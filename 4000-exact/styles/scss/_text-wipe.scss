@@ -1,0 +1,33 @@
+.weather-display .scroll .fixed {
+	position: relative;
+	overflow: hidden;
+	height: 70px;
+
+    .text-layer {
+        position: absolute;
+        width: 100%;
+        overflow: hidden;
+        opacity: 1;
+    }
+
+    .text-layer.exit {
+        opacity: 0;
+        transition: opacity 0.1s ease-out;
+    }
+
+    .text-content {
+        font-family: 'Star4000';
+        font-size: 24pt;
+        white-space: pre;
+        display: inline-block;
+
+        // Initial state: fully clipped
+        clip-path: inset(0 100% 0 0);
+        transition: clip-path 0.2s ease-out;
+    }
+
+    .text-layer.active .text-content {
+        clip-path: inset(0 0% 0 0); // Reveal left to right
+    }
+
+}
