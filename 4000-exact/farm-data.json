@@ -1,0 +1,17 @@
+{
+  "locationCity": "KNCCAROL120",
+  "lastUpdated": "2026-10-31T01:56:00-04:00",
+  "windDirection": "WNW",
+  "windSpeed": 0.0,
+  "windGust": 0.0,
+  "humidity": 99,
+  "feelsLike": 12.78,
+  "dewPoint": 12.78,
+  "temperature": 12.78,
+  "conditionText": "fog",
+  "uvIndex": null,
+  "visibility": 4.83,
+  "pressure": 1017.0,
+  "source": "NWS Wilmington OSOILM CALABASH-FARM AT BRUNSWICK 01:56 AM EDT Oct 31 2026; sky Fog via Open-Meteo farm code; visibility 3 mi KCRE last-good",
+  "rainTodayIn": 0.0
+}
