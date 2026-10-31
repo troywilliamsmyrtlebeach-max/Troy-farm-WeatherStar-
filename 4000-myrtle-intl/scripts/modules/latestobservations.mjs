@@ -25,9 +25,9 @@ class LatestObservations extends WeatherDisplay {
 		//  Conway-Horry C = KHYW, Elizabethtown = KEYF (Curtis L Brown Jr Field, Elizabethtown NC),
 		//  Lumberton = KLBT, Myrtle Beach = KMYR, Southport = KSUT (Brunswick County, nearest to Southport),
 		//  Whiteville = KCPC, Wilmington = KILM. Wind is speed only, no MPH (screenshot style, already in drawCanvas).
+		// Troy Oct 31 19:32: farm FIRST, Elizabethtown DROPPED — 6 towns + farm = 7 rows.
 		const SCREENSHOT_TOWNS = [
 			{ id: 'KHYW', city: 'Conway Horry County Airport' },
-			{ id: 'KEYF', city: 'Elizabethtown' },
 			{ id: 'KLBT', city: 'Lumberton' },
 			{ id: 'KMYR', city: 'Myrtle Beach International Airport' },
 			{ id: 'KSUT', city: 'Southport' },
@@ -51,7 +51,24 @@ class LatestObservations extends WeatherDisplay {
 			lastStation = Math.min(regionalStations.length + 1, firstStation + 7 - actualConditions.length);
 		}
 
-		// cut down to the maximum of 7
+		// Farm row FIRST, from the live farm payload (same data as Current Conditions).
+		// Direction string -> degrees for the shared wind code; sky word from WMO code via getConditionText if available.
+		try {
+			const farm = (typeof window !== 'undefined' && window.__latestPwsPayload) ? window.__latestPwsPayload : null;
+			if (farm && farm.temperature !== undefined && farm.temperature !== null) {
+				const dirDeg = { N: 0, NNE: 22.5, NE: 45, ENE: 67.5, E: 90, ESE: 112.5, SE: 135, SSE: 157.5, S: 180, SSW: 202.5, SW: 225, WSW: 247.5, W: 270, WNW: 292.5, NW: 315, NNW: 337.5 }[farm.windDirection] ?? 0;
+				const farmSky = (farm.conditionText === 3) ? 'Overcast' : (farm.conditionText === 0) ? 'Clear' : (farm.conditionText === 1) ? 'Fair' : (farm.conditionText === 2) ? 'Partly Cloudy' : (farm.conditionText === 45 || farm.conditionText === 48) ? 'Fog' : 'Fair';
+				actualConditions.unshift({
+					temperature: { value: farm.temperature },
+					windSpeed: { value: farm.windSpeed },
+					windDirection: { value: dirDeg },
+					textDescription: farmSky,
+					StationId: 'FARM',
+					city: 'CALABASH-FARM AT BRUNSWICK',
+				});
+			}
+		} catch (e) { /* farm row optional — towns still show */ }
+		// cut down to the maximum of 7 (farm + 6 towns)
 		this.data = actualConditions.slice(0, this.MaximumRegionalStations);
 
 		// test for at least one station
@@ -66,20 +83,19 @@ class LatestObservations extends WeatherDisplay {
 		super.drawCanvas();
 		const conditions = this.data;
 
-		// sort array by station name
-		const sortedConditions = conditions.sort((a, b) => ((a.Name < b.Name) ? -1 : 1));
+		// Farm FIRST, then towns in screenshot order (do not alphabetical-sort the farm away)
 
 		this.elem.querySelector('.column-headers .temp.english').classList.add('show');
 		this.elem.querySelector('.column-headers .temp.metric').classList.remove('show');
 
-		const lines = sortedConditions.map((condition) => {
+		const lines = conditions.map((condition) => {
 			const windDirection = directionToNSEW(condition.windDirection.value);
 
 			if (condition.temperature.value === null || condition.temperature.value === undefined) return null;
 			const	Temperature = Math.round(celsiusToFahrenheit(condition.temperature.value));
 			const WindSpeed = Math.round(kphToMph(condition.windSpeed.value));
 
-			const SCREENSHOT_NAMES = { KHYW: 'Conway-Horry C', KEYF: 'Elizabethtown', KLBT: 'Lumberton', KMYR: 'Myrtle Beach', KSUT: 'Southport', KCPC: 'Whiteville', KILM: 'Wilmington' };
+			const SCREENSHOT_NAMES = { KHYW: 'Conway-Horry C', KEYF: 'Elizabethtown', KLBT: 'Lumberton', KMYR: 'Myrtle Beach', KSUT: 'Southport', KCPC: 'Whiteville', KILM: 'Wilmington', FARM: 'Calabash-Farm' };
 			const fill = {
 				location: SCREENSHOT_NAMES[condition.StationId] || locationCleanup(condition.city).substr(0, 14),
 				temp: Temperature,
