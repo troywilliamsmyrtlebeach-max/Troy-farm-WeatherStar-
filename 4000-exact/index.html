@@ -1209,7 +1209,7 @@ try {
       // baked farm-data.json (refreshed hourly from OSOILM) and replay it
       // through the app's own custom-weather:update path, exactly as the
       // live app does for a PWS push. UI code above is unchanged.
-      function loadFarm(){ fetch('farm-data.json').then(r=>r.json()).then(p=>{ window.__latestPwsPayload=p; applyPayload(p); }).catch(e=>console.error('farm-data load failed', e)); } loadFarm(); setInterval(loadFarm, 5000);
+      function loadFarm(){ fetch('farm-data.json?v='+Date.now(), {cache:'no-store'}).then(r=>r.json()).then(p=>{ window.__latestPwsPayload=p; applyPayload(p); }).catch(e=>console.error('farm-data load failed', e)); } loadFarm(); setInterval(loadFarm, 5000);
       if (false && typeof EventSource !== 'undefined') {
         const es = new EventSource('/events');
         es.onmessage = (e) => {
