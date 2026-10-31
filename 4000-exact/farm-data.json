@@ -8,10 +8,10 @@
   "feelsLike": 14.61,
   "dewPoint": 13.89,
   "temperature": 14.61,
-  "conditionText": "clear",
+  "conditionText": 0,
   "uvIndex": null,
   "visibility": 4.83,
   "pressure": 1018.3,
-  "source": "WU KNCCAROL120 dashboard live 04:44 AM EDT Oct 31 2026: 58.3F Clear W 5 gust 12 RH96 P30.07; OSOILM 04:26 row superseded",
+  "source": "WU KNCCAROL120 dashboard live 04:44 AM EDT Oct 31 2026: 58.3F Clear W 5 gust 12 RH96 P30.07; conditionText as WMO code 0=Clear so sky draws",
   "rainTodayIn": 0.0
 }
