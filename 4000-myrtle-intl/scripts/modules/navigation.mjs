@@ -355,11 +355,11 @@ const loadDisplay = (direction) => {
 		return;
 	}
 	// MYRTLE-INTL ORDER (Troy Oct 31, corrected): 13 farm Current Conditions,
-	// 2 Latest Observations, 3 Hourly, 7 Local Forecast, 9 Almanac,
+	// 2 Latest Observations, 3 Hourly, 6 Regional Forecast (maps), 7 Local Forecast (written out), 9 Almanac,
 	// 8 Extended Forecast, 5 Travel Forecast, 10 Local Radar, then loop.
 	// Native navId order would put Travel (5) before Local (7) and Almanac
 	// (9) after Extended (8), so the cycle is stepped through this list.
-	const MYRTLE_ORDER = [13, 2, 3, 7, 9, 8, 5, 10];
+	const MYRTLE_ORDER = [13, 2, 3, 6, 7, 9, 8, 5, 10];
 	const curPos = MYRTLE_ORDER.indexOf(curIdx);
 	let newPos = -1;
 	for (let i = 0; i < MYRTLE_ORDER.length; i += 1) {
