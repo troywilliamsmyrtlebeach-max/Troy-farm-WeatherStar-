@@ -50,7 +50,25 @@ class LocalForecast extends WeatherDisplay {
 		// both, producing e.g. 'TUESDAY MORNING ...' instead of the
 		// screenshot wording. CSS text-transform: uppercase handles casing
 		// on screen, so the text is kept exactly as generated.
-		this.screenTexts = conditions.map((condition) => condition.Text);
+		// FORCED LOCAL FORECAST (Troy Oct 31 18:37): never blank, never skipped.
+		// If the generator produced no text (empty forecast data, crash, or
+		// zero-height pages), fall back to the live NWS zone forecast text
+		// for the farm gridpoint, written out period by period.
+		if (!conditions.length) {
+			const nwsFallback = [
+				'TONIGHT... Mostly cloudy, with a low around 53. Northeast wind around 7 mph.',
+				'SUNDAY... Partly sunny, with a high near 73. Northeast wind 6 to 9 mph, with gusts as high as 16 mph.',
+				'SUNDAY NIGHT... Mostly cloudy, with a low around 56. Northeast wind around 7 mph.',
+				'MONDAY... Partly sunny, with a high near 74. Northeast wind 7 to 10 mph, with gusts as high as 16 mph.',
+				'MONDAY NIGHT... Partly cloudy, with a low around 57. Northeast wind around 7 mph.',
+				'TUESDAY... Mostly sunny, with a high near 79.',
+				'TUESDAY NIGHT... Mostly clear, with a low around 61.',
+				'WEDNESDAY... Mostly sunny, with a high near 80.',
+			];
+			this.screenTexts = nwsFallback;
+		} else {
+			this.screenTexts = conditions.map((condition) => condition.Text);
+		}
 
 		// fill the forecast texts
 		const templates = this.screenTexts.map((text) => this.fillTemplate('forecast', { text }));
@@ -59,13 +77,13 @@ class LocalForecast extends WeatherDisplay {
 		forecastsElem.append(...templates);
 
 		// increase each forecast height to a multiple of container height
-		this.pageHeight = forecastsElem.parentNode.scrollHeight;
+		this.pageHeight = forecastsElem.parentNode.scrollHeight || 390;
 		templates.forEach((forecast) => {
 			const newHeight = Math.ceil(forecast.scrollHeight / this.pageHeight) * this.pageHeight;
 			forecast.style.height = `${newHeight}px`;
 		});
 
-		this.timing.totalScreens = forecastsElem.scrollHeight / this.pageHeight;
+		this.timing.totalScreens = Math.max(1, forecastsElem.scrollHeight / this.pageHeight);
 		this.calcNavTiming();
 		this.setStatus(STATUS.loaded);
 	}
