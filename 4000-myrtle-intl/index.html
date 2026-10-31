@@ -108,6 +108,18 @@
 .custom-weather-station.main .wind-gusts { display: block !important; visibility: visible !important; font-size: 18pt !important; margin-top: 0 !important; }
 </style>
 
+<!-- GUST-UNDER-WIND -->
+<style>
+/* GUST-UNDER-WIND (Troy Oct 31 19:20): Gusts line sits directly under the regular wind speed number, same size as that wind number, lined up under it — not under the Wind: label, not smaller */
+.custom-weather-station.main .wind-container{display:block !important;}
+.custom-weather-station.main .wind-container .wind{font-size:18pt !important;}
+.custom-weather-station.main .wind-container .wind-gusts{display:block !important; visibility:visible !important; font-size:18pt !important; margin-top:0 !important; margin-left:0 !important; text-align:left !important; padding-left:0 !important;}
+/* Wind row: label left, value right in same row; gust row below, aligned under the value by matching the wind value's left offset */
+.custom-weather-station.main .wind-container .wind-label{display:inline-block !important; width:45% !important; text-align:left !important;}
+.custom-weather-station.main .wind-container .wind{display:inline-block !important; width:45% !important; text-align:left !important;}
+.custom-weather-station.main .wind-container .wind-gusts{margin-left:45% !important;}
+</style>
+
 <!-- FARM-LOCATION-SMALLER -->
 <style>
 /* FARM-LOCATION-SMALLER (Troy Oct 31 19:05, refined 19:07 from his screenshot):
@@ -404,8 +416,8 @@ try {
 				<div class="wind-container">
 					<div class="wind-label">Wind:</div>
 					<div class="wind"></div>
+					<div class="wind-gusts"></div>
 				</div>
-				<div class="wind-gusts"></div>
 			</div>
 			<div class="right col">
 				<div class="location"></div>
@@ -867,8 +879,8 @@ try {
 				<div class="wind-container">
 					<div class="wind-label">Wind:</div>
 					<div class="wind"></div>
+					<div class="wind-gusts"></div>
 				</div>
-				<div class="wind-gusts"></div>
 			</div>
 			<div class="right col">
 				<div class="location farm-name-over-humidity"></div>
