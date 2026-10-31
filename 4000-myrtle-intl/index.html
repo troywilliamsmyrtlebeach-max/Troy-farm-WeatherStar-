@@ -120,6 +120,16 @@
 .custom-weather-station.main .wind-container .wind-gusts{margin-left:45% !important;}
 </style>
 
+<!-- FARM-NAME-SHIFT-LEFT -->
+<style>
+/* FARM-NAME-SHIFT-LEFT (Troy Oct 31 19:43): CALABASH-FARM AT BRUNSWICK moved a little to the left,
+   so the WHOLE name shows across the top-right half of the screen, not clipped at the right edge.
+   Right column nudged left, farm name allowed to overflow leftwards (not clipped), nowrap kept. */
+.custom-weather-station.main .col.right{right:24px !important;}
+.custom-weather-station.main .farm-name-over-humidity{margin-left:-48px !important; width:320px !important; max-width:none !important; overflow:visible !important; text-align:left !important; white-space:nowrap !important;}
+.custom-weather-station.main .location{overflow:visible !important; max-width:none !important;}
+</style>
+
 <!-- FARM-LOCATION-SMALLER -->
 <style>
 /* FARM-LOCATION-SMALLER (Troy Oct 31 19:05, refined 19:07 from his screenshot):
