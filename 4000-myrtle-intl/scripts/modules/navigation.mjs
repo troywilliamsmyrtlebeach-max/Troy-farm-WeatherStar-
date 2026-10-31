@@ -359,7 +359,7 @@ const loadDisplay = (direction) => {
 	// 8 Extended Forecast, 5 Travel Forecast, 10 Local Radar, then loop.
 	// Native navId order would put Travel (5) before Local (7) and Almanac
 	// (9) after Extended (8), so the cycle is stepped through this list.
-	const MYRTLE_ORDER = [13, 2, 3, 6, 7, 9, 8, 5, 10];
+	const MYRTLE_ORDER = [13, 2, 3, 4, 6, 7, 9, 8, 5, 11, 12, 10, 0];
 	const curPos = MYRTLE_ORDER.indexOf(curIdx);
 	let newPos = -1;
 	for (let i = 0; i < MYRTLE_ORDER.length; i += 1) {
