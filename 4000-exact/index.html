@@ -107,6 +107,18 @@
 .custom-weather-station.main .wind-container { margin-bottom: 2px !important; }
 .custom-weather-station.main .wind-gusts { display: block !important; visibility: visible !important; font-size: 18pt !important; margin-top: 0 !important; }
 </style>
+<!-- INTERNATIONAL-MAIN-SCREEN (Troy Oct 31 19:48, same as Myrtle main screen) -->
+<style>
+/* Farm name: yellow, screenshot size, in right col over Humidity, shifted left so full CALABASH-FARM AT BRUNSWICK shows top-right, not clipped */
+.custom-weather-station.main .location{font-size:16pt !important; text-align:left !important; color:#ffff00 !important; white-space:nowrap !important; line-height:1.2 !important; margin-bottom:6px !important; width:auto !important; overflow:visible !important; max-width:none !important;}
+.custom-weather-station.main .farm-name-over-humidity{font-size:16pt !important; color:#ffff00 !important; text-align:left !important; white-space:nowrap !important; margin-bottom:8px !important; font-weight:bold !important; margin-left:-48px !important; width:320px !important; max-width:none !important; overflow:visible !important;}
+.custom-weather-station.main .col.right{right:24px !important;}
+/* Gusts directly under wind speed number, same size, lined up under it */
+.custom-weather-station.main .wind-container{display:block !important;}
+.custom-weather-station.main .wind-container .wind{font-size:18pt !important; display:inline-block !important; width:45% !important; text-align:left !important;}
+.custom-weather-station.main .wind-container .wind-label{display:inline-block !important; width:45% !important; text-align:left !important;}
+.custom-weather-station.main .wind-container .wind-gusts{display:block !important; visibility:visible !important; font-size:18pt !important; margin-top:0 !important; margin-left:45% !important; text-align:left !important;}
+</style>
 </head>
 
 <body>
@@ -800,7 +812,6 @@ try {
 		</div>
 			
 		<div class="weather template">
-			<div class="location center"></div>
 			<div class="left col">
 				<div class="temp center"></div>
 				<div class="condition center"></div>
@@ -808,10 +819,11 @@ try {
 				<div class="wind-container">
 					<div class="wind-label">Wind:</div>
 					<div class="wind"></div>
+					<div class="wind-gusts"></div>
 				</div>
-				<div class="wind-gusts"></div>
 			</div>
 			<div class="right col">
+				<div class="location farm-name-over-humidity"></div>
 				<div class="row">
 					<div class="label">Humidity:</div>
 					<div class="humidity value"></div>
