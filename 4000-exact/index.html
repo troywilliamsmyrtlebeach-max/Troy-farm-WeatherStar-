@@ -102,6 +102,15 @@ body, #divTwc, #container { background: #e07b00 !important; background-image: no
 .weather-display { background: #0a5bd3 !important; background-image: none !important; color: #fff !important; }
 .weather-display .header { background: linear-gradient(90deg, #c65a00, #e07b00) !important; }
 </style>
+<!-- PHONE-FIT -->
+<style>
+/* PHONE-FIT: middle blue panel fills entire phone screen width, orange edges thin on phone */
+@media (max-width: 700px) {
+  #divTwc, .weather-display { width: 100vw !important; max-width: none !important; }
+  .weather-display .main, .weather-display .main.has-scroll, .weather-display .main.has-box { border-left-width: 12px !important; border-right-width: 12px !important; }
+  #divTwc .header, .weather-display .header { width: 100vw !important; }
+}
+</style>
 </head>
 
 <body>
@@ -112,6 +121,7 @@ try {
   localStorage.setItem('latLon', JSON.stringify({lat: 33.92, lon: -78.57}));
   localStorage.setItem('latLonQuery', 'Carolina Shores, NC');
   localStorage.setItem('settings-kiosk-checkbox', 'true');
+  localStorage.setItem('settings-wide-checkbox', 'true');
   localStorage.setItem('display-enabled: custom-weather-station', 'true');
   // FARM-FIRST: the PWS display is disabled by default in the original
   // app (defaultEnabled=false), so on a fresh Pages load its checkbox
