@@ -1,9 +1,9 @@
 {
   "locationCity": "KNCCAROL120",
-  "lastUpdated": "2026-10-31T15:41:00-04:00",
+  "lastUpdated": "2026-10-31T16:41:00-04:00",
   "windDirection": "SSE",
-  "windSpeed": 3.22,
-  "windGust": 12.87,
+  "windSpeed": 0.0,
+  "windGust": 11.27,
   "humidity": 60,
   "feelsLike": 22.22,
   "dewPoint": 13.33,
@@ -11,7 +11,7 @@
   "conditionText": 3,
   "uvIndex": null,
   "visibility": 16.09,
-  "pressure": 1021.3,
-  "source": "NWS Wilmington OSOILM CALABASH-FARM AT BRUNSWICK 03:41 PM EDT Oct 31 2026 (hourly auto-refresh)",
+  "pressure": 1021.7,
+  "source": "NWS Wilmington OSOILM CALABASH-FARM AT BRUNSWICK 04:41 PM EDT Oct 31 2026 (hourly auto-refresh)",
   "rainTodayIn": 0.0
 }
