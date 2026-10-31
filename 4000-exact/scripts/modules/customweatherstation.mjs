@@ -121,7 +121,9 @@ class CustomWeatherStation extends WeatherDisplay {
 			icon: { type: 'img', src: iconImage },
 		};
 
-		if (customWeatherParameters.windGust) fill['wind-gusts'] = `Gusts to ${Math.round(ConversionHelpers.convertWindUnits(customWeatherParameters.windGust))}`;
+		// Troy 2026-10-31: gusts MUST show on the farm main page, always, with unit — never a blank gust line when a gust exists.
+		const gustMph = Math.round(ConversionHelpers.convertWindUnits(customWeatherParameters.windGust || 0));
+		if (gustMph > 0) fill['wind-gusts'] = `Gusts to ${gustMph} ${windUnit}`;
 
 		const area = this.elem.querySelector('.main');
 
