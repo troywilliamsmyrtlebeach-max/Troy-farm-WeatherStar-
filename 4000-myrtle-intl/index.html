@@ -110,8 +110,14 @@
 
 <!-- FARM-LOCATION-SMALLER -->
 <style>
-/* FARM-LOCATION-SMALLER (Troy Oct 31 19:05): CALABASH-FARM AT BRUNSWICK smaller at top of farm Current Conditions, was 28pt */
-.custom-weather-station.main .location{font-size:18pt !important;}
+/* FARM-LOCATION-SMALLER (Troy Oct 31 19:05, refined 19:07 from his screenshot):
+   CALABASH-FARM AT BRUNSWICK at the screenshot size and lineup, on EVERY screen:
+   same size as the Humidity/Dewpoint rows, left-aligned in the right column,
+   teal/cyan like the screenshot, NOT big centered yellow, NOT wrapping.
+   Applied to the farm Current Conditions location line and to any other
+   location label on the app's screens. */
+.custom-weather-station.main .location{font-size:16pt !important; text-align:left !important; color:#00e5e5 !important; white-space:nowrap !important; line-height:1.2 !important; margin-bottom:6px !important;}
+.weather-display .location, .custom-weather-station .location{font-size:16pt !important; text-align:left !important;}
 </style>
 
 <!-- MYRTLE-SKIN: International engine, Myrtle Beach / Weatherstar Channel look.
