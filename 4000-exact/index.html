@@ -1277,6 +1277,24 @@ document.addEventListener('DOMContentLoaded', function(){
   document.body.appendChild(f);
 })();
 </script>
+<script>
+/* STANDALONE-CLOCK: top clock, independent of module cache — updates every second, top-right, white */
+setInterval(function(){
+  try {
+    var now = new Date();
+    var h = now.getHours(), ampm = h >= 12 ? 'PM' : 'AM';
+    var hh = h % 12; if (hh === 0) hh = 12;
+    var mm = String(now.getMinutes()).padStart(2,'0');
+    var ss = String(now.getSeconds()).padStart(2,'0');
+    var timeStr = hh + ':' + mm + ':' + ss + ' ' + ampm;
+    var days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+    var months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+    var dateStr = days[now.getDay()] + ' ' + months[now.getMonth()] + ' ' + String(now.getDate()).padStart(2,' ');
+    document.querySelectorAll('.date-time.time').forEach(function(el){ el.textContent = timeStr; el.style.color = '#fff'; });
+    document.querySelectorAll('.date-time.date').forEach(function(el){ el.textContent = dateStr; el.style.color = '#fff'; });
+  } catch(e) {}
+}, 1000);
+</script>
 </body>
 
 </html>
