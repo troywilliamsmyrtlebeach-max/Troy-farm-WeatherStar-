@@ -65,6 +65,14 @@
 
 <!-- TICKER-LABEL-FIX -->
 <style>
+/* UPSTREAM FONTS: same original Star4000 families, from the upstream
+   Pages site, since fonts/ was not pushed to Pages (binary). */
+@font-face{font-family:"Star4000";src:url("https://mwood77.github.io/ws4kp-international/fonts/Star4000.woff") format("woff")}
+@font-face{font-family:"Star4000 Large";src:url("https://mwood77.github.io/ws4kp-international/fonts/Star4000%20Large.ttf") format("truetype")}
+@font-face{font-family:"Star4000 Extended";src:url("https://mwood77.github.io/ws4kp-international/fonts/Star4000%20Extended.woff") format("woff")}
+@font-face{font-family:"Star4000 Small";src:url("https://mwood77.github.io/ws4kp-international/fonts/Star4000%20Small.woff") format("woff")}
+@font-face{font-family:"Star4000 Large Compressed";src:url("https://mwood77.github.io/ws4kp-international/fonts/Star4000%20Large%20Compressed.woff") format("woff")}
+@font-face{font-family:"Star 4 Radar";src:url("https://mwood77.github.io/ws4kp-international/fonts/Star%204%20Radar.woff") format("woff")}
 /* TICKER-LABEL-FIX: full CALABASH-FARM AT BRUNSWICK visible, not clipped at bottom/right */
 #txtScrollText{width:100%!important;max-width:none!important;overflow:visible!important;white-space:nowrap!important}
 #divTwcBottom,#progress-html .bottom,#container .bottom{overflow:visible!important}
@@ -79,6 +87,11 @@ try {
   localStorage.setItem('latLon', JSON.stringify({lat: 33.92, lon: -78.57}));
   localStorage.setItem('latLonQuery', 'Carolina Shores, NC');
   localStorage.setItem('settings-kiosk-checkbox', 'true');
+  // FARM-FIRST: the PWS display is disabled by default in the original
+  // app (defaultEnabled=false), so on a fresh Pages load its checkbox
+  // is unchecked and the farm screen never loads. Enable it before
+  // any module registers its checkbox (modules are deferred).
+  localStorage.setItem('display-enabled: custom-weather-station', 'true');
 } catch(e) {}
 </script>
 
@@ -1208,6 +1221,43 @@ document.addEventListener('DOMContentLoaded', function(){
   b.onclick = function(){ if(a.paused){ a.play(); b.textContent='NOW PLAYING: FAIR WEATHER — TAP TO MUTE'; } else { a.pause(); b.textContent='TAP FOR SOUND — FAIR WEATHER MUSIC'; } };
   document.body.appendChild(b);
 });
+
+// FARM PAGES: images/fonts were not pushed to Pages (binary, connector is
+// text-only). Serve the ORIGINAL author's own public assets from the
+// upstream Pages site instead of 404s, for <img> elements present now
+// and added later by canvas templates. No UI rewrite, no new images.
+// Tap-only fullscreen button below uses the app's own #divTwc
+// requestFullscreen (resize() scales it) — no forced CSS, which broke
+// the page twice on Oct 31.
+(function () {
+  var UP = 'https://mwood77.github.io/ws4kp-international/';
+  function fixImg(img) {
+    var s = img.getAttribute('src');
+    if (s && s.indexOf('images/') === 0) img.setAttribute('src', UP + s);
+  }
+  document.querySelectorAll('img').forEach(fixImg);
+  try {
+    new MutationObserver(function (muts) {
+      muts.forEach(function (m) {
+        m.addedNodes.forEach(function (n) {
+          if (n.nodeType !== 1) return;
+          if (n.tagName === 'IMG') fixImg(n);
+          n.querySelectorAll && n.querySelectorAll('img').forEach(fixImg);
+        });
+      });
+    }).observe(document.body, { childList: true, subtree: true });
+  } catch (e) {}
+  var f = document.createElement('button');
+  f.textContent = 'FULL SCREEN — TAP FOR TV';
+  f.style.cssText = 'position:fixed;right:8px;bottom:8px;z-index:9999;padding:10px 14px;font-weight:bold;background:#003366;color:#fff;border:2px solid #fff;border-radius:6px;';
+  f.onclick = function () {
+    var el = document.querySelector('#divTwc');
+    if (!el) return;
+    var r = el.requestFullscreen || el.webkitRequestFullscreen;
+    if (r) r.call(el, { navigationUI: 'hide' });
+  };
+  document.body.appendChild(f);
+})();
 </script>
 </body>
 

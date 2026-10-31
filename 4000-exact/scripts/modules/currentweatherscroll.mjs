@@ -102,8 +102,10 @@ const screens = [
 		return sanitizedText;
 	},
 
-	// condition — Troy 2026-10-26: just the sky word, no "Condition:" prefix
-	(data) => `${getConditionText(data.TextConditions)}`,
+	// condition — Troy 2026-10-31: sky condition as its own ticker frame,
+	// labelled SKY so it cannot be mistaken for another reading. All caps
+	// is applied by drawCondition. Farm data: FOG on Oct 31 01:56 AM.
+	(data) => `SKY ${getConditionText(data.TextConditions)}`,
 
 	// temperature
 	(data) => {
@@ -166,6 +168,10 @@ const drawCondition = (text) => {
 		newLayer.className = 'text-layer';
 		const content = document.createElement('div');
 		content.className = 'text-content';
+		// Long farm label (CONDITIONS AT CALABASH-FARM AT BRUNSWICK, 38 chars)
+		// is clipped by the 640px ticker at 24pt. Shrink only long frames
+		// so BRUNSWICK stays fully visible; short frames keep 24pt.
+		if (text.length > 32) content.style.fontSize = '18pt';
 		// Troy 2026-10-27: every ticker reading in capital letters.
 		content.textContent = text.toUpperCase();
 		newLayer.appendChild(content);

@@ -315,12 +315,19 @@ const navTo = (direction) => {
 	if (!current) {
 		// special case for no active displays (typically on progress screen)
 		// find the first ready display
+		// FARM-FIRST (Troy, Oct 31): start on the farm PWS Current Conditions
+		// screen (navId 13, CALABASH-FARM AT BRUNSWICK) when it is loaded,
+		// not on hazards/generic Current Conditions/Carolina Shores.
 		let firstDisplay;
-		let displayCount = 0;
-		do {
-			if (displays[displayCount].status === STATUS.loaded && displays[displayCount].timing.totalScreens > 0) firstDisplay = displays[displayCount];
-			displayCount += 1;
-		} while (!firstDisplay && displayCount < displays.length);
+		if (displays[13] && displays[13].status === STATUS.loaded && displays[13].timing.totalScreens > 0) {
+			firstDisplay = displays[13];
+		} else {
+			let displayCount = 0;
+			do {
+				if (displays[displayCount].status === STATUS.loaded && displays[displayCount].timing.totalScreens > 0) firstDisplay = displays[displayCount];
+				displayCount += 1;
+			} while (!firstDisplay && displayCount < displays.length);
+		}
 
 		if (!firstDisplay) return;
 
@@ -337,6 +344,14 @@ const loadDisplay = (direction) => {
 	const totalDisplays = displays.length;
 	const curIdx = currentDisplayIndex();
 	let idx;
+	// FARM-FIRST (Troy, Oct 31): after the farm PWS screen, go straight to
+	// Latest Observations (navId 2), not back to hazards/generic screens.
+	if (curIdx === 13 && direction > 0 && displays[2] && displays[2].status === STATUS.loaded && displays[2].timing.totalScreens > 0) {
+		idx = 2;
+		hideAllCanvases();
+		displays[idx].showCanvas(msg.command.firstFrame);
+		return;
+	}
 	for (let i = 0; i < totalDisplays; i += 1) {
 		// convert form simple 0-10 to start at current display index +/-1 and wrap
 		idx = wrap(curIdx + (i + 1) * direction, totalDisplays);
