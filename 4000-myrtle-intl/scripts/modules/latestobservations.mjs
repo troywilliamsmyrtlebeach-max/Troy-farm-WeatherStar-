@@ -20,24 +20,28 @@ class LatestObservations extends WeatherDisplay {
 		if (!super.getData(_weatherParameters)) return;
 		const weatherParameters = _weatherParameters ?? this.weatherParameters;
 
-		// calculate distance to each station
-		const stationsByDistance = Object.keys(StationInfo).map((key) => {
-			const station = StationInfo[key];
-			const distance = calcDistance(station.lat, station.lon, weatherParameters.latitude, weatherParameters.longitude);
-			return { ...station, distance };
-		});
-
-		// sort the stations by distance
-		const sortedStations = stationsByDistance.sort((a, b) => a.distance - b.distance);
-		// try up to 30 regional stations
-		const regionalStations = sortedStations.slice(0, 30);
+		// TROY SCREENSHOT (Oct 31 19:16): Latest Observations is EXACTLY these 7 towns,
+		// in this order, with live NWS readings — not the nearest-30 by distance.
+		//  Conway-Horry C = KHYW, Elizabethtown = KEYF (Curtis L Brown Jr Field, Elizabethtown NC),
+		//  Lumberton = KLBT, Myrtle Beach = KMYR, Southport = KSUT (Brunswick County, nearest to Southport),
+		//  Whiteville = KCPC, Wilmington = KILM. Wind is speed only, no MPH (screenshot style, already in drawCanvas).
+		const SCREENSHOT_TOWNS = [
+			{ id: 'KHYW', city: 'Conway Horry County Airport' },
+			{ id: 'KEYF', city: 'Elizabethtown' },
+			{ id: 'KLBT', city: 'Lumberton' },
+			{ id: 'KMYR', city: 'Myrtle Beach International Airport' },
+			{ id: 'KSUT', city: 'Southport' },
+			{ id: 'KCPC', city: 'Whiteville, Columbus County Municipal Airport' },
+			{ id: 'KILM', city: 'Wilmington International Airport' },
+		];
+		const regionalStations = SCREENSHOT_TOWNS;
 
 		// get data for regional stations
 		// get first 7 stations
 		const actualConditions = [];
 		let lastStation = Math.min(regionalStations.length, 7);
 		let firstStation = 0;
-		while (actualConditions.length < 7 && (lastStation) <= regionalStations.length) {
+		while (actualConditions.length < 7 && (lastStation) <= regionalStations.length && firstStation < regionalStations.length) {
 			// eslint-disable-next-line no-await-in-loop
 			const someStations = await getStations(regionalStations.slice(firstStation, lastStation));
 
@@ -71,11 +75,13 @@ class LatestObservations extends WeatherDisplay {
 		const lines = sortedConditions.map((condition) => {
 			const windDirection = directionToNSEW(condition.windDirection.value);
 
+			if (condition.temperature.value === null || condition.temperature.value === undefined) return null;
 			const	Temperature = Math.round(celsiusToFahrenheit(condition.temperature.value));
 			const WindSpeed = Math.round(kphToMph(condition.windSpeed.value));
 
+			const SCREENSHOT_NAMES = { KHYW: 'Conway-Horry C', KEYF: 'Elizabethtown', KLBT: 'Lumberton', KMYR: 'Myrtle Beach', KSUT: 'Southport', KCPC: 'Whiteville', KILM: 'Wilmington' };
 			const fill = {
-				location: locationCleanup(condition.city).substr(0, 14),
+				location: SCREENSHOT_NAMES[condition.StationId] || locationCleanup(condition.city).substr(0, 14),
 				temp: Temperature,
 				weather: shortenCurrentConditions(condition.textDescription).substr(0, 9),
 			};
@@ -91,9 +97,10 @@ class LatestObservations extends WeatherDisplay {
 			return this.fillTemplate('observation-row', fill);
 		});
 
+		const linesFiltered = lines.filter(Boolean);
 		const linesContainer = this.elem.querySelector('.observation-lines');
 		linesContainer.innerHTML = '';
-		linesContainer.append(...lines);
+		linesContainer.append(...linesFiltered);
 
 		this.finishDraw();
 	}
