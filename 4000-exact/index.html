@@ -94,6 +94,11 @@
 /* CLOCK-VISIBLE: top clock white, not black, on dark background */
 .weather-display .header .date-time, .weather-display .date-time { color: #fff !important; text-shadow: 3px 3px 0 #000 !important; }
 </style>
+<!-- GUSTS-VISIBLE -->
+<style>
+/* GUSTS-VISIBLE: gust line on farm main page must draw, not clip */
+.custom-weather-station.main .wind-gusts { display: block !important; visibility: visible !important; font-size: 18pt !important; margin-top: 4px; }
+</style>
 </head>
 
 <body>
@@ -104,6 +109,7 @@ try {
   localStorage.setItem('latLon', JSON.stringify({lat: 33.92, lon: -78.57}));
   localStorage.setItem('latLonQuery', 'Carolina Shores, NC');
   localStorage.setItem('settings-kiosk-checkbox', 'true');
+  try { var _s = JSON.parse(localStorage.getItem('Settings') || '{}'); _s.windUnits = 4; _s.temperatureUnits = 2; _s.distanceUnits = 2; _s.pressureUnits = 2; localStorage.setItem('Settings', JSON.stringify(_s)); } catch(e) {}
   localStorage.setItem('display-enabled: custom-weather-station', 'true');
   // FARM-FIRST: the PWS display is disabled by default in the original
   // app (defaultEnabled=false), so on a fresh Pages load its checkbox
