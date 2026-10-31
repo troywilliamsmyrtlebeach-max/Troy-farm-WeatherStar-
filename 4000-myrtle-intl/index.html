@@ -111,7 +111,7 @@
 <!-- MYRTLE-SKIN: International engine, Myrtle Beach / Weatherstar Channel look.
      Header maroon/red-to-orange gradient + diagonal swoosh, blue emblem box,
      chunky yellow titles, white clock, black 4:3 stage with CRT scanlines,
-     black ticker band, blue watermark lower-right. No Mapbox key, no new images. -->
+     blue ticker band, blue watermark lower-right. No Mapbox key, no new images. -->
 <style>
 /* stage: black surround, 4:3 panel, scanlines (pointer-events none, above content, below nav buttons) */
 body{background:#000!important}
@@ -130,9 +130,9 @@ body{background:#000!important}
 .weather-display .header .date-time{color:#fff!important;text-shadow:2px 2px 0 #000!important}
 /* content panels: deep royal blue (upstream main panels already blue; force main canvas bg) */
 .weather-display .main{background:#0000aa!important}
-/* ticker: Myrtle bottom band is black with white scrolling text (exact ticker was blue) */
-.weather-display .scroll,.weather-display .scroll .fixed,#divTwcBottom{background:#000!important;color:#fff!important}
-.weather-display .scroll .fixed .text-layer,.weather-display .scroll .fixed .text-content{background:#000!important;color:#fff!important}
+/* ticker: Troy Oct 31 18:14 — bottom ticker BLUE, not black, white text */
+.weather-display .scroll,.weather-display .scroll .fixed,#divTwcBottom{background:#0a5bd3!important;color:#fff!important}
+.weather-display .scroll .fixed .text-layer,.weather-display .scroll .fixed .text-content{background:#0a5bd3!important;color:#fff!important}
 /* watermark: blue Weatherstar Channel bug, lower-right, above ticker */
 body::after{content:"THE WEATHERSTAR CHANNEL";position:fixed;right:10px;bottom:48px;z-index:9998;background:#0a3d9e;border:1px solid #fff;border-radius:8px;padding:3px 8px;font-size:11px;color:#fff;pointer-events:none}
 </style>
