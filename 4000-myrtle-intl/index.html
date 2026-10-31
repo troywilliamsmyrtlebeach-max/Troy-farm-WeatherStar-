@@ -1322,7 +1322,10 @@ document.addEventListener('DOMContentLoaded', function(){
           n.querySelectorAll && n.querySelectorAll('img').forEach(fixImg);
         });
       });
-    }).observe(document.body, { childList: true, subtree: true });
+    }).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['src'] });
+  // Regional map sets .map img src directly (attribute change, no new node):
+  // sweep every 2s so a Pages 404 basemap gets rewritten to upstream too.
+  setInterval(function(){ document.querySelectorAll('img').forEach(fixImg); }, 2000);
   } catch (e) {}
   var f = document.createElement('button');
   f.textContent = 'FULL SCREEN — TAP FOR TV';

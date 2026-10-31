@@ -27,11 +27,12 @@ class RegionalForecast extends WeatherDisplay {
 		const weatherParameters = _weatherParameters ?? this.weatherParameters;
 
 		// pre-load the base map
-		let baseMap = 'images/Basemap2.png';
+		// Pages has no local images/ folder (binary push limit): use upstream host there, local file otherwise.
+		let baseMap = (typeof location !== 'undefined' && location.hostname && location.hostname.endsWith('github.io')) ? 'https://mwood77.github.io/ws4kp-international/images/Basemap2.png' : 'images/Basemap2.png';
 		if (weatherParameters.state === 'HI') {
-			baseMap = 'images/HawaiiRadarMap4.png';
+			baseMap = baseMap.replace('Basemap2.png', 'HawaiiRadarMap4.png');
 		} else if (weatherParameters.state === 'AK') {
-			baseMap = 'images/AlaskaRadarMap6.png';
+			baseMap = baseMap.replace('Basemap2.png', 'AlaskaRadarMap6.png');
 		}
 		this.elem.querySelector('.map img').src = baseMap;
 
