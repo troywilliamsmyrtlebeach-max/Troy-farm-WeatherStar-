@@ -26,7 +26,7 @@ class WeatherDisplay {
 		this.okToDrawCurrentConditions = true;
 		// Troy 2026-10-27 (twice): no time and date at the top at all.
 		// Supersedes the earlier seconds-off clock change.
-		this.okToDrawCurrentDateTime = false;
+		this.okToDrawCurrentDateTime = true; // Troy 2026-10-31: clock at top, like the source
 		this.showOnProgress = true;
 
 		// default navigation timing
