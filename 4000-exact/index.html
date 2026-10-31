@@ -92,13 +92,14 @@
 </style>
 <!-- ALL-MAIN-BLUE -->
 <style>
-/* ALL-MAIN-BLUE: every main screen panel blue, header top stays orange */
-.weather-display .main, .weather-display .main.has-scroll, .weather-display .main.has-box { background: #0a5bd3 !important; background-image: none !important; color: #fff !important; }
+/* ORANGE-EDGES-BLUE-CENTER: side edges orange, center panel blue, like screenshot */
+.weather-display .main, .weather-display .main.has-scroll, .weather-display .main.has-box { background: #0a5bd3 !important; background-image: none !important; color: #fff !important; border-left: 64px solid #e07b00 !important; border-right: 64px solid #e07b00 !important; box-sizing: border-box !important; }
 </style>
 <!-- ALL-PAGES-BLUE -->
 <style>
-/* ALL-PAGES-BLUE: every display page blue, not black; header top stays orange */
-body, #divTwc, .weather-display, .weather-display .main, .weather-display .main.has-scroll, .weather-display .main.has-box, #container { background: #0a5bd3 !important; background-image: none !important; color: #fff !important; }
+/* ORANGE-EDGES-BLUE-CENTER-2: page background orange edges, display center blue */
+body, #divTwc, #container { background: #e07b00 !important; background-image: none !important; }
+.weather-display { background: #0a5bd3 !important; background-image: none !important; color: #fff !important; }
 .weather-display .header { background: linear-gradient(90deg, #c65a00, #e07b00) !important; }
 </style>
 </head>
