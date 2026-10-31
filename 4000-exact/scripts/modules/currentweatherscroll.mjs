@@ -105,7 +105,8 @@ const screens = [
 	// condition — Troy 2026-10-31: sky condition as its own ticker frame,
 	// labelled SKY so it cannot be mistaken for another reading. All caps
 	// is applied by drawCondition. Farm data: FOG on Oct 31 01:56 AM.
-	(data) => `SKY ${getConditionText(data.TextConditions)}`,
+	// Troy 2026-10-31: ticker reads just the sky condition itself, no SKY label — same as the main page.
+	(data) => `${getConditionText(data.TextConditions)}`,
 
 	// temperature
 	(data) => {
