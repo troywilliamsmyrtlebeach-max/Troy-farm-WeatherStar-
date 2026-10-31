@@ -1,0 +1,167 @@
+// current weather conditions display
+import { distance as calcDistance, directionToNSEW } from './utils/calc.mjs';
+import { json } from './utils/fetch.mjs';
+import STATUS from './status.mjs';
+import { locationCleanup } from './utils/string.mjs';
+import { celsiusToFahrenheit, kphToMph } from './utils/units.mjs';
+import WeatherDisplay from './weatherdisplay.mjs';
+import { registerDisplay } from './navigation.mjs';
+
+class LatestObservations extends WeatherDisplay {
+	constructor(navId, elemId) {
+		super(navId, elemId, 'Latest Observations', false);
+
+		// constants
+		this.MaximumRegionalStations = 7;
+		this.showOnProgress = false;
+	}
+
+	async getData(_weatherParameters) {
+		if (!super.getData(_weatherParameters)) return;
+		const weatherParameters = _weatherParameters ?? this.weatherParameters;
+
+		// TROY SCREENSHOT (Oct 31 19:16): Latest Observations is EXACTLY these 7 towns,
+		// in this order, with live NWS readings — not the nearest-30 by distance.
+		//  Conway-Horry C = KHYW, Elizabethtown = KEYF (Curtis L Brown Jr Field, Elizabethtown NC),
+		//  Lumberton = KLBT, Myrtle Beach = KMYR, Southport = KSUT (Brunswick County, nearest to Southport),
+		//  Whiteville = KCPC, Wilmington = KILM. Wind is speed only, no MPH (screenshot style, already in drawCanvas).
+		// Troy Oct 31 19:32: farm FIRST, Elizabethtown DROPPED — 6 towns + farm = 7 rows.
+		const SCREENSHOT_TOWNS = [
+			{ id: 'KHYW', city: 'Conway Horry County Airport' },
+			{ id: 'KLBT', city: 'Lumberton' },
+			{ id: 'KMYR', city: 'Myrtle Beach International Airport' },
+			{ id: 'KSUT', city: 'Southport' },
+			{ id: 'KCPC', city: 'Whiteville, Columbus County Municipal Airport' },
+			{ id: 'KILM', city: 'Wilmington International Airport' },
+		];
+		const regionalStations = SCREENSHOT_TOWNS;
+
+		// get data for regional stations
+		// get first 7 stations
+		const actualConditions = [];
+		let lastStation = Math.min(regionalStations.length, 7);
+		let firstStation = 0;
+		while (actualConditions.length < 7 && (lastStation) <= regionalStations.length && firstStation < regionalStations.length) {
+			// eslint-disable-next-line no-await-in-loop
+			const someStations = await getStations(regionalStations.slice(firstStation, lastStation));
+
+			actualConditions.push(...someStations);
+			// update counters
+			firstStation += lastStation;
+			lastStation = Math.min(regionalStations.length + 1, firstStation + 7 - actualConditions.length);
+		}
+
+		// Farm row FIRST, from the live farm payload (same data as Current Conditions).
+		// Direction string -> degrees for the shared wind code; sky word from WMO code via getConditionText if available.
+		try {
+			const farm = (typeof window !== 'undefined' && window.__latestPwsPayload) ? window.__latestPwsPayload : null;
+			if (farm && farm.temperature !== undefined && farm.temperature !== null) {
+				const dirDeg = { N: 0, NNE: 22.5, NE: 45, ENE: 67.5, E: 90, ESE: 112.5, SE: 135, SSE: 157.5, S: 180, SSW: 202.5, SW: 225, WSW: 247.5, W: 270, WNW: 292.5, NW: 315, NNW: 337.5 }[farm.windDirection] ?? 0;
+				const farmSky = (farm.conditionText === 3) ? 'Overcast' : (farm.conditionText === 0) ? 'Clear' : (farm.conditionText === 1) ? 'Fair' : (farm.conditionText === 2) ? 'Partly Cloudy' : (farm.conditionText === 45 || farm.conditionText === 48) ? 'Fog' : 'Fair';
+				actualConditions.unshift({
+					temperature: { value: farm.temperature },
+					// Troy Oct 31 19:36: farm Latest Observations wind = HIGHEST wind speed (sustained vs gust) — e.g. sustained 2, gust 8 -> show 8, not 2.
+					windSpeed: { value: Math.max(farm.windSpeed || 0, farm.windGust || 0) },
+					windDirection: { value: dirDeg },
+					textDescription: farmSky,
+					StationId: 'FARM',
+					city: 'CALABASH-FARM AT BRUNSWICK',
+				});
+			}
+		} catch (e) { /* farm row optional — towns still show */ }
+		// cut down to the maximum of 7 (farm + 6 towns)
+		this.data = actualConditions.slice(0, this.MaximumRegionalStations);
+
+		// test for at least one station
+		if (this.data.length === 0) {
+			this.setStatus(STATUS.noData);
+			return;
+		}
+		this.setStatus(STATUS.loaded);
+	}
+
+	async drawCanvas() {
+		super.drawCanvas();
+		const conditions = this.data;
+
+		// Farm FIRST, then towns in screenshot order (do not alphabetical-sort the farm away)
+
+		this.elem.querySelector('.column-headers .temp.english').classList.add('show');
+		this.elem.querySelector('.column-headers .temp.metric').classList.remove('show');
+
+		const lines = conditions.map((condition) => {
+			const windDirection = directionToNSEW(condition.windDirection.value);
+
+			if (condition.temperature.value === null || condition.temperature.value === undefined) return null;
+			const	Temperature = Math.round(celsiusToFahrenheit(condition.temperature.value));
+			const WindSpeed = Math.round(kphToMph(condition.windSpeed.value));
+
+			const SCREENSHOT_NAMES = { KHYW: 'Conway-Horry C', KEYF: 'Elizabethtown', KLBT: 'Lumberton', KMYR: 'Myrtle Beach', KSUT: 'Southport', KCPC: 'Whiteville', KILM: 'Wilmington', FARM: 'CALABASH-FARM' };
+			const fill = {
+				location: SCREENSHOT_NAMES[condition.StationId] || locationCleanup(condition.city).substr(0, 14),
+				temp: Temperature,
+				weather: shortenCurrentConditions(condition.textDescription).substr(0, 9),
+			};
+
+			if (WindSpeed > 0) {
+				fill.wind = windDirection + (Array(6 - windDirection.length - WindSpeed.toString().length).join(' ')) + WindSpeed.toString();
+			} else if (WindSpeed === 'NA') {
+				fill.wind = 'NA';
+			} else {
+				fill.wind = 'Calm';
+			}
+
+			return this.fillTemplate('observation-row', fill);
+		});
+
+		const linesFiltered = lines.filter(Boolean);
+		const linesContainer = this.elem.querySelector('.observation-lines');
+		linesContainer.innerHTML = '';
+		linesContainer.append(...linesFiltered);
+
+		this.finishDraw();
+	}
+}
+const shortenCurrentConditions = (_condition) => {
+	let condition = _condition;
+	condition = condition.replace(/Light/, 'L');
+	condition = condition.replace(/Heavy/, 'H');
+	condition = condition.replace(/Partly/, 'P');
+	condition = condition.replace(/Mostly/, 'M');
+	condition = condition.replace(/Few/, 'F');
+	condition = condition.replace(/Thunderstorm/, 'T\'storm');
+	condition = condition.replace(/ in /, '');
+	condition = condition.replace(/Vicinity/, '');
+	condition = condition.replace(/ and /, ' ');
+	condition = condition.replace(/Freezing Rain/, 'Frz Rn');
+	condition = condition.replace(/Freezing/, 'Frz');
+	condition = condition.replace(/Unknown Precip/, '');
+	condition = condition.replace(/L Snow Fog/, 'L Snw/Fog');
+	condition = condition.replace(/ with /, '/');
+	return condition;
+};
+
+const getStations = async (stations) => {
+	const stationData = await Promise.all(stations.map(async (station) => {
+		try {
+			const data = await json(`https://api.weather.gov/stations/${station.id}/observations/latest`, { retryCount: 1, stillWaiting: () => this.stillWaiting() });
+			// test for temperature, weather and wind values present
+			if (data.properties.temperature.value === null
+			|| data.properties.textDescription === ''
+			|| data.properties.windSpeed.value === null) return false;
+			// format the return values
+			return {
+				...data.properties,
+				StationId: station.id,
+				city: station.city,
+			};
+		} catch (error) {
+			console.log(`Unable to get latest observations for ${station.id}`);
+			return false;
+		}
+	}));
+	// filter false (no data or other error)
+	return stationData.filter((d) => d);
+};
+// register display
+registerDisplay(new LatestObservations(2, 'latest-observations'));
