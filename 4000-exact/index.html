@@ -92,7 +92,7 @@
 <!-- ALL-MAIN-BLUE -->
 <style>
 /* ORANGE-EDGES-BLUE-CENTER: side edges orange, center panel blue, like screenshot */
-.weather-display .main, .weather-display .main.has-scroll, .weather-display .main.has-box { background: #0a5bd3 !important; background-image: none !important; color: #fff !important; border-left: 8px solid #e07b00 !important; border-right: 8px solid #e07b00 !important; box-sizing: border-box !important; }
+.weather-display .main, .weather-display .main.has-scroll, .weather-display .main.has-box { background: #0a5bd3 !important; background-image: none !important; color: #fff !important;  }
 </style>
 <!-- ALL-PAGES-BLUE -->
 <style>
@@ -100,15 +100,6 @@
 body, #container { background: #000 !important; background-image: none !important; }
 #divTwc { background: #000 !important; background-image: none !important; }
 .weather-display { background: #0a5bd3 !important; background-image: none !important; color: #fff !important; }
-</style>
-<!-- PHONE-FIT -->
-<style>
-/* PHONE-FIT: middle blue panel fills entire phone screen width, orange edges thin on phone */
-@media (max-width: 700px) {
-  #divTwc, .weather-display { width: 100vw !important; max-width: none !important; }
-  .weather-display .main, .weather-display .main.has-scroll, .weather-display .main.has-box { border-left-width: 12px !important; border-right-width: 12px !important; }
-  #divTwc .header, .weather-display .header { width: 100vw !important; }
-}
 </style>
 </head>
 
@@ -120,7 +111,6 @@ try {
   localStorage.setItem('latLon', JSON.stringify({lat: 33.92, lon: -78.57}));
   localStorage.setItem('latLonQuery', 'Carolina Shores, NC');
   localStorage.setItem('settings-kiosk-checkbox', 'true');
-  localStorage.setItem('settings-wide-checkbox', 'true');
   localStorage.setItem('display-enabled: custom-weather-station', 'true');
   // FARM-FIRST: the PWS display is disabled by default in the original
   // app (defaultEnabled=false), so on a fresh Pages load its checkbox
