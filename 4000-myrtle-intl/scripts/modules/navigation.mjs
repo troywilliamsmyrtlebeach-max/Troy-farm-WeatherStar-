@@ -429,11 +429,14 @@ const handleNavButton = (button) => {
 			setPlaying(false);
 			break;
 		case 'next':
-			setPlaying(false);
+			// Troy Oct 31 18:44: auto-cycle stays ON when clicking through.
+			// Next/Previous advance one screen only; the display's own timer
+			// then keeps cycling on its own. Pause is the ONLY way to stop it.
+			if (typeof window !== 'undefined') window.__myrtleShownAt = Date.now();
 			navTo(msg.command.nextFrame);
 			break;
 		case 'previous':
-			setPlaying(false);
+			if (typeof window !== 'undefined') window.__myrtleShownAt = Date.now();
 			navTo(msg.command.previousFrame);
 			break;
 		case 'menu':
