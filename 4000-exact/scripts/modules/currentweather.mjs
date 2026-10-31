@@ -69,7 +69,11 @@ class CurrentWeather extends WeatherDisplay {
 			icon: { type: 'img', src: iconImage },
 		};
 
-		if (this.data.WindGust) fill['wind-gusts'] = `Gusts to ${this.data.WindGust}`;
+		// Troy 2026-10-31: generic Current Conditions main page must also show farm gusts, not only the PWS screen / ticker.
+		// Fall back to the farm payload gust when the gridpoint data carries no gust.
+		const farmGustMph = window.__latestPwsPayload ? Math.round(ConversionHelpers.convertWindUnits(window.__latestPwsPayload.windGust || 0)) : 0;
+		const gustText = this.data.WindGust ? `Gusts to ${this.data.WindGust}` : (farmGustMph > 0 ? `Gusts to ${farmGustMph} MPH` : null);
+		if (gustText) fill['wind-gusts'] = gustText;
 
 		const area = this.elem.querySelector('.main');
 

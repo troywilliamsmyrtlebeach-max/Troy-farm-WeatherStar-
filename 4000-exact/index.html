@@ -35,7 +35,7 @@
   <script type="text/javascript" src="scripts/vendor/auto/suncalc.js"></script>
   <script type="module" src="scripts/modules/hazards.mjs"></script>
   <script type="module" src="scripts/modules/currentweatherscroll.mjs?v=7346422"></script>
-  <script type="module" src="scripts/modules/currentweather.mjs"></script>
+  <script type="module" src="scripts/modules/currentweather.mjs?v=gustfallback"></script>
   <script type="module" src="scripts/modules/customweatherstation.mjs?v=c602f2d"></script>
   <script type="module" src="scripts/modules/almanac.mjs"></script>
   <script type="module" src="scripts/modules/icons.mjs"></script>
@@ -1298,6 +1298,20 @@ setInterval(function(){
     var dateStr = days[now.getDay()] + ' ' + months[now.getMonth()] + ' ' + String(now.getDate()).padStart(2,' ');
     document.querySelectorAll('.date-time.time').forEach(function(el){ el.textContent = timeStr; el.style.color = '#fff'; });
     document.querySelectorAll('.date-time.date').forEach(function(el){ el.textContent = dateStr; el.style.color = '#fff'; });
+  } catch(e) {}
+}, 1000);
+</script>
+<script>
+/* STANDALONE-GUSTS: if any visible wind-gusts line is empty, fill it from the farm payload, every second */
+setInterval(function(){
+  try {
+    var payload = window.__latestPwsPayload;
+    if (!payload || !payload.windGust) return;
+    var gustMph = Math.round(payload.windGust * 0.621371);
+    if (gustMph <= 0) return;
+    document.querySelectorAll('.wind-gusts').forEach(function(el){
+      if (el.offsetParent !== null && !el.textContent.trim()) { el.textContent = 'Gusts to ' + gustMph + ' MPH'; }
+    });
   } catch(e) {}
 }, 1000);
 </script>
