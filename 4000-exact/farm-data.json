@@ -8,10 +8,10 @@
   "feelsLike": 20.0,
   "dewPoint": 13.89,
   "temperature": 20.0,
-  "conditionText": 3,
+  "conditionText": 1,
   "uvIndex": null,
   "visibility": 4.83,
   "pressure": 1022.4,
-  "source": "NWS Wilmington OSOILM CALABASH-FARM AT BRUNSWICK 11:41 AM EDT Oct 31 2026 (hourly auto-refresh)",
+  "source": "Troy eye report 12:02 PM EDT Oct 31 2026: Fair outside, sunny, not Overcast \u2014 eyes beat model for 3h; OSOILM 11:41 AM 68F NNE 5 gust 15 RH70 P30.19",
   "rainTodayIn": 0.0
 }
