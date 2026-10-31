@@ -373,7 +373,8 @@ const loadDisplay = (direction) => {
 	// early still stays up for at least 45 s total. Manual nav buttons go
 	// through navNext/navPrev on the display itself, not this gate, except
 	// at end-of-display where the same path is used (accepted tradeoff).
-	if (typeof window !== 'undefined' && window.__myrtleShownAt) {
+	if (typeof window !== 'undefined' && window.__myrtleManualStep) { window.__myrtleManualStep = false; /* manual tap: bypass dwell gate */ }
+	else if (typeof window !== 'undefined' && window.__myrtleShownAt) {
 		const elapsed = Date.now() - window.__myrtleShownAt;
 		if (elapsed < 45000) {
 			if (window.__myrtleTimeout) clearTimeout(window.__myrtleTimeout);
@@ -429,15 +430,16 @@ const handleNavButton = (button) => {
 			setPlaying(false);
 			break;
 		case 'next':
-			// Troy Oct 31 18:44: auto-cycle stays ON when clicking through.
-			// Next/Previous advance one screen only; the display's own timer
-			// then keeps cycling on its own. Pause is the ONLY way to stop it.
-			if (typeof window !== 'undefined') window.__myrtleShownAt = Date.now();
-			navTo(msg.command.nextFrame);
+			// Troy Oct 31 18:58: manual click-through MUST step display-to-display,
+			// immediately, every tap, while auto-cycle stays ON. Pause is the
+			// ONLY way to stop auto-cycle. Old navTo(nextFrame) only stepped
+			// internal frames, which looked unreliable / did nothing.
+			if (typeof window !== 'undefined') { window.__myrtleManualStep = true; if (window.__myrtleTimeout) { clearTimeout(window.__myrtleTimeout); window.__myrtleTimeout = undefined; } }
+			loadDisplay(1);
 			break;
 		case 'previous':
-			if (typeof window !== 'undefined') window.__myrtleShownAt = Date.now();
-			navTo(msg.command.previousFrame);
+			if (typeof window !== 'undefined') { window.__myrtleManualStep = true; if (window.__myrtleTimeout) { clearTimeout(window.__myrtleTimeout); window.__myrtleTimeout = undefined; } }
+			loadDisplay(-1);
 			break;
 		case 'menu':
 			setPlaying(false);
