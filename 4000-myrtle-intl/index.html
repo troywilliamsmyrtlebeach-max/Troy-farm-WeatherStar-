@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8" />
+  <title>The Weatherstar Channel — CALABASH-FARM AT BRUNSWICK</title>
+  <meta name="description" content="Web based WeatherStar 4000 simulator that reports current and forecast weather conditions plus a few extras!" />
+  <meta name="keywords" content="WeatherStar 4000+" />
+  <meta name="author" content="Michael Wood" />
+  <meta name="application-name" content="WeatherStar 4000+ International" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="images/Logo192.png" />
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin="">
+      window.leaflet = L;
+  </script>
+
+  
+  <link rel="stylesheet" type="text/css" href="styles/main.css" />
+  <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
+  <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
+  <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
+  <script type="text/javascript" src="scripts/vendor/auto/swiped-events.js"></script>
+  <script type="text/javascript" src="scripts/vendor/auto/suncalc.js"></script>
+  <script type="module" src="scripts/modules/hazards.mjs"></script>
+  <script type="module" src="scripts/modules/currentweatherscroll.mjs?v=7346422"></script>
+  <script type="module" src="scripts/modules/currentweather.mjs?v=gustfallback"></script>
+  <script type="module" src="scripts/modules/customweatherstation.mjs?v=c602f2d"></script>
+  <script type="module" src="scripts/modules/almanac.mjs"></script>
+  <script type="module" src="scripts/modules/icons.mjs"></script>
+  <script type="module" src="scripts/modules/extendedforecast.mjs"></script>
+  <script type="module" src="scripts/modules/hourly-graph.mjs"></script>
+  <script type="module" src="scripts/modules/marine-forecast.mjs"></script>
+  <script type="module" src="scripts/modules/aqi-forecast.mjs"></script>
+  <script type="module" src="scripts/modules/hourly.mjs"></script>
+  <script type="module" src="scripts/modules/latestobservations.mjs"></script>
+  <script type="module" src="scripts/modules/localforecast.mjs"></script>
+  <script type="module" src="scripts/modules/radar.mjs"></script>
+  <script type="module" src="scripts/modules/regionalforecast.mjs"></script>
+  <script type="module" src="scripts/modules/travelforecast.mjs"></script>
+  <script type="module" src="scripts/modules/progress.mjs"></script>
+  <script type="module" src="scripts/modules/radar.mjs"></script>
+  <script type="module" src="scripts/modules/settings.mjs"></script>
+	<script type="module" src="scripts/index.mjs"></script>
+	<!-- <script type="text/javascript" src="scripts/custom.js"></script> -->
+  <!-- data -->
+  <script type="text/javascript" src="scripts/data/travelcities.js"></script>
+  <script type="text/javascript" src="scripts/data/regionalcities.js"></script>
+  <script type="text/javascript" src="scripts/data/stations.js"></script>
+
+  <!-- <script type="text/javascript" src="scripts/custom.js"></script> -->
+
+  
+
+<!-- TICKER-LABEL-FIX -->
+<style>
+/* UPSTREAM FONTS: same original Star4000 families, from the upstream
+   Pages site, since fonts/ was not pushed to Pages (binary). */
+@font-face{font-family:"Star4000";src:url("https://mwood77.github.io/ws4kp-international/fonts/Star4000.woff") format("woff")}
+@font-face{font-family:"Star4000 Large";src:url("https://mwood77.github.io/ws4kp-international/fonts/Star4000%20Large.ttf") format("truetype")}
+@font-face{font-family:"Star4000 Extended";src:url("https://mwood77.github.io/ws4kp-international/fonts/Star4000%20Extended.woff") format("woff")}
+@font-face{font-family:"Star4000 Small";src:url("https://mwood77.github.io/ws4kp-international/fonts/Star4000%20Small.woff") format("woff")}
+@font-face{font-family:"Star4000 Large Compressed";src:url("https://mwood77.github.io/ws4kp-international/fonts/Star4000%20Large%20Compressed.woff") format("woff")}
+@font-face{font-family:"Star 4 Radar";src:url("https://mwood77.github.io/ws4kp-international/fonts/Star%204%20Radar.woff") format("woff")}
+/* TICKER-LABEL-FIX: full CALABASH-FARM AT BRUNSWICK visible, not clipped at bottom/right */
+#txtScrollText{width:100%!important;max-width:none!important;overflow:visible!important;white-space:nowrap!important}
+#divTwcBottom,#progress-html .bottom,#container .bottom{overflow:visible!important}
+</style>
+<!-- TICKER-BLUE -->
+<style>
+/* TICKER-BLUE: bottom ticker bar blue instead of black, white text */
+.weather-display .scroll, .weather-display .scroll .fixed, #divTwcBottom { background: #0a5bd3 !important; color: #fff !important; }
+/* TOP-ORANGE: top header bar orange like Troy's screenshot, not blue */
+.weather-display .scroll .fixed .text-layer, .weather-display .scroll .fixed .text-content { background: #0a5bd3 !important; color: #fff !important; }
+</style>
+<!-- HOURLY-GRAPH-BLUE -->
+<style>
+/* HOURLY-GRAPH-BLUE: hourly graph panel blue */
+#hourly-graph-html, .weather-display .main.hourly-graph, .hourly-graph .graph { background: #0a5bd3 !important; color: #fff !important; }
+</style>
+<!-- CLOCK-VISIBLE -->
+<style>
+/* CLOCK-VISIBLE: top clock white, not black, on dark background */
+.weather-display .header .date-time, .weather-display .date-time { color: #fff !important; text-shadow: 3px 3px 0 #000 !important; }
+</style>
+<!-- GUSTS-VISIBLE -->
+<style>
+/* GUSTS-VISIBLE: gust line on farm main page must draw, not clip */
+.custom-weather-station.main .wind-gusts { display: block !important; visibility: visible !important; font-size: 18pt !important; margin-top: 4px; }
+</style>
+<!-- GUSTS-NOT-CUT-OFF -->
+<style>
+/* GUSTS-NOT-CUT-OFF: shrink farm main icon so wind+gust fit inside the 310px main box, on phone too */
+.custom-weather-station.main .icon { height: 70px !important; }
+.custom-weather-station.main .icon img { max-height: 70px !important; }
+.custom-weather-station.main .wind-container { margin-bottom: 2px !important; }
+.custom-weather-station.main .wind-gusts { display: block !important; visibility: visible !important; font-size: 18pt !important; margin-top: 0 !important; }
+</style>
+
+<!-- MYRTLE-SKIN: International engine, Myrtle Beach / Weatherstar Channel look.
+     Header maroon/red-to-orange gradient + diagonal swoosh, blue emblem box,
+     chunky yellow titles, white clock, black 4:3 stage with CRT scanlines,
+     black ticker band, blue watermark lower-right. No Mapbox key, no new images. -->
+<style>
+/* stage: black surround, 4:3 panel, scanlines (pointer-events none, above content, below nav buttons) */
+body{background:#000!important}
+#divTwc{background:#000!important}
+#container{position:relative}
+#container::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:900;background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px)}
+/* header: maroon -> red -> orange, diagonal swoosh */
+.weather-display .header{background:linear-gradient(90deg,#7a0d0d 0%,#c22 45%,#f60 100%)!important;position:relative;overflow:hidden}
+.weather-display .header::after{content:"";position:absolute;right:22%;top:0;width:60px;height:100%;background:#f60;transform:skewX(-24deg);opacity:.55;pointer-events:none}
+/* emblem: white text, blue rounded box, thin white outline, replaces Logo3.png */
+.weather-display .header .logo.emblem{background:#0a3d9e!important;border:2px solid #fff!important;border-radius:12px!important;padding:6px 10px!important;color:#fff!important;font-family:"Star4000",monospace!important;font-size:11px!important;line-height:1.2!important;letter-spacing:1px!important;text-align:center!important;white-space:nowrap!important}
+.weather-display .header .logo.emblem img{display:none!important}
+/* titles: chunky yellow, black shadow */
+.weather-display .header .title,.weather-display .header .title.single,.weather-display .header .title.dual{color:#ff0!important;text-shadow:3px 3px 0 #000!important}
+/* clock: white, dot-matrix look via Star4000, already set by CLOCK-VISIBLE */
+.weather-display .header .date-time{color:#fff!important;text-shadow:2px 2px 0 #000!important}
+/* content panels: deep royal blue (upstream main panels already blue; force main canvas bg) */
+.weather-display .main{background:#0000aa!important}
+/* ticker: Myrtle bottom band is black with white scrolling text (exact ticker was blue) */
+.weather-display .scroll,.weather-display .scroll .fixed,#divTwcBottom{background:#000!important;color:#fff!important}
+.weather-display .scroll .fixed .text-layer,.weather-display .scroll .fixed .text-content{background:#000!important;color:#fff!important}
+/* watermark: blue Weatherstar Channel bug, lower-right, above ticker */
+body::after{content:"THE WEATHERSTAR CHANNEL";position:fixed;right:10px;bottom:48px;z-index:9998;background:#0a3d9e;border:1px solid #fff;border-radius:8px;padding:3px 8px;font-size:11px;color:#fff;pointer-events:none}
+</style>
+</head>
+
+<body>
+<script>
+/* FARM PRESET (data only, no UI change): farm coordinates + gridpoint locality,
+   so the original app auto-loads with no location box and no typing. */
+try {
+  localStorage.setItem('latLon', JSON.stringify({lat: 33.92, lon: -78.57}));
+  localStorage.setItem('latLonQuery', 'Carolina Shores, NC');
+  localStorage.setItem('settings-kiosk-checkbox', 'true');
+  try { var _s = JSON.parse(localStorage.getItem('Settings') || '{}'); _s.windUnits = 4; _s.temperatureUnits = 2; _s.distanceUnits = 2; _s.pressureUnits = 2; localStorage.setItem('Settings', JSON.stringify(_s)); } catch(e) {}
+  localStorage.setItem('display-enabled: custom-weather-station', 'true');
+  /* MYRTLE-INTL ORDER (Troy Oct 31): exactly these 8, in navigation order
+     [13,2,3,7,9,8,5,10] patched in navigation.mjs. Everything else off. */
+  localStorage.setItem('display-enabled: custom-weather-station', 'true');
+  localStorage.setItem('display-enabled: latest-observations', 'true');
+  localStorage.setItem('display-enabled: hourly', 'true');
+  localStorage.setItem('display-enabled: local-forecast', 'true');
+  localStorage.setItem('display-enabled: almanac', 'true');
+  localStorage.setItem('display-enabled: extended-forecast', 'true');
+  localStorage.setItem('display-enabled: travel', 'true');
+  localStorage.setItem('display-enabled: radar', 'true');
+  localStorage.setItem('display-enabled: current-weather', 'false');
+  localStorage.setItem('display-enabled: hourly-graph', 'false');
+  localStorage.setItem('display-enabled: regional-forecast', 'false');
+  localStorage.setItem('display-enabled: marine-forecast', 'false');
+  localStorage.setItem('display-enabled: aqi-forecast', 'false');
+  localStorage.setItem('display-enabled: hazards', 'false');
+  // FARM-FIRST: the PWS display is disabled by default in the original
+  // app (defaultEnabled=false), so on a fresh Pages load its checkbox
+  // is unchecked and the farm screen never loads. Enable it before
+  // any module registers its checkbox (modules are deferred).
+  localStorage.setItem('display-enabled: custom-weather-station', 'true');
+} catch(e) {}
+</script>
+
+
+
+  <div id="divQuery">
+		<input id="txtAddress" type="text" value="" placeholder="Zip or City, State" />
+		<div class="buttons">
+			<button id="btnGetGps" type="button" title="Get GPS Location"><img src="images/nav/ic_gps_fixed_black_18dp_1x.png" class="light"/>
+				<img src="images/nav/ic_gps_fixed_white_18dp_1x.png" class="dark"/>
+			</button>
+			<button id="btnGetLatLng" type="submit">GO</button>
+			<button id="btnClearQuery" type="reset">Reset</button>
+		</div>
+  </div>
+  <div id="version" style="display:none">
+    12.1.0
+  </div>
+
+  <div id="divTwc">
+    <div id="container">
+      <div id="loading" width="640" height="480">
+        <div>
+          <div class="title">THE WEATHERSTAR CHANNEL</div>
+					<div class="version">v12.1.0</div>
+          <div class="instructions">Enter your location above to continue</div>
+        </div>
+      </div>
+      <div id="progress-html" class="weather-display">
+        <div class="header">
+	
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+	
+	
+		<div class="title dual" id="dualTitle">
+			<div class="top" id="topTitle">
+				THE WEATHERSTAR CHANNEL
+			</div>
+			<div class="bottom" id="bottomTitle">
+				CALABASH-FARM AT BRUNSWICK
+			</div>
+		</div>
+		
+				
+					<div class="date-time date"></div>
+					<div class="date-time time"></div>
+					
+						
+</div>
+<div class="main has-box progress">
+  <div class="container">
+    <div class="item template">
+      <div class="name">Current Conditions</div>
+      <div class="links loading">
+        <div class="loading">Loading</div>
+        <div class="press-here">Press Here</div>
+        <div class="failed">Failed</div>
+        <div class="no-data">No Data</div>
+        <div class="disabled">Disabled</div>
+        <div class="retrying">Retrying</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="scroll">
+  <div class="progress-bar-container show">
+    <div class="progress-bar"></div>
+    <div class="cover"></div>
+  </div>
+</div>
+      </div>
+      <div id="hourly-html" class="weather-display">
+        <div class="header">
+	
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+	
+	
+			<div class="title single">
+				Hourly Forecast
+			</div>
+			
+				
+					<div class="date-time date"></div>
+					<div class="date-time time"></div>
+					
+						
+</div>
+	<div class="main has-scroll hourly">
+		<div class="column-headers">
+			<div class="temp">TEMP</div>
+			<div class="like">LIKE</div>
+			<div class="wind">WIND</div>
+		</div>
+		<div class="hourly-lines">
+			<div class="hourly-row template">
+				<div class="hour"></div>
+				<div class="icon"><img /></div>
+				<div class="temp"></div>
+				<div class="like"></div>
+				<div class="wind"></div>
+			</div>
+		</div>
+	</div>
+	<div class="scroll">
+	<div class="scrolling template"></div>
+	<div class="fixed"></div>
+</div>
+      </div>
+      <div id="hourly-graph-html" class="weather-display">
+        <div class="header">
+	
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+	
+	
+			<div class="title single">
+				Hourly Graph
+			</div>
+			
+				
+						<div class="right"></div>
+					
+						
+</div>
+<div class="main has-scroll hourly-graph">
+		<div class="top-right template ">
+			<div class="temperature">Temperature</div>
+			<div class="cloud">Cloud %</div>
+			<div class="rain">Precip %</div>
+		</div>
+		<div class="y-axis">
+			<div class="label l-1">75</div>
+			<div class="label l-2">65</div>
+			<div class="label l-3">55</div>
+		</div>
+		<div class="chart">
+			<img id="chart-area"></img>
+		</div>
+		<div class="x-axis">
+			<div class="label l-1">12a</div>
+			<div class="label l-2">6a</div>
+			<div class="label l-3">12p</div>
+			<div class="label l-4">6p</div>
+			<div class="label l-5">12a</div>
+		</div>
+	</div>
+	<div class="scroll">
+	<div class="scrolling template"></div>
+	<div class="fixed"></div>
+</div>
+      </div>
+      <div id="travel-html" class="weather-display">
+        <div class="header">
+	
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+	
+	
+		<div class="title dual" id="dualTitle">
+			<div class="top" id="topTitle">
+				Travel Forecast
+			</div>
+			<div class="bottom" id="bottomTitle">
+				For 
+			</div>
+		</div>
+		
+				
+					<div class="date-time date"></div>
+					<div class="date-time time"></div>
+					
+						
+</div>
+<div class="main has-scroll travel">
+  <div class="column-headers">
+    <div class="temp low">LOW</div>
+    <div class="temp high">HIGH</div>
+  </div>
+  <div class="travel-lines">
+    <div class="travel-row template">
+      <div class="city"></div>
+      <div class="icon"><img /></div>
+      <div class="temp low"></div>
+      <div class="temp high"></div>
+    </div>
+  </div>
+</div>
+<div class="scroll">
+	<div class="scrolling template"></div>
+	<div class="fixed"></div>
+</div>
+      </div>
+      <div id="current-weather-html" class="weather-display">
+        <div class="header">
+	
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+	
+	
+		<div class="title dual" id="dualTitle">
+			<div class="top" id="topTitle">
+				Current
+			</div>
+			<div class="bottom" id="bottomTitle">
+				Conditions
+			</div>
+		</div>
+		
+				
+					<div class="date-time date"></div>
+					<div class="date-time time"></div>
+					
+						
+</div>
+	<div class="main has-scroll has-box current-weather">
+		<div class="weather template">
+			<div class="left col">
+				<div class="temp center"></div>
+				<div class="condition center"></div>
+				<div class="icon center"><img src="" /></div>
+				<div class="wind-container">
+					<div class="wind-label">Wind:</div>
+					<div class="wind"></div>
+				</div>
+				<div class="wind-gusts"></div>
+			</div>
+			<div class="right col">
+				<div class="location"></div>
+				<div class="row">
+					<div class="label">Humidity:</div>
+					<div class="humidity value"></div>
+				</div>
+				<div class="row">
+					<div class="label">Dewpoint:</div>
+					<div class="dewpoint value"></div>
+				</div>
+				<div class="row">
+					<div class="label">Ceiling:</div>
+					<div class="ceiling value"></div>
+				</div>
+				<div class="row">
+					<div class="label">Visibility:</div>
+					<div class="visibility value"></div>
+				</div>
+				<div class="row">
+					<div class="label">Pressure:</div>
+					<div class="pressure value"></div>
+				</div>
+				<div class="row">
+					<div class="label">Cloud Cover:</div>
+					<div class="cloud value"></div>
+				</div>
+				<div class="row">
+					<div class="label">Feels Like:</div>
+					<div class="feels-like value"></div>
+				</div>
+				<div class="row">
+					<div class="heat-index-label label"></div>
+					<div class="heat-index value"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="scroll">
+	<div class="scrolling template"></div>
+	<div class="fixed"></div>
+</div>
+      </div>
+      <div id="local-forecast-html" class="weather-display">
+        <div class="header">
+	
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+	
+	
+		<div class="title dual" id="dualTitle">
+			<div class="top" id="topTitle">
+				Local
+			</div>
+			<div class="bottom" id="bottomTitle">
+				Forecast
+			</div>
+		</div>
+		
+				
+					<div class="date-time date"></div>
+					<div class="date-time time"></div>
+					
+						
+</div>
+	<div class="main has-scroll has-box local-forecast">
+		<div class="container">
+			<div class="forecasts">
+				<div class="forecast template">
+					<div class="text">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="scroll">
+	<div class="scrolling template"></div>
+	<div class="fixed"></div>
+</div>
+      </div>
+      <div id="latest-observations-html" class="weather-display">
+        <div class="header">
+	
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+	
+	
+		<div class="title dual" id="dualTitle">
+			<div class="top" id="topTitle">
+				Latest
+			</div>
+			<div class="bottom" id="bottomTitle">
+				Observations
+			</div>
+		</div>
+		
+				
+					<div class="date-time date"></div>
+					<div class="date-time time"></div>
+					
+						
+							<div class="noaa-logo">
+								<img src="images/noaa5.gif" />
+							</div>
+							
+</div>
+	<div class="main has-scroll latest-observations has-box">
+		<div class="container">
+			<div class="column-headers">
+				<div class="temp english">&deg;F</div>
+				<div class="temp metric">&deg;C</div>
+				<div class="weather">Weather</div>
+				<div class="wind">Wind</div>
+			</div>
+			<div class="observation-lines">
+				<div class="observation-row template">
+					<div class="location"></div>
+					<div class="temp"></div>
+					<div class="weather"></div>
+					<div class="wind"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="scroll">
+	<div class="scrolling template"></div>
+	<div class="fixed"></div>
+</div>
+      </div>
+      <div id="regional-forecast-html" class="weather-display">
+        <div class="header">
+	
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+	
+	
+		<div class="title dual" id="dualTitle">
+			<div class="top" id="topTitle">
+				Regional
+			</div>
+			<div class="bottom" id="bottomTitle">
+				Observations
+			</div>
+		</div>
+		
+				
+					<div class="date-time date"></div>
+					<div class="date-time time"></div>
+					
+						
+</div>
+	<div class="main has-scroll regional-forecast">
+		<div class="map"><img src="images/Basemap2.png" /></div>
+		<div class="location-container">
+			<div class="location template">
+				<div class="icon">
+					<img src="" />
+				</div>
+				<div class="city"></div>
+				<div class="temp"></div>
+			</div>
+		</div>
+	</div>
+	<div class="scroll">
+	<div class="scrolling template"></div>
+	<div class="fixed"></div>
+</div>
+      </div>
+      <div id="almanac-html" class="weather-display">
+        <div class="header">
+	
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+	
+	
+			<div class="title single">
+				Almanac
+			</div>
+			
+				
+					<div class="date-time date"></div>
+					<div class="date-time time"></div>
+					
+						
+</div>
+<div class="main has-scroll almanac">
+  <div class="sun">
+    <div class="days">
+      <div class="day"></div>
+      <div class="day day-1">Monday</div>
+      <div class="day day-2">Tuesday</div>
+    </div>
+    <div class="times times-1">
+      <div class="name">Sunrise:</div>
+      <div class="sun-time rise-1">6:24 am</div>
+      <div class="sun-time rise-2">6:25 am</div>
+    </div>
+    <div class="times times-2">
+      <div class="name">Sunset:</div>
+      <div class="sun-time set-1">6:24 am</div>
+      <div class="sun-time set-2">6:25 am</div>
+    </div>
+  </div>
+  <div class="moon">
+    <div class="title">Moon Data:</div>
+    <div class="days">
+      <div class="day template">
+        <div class="type"></div>
+        <div class="icon"><img /></div>
+        <div class="date"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="scroll">
+	<div class="scrolling template"></div>
+	<div class="fixed"></div>
+</div>
+      </div>
+      <div id="extended-forecast-html" class="weather-display">
+        <div class="header">
+	
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+	
+	
+		<div class="title dual" id="dualTitle">
+			<div class="top" id="topTitle">
+				Extended
+			</div>
+			<div class="bottom" id="bottomTitle">
+				Forecast
+			</div>
+		</div>
+		
+				
+					<div class="date-time date"></div>
+					<div class="date-time time"></div>
+					
+						
+</div>
+<div class="main has-scroll extended-forecast">
+  <div class="day-container">
+    <div class="day template">
+      <div class="date"></div>
+      <div class="icon">
+        <img src="" />
+      </div>
+      <div class="condition"></div>
+      <div class="temperatures">
+        <div class="temperature-block lo">
+          <div class="label">Lo</div>
+          <div class="value value-lo"></div>
+        </div>
+        <div class="temperature-block hi">
+          <div class="label">Hi</div>
+          <div class="value value-hi"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="scroll">
+	<div class="scrolling template"></div>
+	<div class="fixed"></div>
+</div>
+      </div>
+      <div id="radar-html" class="weather-display">
+        <div class="header">
+	<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+	<div class="title dual">
+		<div class="top">
+			Local
+		</div>
+		<div class="bottom">
+			Radar
+		</div>
+	</div>
+	<div class="right">
+		<div class="precip">
+			<div class="precip-header">PRECIP</div>
+			<div class="scale">
+				<div class="text">Light</div>
+				<div class="scale-table">
+					<div class="box box-1"></div>
+					<div class="box box-2"></div>
+					<div class="box box-3"></div>
+					<div class="box box-4"></div>
+					<div class="box box-5"></div>
+					<div class="box box-6"></div>
+					<div class="box box-7"></div>
+					<div class="box box-8"></div>
+				</div>
+				<div class="text">Heavy</div>
+			</div>
+			<div class="time"></div>
+		</div>
+	</div>
+</div>
+
+<div class="main radar">
+	<div class="container">
+		 <div id="map"></div>
+	</div>
+</div>
+      </div>
+      <div id="hazards-html" class="weather-display">
+        	<div class="main has-scroll hazards no-header">
+		<div class="hazard-lines">
+			<div class="hazard template">
+				<div class="hazard-text"></div>
+			</div>
+		</div>
+	</div>
+	<div class="scroll">
+	<div class="scrolling template"></div>
+	<div class="fixed"></div>
+</div>
+      </div>
+      <div id="marine-forecast-html" class="weather-display">
+        <div class="header">
+	
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+	
+	
+			<div class="title single">
+				Marine Forecast
+			</div>
+			
+				
+					<div class="date-time date"></div>
+					<div class="date-time time"></div>
+					
+						
+</div>
+<div class="main has-scroll marine-forecast">
+    <div class="advisory-container">
+        <div class="advisory template">  
+            <div class="message"></div>
+        </div>
+    </div>
+
+    <div class="title-and-day-container">
+        <div class="api-failure-container">
+            <div class="message">MARINE API FAILURE</div>
+        </div>
+        <div class="title-container">
+            <div class="title">WINDS:</div>
+            <div class="title seas">SEAS:</div>
+        </div>
+        <div class="day-container">
+            <div class="day template">  
+                <div class="date"></div>
+                <div class="wind-direction"></div>
+                <div class="wind-speed"></div>
+    
+                <div class="wave-container">
+                    <div class="wave-height"></div>
+                    <div class="wave-icon">
+                        <img src="" />
+                    </div>
+                    <div class="wave-condition"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="scroll">
+	<div class="scrolling template"></div>
+	<div class="fixed"></div>
+</div>
+      </div>
+      <div id="aqi-forecast-html" class="weather-display">
+        <div class="header">
+	
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+	
+	
+		<div class="title dual" id="dualTitle">
+			<div class="top" id="topTitle">
+				Air Quality
+			</div>
+			<div class="bottom" id="bottomTitle">
+				Today
+			</div>
+		</div>
+		
+				
+					<div class="date-time date"></div>
+					<div class="date-time time"></div>
+					
+						
+</div>
+<div class="main has-scroll aqi-forecast">
+
+    <div class="ratings-container">
+        <div class="rating">HAZARDOUS</div>
+        <div class="rating">VERY UNHEALTHY</div>
+        <div class="rating">UNHEALTHY</div>
+        <div class="rating">GOOD</div>
+    </div>
+
+    <div class="api-failure-container">
+        <div class="message">AQI FAILURE</div>
+    </div>
+
+    <div class="aqi-container">
+        <div class="aqi template">
+            <div class="title-container">
+                <div class="aqi-location title"></div>
+            </div>
+    
+            <div class="value-container">
+                <div class="aqi-index title"></div>
+            </div>
+    
+            <div class="bar-container">
+                <div class="chart">
+                    <img id="chart-area"></img>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="scroll">
+	<div class="scrolling template"></div>
+	<div class="fixed"></div>
+</div>
+
+      </div>
+      <div id="custom-weather-station-html" class="weather-display">
+        <div class="header">
+	
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+	
+	
+		<div class="title dual" id="dualTitle">
+			<div class="top" id="topTitle">
+				Current
+			</div>
+			<div class="bottom" id="bottomTitle">
+				Conditions
+			</div>
+		</div>
+		
+				
+					<div class="date-time date"></div>
+					<div class="date-time time"></div>
+					
+						
+</div>
+	<div class="main has-scroll has-box custom-weather-station">
+
+		<div class="no-data-failure-container">
+			<div class="message">NO DATA</div>
+		</div>
+			
+		<div class="weather template">
+			<div class="location center"></div>
+			<div class="left col">
+				<div class="temp center"></div>
+				<div class="condition center"></div>
+				<div class="icon center"><img src="" /></div>
+				<div class="wind-container">
+					<div class="wind-label">Wind:</div>
+					<div class="wind"></div>
+				</div>
+				<div class="wind-gusts"></div>
+			</div>
+			<div class="right col">
+				<div class="row">
+					<div class="label">Humidity:</div>
+					<div class="humidity value"></div>
+				</div>
+				<div class="row">
+					<div class="label">Dewpoint:</div>
+					<div class="dewpoint value"></div>
+				</div>
+				<div class="row">
+					<div class="label">Visibility:</div>
+					<div class="visibility value"></div>
+				</div>
+				<div class="row">
+					<div class="label">Ceiling:</div>
+					<div class="ceiling value"></div>
+				</div>
+				<div class="row">
+					<div class="label">Pressure:</div>
+					<div class="pressure value"></div>
+				</div>
+				<div class="row">
+					<div class="label">Feels Like:</div>
+					<div class="feels-like value"></div>
+				</div>
+				<div class="row">
+					<div class="heat-index-label label"></div>
+					<div class="heat-index value"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="scroll">
+	<div class="scrolling template"></div>
+	<div class="fixed"></div>
+</div>
+      </div>
+    </div>
+    <div id="divTwcBottom">
+      <div id="divTwcBottomLeft">
+        <img id="NavigateMenu" class="navButton" src="images/nav/ic_menu_white_24dp_2x.png" title="Menu" />
+        <img id="NavigatePrevious" class="navButton" src="images/nav/ic_skip_previous_white_24dp_2x.png" title="Previous" />
+        <img id="NavigateNext" class="navButton" src="images/nav/ic_skip_next_white_24dp_2x.png" title="Next" />
+        <img id="NavigatePlay" class="navButton" src="images/nav/ic_play_arrow_white_24dp_2x.png" title="Play" />
+      </div>
+      <div id="divTwcBottomMiddle">
+        <img id="NavigateRefresh" class="navButton" src="images/nav/ic_refresh_white_24dp_2x.png" title="Refresh" />
+      </div>
+      <div id="divTwcBottomRight">
+        <img id="ToggleMusic" class="navButton" src="images/nav/ic_volume_off_white_24dp_2x.png" title="Toggle Music" />
+        <img id="ToggleFullScreen" class="navButton" src="images/nav/ic_fullscreen_white_24dp_2x.png" title="Enter Fullscreen" />
+      </div>
+    </div>
+  </div>
+
+  <br />
+  <!-- <div class="experimental-features">
+    You've enabled experimental features, you may encounter bugs or weird behavior!
+  </div> -->
+
+  <div class="info">
+    <a class="github-button" href="https://github.com/mwood77/ws4kp-international" data-color-scheme="no-preference: dark_dimmed; light: light; dark: dark;" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star mwood77/ws4kp-international on GitHub">Star</a>
+    <a class="github-button" href="https://github.com/mwood77/ws4kp-international/fork" data-color-scheme="no-preference: dark_dimmed; light: light; dark: dark;" data-icon="octicon-repo-forked" data-size="large" data-show-count="true" aria-label="Fork mwood77/ws4kp-international on GitHub">Fork</a>
+    <!-- <a class="github-button" href="https://github.com/mwood77" data-color-scheme="no-preference: dark_dimmed; light: light; dark: dark;" data-size="large" data-show-count="true" aria-label="Follow @mwood77 on GitHub">Follow @mwood77</a> -->
+    <a class="github-button" href="https://github.com/mwood77/ws4kp-international/issues" data-color-scheme="no-preference: dark_dimmed; light: light; dark: dark;" data-icon="octicon-issue-opened" data-size="large" data-show-count="true" aria-label="Issue mwood77/ws4kp-international on GitHub">Issue</a>
+    <a class="github-button" href="https://github.com/sponsors/mwood77" data-color-scheme="no-preference: dark_dimmed; light: light; dark: dark;" data-icon="octicon-heart" data-size="large" aria-label="Sponsor @mwood77 on GitHub">Sponsor</a>
+  </div>
+
+  <div style="height: 50px; width:400px" id="webamp-app"></div>
+
+  <div class="info">
+    This is a simulation of The Weather Channel's (TWC) WeatherStar 4000+
+    <br />
+    <br />
+    Background info, linking, Q&A, other uses, and questions?<br />
+    - <a href="https://github.com/mwood77/ws4kp-international#weatherstar-4000-international" target="_blank">Check the readme</a>
+  </div>
+
+  <div class="info">
+    <br />
+    Resources & data provided by:<br />
+    <div style="display: flex; gap: 2em; flex-wrap: wrap;">
+      <div>
+        - <a href="https://open-meteo.com/en/docs" target="_blank">Open Meteo</a> <br />
+        - <a href="https://archive.org/details/weatherscancompletecollection" target="_blank">Internet Archive</a><br />
+        - <a href="https://twcclassics.com/" target="_blank">TWC Classics</a><br />
+        - <a href="https://leafletjs.com/" target="_blank">Leaflet</a><br />
+      </div>
+      <div>
+        - <a href="https://www.openstreetmap.org/" target="_blank">OpenStreetMap</a><br />
+        - <a href="https://www.esri.com/" target="_blank">ESRI</a><br />
+        - <a href="https://www.rainviewer.com/api.html" target="_blank">Rainviewer</a><br />
+      </div>
+    </div>
+  </div>
+
+  <div class='heading'>Selected displays</div>
+  <div id='enabledDisplays'>
+
+  </div>
+
+	<div class='heading'>Settings</div>
+	<div id='settings'>
+	</div>
+
+	<div class='heading'>Sharing</div>
+	<div class='info'>
+		<a href='' id='share-link'>Copy Permalink</a> <span id="share-link-copied">Link copied to clipboard!</span>
+		<div id="share-link-instructions">
+			Copy this long URL:
+			<input type='text' id="share-link-url"></div>
+		</div>
+	</div>
+
+	<div class='heading'>Forecast Information</div>
+  <div id="divInfo">
+    Location: <span id="spanCity"></span> <span id="spanState"></span><br />
+  </div>
+
+  <div id="divRefresh">
+    Last Update: <span id="spanLastRefresh">(None)</span><br />
+    <input id="chkAutoRefresh" name="chkAutoRefresh" type="checkbox" /><label id="lblRefreshCountDown" for="chkAutoRefresh">Auto Refresh: <span id="spanRefreshCountDown">--:--</span></label>
+  </div>
+
+  <div class='heading'>Personal Weather Station Information</div>
+  <div id="divInfo">
+    Station Id: <span id="customSpanStationId"></span><br />
+    Last Update: <span id="customSpanLastRefresh">(None)</span><br />
+  </div>
+
+  <script type="module">
+      import Webamp from "https://unpkg.com/webamp@next";
+      const webamp = new Webamp({    
+          windowLayout: {
+            main: {
+              position: { top: 20, left: 0 },
+              shadeMode: true,
+            },
+            playlist: {
+              position: { top: 30, left: 0 },
+              shadeMode: true,
+              closed: false,
+            },
+          }, 
+          availableSkins: [
+            {
+              url: "https://archive.org/cors/winampskin_Green-Dimension-V2/Green-Dimension-V2.wsz",
+              name: "Green Dimension V2",
+            },
+            {
+              url: "https://archive.org/cors/winampskin_mac_os_x_1_5-aqua/mac_os_x_1_5-aqua.wsz",
+              name: "Mac OSX v1.5 (Aqua)",
+            },
+        ],
+        initialTracks: [
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Fair Weather",
+            },
+            url: "/music/01%20Fair%20Weather.mp3",
+            duration: 264
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Lazy Days",
+            },
+            url: "https://ia802804.us.archive.org/26/items/weatherscancompletecollection/01%20Lazy%20Days.mp3",
+            duration: 313
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Beach Frolic",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/02%20Beach%20Frolic.mp3",
+            duration: 292
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Good Ole Days",
+            },
+            url: "https://ia802804.us.archive.org/26/items/weatherscancompletecollection/02%20Good%20Ole%20Days.mp3",
+            duration: 278
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Jumpin'",
+            },
+            url: "https://ia802804.us.archive.org/26/items/weatherscancompletecollection/03%20Jumpin_.mp3",
+            duration: 300
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Winter Tundra",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/03%20Winter%20Tundra.mp3",
+            duration: 284
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Life",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/04%20Life.mp3",
+            duration: 251
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Rainy Days",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/04%20Rainy%20Days.mp3",
+            duration: 206
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Easy Times",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/05%20Easy%20Times.mp3",
+            duration: 258
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Midnight Cruise",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/05%20Midnight%20Cruise.mp3",
+            duration: 204
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Evening",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/06%20Evening.mp3",
+            duration: 251
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Tropical Breeze",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/06%20Tropical%20Breeze.mp3",
+            duration: 252
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Going Home",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/07%20Going%20Home.mp3",
+            duration: 275
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Smooth Sailing",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/07%20Smooth%20Sailing.mp3",
+            duration: 253
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "A New Day",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/08%20A%20New%20Day.mp3",
+            duration: 274
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Brighter Days",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/08%20Brighter%20Days.mp3",
+            duration: 264
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Reflections In Time",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/09%20Reflections%20In%20Time.mp3",
+            duration: 261
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "The Setting Sun",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/09%20The%20Setting%20Sun.mp3",
+            duration: 245
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Do You Believe?",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/10%20Do%20You%20Believe.mp3",
+            duration: 271
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Memories Of The Past",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/10%20Memories%20Of%20The%20Past.mp3",
+            duration: 263
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Jamaican Jam",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/11%20Jamaican%20Jam.mp3",
+            duration: 249
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Late Nite Cafe",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/11%20Late%20Nite%20Cafe.mp3",
+            duration: 303
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Good Times",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/12%20Good%20Times.mp3",
+            duration: 209
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "The End Of The Journey",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/12%20The%20End%20Of%20The%20Journey.mp3",
+            duration: 249
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "A Little Jazz",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/13%20A%20Little%20Jazz.mp3",
+            duration: 215
+          },
+          {
+            metaData: {
+              artist: "Trammell Starks",
+              title: "Care Free",
+            },
+            url: "https://archive.org/download/weatherscancompletecollection/13%20Care%20Free.mp3",
+            duration: 202
+          },
+        ],
+      });
+
+      // Expose it globally for setting.mjs
+      window.webamp = webamp;
+
+      webamp.setVolume(100);
+      webamp.toggleRepeat();
+      webamp.toggleShuffle();
+
+      webamp.renderWhenReady(document.getElementById("webamp-app"));
+  </script>
+  <script>
+    (function () {
+      // Parse bootstrapped JSON from a dedicated script tag to avoid template parsing issues
+      const initialJson = document.getElementById('initial-data') && document.getElementById('initial-data').textContent;
+      let initial = null;
+      try {
+        initial = initialJson ? JSON.parse(initialJson) : null;
+      } catch (e) {
+        initial = null;
+      }
+
+      // Minimal renderer: update a few visible fields. Modules can listen for 'custom-weather:update' event for more complex updates
+      function applyPayload(payload) {
+        if (!payload) return;
+        // Troy 2026-10-27 farm-only: keep the latest PWS payload where
+        // navigation can replay it — the SSE init payload can arrive
+        // before the module listener registers, and then the ticker
+        // would fall back to locality numbers instead of farm numbers.
+        window.__latestPwsPayload = payload;
+        try {
+          if (payload.locationCity) document.getElementById('customSpanStationId').textContent = payload.locationCity;
+          if (payload.lastUpdated) document.getElementById('customSpanLastRefresh').textContent = payload.lastUpdated;
+
+          // Dispatch a global event so module code can react instead of coupling here
+          window.dispatchEvent(new CustomEvent('custom-weather:update', { detail: payload }));
+        } catch (e) {
+          // defensive: DOM may not be present yet
+        }
+      }
+
+      // Apply initial bootstrapped data if present
+      applyPayload(initial);
+
+      // FARM PAGES BUILD: no SSE server on static hosting, so load the
+      // baked farm-data.json (refreshed hourly from OSOILM) and replay it
+      // through the app's own custom-weather:update path, exactly as the
+      // live app does for a PWS push. UI code above is unchanged.
+      function loadFarm(){ fetch('farm-data.json?v='+Date.now(), {cache:'no-store'}).then(r=>r.json()).then(p=>{ window.__latestPwsPayload=p; applyPayload(p); }).catch(e=>console.error('farm-data load failed', e)); } loadFarm(); setInterval(loadFarm, 5000);
+      if (false && typeof EventSource !== 'undefined') {
+        const es = new EventSource('/events');
+        es.onmessage = (e) => {
+          try {
+            const parsed = JSON.parse(e.data);
+            if (parsed && parsed.type === 'weather-update') {
+              console.log('Received weather update via SSE', parsed);
+              applyPayload(parsed.payload);
+            }
+          } catch (err) {
+            console.error('SSE parse error', err);
+          }
+        };
+        es.onerror = () => {
+          // optional: reconnect logic could go here
+        };
+      }
+    })();
+  </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var a = new Audio('../fair-weather.mp3'); a.loop = true;
+  var b = document.createElement('button');
+  b.textContent = 'TAP FOR SOUND — FAIR WEATHER MUSIC';
+  b.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:9999;padding:10px 14px;font-weight:bold;background:#003366;color:#fff;border:2px solid #fff;border-radius:6px;';
+  b.onclick = function(){ if(a.paused){ a.play(); b.textContent='NOW PLAYING: FAIR WEATHER — TAP TO MUTE'; } else { a.pause(); b.textContent='TAP FOR SOUND — FAIR WEATHER MUSIC'; } };
+  document.body.appendChild(b);
+});
+
+// FARM PAGES: images/fonts were not pushed to Pages (binary, connector is
+// text-only). Serve the ORIGINAL author's own public assets from the
+// upstream Pages site instead of 404s, for <img> elements present now
+// and added later by canvas templates. No UI rewrite, no new images.
+// Tap-only fullscreen button below uses the app's own #divTwc
+// requestFullscreen (resize() scales it) — no forced CSS, which broke
+// the page twice on Oct 31.
+(function () {
+  var UP = 'https://mwood77.github.io/ws4kp-international/';
+  function fixImg(img) {
+    var s = img.getAttribute('src');
+    if (s && s.indexOf('images/') === 0) img.setAttribute('src', UP + s);
+  }
+  document.querySelectorAll('img').forEach(fixImg);
+  try {
+    new MutationObserver(function (muts) {
+      muts.forEach(function (m) {
+        m.addedNodes.forEach(function (n) {
+          if (n.nodeType !== 1) return;
+          if (n.tagName === 'IMG') fixImg(n);
+          n.querySelectorAll && n.querySelectorAll('img').forEach(fixImg);
+        });
+      });
+    }).observe(document.body, { childList: true, subtree: true });
+  } catch (e) {}
+  var f = document.createElement('button');
+  f.textContent = 'FULL SCREEN — TAP FOR TV';
+  f.style.cssText = 'position:fixed;right:8px;bottom:8px;z-index:9999;padding:10px 14px;font-weight:bold;background:#003366;color:#fff;border:2px solid #fff;border-radius:6px;';
+  f.onclick = function () {
+    var el = document.querySelector('#divTwc');
+    if (!el) return;
+    var r = el.requestFullscreen || el.webkitRequestFullscreen;
+    if (r) r.call(el, { navigationUI: 'hide' });
+  };
+  document.body.appendChild(f);
+})();
+</script>
+<script>
+/* STANDALONE-CLOCK DISABLED 2026-10-31: it fought the module clock and flashed. Module clock draws now. */
+if (false) setInterval(function(){
+  try {
+    var now = new Date();
+    var h = now.getHours(), ampm = h >= 12 ? 'PM' : 'AM';
+    var hh = h % 12; if (hh === 0) hh = 12;
+    var mm = String(now.getMinutes()).padStart(2,'0');
+    var ss = String(now.getSeconds()).padStart(2,'0');
+    var timeStr = hh + ':' + mm + ':' + ss + ' ' + ampm;
+    var days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+    var months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+    var dateStr = days[now.getDay()] + ' ' + months[now.getMonth()] + ' ' + String(now.getDate()).padStart(2,' ');
+    document.querySelectorAll('.date-time.time').forEach(function(el){ el.textContent = timeStr; el.style.color = '#fff'; });
+    document.querySelectorAll('.date-time.date').forEach(function(el){ el.textContent = dateStr; el.style.color = '#fff'; });
+  } catch(e) {}
+}, 1000);
+</script>
+<script>
+/* STANDALONE-GUSTS: if any visible wind-gusts line is empty, fill it from the farm payload, every second */
+setInterval(function(){
+  try {
+    var payload = window.__latestPwsPayload;
+    if (!payload || !payload.windGust) return;
+    var gustMph = Math.round(payload.windGust * 0.621371);
+    if (gustMph <= 0) return;
+    document.querySelectorAll('.wind-gusts').forEach(function(el){
+      if (el.offsetParent !== null && !el.textContent.trim()) { el.textContent = 'Gusts to ' + gustMph + ' MPH'; }
+    });
+  } catch(e) {}
+}, 1000);
+</script>
+</body>
+
+</html>
