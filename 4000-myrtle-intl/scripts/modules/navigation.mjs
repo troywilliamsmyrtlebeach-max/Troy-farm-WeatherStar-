@@ -333,8 +333,8 @@ const navTo = (direction) => {
 
 		firstDisplay.navNext(msg.command.firstFrame);
 		firstDisplay.showCanvas();
-		return;
 		if (typeof window !== 'undefined') window.__myrtleShownAt = Date.now();
+		return;
 	}
 	if (direction === msg.command.nextFrame) currentDisplay().navNext();
 	if (direction === msg.command.previousFrame) currentDisplay().navPrev();
@@ -351,6 +351,7 @@ const loadDisplay = (direction) => {
 		idx = 2;
 		hideAllCanvases();
 		displays[idx].showCanvas(msg.command.firstFrame);
+		if (typeof window !== 'undefined') window.__myrtleShownAt = Date.now();
 		return;
 	}
 	// MYRTLE-INTL ORDER (Troy Oct 31, corrected): 13 farm Current Conditions,
@@ -369,12 +370,16 @@ const loadDisplay = (direction) => {
 	if (idx === undefined) return;
 	// MYRTLE DWELL: Myrtle holds ~2-3 min/screen. Gate only the automatic
 	// advance (loadDisplay) so a screen that exhausted its internal frames
-	// early still stays up for at least 120 s total. Manual nav buttons go
+	// early still stays up for at least 45 s total. Manual nav buttons go
 	// through navNext/navPrev on the display itself, not this gate, except
 	// at end-of-display where the same path is used (accepted tradeoff).
 	if (typeof window !== 'undefined' && window.__myrtleShownAt) {
 		const elapsed = Date.now() - window.__myrtleShownAt;
-		if (elapsed < 120000) { setTimeout(() => loadDisplay(direction), 120000 - elapsed); return; }
+		if (elapsed < 45000) {
+			if (window.__myrtleTimeout) clearTimeout(window.__myrtleTimeout);
+			window.__myrtleTimeout = setTimeout(() => { window.__myrtleTimeout = undefined; loadDisplay(direction); }, 45000 - elapsed);
+			return;
+		}
 	}
 	const wrapped = (direction > 0 && newPos < curPos) || (direction < 0 && newPos > curPos);
 	// if the order list wrapped, test for reload timeout
