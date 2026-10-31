@@ -99,6 +99,14 @@
 /* GUSTS-VISIBLE: gust line on farm main page must draw, not clip */
 .custom-weather-station.main .wind-gusts { display: block !important; visibility: visible !important; font-size: 18pt !important; margin-top: 4px; }
 </style>
+<!-- GUSTS-NOT-CUT-OFF -->
+<style>
+/* GUSTS-NOT-CUT-OFF: shrink farm main icon so wind+gust fit inside the 310px main box, on phone too */
+.custom-weather-station.main .icon { height: 70px !important; }
+.custom-weather-station.main .icon img { max-height: 70px !important; }
+.custom-weather-station.main .wind-container { margin-bottom: 2px !important; }
+.custom-weather-station.main .wind-gusts { display: block !important; visibility: visible !important; font-size: 18pt !important; margin-top: 0 !important; }
+</style>
 </head>
 
 <body>
