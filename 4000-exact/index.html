@@ -1292,8 +1292,8 @@ document.addEventListener('DOMContentLoaded', function(){
 })();
 </script>
 <script>
-/* STANDALONE-CLOCK: top clock, independent of module cache — updates every second, top-right, white */
-setInterval(function(){
+/* STANDALONE-CLOCK DISABLED 2026-10-31: it fought the module clock and flashed. Module clock draws now. */
+if (false) setInterval(function(){
   try {
     var now = new Date();
     var h = now.getHours(), ampm = h >= 12 ? 'PM' : 'AM';
