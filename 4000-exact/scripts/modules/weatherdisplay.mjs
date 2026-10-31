@@ -220,8 +220,7 @@ class WeatherDisplay {
 	}
 
 	drawCurrentDateTime() {
-		// Troy 2026-10-27: no time/date at the top — do not draw it at all.
-		return;
+		// Troy 2026-10-31: clock at top again, like the source — visible white text, with seconds.
 		// Get the current date and time.
 		const now = DateTime.local().setZone(timeZone());
 
@@ -230,6 +229,7 @@ class WeatherDisplay {
 		const time = now.toLocaleString({
 			hour: '2-digit',
 			minute: '2-digit',
+			second: '2-digit',
 			hourCycle: ConversionHelpers.getHoursFormat() === '12-hour' ? 'h12' : 'h23',
 		}).padStart(8, ' ');
 		const date = now.toFormat(' ccc LLL ') + now.day.toString().padStart(2, ' ');
