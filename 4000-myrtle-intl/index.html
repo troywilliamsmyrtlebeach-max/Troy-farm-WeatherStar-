@@ -116,7 +116,10 @@
    yellow (Troy Oct 31 19:11, was teal/blue), NOT big centered yellow, NOT wrapping.
    Applied to the farm Current Conditions location line and to any other
    location label on the app's screens. */
-.custom-weather-station.main .location{font-size:16pt !important; text-align:left !important; color:#ff0 !important; white-space:nowrap !important; line-height:1.2 !important; margin-bottom:6px !important;}
+.custom-weather-station.main .location{font-size:16pt !important; text-align:left !important; color:#ffff00 !important; white-space:nowrap !important; line-height:1.2 !important; margin-bottom:6px !important; width:auto !important;}
+/* Troy Oct 31 19:14: farm name moved INTO the right column, directly over Humidity, like his screenshot — not a full-width centered line above both columns */
+.custom-weather-station.main .farm-name-over-humidity{font-size:16pt !important; color:#ffff00 !important; text-align:left !important; white-space:nowrap !important; margin-bottom:8px !important; font-weight:bold !important;}
+.custom-weather-station.main .location.center{color:#ffff00 !important;}
 .weather-display .location, .custom-weather-station .location{font-size:16pt !important; text-align:left !important;}
 </style>
 
@@ -857,7 +860,6 @@ try {
 		</div>
 			
 		<div class="weather template">
-			<div class="location center"></div>
 			<div class="left col">
 				<div class="temp center"></div>
 				<div class="condition center"></div>
@@ -869,6 +871,7 @@ try {
 				<div class="wind-gusts"></div>
 			</div>
 			<div class="right col">
+				<div class="location farm-name-over-humidity"></div>
 				<div class="row">
 					<div class="label">Humidity:</div>
 					<div class="humidity value"></div>
