@@ -63,9 +63,18 @@
 
   
 
+<!-- FULLSCREEN-FIX -->
+<style>
+html,body{margin:0!important;padding:0!important;background:#000!important;color:#fff!important;width:100%!important;height:100%!important;overflow:hidden!important}
+#divQuery,#version,.autocomplete-suggestions{display:none!important}
+#divTwc{max-width:none!important;width:100vw!important;height:100vh!important;background:#000!important}
+#divTwc #container{width:100%!important;height:100%!important;max-width:none!important}
+body.kiosk{margin:0!important;background:#000!important}
+</style>
 </head>
 
-<body>
+<body class="kiosk">
+<script>try{document.body.classList.add("kiosk")}catch(e){}</script>
 <script>
 /* FARM PRESET (data only, no UI change): farm coordinates + gridpoint locality,
    so the original app auto-loads with no location box and no typing. */
@@ -1195,7 +1204,7 @@ try {
 
 <script>
 document.addEventListener('DOMContentLoaded', function(){
-  var a = new Audio('fair-weather.mp3'); a.loop = true;
+  var a = new Audio('../fair-weather.mp3'); a.loop = true;
   var b = document.createElement('button');
   b.textContent = 'TAP FOR SOUND — FAIR WEATHER MUSIC';
   b.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:9999;padding:10px 14px;font-weight:bold;background:#003366;color:#fff;border:2px solid #fff;border-radius:6px;';
