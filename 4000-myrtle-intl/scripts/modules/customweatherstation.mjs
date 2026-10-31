@@ -86,7 +86,8 @@ class CustomWeatherStation extends WeatherDisplay {
 		// gust row below still carries any gust, e.g. CALM + Gusts to 10.
 		const windSpeed = Math.round(ConversionHelpers.convertWindUnits(customWeatherParameters.windSpeed));
 		const windUnit = ConversionHelpers.getWindUnitText().toUpperCase();
-		const windText = windSpeed === 0 ? 'CALM' : `${customWeatherParameters.windDirection} ${windSpeed} ${windUnit}`;
+		// Troy Oct 31 19:10 (screenshot): farm main page shows wind as direction + speed ONLY, e.g. 'SSW 2' — NO 'MPH' unit anywhere on this screen.
+		const windText = windSpeed === 0 ? 'CALM' : `${customWeatherParameters.windDirection} ${windSpeed}`;
 		// Pressure trend vs the last PWS pressure drawn (0.02 inHg threshold,
 		// same as his standing rule): rising / falling arrow, steady = no arrow.
 		// Stored for the bottom ticker's R/S/F letter too.
@@ -114,7 +115,7 @@ class CustomWeatherStation extends WeatherDisplay {
 			dewpoint: ConversionHelpers.convertTemperatureUnits(customWeatherParameters.dewPoint) + String.fromCharCode(176),
 			visibility: `${Math.min(10, ConversionHelpers.convertDistanceUnits(customWeatherParameters.visibility))} ${ConversionHelpers.getDistanceUnitText()}`,
 			ceiling: 'Unlimited',
-			pressure: `${pressureInHg.toFixed(2)} in${pressureArrow}`,
+			pressure: `${pressureInHg.toFixed(2)}${pressureArrow}`,
 			'feels-like': (customWeatherParameters.feelsLike !== undefined && customWeatherParameters.feelsLike !== null
 				? ConversionHelpers.convertTemperatureUnits(customWeatherParameters.feelsLike)
 				: ConversionHelpers.convertTemperatureUnits(customWeatherParameters.temperature)) + String.fromCharCode(176),
@@ -123,7 +124,8 @@ class CustomWeatherStation extends WeatherDisplay {
 
 		// Troy 2026-10-31: gusts MUST show on the farm main page, always, with unit — never a blank gust line when a gust exists.
 		const gustMph = Math.round(ConversionHelpers.convertWindUnits(customWeatherParameters.windGust || 0));
-		if (gustMph > 0) fill['wind-gusts'] = `Gusts to ${gustMph} ${windUnit}`;
+		// Screenshot style: 'Gusts 9' — no 'to', no 'MPH', just the speed.
+		if (gustMph > 0) fill['wind-gusts'] = `Gusts ${gustMph}`;
 
 		const area = this.elem.querySelector('.main');
 
