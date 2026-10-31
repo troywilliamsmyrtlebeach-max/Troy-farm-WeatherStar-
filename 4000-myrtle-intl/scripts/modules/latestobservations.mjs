@@ -60,7 +60,8 @@ class LatestObservations extends WeatherDisplay {
 				const farmSky = (farm.conditionText === 3) ? 'Overcast' : (farm.conditionText === 0) ? 'Clear' : (farm.conditionText === 1) ? 'Fair' : (farm.conditionText === 2) ? 'Partly Cloudy' : (farm.conditionText === 45 || farm.conditionText === 48) ? 'Fog' : 'Fair';
 				actualConditions.unshift({
 					temperature: { value: farm.temperature },
-					windSpeed: { value: farm.windSpeed },
+					// Troy Oct 31 19:36: farm Latest Observations wind = HIGHEST wind speed (sustained vs gust) — e.g. sustained 2, gust 8 -> show 8, not 2.
+					windSpeed: { value: Math.max(farm.windSpeed || 0, farm.windGust || 0) },
 					windDirection: { value: dirDeg },
 					textDescription: farmSky,
 					StationId: 'FARM',
