@@ -87,6 +87,7 @@ try {
   localStorage.setItem('latLon', JSON.stringify({lat: 33.92, lon: -78.57}));
   localStorage.setItem('latLonQuery', 'Carolina Shores, NC');
   localStorage.setItem('settings-kiosk-checkbox', 'true');
+  localStorage.setItem('display-enabled: custom-weather-station', 'true');
   // FARM-FIRST: the PWS display is disabled by default in the original
   // app (defaultEnabled=false), so on a fresh Pages load its checkbox
   // is unchecked and the farm screen never loads. Enable it before
@@ -1191,7 +1192,7 @@ try {
       // baked farm-data.json (refreshed hourly from OSOILM) and replay it
       // through the app's own custom-weather:update path, exactly as the
       // live app does for a PWS push. UI code above is unchanged.
-      fetch('farm-data.json').then(r=>r.json()).then(p=>{ window.__latestPwsPayload=p; applyPayload(p); }).catch(e=>console.error('farm-data load failed', e));
+      function loadFarm(){ fetch('farm-data.json').then(r=>r.json()).then(p=>{ window.__latestPwsPayload=p; applyPayload(p); }).catch(e=>console.error('farm-data load failed', e)); } loadFarm(); setInterval(loadFarm, 5000);
       if (false && typeof EventSource !== 'undefined') {
         const es = new EventSource('/events');
         es.onmessage = (e) => {

@@ -17,7 +17,15 @@ class CustomWeatherStation extends WeatherDisplay {
 
 	async getData(_weatherParameters) {
 		if (!super.getData(_weatherParameters)) return;
-
+		// FARM PAGES FIX (Oct 31): on Pages the farm payload can arrive
+		// before this display registers, so the shared weatherParameters
+		// object alone does not carry it. Pull the latest farm payload
+		// directly when this screen loads, so clicking Personal Weather
+		// Station never shows NO DATA when farm-data.json is present.
+		if ((!this.weatherParameters || !this.weatherParameters.customWeather) && window.__latestPwsPayload) {
+			if (!this.weatherParameters) this.weatherParameters = {};
+			this.weatherParameters.customWeather = window.__latestPwsPayload;
+		}
 		this.calcNavTiming();
 		this.setStatus(STATUS.loaded);
 	}
