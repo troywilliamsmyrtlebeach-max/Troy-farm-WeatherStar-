@@ -30,6 +30,24 @@ class CustomWeatherStation extends WeatherDisplay {
 		this.setStatus(STATUS.loaded);
 	}
 
+	// Clicking Personal Weather Station must show the farm screen NOW,
+	// not just enable it for a later cycle pass. After the checkbox
+	// enables it, load the farm payload, draw it, and show it at once.
+	checkboxChange(e) {
+		super.checkboxChange(e);
+		if (!this.isEnabled) return;
+		// Ensure the farm payload is in hand, then draw and show immediately.
+		if ((!this.weatherParameters || !this.weatherParameters.customWeather) && window.__latestPwsPayload) {
+			if (!this.weatherParameters) this.weatherParameters = {};
+			this.weatherParameters.customWeather = window.__latestPwsPayload;
+		}
+		this.setStatus(STATUS.loaded);
+		// Hide any currently shown display, then show the farm screen.
+		document.querySelectorAll('#divTwc .show').forEach((el) => { if (el !== this.elem) el.classList.remove('show'); });
+		this.drawCanvas();
+		this.showCanvas();
+	}
+
 	// Live PWS updates arrive via SSE after this screen has already drawn
 	// once (with NO DATA, if the first draw ran before any push). The base
 	// class only redraws on a screen-index change, so a late-arriving push
