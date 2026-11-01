@@ -12,7 +12,7 @@ class LatestObservations extends WeatherDisplay {
 		super(navId, elemId, 'Latest Observations', false);
 
 		// constants
-		this.MaximumRegionalStations = 8; // Troy Oct 31 20:06: farm + 7 towns incl. N. Myrtle Beach
+		this.MaximumRegionalStations = 7; // Troy Oct 31 20:47: farm + 6 towns, Whiteville REMOVED
 		this.showOnProgress = false;
 	}
 
@@ -32,7 +32,6 @@ class LatestObservations extends WeatherDisplay {
 			{ id: 'KMYR', city: 'Myrtle Beach International Airport' },
 			{ id: 'KCRE', city: 'North Myrtle Beach Grand Strand Airport' },
 			{ id: 'KSUT', city: 'Southport' },
-			{ id: 'KCPC', city: 'Whiteville, Columbus County Municipal Airport' },
 			{ id: 'KILM', city: 'Wilmington International Airport' },
 		];
 		const regionalStations = SCREENSHOT_TOWNS;
@@ -40,16 +39,16 @@ class LatestObservations extends WeatherDisplay {
 		// get data for regional stations
 		// get first 7 stations
 		const actualConditions = [];
-		let lastStation = Math.min(regionalStations.length, 8);
+		let lastStation = Math.min(regionalStations.length, 7);
 		let firstStation = 0;
-		while (actualConditions.length < 8 && (lastStation) <= regionalStations.length && firstStation < regionalStations.length) {
+		while (actualConditions.length < 7 && (lastStation) <= regionalStations.length && firstStation < regionalStations.length) {
 			// eslint-disable-next-line no-await-in-loop
 			const someStations = await getStations(regionalStations.slice(firstStation, lastStation));
 
 			actualConditions.push(...someStations);
 			// update counters
 			firstStation += lastStation;
-			lastStation = Math.min(regionalStations.length + 1, firstStation + 8 - actualConditions.length);
+			lastStation = Math.min(regionalStations.length + 1, firstStation + 7 - actualConditions.length);
 		}
 
 		// Farm row FIRST, from the live farm payload (same data as Current Conditions).
