@@ -26,10 +26,13 @@ class Radar extends WeatherDisplay {
 
 	static radarIterationCount = 3;
 
-	// Screenshot-style Local Radar (Troy's Oct 28-29 reference screenshot):
-	// wide NC+SC window, not a zoom-7 view centred on the farm.
-	// [[south, west], [north, east]] — Savannah to Hatteras, GSP to the coast.
-	static screenshotBounds = [[31.2, -84.9], [36.4, -75.2]];
+	// RetroCast-style Current Radar (Troy's Oct 31 23:37 screenshot):
+	// tight NC+SC coast crop — Charleston to just above Wilmington, farm
+	// coast centred, ILM / MYR / CHS prominent, as in that screenshot.
+	// [[south, west], [north, east]]. The view is also forced with
+	// setView (zoom 7) in getData, because fitBounds alone settled on
+	// zoom 6 at init time and rendered the old wide view.
+	static screenshotBounds = [[32.8, -80.7], [34.9, -77.2]];
 
 	// City codes exactly as labelled in the screenshot. Coordinates are
 	// airport positions taken from this repo's own server/scripts/data/stations.js
@@ -488,6 +491,20 @@ class Radar extends WeatherDisplay {
 		this.timing.totalScreens = this.mapFrames.length;
 		this.calcNavTiming();
 
+		// RetroCast: LOOP the radar frames for the whole visit (Troy:
+		// radar IN MOTION), instead of the engine default of playing the
+		// sequence once and then holding the last frame until the
+		// display dwell ends. Repeat the frame sequence 6x (~39 s at
+		// 500 ms/frame, inside the 45 s display dwell); the base class
+		// supports [{time, si}] delay entries, and showFrame() takes a
+		// frame index, so repeated indexes loop cleanly.
+		if (this.mapFrames.length > 0) {
+			const seq = this.mapFrames.map((_, i) => ({ time: 1, si: i }));
+			this.timing.delay = [];
+			for (let r = 0; r < 6; r += 1) this.timing.delay.push(...seq);
+			this.calcNavTiming();
+		}
+
 		// Show initial frame
 		if (this.mapFrames.length > 0) {
 			this.showFrame(this.lastPastFramePosition, true);
@@ -575,6 +592,10 @@ class Radar extends WeatherDisplay {
 
 		const leafletInitializationOptions = {
 			zoomControl: false,
+			// RetroCast framing must apply instantly: Leaflet's default
+			// zoom animation left a stale zoom-7 read after setView(8).
+			zoomAnimation: false,
+			fadeAnimation: false,
 			dragging: false,
 			touchZoom: false,
 			scrollWheelZoom: false,
@@ -600,6 +621,10 @@ class Radar extends WeatherDisplay {
 			} else {
 				window._leafletMap.fitBounds(Radar.screenshotBounds);
 			}
+			// RetroCast framing: force the tight coast view (farm coast
+			// centred, zoom 8) — fitBounds alone rendered zoom 6 wide.
+			window._leafletMap.invalidateSize();
+			window._leafletMap.setView([33.58, -78.95], 7);
 
 			// County fill, interstate corridors/shields, and city codes.
 			// Runs before the RainViewer tiles load so the radar pane exists.
@@ -617,12 +642,10 @@ class Radar extends WeatherDisplay {
 				city: weatherParameters.city,
 			};
 
-			this.addLocationMarker(
-				weatherParameters.latitude,
-				weatherParameters.longitude,
-				weatherParameters.city,
-				currentWeatherData,
-			);
+			// RetroCast screenshot has city codes only — no farm weather
+			// marker over the map — so do not draw one here (Troy Oct 31).
+			// (currentWeatherData kept for a future non-radar use.)
+			void currentWeatherData;
 
 			this.setStatus(STATUS.loaded);
 		} catch (error) {
