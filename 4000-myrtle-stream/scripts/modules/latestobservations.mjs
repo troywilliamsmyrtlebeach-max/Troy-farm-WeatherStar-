@@ -12,7 +12,7 @@ class LatestObservations extends WeatherDisplay {
 		super(navId, elemId, 'Latest Observations', false);
 
 		// constants
-		this.MaximumRegionalStations = 7;
+		this.MaximumRegionalStations = 8; // Troy Oct 31 20:06: farm + 7 towns incl. N. Myrtle Beach
 		this.showOnProgress = false;
 	}
 
@@ -25,11 +25,12 @@ class LatestObservations extends WeatherDisplay {
 		//  Conway-Horry C = KHYW, Elizabethtown = KEYF (Curtis L Brown Jr Field, Elizabethtown NC),
 		//  Lumberton = KLBT, Myrtle Beach = KMYR, Southport = KSUT (Brunswick County, nearest to Southport),
 		//  Whiteville = KCPC, Wilmington = KILM. Wind is speed only, no MPH (screenshot style, already in drawCanvas).
-		// Troy Oct 31 19:32: farm FIRST, Elizabethtown DROPPED — 6 towns + farm = 7 rows.
+		// Troy Oct 31 19:32: farm FIRST, Elizabethtown DROPPED. Oct 31 20:06: N. Myrtle Beach ADDED — 7 towns + farm = 8 rows.
 		const SCREENSHOT_TOWNS = [
 			{ id: 'KHYW', city: 'Conway Horry County Airport' },
 			{ id: 'KLBT', city: 'Lumberton' },
 			{ id: 'KMYR', city: 'Myrtle Beach International Airport' },
+			{ id: 'KCRE', city: 'North Myrtle Beach Grand Strand Airport' },
 			{ id: 'KSUT', city: 'Southport' },
 			{ id: 'KCPC', city: 'Whiteville, Columbus County Municipal Airport' },
 			{ id: 'KILM', city: 'Wilmington International Airport' },
@@ -39,16 +40,16 @@ class LatestObservations extends WeatherDisplay {
 		// get data for regional stations
 		// get first 7 stations
 		const actualConditions = [];
-		let lastStation = Math.min(regionalStations.length, 7);
+		let lastStation = Math.min(regionalStations.length, 8);
 		let firstStation = 0;
-		while (actualConditions.length < 7 && (lastStation) <= regionalStations.length && firstStation < regionalStations.length) {
+		while (actualConditions.length < 8 && (lastStation) <= regionalStations.length && firstStation < regionalStations.length) {
 			// eslint-disable-next-line no-await-in-loop
 			const someStations = await getStations(regionalStations.slice(firstStation, lastStation));
 
 			actualConditions.push(...someStations);
 			// update counters
 			firstStation += lastStation;
-			lastStation = Math.min(regionalStations.length + 1, firstStation + 7 - actualConditions.length);
+			lastStation = Math.min(regionalStations.length + 1, firstStation + 8 - actualConditions.length);
 		}
 
 		// Farm row FIRST, from the live farm payload (same data as Current Conditions).
@@ -96,7 +97,7 @@ class LatestObservations extends WeatherDisplay {
 			const	Temperature = Math.round(celsiusToFahrenheit(condition.temperature.value));
 			const WindSpeed = Math.round(kphToMph(condition.windSpeed.value));
 
-			const SCREENSHOT_NAMES = { KHYW: 'Conway-Horry C', KEYF: 'Elizabethtown', KLBT: 'Lumberton', KMYR: 'Myrtle Beach', KSUT: 'Southport', KCPC: 'Whiteville', KILM: 'Wilmington', FARM: 'CALABASH-FARM' };
+			const SCREENSHOT_NAMES = { KHYW: 'Conway-Horry C', KEYF: 'Elizabethtown', KLBT: 'Lumberton', KMYR: 'Myrtle Beach', KSUT: 'Southport', KCPC: 'Whiteville', KILM: 'Wilmington', FARM: 'CALABASH-FARM', KCRE: 'N. Myrtle Beach' };
 			const fill = {
 				location: SCREENSHOT_NAMES[condition.StationId] || locationCleanup(condition.city).substr(0, 14),
 				temp: Temperature,
