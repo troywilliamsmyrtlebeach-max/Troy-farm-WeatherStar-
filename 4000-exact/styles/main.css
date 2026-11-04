@@ -1,29 +1,32 @@
 @import url("https://troywilliamsmyrtlebeach-max.github.io/Troy-farm-WeatherStar-/4000-myrtle-intl/styles/main.css");
 
-/* High-specificity color overrides: take precedence over page-level theme rules. */
+/* Strongly scoped final theme overrides for emulator screens. */
 body #divTwc #container { background: #000 !important; }
-#container .weather-display .header {
+#divTwc #container .weather-display,
+#divTwc #container .weather-display .header {
   background: linear-gradient(90deg, #5f0d0d 0%, #8c1a1d 18%, #c64418 52%, #eb8a20 100%) !important;
 }
-#container .weather-display .header .title,
-#container .weather-display .header .top,
-#container .weather-display .header .bottom,
-#container .weather-display .header .date-time,
-#container .weather-display .date-time {
+#divTwc #container .weather-display .header .title,
+#divTwc #container .weather-display .header .top,
+#divTwc #container .weather-display .header .bottom,
+#divTwc #container .weather-display .header .date-time,
+#divTwc #container .weather-display .date-time {
   color: #ffe600 !important;
   text-shadow: 2px 2px 0 #000 !important;
 }
-#container .weather-display .main {
+#divTwc #container .weather-display .main,
+#divTwc #container .weather-display .main.has-scroll,
+#divTwc #container .weather-display .main.has-box {
   background: #123e8a !important;
 }
-#container .weather-display .scroll,
-#container .weather-display .scroll .fixed,
-#divTwcBottom {
+#divTwc #container .weather-display .scroll,
+#divTwc #container .weather-display .scroll .fixed,
+#divTwc #divTwcBottom {
   background: #0a5bd3 !important;
   color: #fff !important;
 }
-#container .custom-weather-station.main .location,
-#container .custom-weather-station.main .farm-name-over-humidity {
+#divTwc #container .custom-weather-station.main .location,
+#divTwc #container .custom-weather-station.main .farm-name-over-humidity {
   color: #ffe600 !important;
   font-size: 16pt !important;
   text-align: left !important;
