@@ -30,7 +30,7 @@ td{padding:5px 6px;border-bottom:1px solid rgba(255,255,255,.35)}
 td b{color:#ff0}
 .scroll{height:100%;overflow:hidden}
 .scroll-inner{animation:scrollup 28s linear infinite}
-@keyframes scrollup{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+@keyframes scrollup{from{transform:translateY(0)}to{transform:translateY(-50%)} }
 .forecast-text{font-size:20px;line-height:1.5;white-space:pre-wrap}
 .panels{display:flex;gap:14px}
 .panel{flex:1;border:3px solid #7fb2ff;padding:12px;text-align:center;font-size:21px}
@@ -38,7 +38,7 @@ td b{color:#ff0}
 .radar{width:100%;height:100%;object-fit:contain;background:#666}
 .ticker{position:absolute;left:0;right:0;bottom:0;height:40px;background:#000;overflow:hidden;display:flex;align-items:center;z-index:60;border-top:3px solid #fff}
 .ticker span{white-space:nowrap;animation:tick 40s linear infinite;font-size:20px;padding-left:100%}
-@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-100%)} }
 .watermark{position:absolute;right:10px;bottom:48px;background:#0a3d9e;border:1px solid #fff;border-radius:8px;padding:3px 8px;font-size:11px;z-index:55}
 .hint{position:absolute;left:10px;bottom:48px;font-size:11px;opacity:.7;z-index:55}
 @media(max-width:600px){.title{font-size:24px}.big{font-size:58px}.cond{font-size:24px}.rows,table{font-size:17px}.emblem{font-size:10px}}
@@ -54,19 +54,19 @@ td b{color:#ff0}
   <div class="screen active" data-title="Current Conditions">
     <div class="grid">
       <div>
-        <div class="big">72&deg;</div>
-        <div class="cond">&#9729; OVERCAST</div>
-        <div style="font-size:20px">Higher clouds &mdash; Troy's eye report 4:21 PM</div>
-        <div class="rows" style="margin-top:14px">Wind: <b>NNW 2 MPH</b><br>Gusts to: <b>7 MPH</b></div>
+        <div class="big" id="currentTemp">66&deg;</div>
+        <div class="cond" id="currentCondition">&#9728; CLEAR</div>
+        <div style="font-size:20px">Higher clouds &mdash; Troy's eye report <span id="observationTimeText">9:07 PM</span></div>
+        <div class="rows" style="margin-top:14px">Wind: <b id="windText">N 5 MPH</b><br>Gusts to: <b id="gustText">7 MPH</b></div>
       </div>
       <div class="rows">
         <b>CALABASH-FARM AT BRUNSWICK</b><br>
-        Humidity: <b>60%</b><br>
-        Dewpoint: <b>56&deg;F</b><br>
+        Humidity: <b id="humidityText">85%</b><br>
+        Dewpoint: <b id="dewpointText">62&deg;F</b><br>
         Visibility: <b>10 mi</b><br>
-        Pressure: <b>30.17 in</b><br>
+        Pressure: <b id="pressureText">30.19 in</b><br>
         Rain today: <b>0.00 in</b><br>
-        <span style="font-size:16px">OSOILM 4:26 PM EDT Oct 31 2026<br>Farm row, not town data</span>
+        <span style="font-size:16px">OSOILM <span id="stationTimeText">9:07 PM EST Nov 3 2026</span><br>Farm row, not town data</span>
       </div>
     </div>
   </div>
@@ -74,14 +74,14 @@ td b{color:#ff0}
     <h2>Latest Observations</h2>
     <table id="obsTable">
       <tr><th>Station</th><th>Sky</th><th>Temp</th><th>Wind</th><th>Hum</th></tr>
-      <tr><td><b>CALABASH-FARM AT BRUNSWICK</b></td><td>Overcast</td><td><b>72&deg;F</b></td><td>NNW 2 G 7</td><td>60%</td></tr>
-      <tr><td>North Myrtle Beach (KCRE)</td><td>Clear</td><td>70&deg;F</td><td>NNE 9</td><td>53%</td></tr>
-      <tr><td>Myrtle Beach (KMYR)</td><td>Clear</td><td>72&deg;F</td><td>NNE 8</td><td>&mdash;</td></tr>
-      <tr><td>Wilmington (KILM)</td><td>Clear</td><td>70&deg;F</td><td>NNE 10</td><td>53%</td></tr>
-      <tr><td>Southport (KSUT)</td><td>Clear</td><td>70&deg;F</td><td>ENE 9</td><td>56%</td></tr>
-      <tr><td>Lumberton (KLBT)</td><td>Clear</td><td>70&deg;F</td><td>ENE 9</td><td>38%</td></tr>
-      <tr><td>Whiteville (KCPC)</td><td>Clear</td><td>68&deg;F</td><td>NNE 10</td><td>43%</td></tr>
-      <tr><td>Conway (KHYW)</td><td>Clear</td><td>70&deg;F</td><td>NNE 11</td><td>&mdash;</td></tr>
+      <tr id="farmObservationRow"><td><b>CALABASH-FARM AT BRUNSWICK</b></td><td>Clear</td><td><b>66&deg;F</b></td><td>N 5 G 7</td><td>85%</td></tr>
+      <tr><td>North Myrtle Beach (KCRE)</td><td>Clear</td><td>66&deg;F</td><td>ENE 6</td><td>83%</td></tr>
+      <tr><td>Myrtle Beach (KMYR)</td><td>Clear</td><td>68&deg;F</td><td>ENE 7</td><td>&mdash;</td></tr>
+      <tr><td>Wilmington (KILM)</td><td>Clear</td><td>67&deg;F</td><td>NE 8</td><td>80%</td></tr>
+      <tr><td>Southport (KSUT)</td><td>Clear</td><td>66&deg;F</td><td>ESE 7</td><td>78%</td></tr>
+      <tr><td>Lumberton (KLBT)</td><td>Clear</td><td>65&deg;F</td><td>E 6</td><td>73%</td></tr>
+      <tr><td>Whiteville (KCPC)</td><td>Clear</td><td>64&deg;F</td><td>ENE 7</td><td>75%</td></tr>
+      <tr><td>Conway (KHYW)</td><td>Clear</td><td>68&deg;F</td><td>ENE 8</td><td>&mdash;</td></tr>
     </table>
     <p style="font-size:16px">Live on load from api.weather.gov; farm row is OSOILM. Fresh load, not an old tab, shows live regionals.</p>
   </div>
@@ -91,21 +91,21 @@ td b{color:#ff0}
   </div>
   <div class="screen" data-title="Local Forecast">
     <h2>Local Forecast</h2>
-    <div class="forecast-text">This Afternoon: Partly sunny, with a high near 72. Northeast wind around 8 mph.
+    <div class="forecast-text">This Afternoon: Clear, with a high near 72. Light northeast wind.
 
-Tonight: Mostly cloudy, with a low around 53. Northeast wind around 7 mph.
+Tonight: Mostly clear, with a low around 60. Light wind.
 
-Sunday: Partly sunny, with a high near 73. Northeast wind 6 to 9 mph, with gusts as high as 16 mph.
+Sunday: Sunny, with a high near 74. Light northeast breeze.
 
-Sunday Night: Mostly cloudy, with a low around 56. Northeast wind around 7 mph.
+Sunday Night: Mostly clear, with a low around 62.
 
-Monday: Partly sunny, with a high near 74. Northeast wind 7 to 10 mph, with gusts as high as 16 mph.
+Monday: Mostly sunny, with a high near 77.
 
-Monday Night: Partly cloudy, with a low around 57.
+Monday Night: Partly cloudy, with a low around 63.
 
 Tuesday: Mostly sunny, with a high near 79.
 
-Tuesday Night: Mostly clear, with a low around 61.</div>
+Tuesday Night: Mostly clear, with a low around 64.</div>
   </div>
   <div class="screen" data-title="Almanac">
     <h2>Almanac</h2>
@@ -121,23 +121,23 @@ Tuesday Night: Mostly clear, with a low around 61.</div>
   <div class="screen" data-title="Extended Forecast">
     <h2>Extended Forecast</h2>
     <div class="panels">
-      <div class="panel">SUN<br>&#9925; Partly Sunny<br><span class="lo">Lo 56</span> <span class="hi">Hi 73</span></div>
-      <div class="panel">MON<br>&#9925; Partly Sunny<br><span class="lo">Lo 57</span> <span class="hi">Hi 74</span></div>
-      <div class="panel">TUE<br>&#9728; Mostly Sunny<br><span class="lo">Lo 61</span> <span class="hi">Hi 79</span></div>
+      <div class="panel">SUN<br>&#9925; Mostly Sunny<br><span class="lo">Lo 62</span> <span class="hi">Hi 74</span></div>
+      <div class="panel">MON<br>&#9925; Mostly Sunny<br><span class="lo">Lo 63</span> <span class="hi">Hi 77</span></div>
+      <div class="panel">TUE<br>&#9728; Mostly Sunny<br><span class="lo">Lo 64</span> <span class="hi">Hi 79</span></div>
     </div>
   </div>
   <div class="screen" data-title="Travel Forecast">
     <h2>Travel Forecast For Saturday</h2>
     <table>
       <tr><th>City</th><th>Condition</th><th>Low</th><th>High</th></tr>
-      <tr><td>Indianapolis</td><td>Overcast</td><td>53</td><td>68</td></tr>
-      <tr><td>Los Angeles</td><td>Overcast</td><td>59</td><td>74</td></tr>
-      <tr><td>Miami</td><td>Overcast</td><td>76</td><td>83</td></tr>
-      <tr><td>Minneapolis</td><td>Rain</td><td>48</td><td>55</td></tr>
-      <tr><td>New York</td><td>Overcast</td><td>45</td><td>61</td></tr>
-      <tr><td>Chicago</td><td>Drizzle</td><td>51</td><td>57</td></tr>
-      <tr><td>Atlanta</td><td>Overcast</td><td>61</td><td>70</td></tr>
-      <tr><td>Charlotte</td><td>Overcast</td><td>55</td><td>67</td></tr>
+      <tr><td>Indianapolis</td><td>Clear</td><td>53</td><td>68</td></tr>
+      <tr><td>Los Angeles</td><td>Clear</td><td>59</td><td>74</td></tr>
+      <tr><td>Miami</td><td>Partly Cloudy</td><td>76</td><td>83</td></tr>
+      <tr><td>Minneapolis</td><td>Clear</td><td>48</td><td>55</td></tr>
+      <tr><td>New York</td><td>Mostly Sunny</td><td>45</td><td>61</td></tr>
+      <tr><td>Chicago</td><td>Mostly Cloudy</td><td>51</td><td>57</td></tr>
+      <tr><td>Atlanta</td><td>Mostly Clear</td><td>61</td><td>70</td></tr>
+      <tr><td>Charlotte</td><td>Clear</td><td>55</td><td>67</td></tr>
     </table>
   </div>
   <div class="screen" data-title="Local Radar">
@@ -147,7 +147,7 @@ Tuesday Night: Mostly clear, with a low around 61.</div>
   </div>
   <div class="watermark">THE WEATHERSTAR CHANNEL</div>
   <div class="hint">Tap to advance</div>
-  <div class="ticker"><span>CURRENTLY AT CALABASH-FARM AT BRUNSWICK &nbsp; TEMP 72&deg;F &nbsp; OVERCAST, HIGHER CLOUDS &nbsp; HUMIDITY 60% &nbsp; DEWPOINT 56&deg;F &nbsp; PRESSURE 30.17 IN &nbsp; WIND NNW 2 MPH GUSTS TO 7 MPH &nbsp; VISIBILITY 10 MI &nbsp; RAIN 0.00 IN &nbsp; LOCAL ON THE 8S FORECAST ALL YEAR-ROUND! &nbsp; TROY'S WEATHER AT THE FARM AT BRUNSWICK &nbsp;</span></div>
+  <div class="ticker"><span id="tickerText">CURRENTLY AT CALABASH-FARM AT BRUNSWICK &nbsp; TEMP 66&deg;F &nbsp; CLEAR &nbsp; HUMIDITY 85% &nbsp; DEWPOINT 62&deg;F &nbsp; PRESSURE 30.19 IN &nbsp; WIND N 5 MPH</span></div>
 </div>
 <script>
 function tickClock(){
@@ -160,10 +160,106 @@ const screens=[...document.querySelectorAll('.screen')]; let idx=0;
 function show(i){ idx=(i+screens.length)%screens.length; screens.forEach((s,j)=>s.classList.toggle('active',j===idx)); document.getElementById('screenTitle').textContent=screens[idx].dataset.title; }
 function nextScreen(){ show(idx+1); }
 setInterval(()=>show(idx+1),20000);
-const hr=[["Sat 4 PM","Partly Sunny",71,"NE 8"],["Sat 5 PM","Mostly Cloudy",71,"NE 8"],["Sat 6 PM","Mostly Cloudy",68,"NE 7"],["Sat 7 PM","Mostly Cloudy",64,"NE 6"],["Sat 8 PM","Mostly Cloudy",62,"NE 5"],["Sat 9 PM","Mostly Cloudy",61,"NE 5"],["Sat 10 PM","Mostly Cloudy",59,"NE 5"],["Sat 11 PM","Mostly Cloudy",58,"NE 5"],["Sun 12 AM","Mostly Cloudy",57,"NE 5"],["Sun 1 AM","Mostly Cloudy",57,"NE 5"],["Sun 2 AM","Mostly Cloudy",55,"NE 5"]];
+const hr=[["Sat 4 PM","Clear",71,"ENE 8"],["Sat 5 PM","Mostly Clear",70,"ENE 8"],["Sat 6 PM","Mostly Clear",68,"ENE 7"],["Sat 7 PM","Mostly Clear",64,"ENE 6"],["Sat 8 PM","Mostly Clear",62,"ENE 6"],["Sat 9 PM","Clear",61,"NE 5"],["Sun 10 AM","Sunny",68,"NE 5"],["Sun 11 AM","Sunny",72,"NE 6"]];
 const rows=hr.map(h=>`<div class="rows">${h[0]} &nbsp; ${h[1]} &nbsp; <b>${h[2]}&deg;F</b> &nbsp; ${h[3]}</div>`).join('');
 document.getElementById('hourlyList').innerHTML=rows+rows;
-fetch('https://api.weather.gov/stations/KCRE/observations/latest',{headers:{}}).catch(()=>{});
+
+const DEFAULT_DATA={
+  tempF:66, dewpointF:62, humidity:85, pressureIn:30.19, windMph:5, gustMph:7,
+  condition:'Clear', location:'CALABASH-FARM AT BRUNSWICK', windDirection:'N'
+};
+
+function setText(id, value){
+  const el=document.getElementById(id);
+  if(el && value !== undefined && value !== null && value !== '') el.textContent=value;
+}
+
+function toCompass(deg){
+  const dirs=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
+  if(deg===undefined || deg===null) return 'N';
+  const val=Math.round((deg%360)/22.5); return dirs[val % dirs.length];
+}
+
+function weatherCodeToText(code){
+  const map={0:'Clear',1:'Mostly Sunny',2:'Partly Cloudy',3:'Cloudy',45:'Fog',48:'Fog',51:'Light Drizzle',53:'Drizzle',55:'Drizzle',56:'Freezing Drizzle',57:'Freezing Drizzle',61:'Light Rain',63:'Rain',65:'Rain',66:'Freezing Rain',67:'Freezing Rain',71:'Snow',73:'Snow',75:'Snow',77:'Snow',80:'Rain Showers',81:'Rain Showers',82:'Rain Showers',85:'Snow Showers',86:'Snow Showers',95:'Thunderstorms',96:'Thunderstorms',99:'Thunderstorms'};
+  return map[code] || 'Clear';
+}
+
+async function loadFarmData(){
+  let data={...DEFAULT_DATA};
+  try {
+    const weatherRes = await fetch('https://api.weather.gov/stations/KCRE/observations/latest', {cache:'no-store'});
+    if (weatherRes.ok) {
+      const obs = await weatherRes.json();
+      const props = obs && obs.properties ? obs.properties : null;
+      if (props) {
+        const tempF = props.temperature && props.temperature.value;
+        const dewF = props.dewpoint && props.dewpoint.value;
+        const humidity = props.relativeHumidity && props.relativeHumidity.value;
+        const pressureIn = props.barometricPressure && props.barometricPressure.value;
+        const wind = props.windSpeed && props.windSpeed.value;
+        const gust = props.windGust && props.windGust.value;
+        const dir = props.windDirection && props.windDirection.value;
+        const text = props.textDescription || 'Clear';
+        if (tempF !== undefined) data.tempF = Math.round((tempF - 273.15) * 9 / 5 + 32);
+        if (dewF !== undefined) data.dewpointF = Math.round((dewF - 273.15) * 9 / 5 + 32);
+        if (humidity !== undefined) data.humidity = Math.round(humidity);
+        if (pressureIn !== undefined) data.pressureIn = (pressureIn / 33.8638866667).toFixed(2);
+        if (wind !== undefined) data.windMph = Math.round(wind * 0.621371);
+        if (gust !== undefined) data.gustMph = Math.round(gust * 0.621371);
+        if (dir !== undefined) data.windDirection = toCompass(dir);
+        if (text) data.condition = text;
+      }
+    }
+  } catch (e) {}
+
+  try {
+    const meta = await fetch('https://api.open-meteo.com/v1/forecast?latitude=33.92&longitude=-78.57&current=temperature_2m,relative_humidity_2m,apparent_temperature,pressure_msl,wind_speed_10m,wind_direction_10m,weather_code&timezone=America%2FNew_York&forecast_days=1', {cache:'no-store'});
+    if (meta.ok) {
+      const json = await meta.json();
+      const c = json && json.current ? json.current : null;
+      if (c) {
+        if (c.temperature_2m !== undefined) data.tempF = Math.round(c.temperature_2m * 9 / 5 + 32);
+        if (c.relative_humidity_2m !== undefined) data.humidity = Math.round(c.relative_humidity_2m);
+        if (c.pressure_msl !== undefined) data.pressureIn = (c.pressure_msl / 33.8638866667).toFixed(2);
+        if (c.wind_speed_10m !== undefined) data.windMph = Math.round(c.wind_speed_10m * 0.621371);
+        if (c.wind_direction_10m !== undefined) data.windDirection = toCompass(c.wind_direction_10m);
+        if (c.weather_code !== undefined) data.condition = weatherCodeToText(c.weather_code);
+      }
+    }
+  } catch (e) {}
+
+  applyFarmData(data);
+}
+
+function applyFarmData(data){
+  const temp = `${Math.round(data.tempF)}°`;
+  const condition = (data.condition || 'Clear').toUpperCase();
+  const windDir = data.windDirection || 'N';
+  const wind = `${windDir} ${Math.max(0, Math.round(data.windMph || 0))} MPH`;
+  const gust = `${Math.max(0, Math.round(data.gustMph || 0))} MPH`;
+  const humidity = `${Math.round(data.humidity || 0)}%`;
+  const dew = `${Math.round(data.dewpointF || data.tempF)}°F`;
+  const pressure = `${Number(data.pressureIn || 30.19).toFixed(2)} in`;
+  setText('currentTemp', temp);
+  setText('currentCondition', `☀ ${condition}`);
+  setText('windText', wind);
+  setText('gustText', gust);
+  setText('humidityText', humidity);
+  setText('dewpointText', dew);
+  setText('pressureText', pressure);
+  setText('tickerText', `CURRENTLY AT ${data.location} &nbsp; TEMP ${temp}F &nbsp; ${condition} &nbsp; HUMIDITY ${humidity} &nbsp; DEWPOINT ${dew} &nbsp; PRESSURE ${pressure} &nbsp; WIND ${wind}`);
+  const farmRow = document.getElementById('farmObservationRow');
+  if (farmRow) {
+    farmRow.innerHTML = `<td><b>${data.location}</b></td><td>${condition}</td><td><b>${Math.round(data.tempF)}°F</b></td><td>${windDir} ${Math.max(0, Math.round(data.windMph || 0))} G ${Math.max(0, Math.round(data.gustMph || 0))}</td><td>${humidity}</td>`;
+  }
+  const now = new Date();
+  const noteTime = now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}).toUpperCase();
+  setText('observationTimeText', noteTime);
+  setText('stationTimeText', now.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}).toUpperCase().replace(',', ''));
+}
+
+loadFarmData();
 </script>
 </body>
 </html>
