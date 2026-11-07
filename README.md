@@ -42,4 +42,4 @@ localStorage.clear(); sessionStorage.clear(); indexedDB.databases().then(dbs => 
       window.history.replaceState(null, '', newRelativePathQuery);
     }
   })();
-</script>
+</script> 
