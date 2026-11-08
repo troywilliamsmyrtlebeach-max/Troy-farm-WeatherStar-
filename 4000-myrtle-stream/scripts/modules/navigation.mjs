@@ -455,16 +455,34 @@ const handleNavButton = (button) => {
 const getDisplay = (index) => displays[index];
 
 // resize the container on a page resize
+// LAYOUT-FIX 2026-11-07 (Troy: colours OK, layout broken on phone):
+// scale from top-left, not the centre, measure width from the viewport
+// (not #divTwcBottom, whose width changes with the kiosk stage), and pull
+// the following content up/down with a negative/positive bottom margin so
+// the layout height matches the scaled 4:3 panel - no black gap, no
+// clipped left edge, CALABASH-FARM AT BRUNSWICK stays inside the panel.
+// Colours untouched. NOTE: container height stays 480px - the transform
+// scales it visually; setting height to 480*scale would double-scale.
 const resize = () => {
+	const container = document.querySelector('#container');
+	if (!container) return;
 	const targetWidth = settings.wide.value ? 640 + 107 + 107 : 640;
-	const widthZoomPercent = (document.querySelector('#divTwcBottom').getBoundingClientRect().width) / targetWidth;
+	const availWidth = document.documentElement.clientWidth || window.innerWidth;
+	const widthZoomPercent = availWidth / targetWidth;
 	const heightZoomPercent = (window.innerHeight) / 480;
 
 	const scale = Math.min(widthZoomPercent, heightZoomPercent);
 	if (scale < 1.0 || document.fullscreenElement || settings.kiosk) {
-		document.querySelector('#container').style.transform = `scale(${scale})`;
+		container.style.transform = `scale(${scale})`;
+		container.style.transformOrigin = 'top left';
+		container.style.marginBottom = `${480 * (scale - 1)}px`;
+		const scaledWidth = targetWidth * scale;
+		container.style.marginLeft = availWidth > scaledWidth ? `${(availWidth - scaledWidth) / 2}px` : '0px';
 	} else {
-		document.querySelector('#container').style.transform = 'unset';
+		container.style.transform = 'unset';
+		container.style.transformOrigin = '';
+		container.style.marginBottom = '';
+		container.style.marginLeft = '';
 	}
 };
 

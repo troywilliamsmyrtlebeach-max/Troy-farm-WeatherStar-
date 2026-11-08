@@ -27,10 +27,33 @@ body #divTwc #container { background: #000 !important; }
 }
 #divTwc #container .custom-weather-station.main .location,
 #divTwc #container .custom-weather-station.main .farm-name-over-humidity {
-  color: #ffe600 !important;
+  color: #7fe7ff !important; /* teal/cyan, Troy's reference main page */
   font-size: 16pt !important;
   text-align: left !important;
   white-space: nowrap !important;
 }
 #container::after,
 body::after { pointer-events: none !important; }
+
+/* LAYOUT-FIX 2026-11-07 (Troy: colours OK, layout broken on phone):
+   The 640x480 panel scaled from its centre (no transform-origin in this
+   CSS), so on a phone it sat right and clipped left/right, and its layout
+   height stayed 480px so the nav / music sat far below it. Colours are
+   NOT changed here - header gradient, blue panels, blue ticker, yellow
+   titles all stay exactly as Troy approved. Only geometry. */
+body{margin:0;background:#000}
+body.kiosk{margin:0}
+body.kiosk #divQuery{display:none}
+body.kiosk #webamp-app{display:none !important}
+#webamp-app{max-width:100%;margin:0 auto;overflow:hidden}
+#divTwc{margin:0 auto}
+#divTwc #container{width:640px;height:480px;transform-origin:top left;overflow:hidden;background:#000}
+body.kiosk #divTwc #container{width:640px;height:480px;transform-origin:top left}
+#divQuery{box-sizing:border-box}
+#divQuery #txtAddress{min-width:0}
+@media (max-width:640px){
+  body.kiosk > button{left:8px !important;right:8px !important;width:auto !important;max-width:none !important;font-size:13px !important;padding:8px 10px !important;white-space:nowrap !important;overflow:hidden !important;text-overflow:ellipsis !important}
+  body.kiosk > button:nth-of-type(1){bottom:8px !important}
+  body.kiosk > button:nth-of-type(2){bottom:54px !important}
+  body::after{bottom:100px !important}
+}
