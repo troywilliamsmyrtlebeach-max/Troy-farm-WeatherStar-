@@ -223,6 +223,16 @@ html.farm-tv .weather-display .scroll .fixed .text-layer{top:46%!important}
 #local-forecast-html .fc-label{color:#FAFA2C !important}
 #local-forecast-html .fc-period{margin-bottom:10px !important}
 #local-forecast-html .fc-period:last-child{margin-bottom:0 !important}
+/* v=11 SUNSET-ORANGE EDGES (Troy 2026-11-08: the original WeatherStar 4000+ had
+   sunset-orange edges around the screen — side strips + frame/body, all screens,
+   all the time. Sampled from his screenshots 946_0_qa1h.jpg + 987_1_5ss8.png:
+   dark maroon-purple at top fading to bright sunset orange at the bottom.
+   The panel itself is unchanged; only the frame around it is orange. The body
+   carries the one gradient so it runs seamless behind the panel; #divTwc and
+   #divTwcBottom go transparent so it shows through. TV mode included. */
+body, body.kiosk { background: linear-gradient(180deg, #3A1428 0%, #7A3010 30%, #A64707 60%, #C63F00 100%) !important; }
+#divTwc, #divTwcBottom { background: transparent !important; }
+html.farm-tv body { background: linear-gradient(180deg, #3A1428 0%, #7A3010 30%, #A64707 60%, #C63F00 100%) !important; }
 </style>
 
 </head>
