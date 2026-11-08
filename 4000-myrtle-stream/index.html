@@ -138,10 +138,10 @@
    yellow (Troy Oct 31 19:11, was teal/blue), NOT big centered yellow, NOT wrapping.
    Applied to the farm Current Conditions location line and to any other
    location label on the app's screens. */
-.custom-weather-station.main .location{font-size:16pt !important; text-align:left !important; color:#ffff00 !important; white-space:nowrap !important; line-height:1.2 !important; margin-bottom:6px !important; width:auto !important;}
+.custom-weather-station.main .location{font-size:16pt !important; text-align:left !important; color:#7fe7ff !important; white-space:nowrap !important; line-height:1.2 !important; margin-bottom:6px !important; width:auto !important;}
 /* Troy Oct 31 19:14: farm name moved INTO the right column, directly over Humidity, like his screenshot — not a full-width centered line above both columns */
-.custom-weather-station.main .farm-name-over-humidity{font-size:16pt !important; color:#ffff00 !important; text-align:left !important; white-space:nowrap !important; margin-bottom:8px !important; font-weight:bold !important;}
-.custom-weather-station.main .location.center{color:#ffff00 !important;}
+.custom-weather-station.main .farm-name-over-humidity{font-size:16pt !important; color:#7fe7ff !important; text-align:left !important; white-space:nowrap !important; margin-bottom:8px !important; font-weight:bold !important;}
+.custom-weather-station.main .location.center{color:#7fe7ff !important;}
 .weather-display .location, .custom-weather-station .location{font-size:16pt !important; text-align:left !important;}
 </style>
 
@@ -156,10 +156,10 @@ body{background:#000!important}
 #container{position:relative}
 #container::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:900;background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px)}
 /* header: maroon -> red -> orange, diagonal swoosh */
-.weather-display .header{background:linear-gradient(90deg,#7a0d0d 0%,#c22 45%,#f60 100%)!important;position:relative;overflow:hidden}
+.weather-display .header{background:linear-gradient(90deg,#3b1f5e 0%,#7a3a1a 48%,#e8730c 100%)!important;position:relative;overflow:hidden}
 .weather-display .header::after{content:"";position:absolute;right:22%;top:0;width:60px;height:100%;background:#f60;transform:skewX(-24deg);opacity:.55;pointer-events:none}
 /* emblem: white text, blue rounded box, thin white outline, replaces Logo3.png */
-.weather-display .header .logo.emblem{background:#0a3d9e!important;border:2px solid #fff!important;border-radius:12px!important;padding:6px 10px!important;color:#fff!important;font-family:"Star4000",monospace!important;font-size:11px!important;line-height:1.2!important;letter-spacing:1px!important;text-align:center!important;white-space:nowrap!important}
+.weather-display .header .logo.emblem{background:#0a3d9e!important;border:2px solid #fff!important;border-radius:8px!important;padding:4px 8px!important;color:#fff!important;font-family:"Star4000",monospace!important;font-size:11px!important;line-height:1.2!important;letter-spacing:1px!important;text-align:center!important;white-space:nowrap!important}
 .weather-display .header .logo.emblem img{display:none!important}
 /* titles: chunky yellow, black shadow */
 .weather-display .header .title,.weather-display .header .title.single,.weather-display .header .title.dual{color:#ff0!important;text-shadow:3px 3px 0 #000!important}
@@ -171,7 +171,7 @@ body{background:#000!important}
 .weather-display .scroll,.weather-display .scroll .fixed,#divTwcBottom{background:#0a5bd3!important;color:#fff!important}
 .weather-display .scroll .fixed .text-layer,.weather-display .scroll .fixed .text-content{background:#0a5bd3!important;color:#fff!important}
 /* watermark: blue Weatherstar Channel bug, lower-right, above ticker */
-body::after{content:"THE WEATHERSTAR CHANNEL";position:fixed;right:10px;bottom:48px;z-index:9998;background:#0a3d9e;border:1px solid #fff;border-radius:8px;padding:3px 8px;font-size:11px;color:#fff;pointer-events:none}
+/* no watermark bug - clean reference frame has none */
 </style>
 <!-- STREAM-CLEAN -->
 <style>
@@ -243,7 +243,7 @@ try {
       <div id="progress-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -286,7 +286,7 @@ try {
       <div id="hourly-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
 	
 	
 			<div class="title single">
@@ -323,7 +323,7 @@ try {
       <div id="hourly-graph-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
 	
 	
 			<div class="title single">
@@ -365,7 +365,7 @@ try {
       <div id="travel-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -405,7 +405,7 @@ try {
       <div id="current-weather-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -480,7 +480,7 @@ try {
       <div id="local-forecast-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -516,7 +516,7 @@ try {
       <div id="latest-observations-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -564,7 +564,7 @@ try {
       <div id="regional-forecast-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -602,7 +602,7 @@ try {
       <div id="almanac-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
 	
 	
 			<div class="title single">
@@ -652,7 +652,7 @@ try {
       <div id="extended-forecast-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -698,7 +698,7 @@ try {
       </div>
       <div id="radar-html" class="weather-display">
         <div class="header">
-	<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+	<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
 	<div class="title dual">
 		<div class="top">
 			Local
@@ -751,7 +751,7 @@ try {
       <div id="marine-forecast-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
 	
 	
 			<div class="title single">
@@ -804,7 +804,7 @@ try {
       <div id="aqi-forecast-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -863,7 +863,7 @@ try {
       <div id="custom-weather-station-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
+		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
 	
 	
 		<div class="title dual" id="dualTitle">

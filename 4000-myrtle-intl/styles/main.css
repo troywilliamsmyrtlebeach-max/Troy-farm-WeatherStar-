@@ -197,7 +197,7 @@ body #divTwc #container {
 
 #container .custom-weather-station.main .location,
 #container .custom-weather-station.main .farm-name-over-humidity {
-  color: #ffe600 !important;
+  color: #7fe7ff !important; /* teal, Troy's reference frame */
   font-size: 16pt !important;
   text-align: left !important;
   white-space: nowrap !important;
@@ -234,3 +234,13 @@ body.kiosk #divTwc #container{width:640px;height:480px;transform-origin:top left
   body.kiosk > button:nth-of-type(2){bottom:54px !important}
   body::after{bottom:100px !important}
 }
+
+/* REFERENCE-FIX 2026-11-07 (Troy: all pages exactly like his clean Sep 15
+   reference frame): centred ticker, no nav/info overlays in kiosk, no
+   watermark bug. Farm name is teal in the main.css rules below / in
+   index.html - see emblem/farm patches there. Live data still cycles;
+   only the frame is made to match the reference. */
+body.kiosk #divTwcBottom{display:none}
+body.kiosk .info{display:none}
+body.kiosk::after{display:none !important}
+.weather-display .scroll .fixed{text-align:center;width:100%}
