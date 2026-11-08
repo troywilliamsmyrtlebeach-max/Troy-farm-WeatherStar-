@@ -1168,13 +1168,13 @@ try {
   </script>
 
 <script>
-<!-- v=11 MUSIC (Troy 2026-11-07: make ALL of them play music - the stream copy
+/* v=11 MUSIC (Troy 2026-11-07: make ALL of them play music - the stream copy
    gets the same Fair Weather tap-to-play button as the Channel and
    International copies. One tap starts the Fair Weather MP3, looped; it is a
    page-level Audio element, so it keeps playing across screen changes.
    The button is hidden in TV mode by the v=9 farm-tv rules, but hiding the
    button never pauses the audio - start it on the phone first, then cast.
-   No autoplay: browsers need one tap.) -->
+   No autoplay: browsers need one tap.) */
 document.addEventListener('DOMContentLoaded', function(){
   var a = new Audio('../fair-weather.mp3'); a.loop = true;
   var b = document.createElement('button');
