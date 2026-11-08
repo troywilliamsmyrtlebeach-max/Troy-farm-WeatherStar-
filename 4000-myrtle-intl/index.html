@@ -29,7 +29,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=10" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=11" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -233,6 +233,13 @@ html.farm-tv #farm-nav-bar,html.farm-tv #farm-sound-btn,html.farm-tv #farm-fulls
    (#divTwc) is never touched by this rule. */
 html.farm-tv body > :not(#divTwc):not(script){display:none!important}
 html.farm-tv body{background:#0B1861!important;margin:0!important}
+/* v=11 TV-FIT (Troy 2026-11-07: for the TV - move the emblem down a hair more
+   and raise the ticker text a little more so it all fits the TV screen
+   perfectly). TV mode only, small nudges: emblem top 4px -> 8px (bottom
+   ~76px, still inside the 83px header); ticker text-layer top 50% -> 46%
+   (~3px up in the 70px band). Phone view unchanged. */
+html.farm-tv .weather-display .header .logo.emblem{top:8px!important}
+html.farm-tv .weather-display .scroll .fixed .text-layer{top:46%!important}
 </style>
 
 <!-- RETROCAST-RADAR (Troy Oct 31 23:42): radar screen only, matching his
