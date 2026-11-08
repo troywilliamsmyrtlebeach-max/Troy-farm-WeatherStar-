@@ -29,7 +29,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=16" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=17" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -273,7 +273,12 @@ html.farm-tv body { background: linear-gradient(180deg, #3A1428 0%, #7A3010 30%,
    sunset-orange gradient, its top/bottom edges are the screenshot's blue
    #233371. Blue caps are 2.5% of the 500px border box, wider than the 10px
    border, so the top/bottom edges read solid blue. */
-#container{border:10px solid transparent!important;border-image:linear-gradient(180deg,#233371 0%,#233371 2.5%,#3A1428 2.5%,#7A3010 32%,#A64707 62%,#C63F00 97.5%,#233371 97.5%,#233371 100%) 1!important;}
+/* v=17 BLUE EDGES AROUND THE ORANGE (Troy 2026-11-08, ref 1347_0_qc5v.png:
+   "Blue edges around the orange" — in the screenshot the orange side bars are
+   bordered by a blue edge band (bright blue #294EA9 fading to navy #222B62)
+   between the orange and the navy panel. The panel's frame is now that blue
+   edge on all four sides; the sunset-orange stays as the body side bars. */
+#container{border:10px solid transparent!important;border-image:linear-gradient(180deg,#2E50AD 0%,#2A4BA0 40%,#26357E 75%,#222B62 100%) 1!important;}
 /* v=13 NAVY PANEL (black strips on TV: main.css forces #container black, and
    the display's background image 404s so the black showed through wherever a
    screen paints nothing. The v=8 wide rule painted it navy only in wide
