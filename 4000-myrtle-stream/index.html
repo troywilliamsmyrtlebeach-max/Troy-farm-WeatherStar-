@@ -27,7 +27,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=6" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=7" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -205,6 +205,14 @@ body.kiosk{overflow-x:hidden}
 #radar-html .kltx-dbz{position:absolute;left:6px;right:6px;bottom:6px;display:flex;justify-content:space-between;padding:1px 6px;background:rgba(2,16,53,.85);color:#fff;font-family:Arial,sans-serif;font-size:9px;font-weight:700}
 /* Latest Observations: full station names — the temp column starts at 230px, so the location gets 225px at 18pt (was 24pt/14 chars, truncated) */
 .weather-display .latest-observations.main .observation-row .location{font-size:18pt!important;max-width:225px!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* v=7 FARM-NAV (Troy 2026-11-07: arrows to step through all screens):
+   big PREV / PAUSE / NEXT bar under the panel, like his library RetroCast.
+   Text buttons — the upstream image nav buttons are missing from the repo
+   (images/nav/ does not exist), so they render 0x0 and invisible. */
+#farm-nav-bar{display:flex!important;gap:8px!important;width:100%!important;max-width:640px!important;margin:10px auto 0!important;padding:0 6px!important;box-sizing:border-box!important}
+#farm-nav-bar button{flex:1!important;min-height:56px!important;font-family:Arial,sans-serif!important;font-size:26px!important;font-weight:900!important;letter-spacing:1px!important;color:#fff!important;background:#1C2A5D!important;border:3px solid #fff!important;border-radius:12px!important;cursor:pointer!important;text-shadow:2px 2px 0 #000!important;-webkit-tap-highlight-color:transparent!important}
+#farm-nav-bar button:active{background:#0d47c2!important}
 </style>
 
 <!-- STREAM-CLEAN -->
@@ -990,6 +998,13 @@ try {
     </div>
   </div>
 
+  <!-- FARM-NAV v=7 (Troy 2026-11-07): big PREV / PAUSE / NEXT bar under the panel, like his library RetroCast. Text buttons — the stock image nav buttons are missing from the repo so they render invisible. -->
+  <div id="farm-nav-bar" role="navigation" aria-label="Screen navigation">
+    <button type="button" id="farm-nav-prev" aria-label="Previous screen">&#8249; PREV</button>
+    <button type="button" id="farm-nav-pause" aria-label="Pause or resume the cycle">&#10074;&#10074; PAUSE</button>
+    <button type="button" id="farm-nav-next" aria-label="Next screen">NEXT &#8250;</button>
+  </div>
+
   <br />
   <!-- <div class="experimental-features">
     You've enabled experimental features, you may encounter bugs or weird behavior!
@@ -1231,11 +1246,16 @@ setInterval(function(){
         container.style.marginBottom = (480 * (scale - 1)) + 'px';
         var scaledWidth = targetWidth * scale;
         container.style.marginLeft = availWidth > scaledWidth ? ((availWidth - scaledWidth) / 2) + 'px' : '0px';
+        /* v=7 FARM-NAV: keep the PREV/PAUSE/NEXT bar exactly under the scaled panel. */
+        var farmBar = document.getElementById('farm-nav-bar');
+        if (farmBar) { farmBar.style.width = scaledWidth + 'px'; farmBar.style.marginLeft = container.style.marginLeft; farmBar.style.marginRight = '0px'; }
       } else {
         container.style.transform = 'unset';
         container.style.transformOrigin = '';
         container.style.marginBottom = '';
         container.style.marginLeft = '';
+        var farmBar2 = document.getElementById('farm-nav-bar');
+        if (farmBar2) { farmBar2.style.width = ''; farmBar2.style.marginLeft = ''; farmBar2.style.marginRight = ''; }
       }
     }
     if (isKiosk) {
@@ -1254,6 +1274,66 @@ setInterval(function(){
   window.addEventListener('resize', applyLayout);
   window.addEventListener('orientationchange', applyLayout);
   setInterval(applyLayout, 1000);
+})();
+
+/* FARM-CLOCK v=7 (Troy 2026-11-07: exact right time, seconds clicking off):
+   the per-display clocks only tick while their screen is showing, and the
+   settings default made them 24-hour ("22:06:35"). This global updater runs
+   from the page HTML itself (always fresh, never a stale cached module):
+   every second it writes the true America/New_York time, 12-hour with
+   seconds ("10:06:35 PM") and date (" SAT NOV  7"), into EVERY header
+   clock on the page — shown or hidden, so no screen ever shows a frozen
+   or blank clock. */
+(function () {
+  var timeFmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+  var dateFmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', weekday: 'short', month: 'short', day: 'numeric' });
+  function updateFarmClock() {
+    var now = new Date();
+    var time = timeFmt.format(now).toUpperCase();
+    var dp = dateFmt.formatToParts(now);
+    var wd = '', mo = '', day = '';
+    for (var i = 0; i < dp.length; i++) {
+      if (dp[i].type === 'weekday') wd = dp[i].value.toUpperCase();
+      else if (dp[i].type === 'month') mo = dp[i].value.toUpperCase();
+      else if (dp[i].type === 'day') day = dp[i].value;
+    }
+    var date = ' ' + wd + ' ' + mo + ' ' + (day.length < 2 ? ' ' + day : day);
+    var times = document.querySelectorAll('.date-time.time');
+    for (var t = 0; t < times.length; t++) { if (times[t].textContent !== time) times[t].textContent = time; }
+    var dates = document.querySelectorAll('.date-time.date');
+    for (var d = 0; d < dates.length; d++) { if (dates[d].textContent !== date) dates[d].textContent = date; }
+  }
+  updateFarmClock();
+  setInterval(updateFarmClock, 1000);
+})();
+
+/* FARM-NAV v=7 wiring: the bar buttons drive the stock nav buttons
+   (NavigatePrevious / NavigateNext / NavigatePlay), which already step
+   display-to-display with wrap-around and pause the auto-cycle. The stock
+   buttons are invisible (missing images) but still clickable in code. */
+(function () {
+  function clickNav(id) { var el = document.getElementById(id); if (el) el.click(); }
+  var prev = document.getElementById('farm-nav-prev');
+  var next = document.getElementById('farm-nav-next');
+  var pauseBtn = document.getElementById('farm-nav-pause');
+  function syncPauseLabel() {
+    if (!pauseBtn) return;
+    var play = document.getElementById('NavigatePlay');
+    /* setPlaying() sets the stock button title to 'Pause' while playing and 'Play' while paused. */
+    var paused = play && play.title === 'Play';
+    pauseBtn.innerHTML = paused ? '&#9654; PLAY' : '&#10074;&#10074; PAUSE';
+  }
+  if (prev) prev.addEventListener('click', function () { clickNav('NavigatePrevious'); });
+  if (next) next.addEventListener('click', function () { clickNav('NavigateNext'); });
+  if (pauseBtn) pauseBtn.addEventListener('click', function () { clickNav('NavigatePlay'); setTimeout(syncPauseLabel, 200); });
+  /* TV remote / keyboard: left/right arrows step, space pauses. */
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') clickNav('NavigatePrevious');
+    else if (e.key === 'ArrowRight') clickNav('NavigateNext');
+    else if (e.key === ' ' && pauseBtn) { e.preventDefault(); pauseBtn.click(); }
+  });
+  syncPauseLabel();
+  setInterval(syncPauseLabel, 1000);
 })();
 </script>
 </body>

@@ -224,13 +224,12 @@ class WeatherDisplay {
 		// Get the current date and time.
 		const now = DateTime.local().setZone(timeZone());
 
-		// Troy 2026-10-27: top clock with no seconds.
-		// "12:00 AM" is 8 chars (was 11 with seconds), so pad to 8.
+		// FARM-CLOCK v=7 (Troy): top clock with seconds, 12-hour — "10:06:35 PM" is 11 chars.
 		const time = now.toLocaleString({
 			hour: '2-digit',
 			minute: '2-digit',
 			second: '2-digit',
-			hourCycle: ConversionHelpers.getHoursFormat() === '12-hour' ? 'h12' : 'h23',
+			hourCycle: 'h12', // FARM-CLOCK v=7 (Troy): header clock is always 12-hour with AM/PM, like the stream — the settings default (24-hour) made it read military time.
 		}).padStart(8, ' ');
 		const date = now.toFormat(' ccc LLL ') + now.day.toString().padStart(2, ' ');
 
