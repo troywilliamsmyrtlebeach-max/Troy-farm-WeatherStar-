@@ -27,7 +27,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=8" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=9" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -221,6 +221,8 @@ body #divTwc.wide #container{box-sizing:border-box!important;background-color:#0
 #farm-nav-bar{display:flex;gap:8px;width:100%;max-width:854px;margin:10px auto 0;padding:0 6px;box-sizing:border-box}
 #farm-nav-bar button{flex:1!important;min-height:56px!important;font-family:Arial,sans-serif!important;font-size:26px!important;font-weight:900!important;letter-spacing:1px!important;color:#fff!important;background:#1C2A5D!important;border:3px solid #fff!important;border-radius:12px!important;cursor:pointer!important;text-shadow:2px 2px 0 #000!important;-webkit-tap-highlight-color:transparent!important}
 #farm-nav-bar button:active{background:#0d47c2!important}
+/* v=9 TV-CLEAN (Troy 2026-11-07: casting his phone to the TV shows the phone-only arrows AND the TAP FOR SOUND / FULL SCREEN buttons on the TV — the width-based hide cannot tell a cast phone from a phone). In TV mode (?tv=1 or ?arrows=off) hide EVERY control so the TV shows a clean broadcast picture: nav bar, sound button, fullscreen button. Clock, ticker, emblem and screens stay visible. */
+html.farm-tv #farm-nav-bar,html.farm-tv #farm-sound-btn,html.farm-tv #farm-fullscreen-btn{display:none!important}
 </style>
 
 <!-- STREAM-CLEAN -->
@@ -1181,6 +1183,7 @@ try {
   setInterval(function(){ document.querySelectorAll('img').forEach(fixImg); }, 2000);
   } catch (e) {}
   var f = document.createElement('button');
+  f.id = 'farm-fullscreen-btn';
   f.textContent = 'FULL SCREEN — TAP FOR TV';
   f.style.cssText = 'position:fixed;right:8px;bottom:8px;z-index:9999;padding:10px 14px;font-weight:bold;background:#003366;color:#fff;border:2px solid #fff;border-radius:6px;';
   f.onclick = function () {
@@ -1238,6 +1241,10 @@ setInterval(function(){
   var farmQs = new URLSearchParams(window.location.search);
   var arrowsParam = farmQs.get('arrows');
   var tvParam = farmQs.get('tv');
+  /* v=9 TV-CLEAN: param-driven (width alone cannot tell a cast phone from a
+     phone), so it works at any width — TV width and landscape phone (~800px).
+     ?arrows=on still forces the controls back on. */
+  var tvMode = arrowsParam === 'on' ? false : (arrowsParam === 'off' || tvParam === '1');
   function applyLayout() {
     var container = document.getElementById('container');
     var divTwc = document.getElementById('divTwc');
@@ -1303,6 +1310,15 @@ setInterval(function(){
       var dq = document.getElementById('divQuery');
       if (dq) dq.style.display = 'none';
     }
+    /* v=9 TV-CLEAN (re-asserted every tick): in TV mode hide every control
+       overlaying the picture — nav bar (CSS farm-tv rule is the first
+       layer), TAP FOR SOUND and FULL SCREEN buttons. Phone view without
+       the parameter is unchanged: controls stay visible and tappable. */
+    document.documentElement.classList.toggle('farm-tv', tvMode);
+    var soundBtn = document.getElementById('farm-sound-btn');
+    if (soundBtn) soundBtn.style.display = tvMode ? 'none' : '';
+    var fsBtn = document.getElementById('farm-fullscreen-btn');
+    if (fsBtn) fsBtn.style.display = tvMode ? 'none' : '';
   }
   applyLayout();
   window.addEventListener('resize', applyLayout);
