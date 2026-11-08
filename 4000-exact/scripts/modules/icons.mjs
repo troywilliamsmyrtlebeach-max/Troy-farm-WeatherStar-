@@ -43,7 +43,24 @@ const getWeatherRegionalIconFromIconLink = (text, isDay) => {
 	const addPath = (icon) => `images/r/${icon}`;
 
 	// const nightTime = isNightTime(timeZone);
-	let tidyText = text.toLowerCase();
+	let tidyText = String(text ?? '').toLowerCase();
+	// NWS icon URLs: https://api.weather.gov/icons/land/day/clear, .../night/bkn, .../skc, .../ovc, .../rain, etc.
+	// Map those to the switch words below BEFORE the switch, so map cities get sky icons, never Logo3.
+	if (tidyText.includes('api.weather.gov/icons')) {
+		const m = tidyText.match(/\/(day|night)\/([a-z0-9_\-]+)/);
+		if (m) {
+			const dayNight = m[1], code = m[2].split('?')[0].split('/')[0];
+			const nightSuffix = dayNight === 'night' ? '-night' : '';
+			const codeMap = { skc: 'clear', few: 'mostly-clear', sct: 'partly-cloudy', bkn: 'mostly-cloudy', ovc: 'overcast', fog: 'fog', rain: 'moderate-rain', rain_showers: 'moderate-rain-showers', tsra: 'thunderstorm', snow: 'moderate-snow-fall', sleet: 'snow-grains', fzra: 'light-freezing-rain', mix: 'light-freezing-rain' };
+			if (codeMap[code]) tidyText = codeMap[code] + nightSuffix;
+		}
+	}
+	// Plain words that were missing from the switch (Overcast variants, etc.)
+	if (tidyText.includes('overcast')) tidyText = tidyText.includes('night') ? 'overcast-night' : 'overcast';
+	if (tidyText.includes('partly') && tidyText.includes('cloud')) tidyText = tidyText.includes('night') ? 'partly-cloudy-night' : 'partly-cloudy';
+	if (tidyText.includes('mostly') && tidyText.includes('cloud')) tidyText = tidyText.includes('night') ? 'mostly-cloudy-night' : 'mostly-cloudy';
+	if (tidyText.includes('mostly') && tidyText.includes('clear')) tidyText = tidyText.includes('night') ? 'mostly-clear-night' : 'mostly-clear';
+	if (tidyText === 'clear' || tidyText === 'sunny') tidyText = isDay === 0 ? 'clear-night' : 'clear';
 	if (tidyText.includes(' ')) tidyText = tidyText.replaceAll(' ', '-');
 
 	if (isDay === 0) tidyText += '-night';
@@ -206,7 +223,8 @@ const getWeatherRegionalIconFromIconLink = (text, isDay) => {
 
 		default:
 			console.log(`Unable to locate icon for: ${text}`);
-			return addPath('Logo3.gif');
+			// Troy Oct 31 19:28: NEVER Logo3 (WeatherStar 4000+ logo) on regional maps — fall back to a sky icon instead.
+			return addPath('Partly-Cloudy.gif');
 	}
 };
 
@@ -377,7 +395,8 @@ const getWeatherIconFromIconLink = (text, timeZone, extendedForecast) => {
 
 		default:
 			console.log(`Unable to locate icon for: ${text}`);
-			return addPath('Logo3.gif');
+			// Troy Oct 31 19:28: NEVER Logo3 (WeatherStar 4000+ logo) on regional maps — fall back to a sky icon instead.
+			return addPath('Partly-Cloudy.gif');
 	}
 };
 

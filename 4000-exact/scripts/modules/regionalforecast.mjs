@@ -27,11 +27,12 @@ class RegionalForecast extends WeatherDisplay {
 		const weatherParameters = _weatherParameters ?? this.weatherParameters;
 
 		// pre-load the base map
-		let baseMap = 'images/Basemap2.png';
+		// Pages has no local images/ folder (binary push limit): use upstream host there, local file otherwise.
+		let baseMap = (typeof location !== 'undefined' && location.hostname && location.hostname.endsWith('github.io')) ? 'https://mwood77.github.io/ws4kp-international/images/Basemap2.png' : 'images/Basemap2.png';
 		if (weatherParameters.state === 'HI') {
-			baseMap = 'images/HawaiiRadarMap4.png';
+			baseMap = baseMap.replace('Basemap2.png', 'HawaiiRadarMap4.png');
 		} else if (weatherParameters.state === 'AK') {
-			baseMap = 'images/AlaskaRadarMap6.png';
+			baseMap = baseMap.replace('Basemap2.png', 'AlaskaRadarMap6.png');
 		}
 		this.elem.querySelector('.map img').src = baseMap;
 
@@ -89,12 +90,13 @@ class RegionalForecast extends WeatherDisplay {
 				// wait for the regional observation if it's not done yet
 				const observation = await observationPromise;
 
-				if (!observation) return false;
+				if (!observation || !observation.temperature || observation.temperature.value === null || observation.temperature.value === undefined) return false;
 
 				// format the observation the same as the forecast
 				const regionalObservation = {
 					daytime: !!/\/day\//.test(observation.icon),
-					temperature: celsiusToFahrenheit(observation.temperature.value),
+					// Troy Oct 31: a null temp converts to exactly 32F (0*9/5+32) — never show that fake 32. Use the forecast temp instead, or skip the city.
+					temperature: (observation.temperature && observation.temperature.value !== null && observation.temperature.value !== undefined) ? celsiusToFahrenheit(observation.temperature.value) : null,
 					name: utils.formatCity(city.city),
 					icon: observation.icon,
 					x: cityXY.x,
