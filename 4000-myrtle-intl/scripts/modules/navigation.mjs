@@ -397,17 +397,23 @@ const loadDisplay = (direction) => {
 		if (displays[cand] && displays[cand].status === STATUS.loaded && displays[cand].timing.totalScreens > 0) { idx = cand; newPos = candPos; break; }
 	}
 	if (idx === undefined) return;
-	// MYRTLE DWELL: Myrtle holds ~2-3 min/screen. Gate only the automatic
-	// advance (loadDisplay) so a screen that exhausted its internal frames
-	// early still stays up for at least 45 s total. Manual nav buttons go
+	// MYRTLE DWELL (v=22 PAGE-SPEED, Troy 2026-11-08: "And make all the
+	// pages change quicker also"). Gate only the automatic advance
+	// (loadDisplay) so a screen that exhausted its internal frames early
+	// still stays up for at least 10 s total (was 45 s — every page sat
+	// for 45 s and a full 13-page cycle took ~10 min, that's the "taking
+	// its time"). Now each page stays up at least 10 s (readable), then
+	// advances; pages with longer internal content (Hourly ~36 s, Travel
+	// ~30 s, Regional 27 s, Extended 18 s, Local ~15 s) still play out
+	// their full content. Full cycle now ~3 min. Manual nav buttons go
 	// through navNext/navPrev on the display itself, not this gate, except
 	// at end-of-display where the same path is used (accepted tradeoff).
 	if (typeof window !== 'undefined' && window.__myrtleManualStep) { window.__myrtleManualStep = false; /* manual tap: bypass dwell gate */ }
 	else if (typeof window !== 'undefined' && window.__myrtleShownAt) {
 		const elapsed = Date.now() - window.__myrtleShownAt;
-		if (elapsed < 45000) {
+		if (elapsed < 10000) {
 			if (window.__myrtleTimeout) clearTimeout(window.__myrtleTimeout);
-			window.__myrtleTimeout = setTimeout(() => { window.__myrtleTimeout = undefined; loadDisplay(direction); }, 45000 - elapsed);
+			window.__myrtleTimeout = setTimeout(() => { window.__myrtleTimeout = undefined; loadDisplay(direction); }, 10000 - elapsed);
 			return;
 		}
 	}
