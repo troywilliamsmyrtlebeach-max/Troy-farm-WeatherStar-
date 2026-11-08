@@ -1,28 +1,31 @@
-@import url("https://troywilliamsmyrtlebeach-max.github.io/Troy-farm-WeatherStar-/4000-myrtle-intl/styles/main.css?v=5");
+@import url("https://troywilliamsmyrtlebeach-max.github.io/Troy-farm-WeatherStar-/4000-myrtle-intl/styles/main.css?v=6");
 
 /* Strongly scoped final theme overrides for emulator screens. */
 body #divTwc #container { background: #000 !important; }
 #divTwc #container .weather-display,
 #divTwc #container .weather-display .header {
-  background: linear-gradient(90deg, #5f0d0d 0%, #8c1a1d 18%, #c64418 52%, #eb8a20 100%) !important;
+  background: linear-gradient(180deg, #150644 0%, #944B11 30%, #793815 55%, #652D21 78%, #1B0046 100%) !important;
 }
 #divTwc #container .weather-display .header .title,
 #divTwc #container .weather-display .header .top,
-#divTwc #container .weather-display .header .bottom,
+#divTwc #container .weather-display .header .bottom {
+  color: #FAFA2C !important;
+  text-shadow: 3px 3px 0 #000 !important;
+}
 #divTwc #container .weather-display .header .date-time,
 #divTwc #container .weather-display .date-time {
-  color: #ffe600 !important;
+  color: #fff !important;
   text-shadow: 2px 2px 0 #000 !important;
 }
 #divTwc #container .weather-display .main,
 #divTwc #container .weather-display .main.has-scroll,
 #divTwc #container .weather-display .main.has-box {
-  background: #123e8a !important;
+  background: #0B1861 !important;
 }
 #divTwc #container .weather-display .scroll,
 #divTwc #container .weather-display .scroll .fixed,
 #divTwc #divTwcBottom {
-  background: #0a5bd3 !important;
+  background: #1C2A5D !important;
   color: #fff !important;
 }
 #divTwc #container .custom-weather-station.main .location,
@@ -47,7 +50,7 @@ body.kiosk #divQuery{display:none}
 body.kiosk #webamp-app{display:none !important}
 #webamp-app{max-width:100%;margin:0 auto;overflow:hidden}
 #divTwc{margin:0 auto}
-#divTwc #container{width:640px;height:480px;transform-origin:top left;overflow:hidden;background:#000}
+#divTwc #container{width:640px;height:480px;transform-origin:top left;overflow:hidden;background:#000;flex-shrink:0}
 body.kiosk #divTwc #container{width:640px;height:480px;transform-origin:top left}
 #divQuery{box-sizing:border-box}
 #divQuery #txtAddress{min-width:0}
@@ -74,4 +77,5 @@ body.kiosk::after{display:none !important}
    HTML itself, so it works even with a stale cached settings module). */
 body.kiosk{overflow-x:hidden}
 html.farm-kiosk #webamp-app{display:none!important}
+html.farm-kiosk #webamp{display:none!important}
 html.farm-kiosk #divQuery{display:none!important}

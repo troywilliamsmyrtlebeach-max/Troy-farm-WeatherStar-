@@ -60,7 +60,7 @@ body.kiosk #divQuery{display:none}
 body.kiosk #webamp-app{display:none !important}
 #webamp-app{max-width:100%;margin:0 auto;overflow:hidden}
 #divTwc{margin:0 auto}
-#divTwc #container{width:640px;height:480px;transform-origin:top left;overflow:hidden;background:#000}
+#divTwc #container{width:640px;height:480px;transform-origin:top left;overflow:hidden;background:#000;flex-shrink:0}
 body.kiosk #divTwc #container{width:640px;height:480px;transform-origin:top left}
 #divQuery{box-sizing:border-box}
 #divQuery #txtAddress{min-width:0}
@@ -87,4 +87,5 @@ body.kiosk::after{display:none !important}
    HTML itself, so it works even with a stale cached settings module). */
 body.kiosk{overflow-x:hidden}
 html.farm-kiosk #webamp-app{display:none!important}
+html.farm-kiosk #webamp{display:none!important}
 html.farm-kiosk #divQuery{display:none!important}

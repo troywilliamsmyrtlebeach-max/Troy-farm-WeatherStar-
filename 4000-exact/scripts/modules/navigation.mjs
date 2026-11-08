@@ -348,6 +348,7 @@ const navTo = (direction) => {
 
 		firstDisplay.navNext(msg.command.firstFrame);
 		firstDisplay.showCanvas();
+		if (typeof window !== 'undefined') window.__myrtleShownAt = Date.now();
 		return;
 	}
 	if (direction === msg.command.nextFrame) currentDisplay().navNext();
@@ -379,21 +380,47 @@ const loadDisplay = (direction) => {
 		idx = 2;
 		hideAllCanvases();
 		displays[idx].showCanvas(msg.command.firstFrame);
+		if (typeof window !== 'undefined') window.__myrtleShownAt = Date.now();
 		return;
 	}
-	for (let i = 0; i < totalDisplays; i += 1) {
-		// convert form simple 0-10 to start at current display index +/-1 and wrap
-		idx = wrap(curIdx + (i + 1) * direction, totalDisplays);
-		if (displays[idx].status === STATUS.loaded && displays[idx].timing.totalScreens > 0) break;
+	// MYRTLE-INTL ORDER (Troy Oct 31, corrected): 13 farm Current Conditions,
+	// 2 Latest Observations, 3 Hourly, 6 Regional Forecast (maps), 7 Local Forecast (written out), 9 Almanac,
+	// 8 Extended Forecast, 5 Travel Forecast, 10 Local Radar, then loop.
+	// Native navId order would put Travel (5) before Local (7) and Almanac
+	// (9) after Extended (8), so the cycle is stepped through this list.
+	const MYRTLE_ORDER = [13, 2, 3, 4, 6, 7, 9, 8, 5, 11, 12, 10, 0];
+	const curPos = MYRTLE_ORDER.indexOf(curIdx);
+	let newPos = -1;
+	for (let i = 0; i < MYRTLE_ORDER.length; i += 1) {
+		const candPos = (((curPos + (i + 1) * direction) % MYRTLE_ORDER.length) + MYRTLE_ORDER.length) % MYRTLE_ORDER.length;
+		const cand = MYRTLE_ORDER[candPos];
+		if (displays[cand] && displays[cand].status === STATUS.loaded && displays[cand].timing.totalScreens > 0) { idx = cand; newPos = candPos; break; }
 	}
-	// if new display index is less than current display a wrap occurred, test for reload timeout
-	if (idx <= curIdx && refreshCheck()) return;
+	if (idx === undefined) return;
+	// MYRTLE DWELL: Myrtle holds ~2-3 min/screen. Gate only the automatic
+	// advance (loadDisplay) so a screen that exhausted its internal frames
+	// early still stays up for at least 45 s total. Manual nav buttons go
+	// through navNext/navPrev on the display itself, not this gate, except
+	// at end-of-display where the same path is used (accepted tradeoff).
+	if (typeof window !== 'undefined' && window.__myrtleManualStep) { window.__myrtleManualStep = false; /* manual tap: bypass dwell gate */ }
+	else if (typeof window !== 'undefined' && window.__myrtleShownAt) {
+		const elapsed = Date.now() - window.__myrtleShownAt;
+		if (elapsed < 45000) {
+			if (window.__myrtleTimeout) clearTimeout(window.__myrtleTimeout);
+			window.__myrtleTimeout = setTimeout(() => { window.__myrtleTimeout = undefined; loadDisplay(direction); }, 45000 - elapsed);
+			return;
+		}
+	}
+	const wrapped = (direction > 0 && newPos < curPos) || (direction < 0 && newPos > curPos);
+	// if the order list wrapped, test for reload timeout
+	if (wrapped && refreshCheck()) return;
 	const newDisplay = displays[idx];
 	// hide all displays
 	hideAllCanvases();
 	// show the new display and navigate to an appropriate display
 	if (direction < 0) newDisplay.showCanvas(msg.command.lastFrame);
 	if (direction > 0) newDisplay.showCanvas(msg.command.firstFrame);
+	if (typeof window !== 'undefined') window.__myrtleShownAt = Date.now();
 };
 
 // get the current display index or value
@@ -432,12 +459,16 @@ const handleNavButton = (button) => {
 			setPlaying(false);
 			break;
 		case 'next':
-			setPlaying(false);
-			navTo(msg.command.nextFrame);
+			// Troy Oct 31 18:58: manual click-through MUST step display-to-display,
+			// immediately, every tap, while auto-cycle stays ON. Pause is the
+			// ONLY way to stop auto-cycle. Old navTo(nextFrame) only stepped
+			// internal frames, which looked unreliable / did nothing.
+			if (typeof window !== 'undefined') { window.__myrtleManualStep = true; if (window.__myrtleTimeout) { clearTimeout(window.__myrtleTimeout); window.__myrtleTimeout = undefined; } }
+			loadDisplay(1);
 			break;
 		case 'previous':
-			setPlaying(false);
-			navTo(msg.command.previousFrame);
+			if (typeof window !== 'undefined') { window.__myrtleManualStep = true; if (window.__myrtleTimeout) { clearTimeout(window.__myrtleTimeout); window.__myrtleTimeout = undefined; } }
+			loadDisplay(-1);
 			break;
 		case 'menu':
 			setPlaying(false);
@@ -465,6 +496,14 @@ const resize = () => {
 	const container = document.querySelector('#container');
 	if (!container) return;
 	const targetWidth = settings.wide.value ? 640 + 107 + 107 : 640;
+	// v=6 PANEL-FIT (Troy's phone): in kiosk #divTwc is display:flex, so
+	// #container is a flex item that SHRINKS to the viewport and its
+	// overflow:hidden clips the 640px screens. Pin it to the design width.
+	container.style.width = `${targetWidth}px`;
+	container.style.minWidth = `${targetWidth}px`;
+	container.style.flexShrink = '0';
+	container.style.flexGrow = '0';
+	container.style.flexBasis = `${targetWidth}px`;
 	const availWidth = document.documentElement.clientWidth || window.innerWidth;
 	const widthZoomPercent = availWidth / targetWidth;
 	const heightZoomPercent = (window.innerHeight) / 480;

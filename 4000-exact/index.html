@@ -27,7 +27,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=5" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=6" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -119,35 +119,64 @@
 .custom-weather-station.main .wind-container .wind-label{display:inline-block !important; width:45% !important; text-align:left !important;}
 .custom-weather-station.main .wind-container .wind-gusts{display:block !important; visibility:visible !important; font-size:18pt !important; margin-top:0 !important; margin-left:45% !important; text-align:left !important;}
 </style>
-<!-- MYRTLE-SKIN 2026-11-07 (v=5, STREAM-MATCH): International engine, Myrtle Beach / Weatherstar Channel look, pixel-matched to the YouTube 24/7 stream (youtube.com/live/VP7y4eGtYyw).
-     Header: purple top, orange-maroon middle, purple bottom strip. Emblem: rounded royal-blue square, thick chunky compact white letters THE / WEATHERSTAR / CHANNEL, fully visible. Body: stream dark navy. Ticker: dark navy, scrolling right-to-left, left-anchored. No scanlines, no music bar in kiosk. -->
+<!-- MYRTLE-SKIN 2026-11-07 (v=6, STREAM-MATCH): International engine, Myrtle Beach / Weatherstar Channel look, pixel-matched to the YouTube 24/7 stream (youtube.com/live/VP7y4eGtYyw).
+     Header: purple top, orange-maroon middle, purple bottom strip. Emblem: rounded royal-blue square, thick chunky compact white letters THE / WEATHERSTAR / CHANNEL, fully visible. Body: stream dark navy. Ticker: dark navy, CYCLING (one condition at a time, changes every 12s), left-anchored. No scanlines, no music bar in kiosk. -->
 <style>
 /* stage: black surround, 4:3 panel, never sideways scroll in kiosk */
 body{background:#000!important}
 #divTwc{background:#000!important}
 #container{position:relative}
+/* v=6 PANEL-FIT: in kiosk #divTwc is display:flex (upstream rule), so
+   #container is a flex item that SHRINKS to the viewport width and its
+   overflow:hidden then clips the 640px screens — the panel looked cut off
+   on Troy's phone. Pin the container to the design width, never shrink;
+   left-align the flex row so the scaled panel starts at x=0. */
+#divTwc #container{flex:0 0 640px!important;width:640px!important;min-width:640px!important}
+#divTwc.wide #container{flex-basis:854px!important;width:854px!important;min-width:854px!important}
+body.kiosk #divTwc{justify-content:flex-start!important;align-items:flex-start!important}
+/* v=6 WINAMP: Webamp renders its player into a separate #webamp div on
+   BODY, not inside #webamp-app — hiding #webamp-app alone left the bar
+   showing at the top. Hide the real player root in kiosk (music still
+   plays from TAP FOR SOUND / the player itself). */
+html.farm-kiosk #webamp{display:none!important}
 body.kiosk{overflow-x:hidden}
-/* header: purple top -> orange/maroon middle -> purple bottom strip (stream, pixel-sampled). #container-qualified so it beats the compiled "Final theme" gradient in main.css (same specificity, this <style> comes later). No overflow:hidden — that is what clipped the emblem. */
-#container .weather-display .header{background:linear-gradient(180deg,#150644 0%,#944B11 30%,#793815 55%,#652D21 78%,#1B0046 100%)!important;position:relative;overflow:visible;border-bottom:2px solid #a00}
-#container .weather-display .header .top,#container .weather-display .header .bottom{color:#FAFA2C!important;text-shadow:3px 3px 0 #000!important}
-#container .weather-display .header .date-time{color:#fff!important;text-shadow:2px 2px 0 #000!important}
+/* header: purple top -> orange/maroon middle -> purple bottom strip (stream, pixel-sampled). #divTwc #container-qualified so it beats exact main.css's own "Final theme" gradient (same 2-ID specificity, this <style> comes later). No overflow:hidden — that is what clipped the emblem. */
+#divTwc #container .weather-display .header{background:linear-gradient(180deg,#150644 0%,#944B11 30%,#793815 55%,#652D21 78%,#1B0046 100%)!important;position:relative;overflow:visible;border-bottom:2px solid #a00}
+#divTwc #container .weather-display .header .top,#divTwc #container .weather-display .header .bottom{color:#FAFA2C!important;text-shadow:3px 3px 0 #000!important}
+#divTwc #container .weather-display .header .date-time{color:#fff!important;text-shadow:2px 2px 0 #000!important}
 /* titles: chunky yellow, black shadow */
-.weather-display .header .title,.weather-display .header .title.single,.weather-display .header .title.dual{color:#FAFA2C!important;text-shadow:3px 3px 0 #000!important}
+#divTwc #container .weather-display .header .title,#divTwc #container .weather-display .header .title.single,#divTwc #container .weather-display .header .title.dual{color:#FAFA2C!important;text-shadow:3px 3px 0 #000!important}
 /* emblem (exact copy): the text emblem replaces the Logo3.png image inside .logo.
    Same sizing as the Channel copies: top:4px, 16px, ~68px tall, inside the 83px header. */
 .weather-display .header .logo{top:4px!important;left:6px!important}
 .weather-display .header .logo .twc-emblem{background:#0d47c2!important;border:3px solid #fff!important;border-radius:12px!important;box-shadow:3px 4px 6px rgba(0,0,0,.55)!important;padding:6px 4px!important;color:#fff!important;font-family:"Arial Narrow",Arial,sans-serif!important;font-size:16px!important;font-weight:900!important;line-height:1.05!important;letter-spacing:-.5px!important;text-align:center!important;white-space:nowrap!important}
 /* content panels: stream dark navy */
-#container .weather-display .main{background:#0B1861!important}
+#divTwc #container .weather-display .main{background:#0B1861!important}
 /* ticker: stream dark navy, scrolling right-to-left, left-anchored, never truncated.
    .text-layer is the full-width box; the marquee sweeps it from off-screen right to off-screen left in 12s, matching the 12s frame interval. text-align:left puts the text at the layer's left edge so it enters the band immediately. */
-#container .weather-display .scroll,#container .weather-display .scroll .fixed,#divTwcBottom{background:#1C2A5D!important;color:#fff!important}
+#divTwc #container .weather-display .scroll,#divTwc #container .weather-display .scroll .fixed,#divTwcBottom{background:#1C2A5D!important;color:#fff!important}
 .weather-display .scroll .fixed{text-align:left!important}
 .weather-display .scroll .fixed .text-layer,.weather-display .scroll .fixed .text-content{background:#1C2A5D!important;color:#fff!important}
-.weather-display .scroll .fixed .text-layer{animation:ws-marquee 12s linear infinite;top:50%}
-@keyframes ws-marquee{from{transform:translateX(640px) translateY(-50%)}to{transform:translateX(-100%) translateY(-50%)}}
+.weather-display .scroll .fixed .text-layer{top:50%}
 /* radar: hide the location weather widget that overlaps the map centre */
 #radar-html .custom-weather-marker,.custom-weather-marker{display:none!important}
+/* v=6 KLTX LOOP RADAR (Troy: radar like his library RetroCast Current
+   Radar): the NWS KLTX loop GIF itself — grey land, blue ocean, green/
+   yellow echoes, county lines + city names baked in. Shown up close
+   (cover crop on the coast) with the warning-legend bar and dBZ scale
+   re-added as overlays so they stay visible at this crop. */
+#radar-html .kltx-wrap{position:relative;width:100%;height:100%;overflow:hidden;background:#061c4c}
+#radar-html .kltx-wrap img.kltx-loop{width:100%;height:100%;object-fit:cover;object-position:50% 62%;display:block}
+#radar-html .kltx-warnbar{position:absolute;top:0;left:0;right:0;display:flex;gap:4px;padding:3px 6px;background:rgba(0,0,0,.78);font-family:Arial,sans-serif;font-size:11px;font-weight:700;line-height:1.2}
+#radar-html .kltx-warnbar span{padding:2px 6px;color:#fff;white-space:nowrap}
+#radar-html .kltx-warnbar .w-tornado{background:#e60000}
+#radar-html .kltx-warnbar .w-svr{background:#f0e000;color:#000}
+#radar-html .kltx-warnbar .w-flood{background:#00a000}
+#radar-html .kltx-warnbar .w-marine{background:#e67e00}
+#radar-html .kltx-tag{position:absolute;left:6px;bottom:42px;padding:3px 8px;background:rgba(2,16,53,.85);border:1px solid rgba(255,255,255,.4);color:#fff;font-family:Arial,sans-serif;font-size:13px;font-weight:700;text-shadow:1px 1px 0 #000}
+#radar-html .kltx-scale{position:absolute;left:6px;right:6px;bottom:24px;display:flex;align-items:center;gap:6px;padding:2px 6px;background:rgba(2,16,53,.85);color:#fff;font-family:Arial,sans-serif;font-size:11px;font-weight:700}
+#radar-html .kltx-scale i{flex:1;height:10px;background:linear-gradient(90deg,#00008b,#0000ff,#00ffff,#00ff00,#80ff00,#ffff00,#ff8000,#ff0000,#ff00ff,#800080)}
+#radar-html .kltx-dbz{position:absolute;left:6px;right:6px;bottom:6px;display:flex;justify-content:space-between;padding:1px 6px;background:rgba(2,16,53,.85);color:#fff;font-family:Arial,sans-serif;font-size:9px;font-weight:700}
 /* Latest Observations: full station names — the temp column starts at 230px, so the location gets 225px at 18pt (was 24pt/14 chars, truncated) */
 .weather-display .latest-observations.main .observation-row .location{font-size:18pt!important;max-width:225px!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 </style>
@@ -1382,7 +1411,7 @@ setInterval(function(){
 </script>
 
 <script>
-/* FARM-LAYOUT 2026-11-07 (STREAM-MATCH v=5): the 640x480 panel MUST fit the
+/* FARM-LAYOUT 2026-11-07 (STREAM-MATCH v=6): the 640x480 panel MUST fit the
    screen on a real phone — Troy's phone still showed the right side cut off
    on v=4. This runs from the page HTML itself (always fresh), not from a
    cached JS module: it scales #container from the top-left to fit the
@@ -1401,6 +1430,14 @@ setInterval(function(){
       if (scale < 1.0 || document.fullscreenElement || isKiosk || document.body.classList.contains('kiosk')) {
         container.style.transform = 'scale(' + scale + ')';
         container.style.transformOrigin = 'top left';
+        /* v=6 PANEL-FIT: pin the container to the design width (see CSS) —
+           flex-shrink alone in CSS is not enough if a stale stylesheet wins. */
+        container.style.width = targetWidth + 'px';
+        container.style.minWidth = targetWidth + 'px';
+        container.style.flexShrink = '0';
+        container.style.flexGrow = '0';
+        container.style.flexBasis = targetWidth + 'px';
+        if (divTwc) { divTwc.style.justifyContent = 'flex-start'; divTwc.style.alignItems = 'flex-start'; }
         container.style.marginBottom = (480 * (scale - 1)) + 'px';
         var scaledWidth = targetWidth * scale;
         container.style.marginLeft = availWidth > scaledWidth ? ((availWidth - scaledWidth) / 2) + 'px' : '0px';
@@ -1416,6 +1453,9 @@ setInterval(function(){
       document.documentElement.classList.add('farm-kiosk');
       var wa = document.getElementById('webamp-app');
       if (wa) wa.style.display = 'none';
+      /* v=6 WINAMP: the visible player lives in #webamp on BODY, not here. */
+      var wb = document.getElementById('webamp');
+      if (wb) wb.style.display = 'none';
       var dq = document.getElementById('divQuery');
       if (dq) dq.style.display = 'none';
     }

@@ -496,6 +496,14 @@ const resize = () => {
 	const container = document.querySelector('#container');
 	if (!container) return;
 	const targetWidth = settings.wide.value ? 640 + 107 + 107 : 640;
+	// v=6 PANEL-FIT (Troy's phone): in kiosk #divTwc is display:flex, so
+	// #container is a flex item that SHRINKS to the viewport and its
+	// overflow:hidden clips the 640px screens. Pin it to the design width.
+	container.style.width = `${targetWidth}px`;
+	container.style.minWidth = `${targetWidth}px`;
+	container.style.flexShrink = '0';
+	container.style.flexGrow = '0';
+	container.style.flexBasis = `${targetWidth}px`;
 	const availWidth = document.documentElement.clientWidth || window.innerWidth;
 	const widthZoomPercent = availWidth / targetWidth;
 	const heightZoomPercent = (window.innerHeight) / 480;

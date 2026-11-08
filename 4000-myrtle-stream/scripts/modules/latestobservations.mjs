@@ -8,22 +8,44 @@ import WeatherDisplay from './weatherdisplay.mjs';
 import { registerDisplay } from './navigation.mjs';
 
 
-// STREAM-MATCH 2026-11-07: full station names, never truncated mid-word.
-// Strip airport suffixes (" International Airport", " Airport") that only
-// waste column space, then allow up to 18 chars at 18pt (was 14).
-const cleanStationName = (city) => locationCleanup(city)
-	.replace(/ International Airport$/i, '')
-	.replace(/ Regional Airport$/i, '')
-	.replace(/ Airport$/i, '')
-	.trim()
-	.slice(0, 18);
+// STREAM-MATCH 2026-11-07 (v=6): TOWN names, never airport codes and never
+// cut mid-word. Known airport/county names map to their town; anything else
+// loses its "Airport" suffix, then truncates at a word boundary (max 18
+// chars, so "North Myrtle Beach" fits whole in the 225px location column).
+const TOWN_NAMES = {
+	'Conway Horry County Airport': 'Conway',
+	'Conway-Horry County Airport': 'Conway',
+	'North Myrtle Beach Grand Strand Airport': 'North Myrtle Beach',
+	'Grand Strand Airport': 'North Myrtle Beach',
+	'Myrtle Beach International Airport': 'Myrtle Beach',
+	'Wilmington International Airport': 'Wilmington',
+	'Columbus County Municipal Airport': 'Whiteville',
+	'Curtis L Brown Jr Field': 'Elizabethtown',
+	'Lumberton Regional Airport': 'Lumberton',
+	'Florence Regional Airport': 'Florence',
+	'Brunswick County': 'Southport',
+};
+const cleanStationName = (city) => {
+	const cleaned = locationCleanup(city || '');
+	const mapped = TOWN_NAMES[cleaned] || cleaned;
+	const stripped = mapped
+		.replace(/ International Airport$/i, '')
+		.replace(/ Regional Airport$/i, '')
+		.replace(/ Airport$/i, '')
+		.trim();
+	if (stripped.length <= 18) return stripped;
+	// Never cut mid-word: back up to the last space inside 18 chars.
+	const cut = stripped.slice(0, 18);
+	const lastSpace = cut.lastIndexOf(' ');
+	return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).trim();
+};
 
 class LatestObservations extends WeatherDisplay {
 	constructor(navId, elemId) {
 		super(navId, elemId, 'Latest Observations', false);
 
 		// constants
-		this.MaximumRegionalStations = 8; // Troy Oct 31 20:06: farm + 7 towns incl. N. Myrtle Beach
+		this.MaximumRegionalStations = 7; // Troy Oct 31 20:47: farm + 6 towns, Whiteville REMOVED
 		this.showOnProgress = false;
 	}
 
@@ -33,9 +55,9 @@ class LatestObservations extends WeatherDisplay {
 
 		// TROY SCREENSHOT (Oct 31 19:16): Latest Observations is EXACTLY these 7 towns,
 		// in this order, with live NWS readings — not the nearest-30 by distance.
-		//  Conway-Horry C = KHYW, Elizabethtown = KEYF (Curtis L Brown Jr Field, Elizabethtown NC),
-		//  Lumberton = KLBT, Myrtle Beach = KMYR, Southport = KSUT (Brunswick County, nearest to Southport),
-		//  Whiteville = KCPC, Wilmington = KILM. Wind is speed only, no MPH (screenshot style, already in drawCanvas).
+		//  Conway = KHYW, Lumberton = KLBT, Myrtle Beach = KMYR,
+		//  North Myrtle Beach = KCRE, Southport = KSUT (Brunswick County),
+		//  Wilmington = KILM. Wind is speed only, no MPH (screenshot style, already in drawCanvas).
 		// Troy Oct 31 19:32: farm FIRST, Elizabethtown DROPPED. Oct 31 20:06: N. Myrtle Beach ADDED — 7 towns + farm = 8 rows.
 		const SCREENSHOT_TOWNS = [
 			{ id: 'KHYW', city: 'Conway Horry County Airport' },
@@ -43,7 +65,6 @@ class LatestObservations extends WeatherDisplay {
 			{ id: 'KMYR', city: 'Myrtle Beach International Airport' },
 			{ id: 'KCRE', city: 'North Myrtle Beach Grand Strand Airport' },
 			{ id: 'KSUT', city: 'Southport' },
-			{ id: 'KCPC', city: 'Whiteville, Columbus County Municipal Airport' },
 			{ id: 'KILM', city: 'Wilmington International Airport' },
 		];
 		const regionalStations = SCREENSHOT_TOWNS;
@@ -51,16 +72,16 @@ class LatestObservations extends WeatherDisplay {
 		// get data for regional stations
 		// get first 7 stations
 		const actualConditions = [];
-		let lastStation = Math.min(regionalStations.length, 8);
+		let lastStation = Math.min(regionalStations.length, 7);
 		let firstStation = 0;
-		while (actualConditions.length < 8 && (lastStation) <= regionalStations.length && firstStation < regionalStations.length) {
+		while (actualConditions.length < 7 && (lastStation) <= regionalStations.length && firstStation < regionalStations.length) {
 			// eslint-disable-next-line no-await-in-loop
 			const someStations = await getStations(regionalStations.slice(firstStation, lastStation));
 
 			actualConditions.push(...someStations);
 			// update counters
 			firstStation += lastStation;
-			lastStation = Math.min(regionalStations.length + 1, firstStation + 8 - actualConditions.length);
+			lastStation = Math.min(regionalStations.length + 1, firstStation + 7 - actualConditions.length);
 		}
 
 		// Farm row FIRST, from the live farm payload (same data as Current Conditions).
@@ -108,7 +129,9 @@ class LatestObservations extends WeatherDisplay {
 			const	Temperature = Math.round(celsiusToFahrenheit(condition.temperature.value));
 			const WindSpeed = Math.round(kphToMph(condition.windSpeed.value));
 
-			const SCREENSHOT_NAMES = { KHYW: 'Conway-Horry C', KEYF: 'Elizabethtown', KLBT: 'Lumberton', KMYR: 'Myrtle Beach', KSUT: 'Southport', KCPC: 'Whiteville', KILM: 'Wilmington', FARM: 'CALABASH-FARM', KCRE: 'N. Myrtle Beach' };
+			// v=6: full TOWN names, never airport codes, never truncated
+			// mid-word — "Conway", "North Myrtle Beach" (not "Conway-Horry C" / "N. Myrtle Beach").
+			const SCREENSHOT_NAMES = { KHYW: 'Conway', KEYF: 'Elizabethtown', KLBT: 'Lumberton', KMYR: 'Myrtle Beach', KSUT: 'Southport', KCPC: 'Whiteville', KILM: 'Wilmington', FARM: 'CALABASH-FARM', KCRE: 'North Myrtle Beach' };
 			const fill = {
 				location: SCREENSHOT_NAMES[condition.StationId] || cleanStationName(condition.city),
 				temp: Temperature,
