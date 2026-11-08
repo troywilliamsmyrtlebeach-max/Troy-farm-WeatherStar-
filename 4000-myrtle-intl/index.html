@@ -12,6 +12,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0B1861" />
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="images/Logo192.png" />
   <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -27,7 +29,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=9" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=10" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -223,6 +225,14 @@ body #divTwc.wide #container{box-sizing:border-box!important;background-color:#0
 #farm-nav-bar button:active{background:#0d47c2!important}
 /* v=9 TV-CLEAN (Troy 2026-11-07: casting his phone to the TV shows the phone-only arrows AND the TAP FOR SOUND / FULL SCREEN buttons on the TV — the width-based hide cannot tell a cast phone from a phone). In TV mode (?tv=1 or ?arrows=off) hide EVERY control so the TV shows a clean broadcast picture: nav bar, sound button, fullscreen button. Clock, ticker, emblem and screens stay visible. */
 html.farm-tv #farm-nav-bar,html.farm-tv #farm-sound-btn,html.farm-tv #farm-fullscreen-btn{display:none!important}
+/* v=10 EMULATOR-ONLY (Troy 2026-11-07: take off the browser top bar and the
+   controls at the bottom — only the emulator itself on screen). In TV mode
+   hide EVERYTHING outside the emulator panel: the settings/share/info
+   sections below the panel, the search box, the Webamp slot, and any stray
+   line break, so the page is the panel and nothing else. The panel itself
+   (#divTwc) is never touched by this rule. */
+html.farm-tv body > :not(#divTwc):not(script){display:none!important}
+html.farm-tv body{background:#0B1861!important;margin:0!important}
 </style>
 
 <!-- RETROCAST-RADAR (Troy Oct 31 23:42): radar screen only, matching his
@@ -1615,11 +1625,49 @@ setInterval(function(){
     if (soundBtn) soundBtn.style.display = tvMode ? 'none' : '';
     var fsBtn = document.getElementById('farm-fullscreen-btn');
     if (fsBtn) fsBtn.style.display = tvMode ? 'none' : '';
+    /* v=10 EMULATOR-ONLY (re-asserted every tick, so a stale stylesheet can
+       never bring the below-panel sections back): in TV mode hide every
+       page-level element outside the emulator panel itself. */
+    if (tvMode) {
+      var farmHide = document.querySelectorAll('body > :not(#divTwc):not(script)');
+      for (var hi = 0; hi < farmHide.length; hi++) { farmHide[hi].style.display = 'none'; }
+      document.body.style.background = '#0B1861';
+      document.body.style.margin = '0';
+    }
   }
   applyLayout();
   window.addEventListener('resize', applyLayout);
   window.addEventListener('orientationchange', applyLayout);
   setInterval(applyLayout, 1000);
+})();
+
+/* FARM-FULLSCREEN-TAP v=10 (Troy 2026-11-07: take off the browser top bar —
+   only the emulator itself on screen). A web page cannot remove the
+   browser's own address bar by itself, but the Fullscreen API can hide it:
+   tap anywhere on the emulator panel to go fullscreen (address bar and
+   system UI go away); tap again to come back out. Taps on the emulator's
+   own controls (bottom nav icons, menu items, links, buttons) are left
+   alone so they keep working. The FULL SCREEN button does the same thing
+   and stays hidden in TV mode — on TV the tap is the way in. */
+(function () {
+  function farmToggleFullscreen() {
+    try {
+      if (document.fullscreenElement) { document.exitFullscreen(); return; }
+      var el = document.getElementById('divTwc');
+      if (!el) return;
+      var r = el.requestFullscreen || el.webkitRequestFullscreen;
+      if (r) r.call(el, { navigationUI: 'hide' });
+    } catch (e) {}
+  }
+  var twc = document.getElementById('divTwc');
+  if (twc) twc.addEventListener('click', function (e) {
+    var t = e.target;
+    if (t && t.closest && t.closest('#divTwcBottom, a, button, input, .item, .navButton')) return;
+    farmToggleFullscreen();
+  });
+  /* Best-effort URL-bar hide on mobile browsers (they collapse the bar on
+     scroll): nudge 1px once the page has laid out. */
+  window.addEventListener('load', function () { try { window.scrollTo(0, 1); } catch (e) {} });
 })();
 
 /* FARM-CLOCK v=7 (Troy 2026-11-07: exact right time, seconds clicking off):
