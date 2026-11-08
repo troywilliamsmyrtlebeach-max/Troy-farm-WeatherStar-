@@ -218,7 +218,7 @@ body #divTwc.wide #container{box-sizing:border-box!important;background-color:#0
    big PREV / PAUSE / NEXT bar under the panel, like his library RetroCast.
    Text buttons — the upstream image nav buttons are missing from the repo
    (images/nav/ does not exist), so they render 0x0 and invisible. */
-#farm-nav-bar{display:flex!important;gap:8px!important;width:100%!important;max-width:854px!important;margin:10px auto 0!important;padding:0 6px!important;box-sizing:border-box!important}
+#farm-nav-bar{display:flex;gap:8px;width:100%;max-width:854px;margin:10px auto 0;padding:0 6px;box-sizing:border-box}
 #farm-nav-bar button{flex:1!important;min-height:56px!important;font-family:Arial,sans-serif!important;font-size:26px!important;font-weight:900!important;letter-spacing:1px!important;color:#fff!important;background:#1C2A5D!important;border:3px solid #fff!important;border-radius:12px!important;cursor:pointer!important;text-shadow:2px 2px 0 #000!important;-webkit-tap-highlight-color:transparent!important}
 #farm-nav-bar button:active{background:#0d47c2!important}
 </style>
@@ -1260,6 +1260,12 @@ setInterval(function(){
          narrow (phone-width) screens. */
       var showArrows = arrowsParam === 'on' ? true : (arrowsParam === 'off' || tvParam === '1' ? false : (availWidth <= 900));
       if (divTwc) { if (isTvWide) divTwc.classList.add('wide'); else divTwc.classList.remove('wide'); }
+      /* v=8 TV-FILL: on a wide screen the scaled panel's positive bottom
+         margin makes the document taller than the viewport, so a scrollbar
+         appears and shrinks the viewport — the panel then never quite fills
+         the frame. Hide page scroll on TV (the panel + bar are all there is
+         to see in kiosk); phones are unaffected (their content fits). */
+      document.body.style.overflow = isTvWide ? 'hidden' : '';
       if (scale < 1.0 || isTvWide || document.fullscreenElement || isKiosk || document.body.classList.contains('kiosk')) {
         container.style.transform = 'scale(' + scale + ')';
         container.style.transformOrigin = 'top left';
