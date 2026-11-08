@@ -29,7 +29,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=11" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=12" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -177,7 +177,8 @@ body.kiosk{overflow-x:hidden}
 #divTwc #container .weather-display .header .title,#divTwc #container .weather-display .header .title.single,#divTwc #container .weather-display .header .title.dual{color:#FAFA2C!important;text-shadow:3px 3px 0 #000!important}
 /* emblem: rounded royal-blue square, thick chunky compact letters, fully visible.
    Upstream .logo sits at top:30px left:50px in an 83px header; the old 18px emblem was ~86px tall so CHANNEL fell behind the body panel. Now top:4px, 16px, ~68px tall -> bottom ~72px, inside the header. */
-.weather-display .header .logo.emblem{background:#0d47c2!important;border:3px solid #fff!important;border-radius:12px!important;box-shadow:3px 4px 6px rgba(0,0,0,.55)!important;padding:6px 4px!important;color:#fff!important;font-family:"Arial Narrow",Arial,sans-serif!important;font-size:16px!important;font-weight:900!important;line-height:1.05!important;letter-spacing:-.5px!important;text-align:center!important;white-space:nowrap!important;left:6px!important;top:4px!important}
+/* v=12 COMPACT EMBLEM (Troy 2026-11-08: the Channel emblem looked stretched — measured 130.6x68.4 design px, ratio 1.91. Now 12px type with taller padding so the blue box is square-ish, three lines tight and compact, fully visible. International keeps WEATHER/STAR/4000+. */
+.weather-display .header .logo.emblem{background:#0d47c2!important;border:3px solid #fff!important;border-radius:12px!important;box-shadow:3px 4px 6px rgba(0,0,0,.55)!important;padding:16px 4px!important;color:#fff!important;font-family:"Arial Narrow",Arial,sans-serif!important;font-size:12px!important;font-weight:900!important;line-height:1.12!important;letter-spacing:-1px!important;text-align:center!important;white-space:nowrap!important;left:6px!important;top:4px!important}
 .weather-display .header .logo.emblem img{display:none!important}
 /* content panels: stream dark navy */
 #container .weather-display .main{background:#0B1861!important}
@@ -233,7 +234,7 @@ html.farm-tv #farm-nav-bar,html.farm-tv #farm-sound-btn,html.farm-tv #farm-fulls
    line break, so the page is the panel and nothing else. The panel itself
    (#divTwc) is never touched by this rule. */
 html.farm-tv body > :not(#divTwc):not(script){display:none!important}
-html.farm-tv body{background:#0B1861!important;margin:0!important}
+html.farm-tv body{margin:0!important}
 /* v=11 TV-FIT (Troy 2026-11-07: for the TV - move the emblem down a hair more
    and raise the ticker text a little more so it all fits the TV screen
    perfectly). TV mode only, small nudges: emblem top 4px -> 8px (bottom
@@ -260,6 +261,13 @@ html.farm-tv .weather-display .scroll .fixed .text-layer{top:46%!important}
 body, body.kiosk { background: linear-gradient(180deg, #3A1428 0%, #7A3010 30%, #A64707 60%, #C63F00 100%) !important; }
 #divTwc, #divTwcBottom { background: transparent !important; }
 html.farm-tv body { background: linear-gradient(180deg, #3A1428 0%, #7A3010 30%, #A64707 60%, #C63F00 100%) !important; }
+/* v=12 ORANGE FRAME (Troy 2026-11-08: the orange was only on the body behind
+   the panel — invisible on TV where the 854px widescreen panel filled
+   edge-to-edge, and dark maroon at the top of the long phone page. Now the
+   panel itself wears the sunset-orange gradient as a 10px frame on every
+   screen, phone and TV, and the TV panel is 4:3 again so the orange body
+   gradient shows as side bars. */
+#container{border:10px solid transparent!important;border-image:linear-gradient(180deg,#3A1428 0%,#7A3010 30%,#A64707 60%,#C63F00 100%) 1!important;}
 </style>
 
 <!-- RETROCAST-RADAR (Troy Oct 31 23:42): radar screen only, matching his
@@ -1480,12 +1488,38 @@ try {
 
 <script>
 document.addEventListener('DOMContentLoaded', function(){
-  var a = new Audio('../fair-weather.mp3'); a.loop = true;
+  /* v=12 MUSIC PLAYLIST (Troy 2026-11-08: not always the Fair Weather track —
+     play what is on the International / Myrtle Beach stream: the Webamp
+     Trammell Starks playlist, shuffled, one track after another. One tap
+     starts it; it keeps playing across screens. Fair Weather is track 1
+     of the 26, so it still comes around. */
+  var tracks = [{"artist": "Trammell Starks", "title": "Fair Weather", "url": "../fair-weather.mp3"}, {"artist": "Trammell Starks", "title": "Lazy Days", "url": "https://ia802804.us.archive.org/26/items/weatherscancompletecollection/01%20Lazy%20Days.mp3"}, {"artist": "Trammell Starks", "title": "Beach Frolic", "url": "https://archive.org/download/weatherscancompletecollection/02%20Beach%20Frolic.mp3"}, {"artist": "Trammell Starks", "title": "Good Ole Days", "url": "https://ia802804.us.archive.org/26/items/weatherscancompletecollection/02%20Good%20Ole%20Days.mp3"}, {"artist": "Trammell Starks", "title": "Jumpin'", "url": "https://ia802804.us.archive.org/26/items/weatherscancompletecollection/03%20Jumpin_.mp3"}, {"artist": "Trammell Starks", "title": "Winter Tundra", "url": "https://archive.org/download/weatherscancompletecollection/03%20Winter%20Tundra.mp3"}, {"artist": "Trammell Starks", "title": "Life", "url": "https://archive.org/download/weatherscancompletecollection/04%20Life.mp3"}, {"artist": "Trammell Starks", "title": "Rainy Days", "url": "https://archive.org/download/weatherscancompletecollection/04%20Rainy%20Days.mp3"}, {"artist": "Trammell Starks", "title": "Easy Times", "url": "https://archive.org/download/weatherscancompletecollection/05%20Easy%20Times.mp3"}, {"artist": "Trammell Starks", "title": "Midnight Cruise", "url": "https://archive.org/download/weatherscancompletecollection/05%20Midnight%20Cruise.mp3"}, {"artist": "Trammell Starks", "title": "Evening", "url": "https://archive.org/download/weatherscancompletecollection/06%20Evening.mp3"}, {"artist": "Trammell Starks", "title": "Tropical Breeze", "url": "https://archive.org/download/weatherscancompletecollection/06%20Tropical%20Breeze.mp3"}, {"artist": "Trammell Starks", "title": "Going Home", "url": "https://archive.org/download/weatherscancompletecollection/07%20Going%20Home.mp3"}, {"artist": "Trammell Starks", "title": "Smooth Sailing", "url": "https://archive.org/download/weatherscancompletecollection/07%20Smooth%20Sailing.mp3"}, {"artist": "Trammell Starks", "title": "A New Day", "url": "https://archive.org/download/weatherscancompletecollection/08%20A%20New%20Day.mp3"}, {"artist": "Trammell Starks", "title": "Brighter Days", "url": "https://archive.org/download/weatherscancompletecollection/08%20Brighter%20Days.mp3"}, {"artist": "Trammell Starks", "title": "Reflections In Time", "url": "https://archive.org/download/weatherscancompletecollection/09%20Reflections%20In%20Time.mp3"}, {"artist": "Trammell Starks", "title": "The Setting Sun", "url": "https://archive.org/download/weatherscancompletecollection/09%20The%20Setting%20Sun.mp3"}, {"artist": "Trammell Starks", "title": "Do You Believe?", "url": "https://archive.org/download/weatherscancompletecollection/10%20Do%20You%20Believe.mp3"}, {"artist": "Trammell Starks", "title": "Memories Of The Past", "url": "https://archive.org/download/weatherscancompletecollection/10%20Memories%20Of%20The%20Past.mp3"}, {"artist": "Trammell Starks", "title": "Jamaican Jam", "url": "https://archive.org/download/weatherscancompletecollection/11%20Jamaican%20Jam.mp3"}, {"artist": "Trammell Starks", "title": "Late Nite Cafe", "url": "https://archive.org/download/weatherscancompletecollection/11%20Late%20Nite%20Cafe.mp3"}, {"artist": "Trammell Starks", "title": "Good Times", "url": "https://archive.org/download/weatherscancompletecollection/12%20Good%20Times.mp3"}, {"artist": "Trammell Starks", "title": "The End Of The Journey", "url": "https://archive.org/download/weatherscancompletecollection/12%20The%20End%20Of%20The%20Journey.mp3"}, {"artist": "Trammell Starks", "title": "A Little Jazz", "url": "https://archive.org/download/weatherscancompletecollection/13%20A%20Little%20Jazz.mp3"}, {"artist": "Trammell Starks", "title": "Care Free", "url": "https://archive.org/download/weatherscancompletecollection/13%20Care%20Free.mp3"}];
+  var order = tracks.map(function(_, i){ return i; });
+  for (var s = order.length - 1; s > 0; s--) { var j = Math.floor(Math.random() * (s + 1)); var t = order[s]; order[s] = order[j]; order[j] = t; }
+  var pos = 0;
+  var wantPlay = false;
+  var fails = 0;
+  var a = new Audio();
   var b = document.createElement('button');
   b.id = 'farm-sound-btn';
-  b.textContent = 'TAP FOR SOUND — FAIR WEATHER MUSIC';
+  b.textContent = 'TAP FOR SOUND — TAP FOR MUSIC';
   b.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:9999;padding:10px 14px;font-weight:bold;background:#003366;color:#fff;border:2px solid #fff;border-radius:6px;';
-  b.onclick = function(){ if(a.paused){ var p=a.play(); if(p&&p.then){ p.then(function(){ b.textContent='NOW PLAYING: FAIR WEATHER — TAP TO MUTE'; }).catch(function(){ b.textContent='TAP FOR SOUND — TAP TO TRY AGAIN'; }); } else { b.textContent='NOW PLAYING: FAIR WEATHER — TAP TO MUTE'; } } else { a.pause(); b.textContent='TAP FOR SOUND — FAIR WEATHER MUSIC'; } };
+  function label(){ var tr = tracks[order[pos]]; return 'NOW PLAYING: ' + tr.artist + ' — ' + tr.title + ' — TAP TO MUTE'; }
+  function loadTrack(){ a.src = tracks[order[pos]].url; }
+  function tryPlay(tries){
+    var p = a.play();
+    if (p && p.then) {
+      p.then(function(){ fails = 0; b.textContent = label(); }).catch(function(){
+        fails++;
+        if (tries > 0 && fails < 8) { pos = (pos + 1) % order.length; loadTrack(); tryPlay(tries - 1); }
+        else { b.textContent = 'TAP FOR SOUND — TAP TO TRY AGAIN'; }
+      });
+    } else { b.textContent = label(); }
+  }
+  loadTrack();
+  a.addEventListener('ended', function(){ if (!wantPlay) return; pos = (pos + 1) % order.length; loadTrack(); tryPlay(3); });
+  a.addEventListener('error', function(){ if (!wantPlay || fails >= 8) return; fails++; pos = (pos + 1) % order.length; loadTrack(); tryPlay(3); });
+  b.onclick = function(){ if (a.paused) { wantPlay = true; tryPlay(3); } else { wantPlay = false; a.pause(); b.textContent = 'TAP FOR SOUND — TAP TO RESUME'; } };
   document.body.appendChild(b);
 });
 
@@ -1593,15 +1627,25 @@ setInterval(function(){
          did before. On a phone (portrait) keep the 640px panel — the cap
          never binds there, so the phone fit is untouched. */
       var isTvWide = (availWidth / availHeight) > 1.34;
-      var targetWidth = isTvWide ? 854 : 640;
-      var scale = isTvWide ? Math.min(availWidth / targetWidth, availHeight / 480)
-        : Math.min(availWidth / targetWidth, availHeight / 480, 1.6);
+      /* v=12 ORANGE FRAME (Troy 2026-11-08): the panel is 4:3 again on TV —
+         the 854px widescreen stretch filled the whole TV so the orange edges
+         had nowhere to show. Now the 640x480 panel fits the screen height
+         and centers, so the sunset-orange body gradient shows as side bars,
+         and the panel itself wears a 10px orange-gradient frame (border-image)
+         on every screen, phone and TV. */
+      var framePx = 10;
+      var targetWidth = 640;
+      var scale = isTvWide ? (availHeight / (480 + 2 * framePx))
+        : Math.min(availWidth / targetWidth, availHeight / (480 + 2 * framePx), 1.6);
+      var totalW = (targetWidth + 2 * framePx) * scale;
+      if (totalW > availWidth) { scale = availWidth / (targetWidth + 2 * framePx); totalW = availWidth; }
+      var frameScreen = framePx * scale;
       /* v=8 ARROWS (Troy): arrows are for phone only — hidden on TV and on
          the YouTube stream (both are wide screens). ?arrows=off / ?tv=1
          hides them, ?arrows=on forces them; otherwise shown only on
          narrow (phone-width) screens. */
       var showArrows = arrowsParam === 'on' ? true : (arrowsParam === 'off' || tvParam === '1' ? false : (availWidth <= 900));
-      if (divTwc) { if (isTvWide) divTwc.classList.add('wide'); else divTwc.classList.remove('wide'); }
+      if (divTwc) { divTwc.classList.remove('wide'); } /* v=12: 4:3 panel on TV — no widescreen stretch, so the orange side bars show */
       /* v=8 TV-FILL: on a wide screen the scaled panel's positive bottom
          margin makes the document taller than the viewport, so a scrollbar
          appears and shrinks the viewport — the panel then never quite fills
@@ -1619,12 +1663,12 @@ setInterval(function(){
         container.style.flexGrow = '0';
         container.style.flexBasis = targetWidth + 'px';
         if (divTwc) { divTwc.style.justifyContent = 'flex-start'; divTwc.style.alignItems = 'flex-start'; }
-        container.style.marginBottom = (480 * (scale - 1)) + 'px';
+        container.style.marginBottom = ((480 + 2 * framePx) * (scale - 1)) + 'px';
         var scaledWidth = targetWidth * scale;
-        container.style.marginLeft = availWidth > scaledWidth ? ((availWidth - scaledWidth) / 2) + 'px' : '0px';
+        container.style.marginLeft = availWidth > totalW ? ((availWidth - totalW) / 2) + 'px' : '0px';
         /* v=7 FARM-NAV: keep the PREV/PAUSE/NEXT bar exactly under the scaled panel. */
         var farmBar = document.getElementById('farm-nav-bar');
-        if (farmBar) { farmBar.style.width = scaledWidth + 'px'; farmBar.style.marginLeft = container.style.marginLeft; farmBar.style.marginRight = '0px'; farmBar.style.display = showArrows ? 'flex' : 'none'; }
+        if (farmBar) { farmBar.style.width = scaledWidth + 'px'; farmBar.style.marginLeft = ((parseFloat(container.style.marginLeft) || 0) + frameScreen) + 'px'; farmBar.style.marginRight = '0px'; farmBar.style.display = showArrows ? 'flex' : 'none'; }
       } else {
         container.style.transform = 'unset';
         container.style.transformOrigin = '';
@@ -1660,7 +1704,6 @@ setInterval(function(){
     if (tvMode) {
       var farmHide = document.querySelectorAll('body > :not(#divTwc):not(script)');
       for (var hi = 0; hi < farmHide.length; hi++) { farmHide[hi].style.display = 'none'; }
-      document.body.style.background = '#0B1861';
       document.body.style.margin = '0';
     }
   }
