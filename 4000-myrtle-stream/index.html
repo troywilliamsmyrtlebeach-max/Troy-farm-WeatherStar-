@@ -1108,7 +1108,7 @@ try {
     Last Update: <span id="customSpanLastRefresh">(None)</span><br />
   </div>
 
-<!-- STREAM-CLEAN: Webamp music player removed entirely (video-only stream feed, silent) -->
+<!-- STREAM-CLEAN: Webamp music player removed entirely (video-only stream feed). Fair Weather music comes from the TAP FOR SOUND button (v=11) - Webamp itself stays out. -->
   <script>
     (function () {
       // Parse bootstrapped JSON from a dedicated script tag to avoid template parsing issues
@@ -1168,7 +1168,22 @@ try {
   </script>
 
 <script>
-<!-- STREAM-CLEAN: Fair Weather tap-to-play button removed (silent stream feed) -->
+<!-- v=11 MUSIC (Troy 2026-11-07: make ALL of them play music - the stream copy
+   gets the same Fair Weather tap-to-play button as the Channel and
+   International copies. One tap starts the Fair Weather MP3, looped; it is a
+   page-level Audio element, so it keeps playing across screen changes.
+   The button is hidden in TV mode by the v=9 farm-tv rules, but hiding the
+   button never pauses the audio - start it on the phone first, then cast.
+   No autoplay: browsers need one tap.) -->
+document.addEventListener('DOMContentLoaded', function(){
+  var a = new Audio('../fair-weather.mp3'); a.loop = true;
+  var b = document.createElement('button');
+  b.id = 'farm-sound-btn';
+  b.textContent = 'TAP FOR SOUND — FAIR WEATHER MUSIC';
+  b.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:9999;padding:10px 14px;font-weight:bold;background:#003366;color:#fff;border:2px solid #fff;border-radius:6px;';
+  b.onclick = function(){ if(a.paused){ a.play(); b.textContent='NOW PLAYING: FAIR WEATHER — TAP TO MUTE'; } else { a.pause(); b.textContent='TAP FOR SOUND — FAIR WEATHER MUSIC'; } };
+  document.body.appendChild(b);
+});
 
 
 // FARM PAGES: images/fonts were not pushed to Pages (binary, connector is
