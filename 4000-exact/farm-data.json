@@ -1,16 +1,1 @@
-{
-  "locationCity": "CALABASH-FARM AT BRUNSWICK",
-  "windDirection": "SW",
-  "windSpeed": 0.0,
-  "windGust": 0.0,
-  "humidity": 99,
-  "feelsLike": 12.2,
-  "dewPoint": 11.7,
-  "temperature": 12.2,
-  "conditionText": 3,
-  "uvIndex": null,
-  "visibility": 16.09,
-  "pressure": 1010.5,
-  "source": "Fresh OSOILM row 8:41 PM EST Nov 7 2026 (WU dashboard unavailable); 54F Overcast, wind SW calm, RH 99%, pressure 29.84 inHg. Sky from Open-Meteo farm WMO code 3; visibility 10 mi from KCRE.",
-  "rainTodayIn": 0.02
-}
+{"conditionText":3,"dewPoint":10.6,"feelsLike":10.6,"humidity":99,"locationCity":"CALABASH-FARM AT BRUNSWICK","pressure":1011.2,"rainTodayIn":0.02,"source":"Fresh OSOILM row 10:11 PM EST Nov 7 2026 (WU dashboard unavailable/rate-limited); 51F, dewpoint 51F, wind S calm, RH 99%, pressure 29.86 inHg. Sky unchanged from earlier row (Overcast, conditionText 3); visibility 10 mi from KCRE.","temperature":10.6,"uvIndex":null,"visibility":16.09,"windDirection":"S","windGust":0.0,"windSpeed":0.0}
