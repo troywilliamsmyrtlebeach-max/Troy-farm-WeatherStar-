@@ -1,17 +1,17 @@
 {
   "conditionText": 0,
-  "dewPoint": 8.89,
-  "feelsLike": 14.44,
-  "humidity": 68,
-  "lastUpdated": "2026-11-08T10:56:00-05:00",
+  "dewPoint": 9.44,
+  "feelsLike": 15.56,
+  "humidity": 66,
+  "lastUpdated": "2026-11-08T11:11:00-05:00",
   "locationCity": "CALABASH-FARM AT BRUNSWICK",
-  "pressure": 1013.2,
+  "pressure": 1012.9,
   "rainTodayIn": 0.0,
-  "source": "OSOILM CALABASH-FARM AT BRUNSWICK 10:56 AM EST Nov 8 2026: 58F, feels 58F, Sunny/Clear, SSW 2 mph, RH 68%, dewpoint 48F, pressure 29.92 inHg, visibility 10 mi, rain today 0.00 in. Gust 4 mph (OSOILM farm row). WU bot-blocked all retries.",
-  "temperature": 14.44,
+  "source": "OSOILM CALABASH-FARM AT BRUNSWICK 11:11 AM EST Nov 8 2026: 60F, feels 60F, Sunny/Clear, S 0 mph, RH 66%, dewpoint 49F, pressure 29.91 inHg, visibility 10 mi, rain today 0.00 in. Gust 4 mph (OSOILM farm row). WU bot-blocked all retries.",
+  "temperature": 15.56,
   "uvIndex": null,
   "visibility": 16.09,
-  "windDirection": "SSW",
+  "windDirection": "S",
   "windGust": 6.44,
-  "windSpeed": 3.22
+  "windSpeed": 0.0
 }
