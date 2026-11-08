@@ -523,7 +523,9 @@ const resize = () => {
 	container.style.flexGrow = '0';
 	container.style.flexBasis = `${targetWidth}px`;
 	const availWidth = document.documentElement.clientWidth || window.innerWidth;
-	const widthZoomPercent = availWidth / targetWidth;
+	// v=18 TV-ZOOM (scale alignment): same 32px width reserve as the inline
+	// FARM-LAYOUT script, so the orange side bars still show on a real TV.
+	const widthZoomPercent = (tvMode && isTvWide) ? (availWidth - 32) / targetWidth : availWidth / targetWidth;
 	const heightZoomPercent = (window.innerHeight) / 480;
 
 	const scale = isTvWide ? Math.min(widthZoomPercent, heightZoomPercent) : Math.min(widthZoomPercent, heightZoomPercent, 1.6);

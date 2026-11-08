@@ -1593,10 +1593,18 @@ setInterval(function(){
          panel leaves 84px at the bottom so the bar fits on screen. */
       var showArrows = arrowsParam === 'on' ? true : (arrowsParam === 'off' || tvParam === '1' ? false : (availWidth <= 1200 || navigator.maxTouchPoints > 0));
       var barReserve = showArrows ? 84 : 0;
-      var scale = isTvWide ? Math.max(0.2, (availHeight - barReserve) / (480 + 2 * framePx))
+      /* v=18 TV-ZOOM (scale alignment): in wide mode #container is
+         box-sizing:border-box, so the 10px frame sits INSIDE the 854x480
+         design box — the true design size is 854x480, not 874x500. Using
+         500/874 under-scales (43px gap at the bottom of a 1080 TV, lopsided
+         orange bars: 16px left, 59px right). Use the true dims here, and
+         keep a 32px width reserve so the orange side bars still show. */
+      var designW = (tvMode && isTvWide) ? targetWidth : (targetWidth + 2 * framePx);
+      var designH = (tvMode && isTvWide) ? 480 : (480 + 2 * framePx);
+      var scale = isTvWide ? Math.max(0.2, Math.min((availHeight - barReserve) / designH, (availWidth - ((tvMode && isTvWide) ? 32 : 0)) / designW))
         : Math.min(availWidth / targetWidth, availHeight / (480 + 2 * framePx), 1.6);
-      var totalW = (targetWidth + 2 * framePx) * scale;
-      if (totalW > availWidth) { scale = availWidth / (targetWidth + 2 * framePx); totalW = availWidth; }
+      var totalW = designW * scale;
+      if (totalW > availWidth) { scale = availWidth / designW; totalW = availWidth; }
       var frameScreen = framePx * scale;
       /* v=18 TV-ZOOM: the 'wide' class (854px container) is back in TV mode
          on a wide screen, so the emulator fills the TV; everywhere else the
@@ -1619,7 +1627,7 @@ setInterval(function(){
         container.style.flexGrow = '0';
         container.style.flexBasis = targetWidth + 'px';
         if (divTwc) { divTwc.style.justifyContent = 'flex-start'; divTwc.style.alignItems = 'flex-start'; }
-        container.style.marginBottom = ((480 + 2 * framePx) * (scale - 1)) + 'px';
+        container.style.marginBottom = (designH * (scale - 1)) + 'px';
         var scaledWidth = targetWidth * scale;
         container.style.marginLeft = availWidth > totalW ? ((availWidth - totalW) / 2) + 'px' : '0px';
         /* v=7 FARM-NAV: keep the PREV/PAUSE/NEXT bar exactly under the scaled panel. */
