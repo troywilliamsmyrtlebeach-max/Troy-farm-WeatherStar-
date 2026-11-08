@@ -29,7 +29,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=17" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=18" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -1572,7 +1572,16 @@ setInterval(function(){
          and the panel itself wears a 10px orange-gradient frame (border-image)
          on every screen, phone and TV. */
       var framePx = 10;
-      var targetWidth = 640;
+      /* v=18 TV-ZOOM (Troy 2026-11-08: "zoomed more in on the TV" — black
+         still showed around the TV. The 4:3 panel in the 915x412 cast view
+         was only 544px wide, so the emulator looked small in the middle of
+         the TV. In TV mode on a wide screen, restore the app's own
+         widescreen 854px container (the v=8 wide mode): the 640x480 content
+         is NOT stretched or cropped — the extra 107px strips on each side
+         are part of the container — and the whole emulator scales to fill
+         the viewport height, so it fills the TV. Phone links (no ?tv=1)
+         keep the 640 panel, untouched. */
+      var targetWidth = (tvMode && isTvWide) ? 854 : 640;
       /* v=16 ARROWS IN LANDSCAPE (Troy 2026-11-08: "no arrows on neither
          one" — he taps the phone links with the phone SIDEWAYS, landscape
          ~915px wide. The old gate (availWidth <= 900) hid the bar, and
@@ -1589,7 +1598,10 @@ setInterval(function(){
       var totalW = (targetWidth + 2 * framePx) * scale;
       if (totalW > availWidth) { scale = availWidth / (targetWidth + 2 * framePx); totalW = availWidth; }
       var frameScreen = framePx * scale;
-      if (divTwc) { divTwc.classList.remove('wide'); } /* v=12: 4:3 panel on TV — no widescreen stretch, so the orange side bars show */
+      /* v=18 TV-ZOOM: the 'wide' class (854px container) is back in TV mode
+         on a wide screen, so the emulator fills the TV; everywhere else the
+         4:3 panel stays (v=12), so the orange side bars still show there. */
+      if (divTwc) { if (tvMode && isTvWide) { divTwc.classList.add('wide'); } else { divTwc.classList.remove('wide'); } }
       /* v=8 TV-FILL: on a wide screen the scaled panel's positive bottom
          margin makes the document taller than the viewport, so a scrollbar
          appears and shrinks the viewport — the panel then never quite fills

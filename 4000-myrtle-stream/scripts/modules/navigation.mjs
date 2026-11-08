@@ -504,9 +504,16 @@ const resize = () => {
 	// never disagree.)
 	const availWidthEarly = document.documentElement.clientWidth || window.innerWidth;
 	const isTvWide = (availWidthEarly / window.innerHeight) > 1.34;
-	const targetWidth = isTvWide ? 854 : 640;
+	// v=18 TV-ZOOM (Troy 2026-11-08: "zoomed more in on the TV"): the 854px
+	// widescreen container applies ONLY in TV mode (?tv=1) on a wide screen.
+	// The inline FARM-LAYOUT script decides the same way every second, so
+	// the two can never disagree. Phone links keep the 640px panel.
+	const tvParams = new URLSearchParams(window.location.search);
+	const tvArrows = tvParams.get('arrows');
+	const tvMode = tvArrows === 'on' ? false : (tvArrows === 'off' || tvParams.get('tv') === '1');
+	const targetWidth = (tvMode && isTvWide) ? 854 : 640;
 	const divTwcEl = document.querySelector('#divTwc');
-	if (divTwcEl) { if (isTvWide) divTwcEl.classList.add('wide'); else divTwcEl.classList.remove('wide'); }
+	if (divTwcEl) { if (tvMode && isTvWide) divTwcEl.classList.add('wide'); else divTwcEl.classList.remove('wide'); }
 	// v=6 PANEL-FIT (Troy's phone): in kiosk #divTwc is display:flex, so
 	// #container is a flex item that SHRINKS to the viewport and its
 	// overflow:hidden clips the 640px screens. Pin it to the design width.
