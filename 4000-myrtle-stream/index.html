@@ -27,7 +27,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=4" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=5" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -145,34 +145,39 @@
 .weather-display .location, .custom-weather-station .location{font-size:16pt !important; text-align:left !important;}
 </style>
 
-<!-- MYRTLE-SKIN: International engine, Myrtle Beach / Weatherstar Channel look.
-     Header maroon/red-to-orange gradient + diagonal swoosh, blue emblem box,
-     chunky yellow titles, white clock, black 4:3 stage with CRT scanlines,
-     blue ticker band, blue watermark lower-right. No Mapbox key, no new images. -->
+<!-- MYRTLE-SKIN 2026-11-07 (v=5, STREAM-MATCH): International engine, Myrtle Beach / Weatherstar Channel look, pixel-matched to the YouTube 24/7 stream (youtube.com/live/VP7y4eGtYyw).
+     Header: purple top, orange-maroon middle, purple bottom strip. Emblem: rounded royal-blue square, thick chunky compact white letters THE / WEATHERSTAR / CHANNEL, fully visible. Body: stream dark navy. Ticker: dark navy, scrolling right-to-left, left-anchored. No scanlines, no music bar in kiosk. -->
 <style>
-/* stage: black surround, 4:3 panel, scanlines (pointer-events none, above content, below nav buttons) */
+/* stage: black surround, 4:3 panel, never sideways scroll in kiosk */
 body{background:#000!important}
 #divTwc{background:#000!important}
 #container{position:relative}
-#container::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:900;background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px)}
-/* header: maroon -> red -> orange, diagonal swoosh */
-.weather-display .header{background:linear-gradient(90deg,#3b1f5e 0%,#7a3a1a 48%,#e8730c 100%)!important;position:relative;overflow:hidden}
-.weather-display .header::after{content:"";position:absolute;right:22%;top:0;width:60px;height:100%;background:#f60;transform:skewX(-24deg);opacity:.55;pointer-events:none}
-/* emblem: white text, blue rounded box, thin white outline, replaces Logo3.png */
-.weather-display .header .logo.emblem{background:#0a3d9e!important;border:2px solid #fff!important;border-radius:12px!important;padding:6px 10px!important;color:#fff!important;font-family:"Star4000",monospace!important;font-size:11px!important;line-height:1.2!important;letter-spacing:1px!important;text-align:center!important;white-space:nowrap!important}
-.weather-display .header .logo.emblem img{display:none!important}
+body.kiosk{overflow-x:hidden}
+/* header: purple top -> orange/maroon middle -> purple bottom strip (stream, pixel-sampled). #container-qualified so it beats the compiled "Final theme" gradient in main.css (same specificity, this <style> comes later). No overflow:hidden — that is what clipped the emblem. */
+#container .weather-display .header{background:linear-gradient(180deg,#150644 0%,#944B11 30%,#793815 55%,#652D21 78%,#1B0046 100%)!important;position:relative;overflow:visible;border-bottom:2px solid #a00}
+#container .weather-display .header .top,#container .weather-display .header .bottom{color:#FAFA2C!important;text-shadow:3px 3px 0 #000!important}
+#container .weather-display .header .date-time{color:#fff!important;text-shadow:2px 2px 0 #000!important}
 /* titles: chunky yellow, black shadow */
-.weather-display .header .title,.weather-display .header .title.single,.weather-display .header .title.dual{color:#ff0!important;text-shadow:3px 3px 0 #000!important}
-/* clock: white, dot-matrix look via Star4000, already set by CLOCK-VISIBLE */
-.weather-display .header .date-time{color:#fff!important;text-shadow:2px 2px 0 #000!important}
-/* content panels: deep royal blue (upstream main panels already blue; force main canvas bg) */
-.weather-display .main{background:#0000aa!important}
-/* ticker: Troy Oct 31 18:14 — bottom ticker BLUE, not black, white text */
-.weather-display .scroll,.weather-display .scroll .fixed,#divTwcBottom{background:#0a5bd3!important;color:#fff!important}
-.weather-display .scroll .fixed .text-layer,.weather-display .scroll .fixed .text-content{background:#0a5bd3!important;color:#fff!important}
-/* watermark: blue Weatherstar Channel bug, lower-right, above ticker */
-/* no watermark bug - clean reference frame has none */
+.weather-display .header .title,.weather-display .header .title.single,.weather-display .header .title.dual{color:#FAFA2C!important;text-shadow:3px 3px 0 #000!important}
+/* emblem: rounded royal-blue square, thick chunky compact letters, fully visible.
+   Upstream .logo sits at top:30px left:50px in an 83px header; the old 18px emblem was ~86px tall so CHANNEL fell behind the body panel. Now top:4px, 16px, ~68px tall -> bottom ~72px, inside the header. */
+.weather-display .header .logo.emblem{background:#0d47c2!important;border:3px solid #fff!important;border-radius:12px!important;box-shadow:3px 4px 6px rgba(0,0,0,.55)!important;padding:6px 4px!important;color:#fff!important;font-family:"Arial Narrow",Arial,sans-serif!important;font-size:16px!important;font-weight:900!important;line-height:1.05!important;letter-spacing:-.5px!important;text-align:center!important;white-space:nowrap!important;left:6px!important;top:4px!important}
+.weather-display .header .logo.emblem img{display:none!important}
+/* content panels: stream dark navy */
+#container .weather-display .main{background:#0B1861!important}
+/* ticker: stream dark navy, scrolling right-to-left, left-anchored, never truncated.
+   .text-layer is the full-width box; the marquee sweeps it from off-screen right to off-screen left in 12s, matching the 12s frame interval. text-align:left puts the text at the layer's left edge so it enters the band immediately. */
+#container .weather-display .scroll,#container .weather-display .scroll .fixed,#divTwcBottom{background:#1C2A5D!important;color:#fff!important}
+.weather-display .scroll .fixed{text-align:left!important}
+.weather-display .scroll .fixed .text-layer,.weather-display .scroll .fixed .text-content{background:#1C2A5D!important;color:#fff!important}
+.weather-display .scroll .fixed .text-layer{animation:ws-marquee 12s linear infinite;top:50%}
+@keyframes ws-marquee{from{transform:translateX(640px) translateY(-50%)}to{transform:translateX(-100%) translateY(-50%)}}
+/* radar: hide the location weather widget that overlaps the map centre */
+#radar-html .custom-weather-marker,.custom-weather-marker{display:none!important}
+/* Latest Observations: full station names — the temp column starts at 230px, so the location gets 225px at 18pt (was 24pt/14 chars, truncated) */
+.weather-display .latest-observations.main .observation-row .location{font-size:18pt!important;max-width:225px!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 </style>
+
 <!-- STREAM-CLEAN -->
 <style>
 /* STREAM-CLEAN (silent YouTube feed): music toggle hidden, no audio UI. Cycle/ticker/clock/video unchanged. */
@@ -191,6 +196,7 @@ try {
   localStorage.setItem('settings-kiosk-checkbox', 'true');
   try { var _s = JSON.parse(localStorage.getItem('Settings') || '{}'); _s.windUnits = 4; _s.temperatureUnits = 2; _s.distanceUnits = 2; _s.pressureUnits = 2; _s.kiosk = true; /* FARM KIOSK 2026-11-07: the kiosk Setting is non-sticky and reads Settings.kiosk, but the old preset wrote a standalone settings-kiosk-checkbox key nothing reads, so the kiosk class was never added and Webamp/search stayed visible. Force kiosk on here, every load. */ localStorage.setItem('Settings', JSON.stringify(_s)); } catch(e) {}
   try { document.body.classList.add('kiosk'); } catch(e) {}
+  try { if (new URLSearchParams(location.search).get('kiosk') === 'true') document.documentElement.classList.add('farm-kiosk'); } catch(e) {}
   localStorage.setItem('display-enabled: custom-weather-station', 'true');
   /* MYRTLE-INTL ORDER (Troy Oct 31): exactly these 8, in navigation order
      [13,2,3,7,9,8,5,10] patched in navigation.mjs. Everything else off. */
@@ -1163,6 +1169,52 @@ setInterval(function(){
     });
   } catch(e) {}
 }, 1000);
+</script>
+
+<script>
+/* FARM-LAYOUT 2026-11-07 (STREAM-MATCH v=5): the 640x480 panel MUST fit the
+   screen on a real phone — Troy's phone still showed the right side cut off
+   on v=4. This runs from the page HTML itself (always fresh), not from a
+   cached JS module: it scales #container from the top-left to fit the
+   viewport (capped at 1.6x), forces the kiosk class on, and hides the
+   Winamp bar. It re-asserts on resize and every second so a stale cached
+   module can never leave the panel unscaled or the music bar showing. */
+(function () {
+  var isKiosk = new URLSearchParams(window.location.search).get('kiosk') === 'true';
+  function applyLayout() {
+    var container = document.getElementById('container');
+    var divTwc = document.getElementById('divTwc');
+    if (container) {
+      var targetWidth = (divTwc && divTwc.classList.contains('wide')) ? 854 : 640;
+      var availWidth = document.documentElement.clientWidth || window.innerWidth;
+      var scale = Math.min(availWidth / targetWidth, window.innerHeight / 480, 1.6);
+      if (scale < 1.0 || document.fullscreenElement || isKiosk || document.body.classList.contains('kiosk')) {
+        container.style.transform = 'scale(' + scale + ')';
+        container.style.transformOrigin = 'top left';
+        container.style.marginBottom = (480 * (scale - 1)) + 'px';
+        var scaledWidth = targetWidth * scale;
+        container.style.marginLeft = availWidth > scaledWidth ? ((availWidth - scaledWidth) / 2) + 'px' : '0px';
+      } else {
+        container.style.transform = 'unset';
+        container.style.transformOrigin = '';
+        container.style.marginBottom = '';
+        container.style.marginLeft = '';
+      }
+    }
+    if (isKiosk) {
+      document.body.classList.add('kiosk');
+      document.documentElement.classList.add('farm-kiosk');
+      var wa = document.getElementById('webamp-app');
+      if (wa) wa.style.display = 'none';
+      var dq = document.getElementById('divQuery');
+      if (dq) dq.style.display = 'none';
+    }
+  }
+  applyLayout();
+  window.addEventListener('resize', applyLayout);
+  window.addEventListener('orientationchange', applyLayout);
+  setInterval(applyLayout, 1000);
+})();
 </script>
 </body>
 

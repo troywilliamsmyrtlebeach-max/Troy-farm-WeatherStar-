@@ -34,3 +34,11 @@ body.kiosk #divTwcBottom{display:none}
 body.kiosk .info{display:none}
 body.kiosk::after{display:none !important}
 .weather-display .scroll .fixed{text-align:center;width:100%}
+
+/* STREAM-MATCH 2026-11-07 (v=5): kiosk never scrolls sideways; the Winamp bar
+   and the search box stay hidden when the page was opened with ?kiosk=true
+   (the html.farm-kiosk class is set by the inline preset script in the
+   HTML itself, so it works even with a stale cached settings module). */
+body.kiosk{overflow-x:hidden}
+html.farm-kiosk #webamp-app{display:none!important}
+html.farm-kiosk #divQuery{display:none!important}

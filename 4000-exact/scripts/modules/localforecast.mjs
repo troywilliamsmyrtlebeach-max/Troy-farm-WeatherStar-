@@ -38,14 +38,16 @@ class LocalForecast extends WeatherDisplay {
 
 		if (!conditions.length) {
 			this.screenTexts = [
-				'TONIGHT... Mostly cloudy, with a low around 53. Northeast wind around 7 mph.',
-				'SUNDAY... Partly sunny, with a high near 73. Northeast wind 6 to 9 mph, with gusts as high as 16 mph.',
-				'SUNDAY NIGHT... Mostly cloudy, with a low around 56. Northeast wind around 7 mph.',
-				'MONDAY... Partly sunny, with a high near 74. Northeast wind 7 to 10 mph, with gusts as high as 16 mph.',
-				'MONDAY NIGHT... Partly cloudy, with a low around 57. Northeast wind around 7 mph.',
-				'TUESDAY... Mostly sunny, with a high near 79.',
-				'TUESDAY NIGHT... Mostly clear, with a low around 61.',
-				'WEDNESDAY... Mostly sunny, with a high near 80.',
+				// FRESH FORECAST 2026-11-07 ~9 PM EST (NWS ILM gridpoint 68,59 for the farm,
+				// generated 2026-11-08T01:58Z). Replaces the stale Oct 31 fallback text.
+				'TONIGHT... Mostly clear, with a low around 41. North wind around 3 mph.',
+				'SUNDAY... Sunny, with a high near 68. North wind around 3 mph.',
+				'SUNDAY NIGHT... Mostly clear, with a low around 44. West wind around 2 mph.',
+				'MONDAY... Sunny, with a high near 74. West wind 1 to 6 mph.',
+				'MONDAY NIGHT... Clear, with a low around 44. Southeast wind around 1 mph.',
+				'TUESDAY... Sunny, with a high near 74.',
+				'TUESDAY NIGHT... Partly cloudy, with a low around 48.',
+				'VETERANS DAY... Mostly sunny, with a high near 75.',
 			];
 		} else {
 			this.screenTexts = conditions.map((condition) => condition.Text);

@@ -18,7 +18,7 @@ const start = () => {
 
 	// set up the interval if needed
 	if (!interval) {
-		interval = setInterval(incrementInterval, 4000);
+		interval = setInterval(incrementInterval, 12000);
 	}
 
 	// draw the data

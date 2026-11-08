@@ -318,6 +318,21 @@ const navTo = (direction) => {
 		// FARM-FIRST (Troy, Oct 31): start on the farm PWS Current Conditions
 		// screen (navId 13, CALABASH-FARM AT BRUNSWICK) when it is loaded,
 		// not on hazards/generic Current Conditions/Carolina Shores.
+
+		// FARM-FIRST WAIT GATE (Troy, 2026-11-07): same wait as loadDisplay —
+		// do not fall back to the first loaded screen while the farm PWS
+		// screen (13) is still loading.
+		const farm = displays[13];
+		const farmReady = farm && farm.status === STATUS.loaded && farm.timing.totalScreens > 0;
+		if (!farmReady && farm && typeof window !== 'undefined') {
+			const since = window.__farmFirstSince || (window.__farmFirstSince = Date.now());
+			if (Date.now() - since < 15000) {
+				if (!window.__farmFirstTimer) {
+					window.__farmFirstTimer = setTimeout(() => { window.__farmFirstTimer = undefined; navTo(direction); }, 500);
+				}
+				return;
+			}
+		}
 		let firstDisplay;
 		if (displays[13] && displays[13].status === STATUS.loaded && displays[13].timing.totalScreens > 0) {
 			firstDisplay = displays[13];
@@ -345,6 +360,20 @@ const loadDisplay = (direction) => {
 	const totalDisplays = displays.length;
 	const curIdx = currentDisplayIndex();
 	let idx;
+	// FARM-FIRST WAIT GATE (Troy, 2026-11-07, STREAM-MATCH): the farm PWS
+	// screen (13) loads slowest, so the candidate loop used to skip it and
+	// open Hourly first. When nothing is showing yet, wait for 13 (up to
+	// 15 s) instead of falling through to the first loaded screen.
+	if (curIdx === -1 && direction > 0 && typeof window !== 'undefined' && displays[13] && !(displays[13].status === STATUS.loaded && displays[13].timing.totalScreens > 0)) {
+		const since = window.__farmFirstSince || (window.__farmFirstSince = Date.now());
+		if (Date.now() - since < 15000) {
+			if (!window.__farmFirstTimer) {
+				window.__farmFirstTimer = setTimeout(() => { window.__farmFirstTimer = undefined; loadDisplay(direction); }, 500);
+			}
+			return;
+		}
+	}
+
 	// FARM-FIRST (Troy, Oct 31): after the farm PWS screen, go straight to
 	// Latest Observations (navId 2), not back to hazards/generic screens.
 	if (curIdx === 13 && direction > 0 && displays[2] && displays[2].status === STATUS.loaded && displays[2].timing.totalScreens > 0) {
@@ -471,7 +500,7 @@ const resize = () => {
 	const widthZoomPercent = availWidth / targetWidth;
 	const heightZoomPercent = (window.innerHeight) / 480;
 
-	const scale = Math.min(widthZoomPercent, heightZoomPercent);
+	const scale = Math.min(widthZoomPercent, heightZoomPercent, 1.6);
 	if (scale < 1.0 || document.fullscreenElement || settings.kiosk) {
 		container.style.transform = `scale(${scale})`;
 		container.style.transformOrigin = 'top left';

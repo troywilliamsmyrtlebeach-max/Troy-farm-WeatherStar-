@@ -7,6 +7,17 @@ import { celsiusToFahrenheit, kphToMph } from './utils/units.mjs';
 import WeatherDisplay from './weatherdisplay.mjs';
 import { registerDisplay } from './navigation.mjs';
 
+
+// STREAM-MATCH 2026-11-07: full station names, never truncated mid-word.
+// Strip airport suffixes (" International Airport", " Airport") that only
+// waste column space, then allow up to 18 chars at 18pt (was 14).
+const cleanStationName = (city) => locationCleanup(city)
+	.replace(/ International Airport$/i, '')
+	.replace(/ Regional Airport$/i, '')
+	.replace(/ Airport$/i, '')
+	.trim()
+	.slice(0, 18);
+
 class LatestObservations extends WeatherDisplay {
 	constructor(navId, elemId) {
 		super(navId, elemId, 'Latest Observations', false);
@@ -98,7 +109,7 @@ class LatestObservations extends WeatherDisplay {
 
 			const SCREENSHOT_NAMES = { KHYW: 'Conway-Horry C', KEYF: 'Elizabethtown', KLBT: 'Lumberton', KMYR: 'Myrtle Beach', KSUT: 'Southport', KCPC: 'Whiteville', KILM: 'Wilmington', FARM: 'CALABASH-FARM', KCRE: 'N. Myrtle Beach' };
 			const fill = {
-				location: SCREENSHOT_NAMES[condition.StationId] || locationCleanup(condition.city).substr(0, 14),
+				location: SCREENSHOT_NAMES[condition.StationId] || cleanStationName(condition.city),
 				temp: Temperature,
 				weather: shortenCurrentConditions(condition.textDescription).substr(0, 9),
 			};

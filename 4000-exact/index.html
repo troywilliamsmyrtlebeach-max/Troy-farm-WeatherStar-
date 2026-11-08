@@ -27,7 +27,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=4" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=5" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -119,6 +119,39 @@
 .custom-weather-station.main .wind-container .wind-label{display:inline-block !important; width:45% !important; text-align:left !important;}
 .custom-weather-station.main .wind-container .wind-gusts{display:block !important; visibility:visible !important; font-size:18pt !important; margin-top:0 !important; margin-left:45% !important; text-align:left !important;}
 </style>
+<!-- MYRTLE-SKIN 2026-11-07 (v=5, STREAM-MATCH): International engine, Myrtle Beach / Weatherstar Channel look, pixel-matched to the YouTube 24/7 stream (youtube.com/live/VP7y4eGtYyw).
+     Header: purple top, orange-maroon middle, purple bottom strip. Emblem: rounded royal-blue square, thick chunky compact white letters THE / WEATHERSTAR / CHANNEL, fully visible. Body: stream dark navy. Ticker: dark navy, scrolling right-to-left, left-anchored. No scanlines, no music bar in kiosk. -->
+<style>
+/* stage: black surround, 4:3 panel, never sideways scroll in kiosk */
+body{background:#000!important}
+#divTwc{background:#000!important}
+#container{position:relative}
+body.kiosk{overflow-x:hidden}
+/* header: purple top -> orange/maroon middle -> purple bottom strip (stream, pixel-sampled). #container-qualified so it beats the compiled "Final theme" gradient in main.css (same specificity, this <style> comes later). No overflow:hidden — that is what clipped the emblem. */
+#container .weather-display .header{background:linear-gradient(180deg,#150644 0%,#944B11 30%,#793815 55%,#652D21 78%,#1B0046 100%)!important;position:relative;overflow:visible;border-bottom:2px solid #a00}
+#container .weather-display .header .top,#container .weather-display .header .bottom{color:#FAFA2C!important;text-shadow:3px 3px 0 #000!important}
+#container .weather-display .header .date-time{color:#fff!important;text-shadow:2px 2px 0 #000!important}
+/* titles: chunky yellow, black shadow */
+.weather-display .header .title,.weather-display .header .title.single,.weather-display .header .title.dual{color:#FAFA2C!important;text-shadow:3px 3px 0 #000!important}
+/* emblem (exact copy): the text emblem replaces the Logo3.png image inside .logo.
+   Same sizing as the Channel copies: top:4px, 16px, ~68px tall, inside the 83px header. */
+.weather-display .header .logo{top:4px!important;left:6px!important}
+.weather-display .header .logo .twc-emblem{background:#0d47c2!important;border:3px solid #fff!important;border-radius:12px!important;box-shadow:3px 4px 6px rgba(0,0,0,.55)!important;padding:6px 4px!important;color:#fff!important;font-family:"Arial Narrow",Arial,sans-serif!important;font-size:16px!important;font-weight:900!important;line-height:1.05!important;letter-spacing:-.5px!important;text-align:center!important;white-space:nowrap!important}
+/* content panels: stream dark navy */
+#container .weather-display .main{background:#0B1861!important}
+/* ticker: stream dark navy, scrolling right-to-left, left-anchored, never truncated.
+   .text-layer is the full-width box; the marquee sweeps it from off-screen right to off-screen left in 12s, matching the 12s frame interval. text-align:left puts the text at the layer's left edge so it enters the band immediately. */
+#container .weather-display .scroll,#container .weather-display .scroll .fixed,#divTwcBottom{background:#1C2A5D!important;color:#fff!important}
+.weather-display .scroll .fixed{text-align:left!important}
+.weather-display .scroll .fixed .text-layer,.weather-display .scroll .fixed .text-content{background:#1C2A5D!important;color:#fff!important}
+.weather-display .scroll .fixed .text-layer{animation:ws-marquee 12s linear infinite;top:50%}
+@keyframes ws-marquee{from{transform:translateX(640px) translateY(-50%)}to{transform:translateX(-100%) translateY(-50%)}}
+/* radar: hide the location weather widget that overlaps the map centre */
+#radar-html .custom-weather-marker,.custom-weather-marker{display:none!important}
+/* Latest Observations: full station names — the temp column starts at 230px, so the location gets 225px at 18pt (was 24pt/14 chars, truncated) */
+.weather-display .latest-observations.main .observation-row .location{font-size:18pt!important;max-width:225px!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+</style>
+
 </head>
 
 <body>
@@ -131,6 +164,7 @@ try {
   localStorage.setItem('settings-kiosk-checkbox', 'true');
   try { var _s = JSON.parse(localStorage.getItem('Settings') || '{}'); _s.windUnits = 4; _s.temperatureUnits = 2; _s.distanceUnits = 2; _s.pressureUnits = 2; _s.kiosk = true; /* FARM KIOSK 2026-11-07: the kiosk Setting is non-sticky and reads Settings.kiosk, but the old preset wrote a standalone settings-kiosk-checkbox key nothing reads, so the kiosk class was never added and Webamp/search stayed visible. Force kiosk on here, every load. */ localStorage.setItem('Settings', JSON.stringify(_s)); } catch(e) {}
   try { document.body.classList.add('kiosk'); } catch(e) {}
+  try { if (new URLSearchParams(location.search).get('kiosk') === 'true') document.documentElement.classList.add('farm-kiosk'); } catch(e) {}
   localStorage.setItem('display-enabled: custom-weather-station', 'true');
   // FARM-FIRST: the PWS display is disabled by default in the original
   // app (defaultEnabled=false), so on a fresh Pages load its checkbox
@@ -168,7 +202,7 @@ try {
       <div id="progress-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><img src="images/Logo3.png" /></div>
+		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -211,7 +245,7 @@ try {
       <div id="hourly-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><img src="images/Logo3.png" /></div>
+		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
 	
 	
 			<div class="title single">
@@ -248,7 +282,7 @@ try {
       <div id="hourly-graph-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><img src="images/Logo3.png" /></div>
+		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
 	
 	
 			<div class="title single">
@@ -290,7 +324,7 @@ try {
       <div id="travel-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><img src="images/Logo3.png" /></div>
+		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -330,7 +364,7 @@ try {
       <div id="current-weather-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><img src="images/Logo3.png" /></div>
+		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -405,7 +439,7 @@ try {
       <div id="local-forecast-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><img src="images/Logo3.png" /></div>
+		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -441,7 +475,7 @@ try {
       <div id="latest-observations-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><img src="images/Logo3.png" /></div>
+		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -489,7 +523,7 @@ try {
       <div id="regional-forecast-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><img src="images/Logo3.png" /></div>
+		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -527,7 +561,7 @@ try {
       <div id="almanac-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><img src="images/Logo3.png" /></div>
+		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
 	
 	
 			<div class="title single">
@@ -577,7 +611,7 @@ try {
       <div id="extended-forecast-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><img src="images/Logo3.png" /></div>
+		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -623,7 +657,7 @@ try {
       </div>
       <div id="radar-html" class="weather-display">
         <div class="header">
-	<div class="logo"><img src="images/Logo3.png" /></div>
+	<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
 	<div class="title dual">
 		<div class="top">
 			Local
@@ -676,7 +710,7 @@ try {
       <div id="marine-forecast-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><img src="images/Logo3.png" /></div>
+		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
 	
 	
 			<div class="title single">
@@ -729,7 +763,7 @@ try {
       <div id="aqi-forecast-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><img src="images/Logo3.png" /></div>
+		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -788,7 +822,7 @@ try {
       <div id="custom-weather-station-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><img src="images/Logo3.png" /></div>
+		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -1197,6 +1231,16 @@ try {
       webamp.toggleRepeat();
       webamp.toggleShuffle();
 
+      // STREAM-MATCH 2026-11-07: in kiosk mode the Winamp bar must be completely
+      // hidden — Troy's phone showed it at the TOP of the screen (Webamp's
+      // window is absolutely positioned at top:20 left:0 of the page). Hide its
+      // container before rendering (display:none hides the whole subtree;
+      // the music still plays from the TAP FOR SOUND button).
+      if (new URLSearchParams(window.location.search).get('kiosk') === 'true') {
+        var _wa = document.getElementById('webamp-app');
+        if (_wa) _wa.style.display = 'none';
+      }
+
       webamp.renderWhenReady(document.getElementById("webamp-app"));
   </script>
   <script>
@@ -1335,6 +1379,52 @@ setInterval(function(){
     });
   } catch(e) {}
 }, 1000);
+</script>
+
+<script>
+/* FARM-LAYOUT 2026-11-07 (STREAM-MATCH v=5): the 640x480 panel MUST fit the
+   screen on a real phone — Troy's phone still showed the right side cut off
+   on v=4. This runs from the page HTML itself (always fresh), not from a
+   cached JS module: it scales #container from the top-left to fit the
+   viewport (capped at 1.6x), forces the kiosk class on, and hides the
+   Winamp bar. It re-asserts on resize and every second so a stale cached
+   module can never leave the panel unscaled or the music bar showing. */
+(function () {
+  var isKiosk = new URLSearchParams(window.location.search).get('kiosk') === 'true';
+  function applyLayout() {
+    var container = document.getElementById('container');
+    var divTwc = document.getElementById('divTwc');
+    if (container) {
+      var targetWidth = (divTwc && divTwc.classList.contains('wide')) ? 854 : 640;
+      var availWidth = document.documentElement.clientWidth || window.innerWidth;
+      var scale = Math.min(availWidth / targetWidth, window.innerHeight / 480, 1.6);
+      if (scale < 1.0 || document.fullscreenElement || isKiosk || document.body.classList.contains('kiosk')) {
+        container.style.transform = 'scale(' + scale + ')';
+        container.style.transformOrigin = 'top left';
+        container.style.marginBottom = (480 * (scale - 1)) + 'px';
+        var scaledWidth = targetWidth * scale;
+        container.style.marginLeft = availWidth > scaledWidth ? ((availWidth - scaledWidth) / 2) + 'px' : '0px';
+      } else {
+        container.style.transform = 'unset';
+        container.style.transformOrigin = '';
+        container.style.marginBottom = '';
+        container.style.marginLeft = '';
+      }
+    }
+    if (isKiosk) {
+      document.body.classList.add('kiosk');
+      document.documentElement.classList.add('farm-kiosk');
+      var wa = document.getElementById('webamp-app');
+      if (wa) wa.style.display = 'none';
+      var dq = document.getElementById('divQuery');
+      if (dq) dq.style.display = 'none';
+    }
+  }
+  applyLayout();
+  window.addEventListener('resize', applyLayout);
+  window.addEventListener('orientationchange', applyLayout);
+  setInterval(applyLayout, 1000);
+})();
 </script>
 </body>
 
