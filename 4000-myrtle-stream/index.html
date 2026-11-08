@@ -29,7 +29,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=18" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=19" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -186,7 +186,17 @@ body.kiosk{overflow-x:hidden}
 #container .weather-display .scroll,#container .weather-display .scroll .fixed,#divTwcBottom{background:#1C2A5D!important;color:#fff!important}
 .weather-display .scroll .fixed{text-align:left!important}
 .weather-display .scroll .fixed .text-layer,.weather-display .scroll .fixed .text-content{background:#1C2A5D!important;color:#fff!important}
-.weather-display .scroll .fixed .text-layer{top:50%}
+/* v=19 TICKER-RAISE (Troy 2026-11-08: the current-conditions text on the
+   bottom ticker is still too low, cut off at the bottom on his TV. Measured
+   live: .text-layer hangs from top:46-50% of the 70px bar with ~37px-tall
+   text, so its bottom sits flush at the bar's bottom edge. Now the layer is
+   vertically CENTRED in the bar (top 50% + translateY(-50%)), so the text
+   has ~16px clear space above and below it on every frame, TV and phone,
+   plain and ?tv=1. The bar's 10px top margin is also gone, so the whole bar
+   sits 10px higher, fully inside the display. The red alert crawl reuses
+   .text-layer, so it is centred the same way.) */
+.weather-display .scroll .fixed .text-layer{top:50%;transform:translateY(-50%)}
+#container .weather-display .scroll{margin-top:0!important}
 /* radar: hide the location weather widget that overlaps the map centre */
 #radar-html .custom-weather-marker,.custom-weather-marker{display:none!important}
 /* v=6 KLTX LOOP RADAR (Troy: radar like his library RetroCast Current
@@ -226,6 +236,16 @@ body #divTwc.wide #container{box-sizing:border-box!important;background-color:#0
 #farm-nav-bar button:active{background:#0d47c2!important}
 /* v=9 TV-CLEAN (Troy 2026-11-07: casting his phone to the TV shows the phone-only arrows AND the TAP FOR SOUND / FULL SCREEN buttons on the TV — the width-based hide cannot tell a cast phone from a phone). In TV mode (?tv=1 or ?arrows=off) hide EVERY control so the TV shows a clean broadcast picture: nav bar, sound button, fullscreen button. Clock, ticker, emblem and screens stay visible. */
 html.farm-tv #farm-nav-bar,html.farm-tv #farm-sound-btn,html.farm-tv #farm-fullscreen-btn{display:none!important}
+/* v=19 TAP TV (Troy 2026-11-08: "tap tv on all of them to get big screen
+   and take off the browser at the top and the controls below so it will
+   fit the screen exactly perfectly"). Entering fullscreen turns on
+   farm-big: every control below the panel (nav bar, sound + fullscreen
+   buttons, the stock #divTwcBottom strip) hides, and applyLayout drops
+   the 84px nav-bar reserve so the panel scales to the full screen height.
+   Exiting fullscreen turns it back off. In ?tv=1 the TAP TV button stays
+   hidden (the TV view is already the clean big screen) and the panel tap
+   still works. */
+html.farm-big #farm-nav-bar,html.farm-big #farm-sound-btn,html.farm-big #farm-fullscreen-btn,html.farm-big #divTwcBottom{display:none!important}
 /* v=10 EMULATOR-ONLY (Troy 2026-11-07: take off the browser top bar and the
    controls at the bottom — only the emulator itself on screen). In TV mode
    hide EVERYTHING outside the emulator panel: the settings/share/info
@@ -240,7 +260,7 @@ html.farm-tv body{margin:0!important}
    ~76px, still inside the 83px header); ticker text-layer top 50% -> 46%
    (~3px up in the 70px band). Phone view unchanged. */
 html.farm-tv .weather-display .header .logo.emblem{top:8px!important}
-html.farm-tv .weather-display .scroll .fixed .text-layer{top:46%!important}
+html.farm-tv .weather-display .scroll .fixed .text-layer{top:50%!important;transform:translateY(-50%)!important}
 /* v=11 LOCAL FORECAST (Troy 2026-11-07, screenshot 987_1_5ss8.png): written out
    in paragraph form, 3 periods per screen, period label in yellow caps on its
    own line, body in white mixed case. The shared .forecast rule uppercases
@@ -1296,7 +1316,7 @@ document.addEventListener('DOMContentLoaded', function(){
   } catch (e) {}
   var f = document.createElement('button');
   f.id = 'farm-fullscreen-btn';
-  f.textContent = 'FULL SCREEN — TAP FOR TV';
+  f.textContent = 'TAP TV — FULL SCREEN';
   f.style.cssText = 'position:fixed;right:8px;bottom:8px;z-index:9999;padding:10px 14px;font-weight:bold;background:#003366;color:#fff;border:2px solid #fff;border-radius:6px;';
   f.onclick = function () {
     var el = document.querySelector('#divTwc');
@@ -1396,7 +1416,10 @@ setInterval(function(){
          screen (<= 1200px) or any touch device — the TV (?tv=1) and the
          1280px no-touch stream kiosk still hide them — and in wide mode the
          panel leaves 84px at the bottom so the bar fits on screen. */
-      var showArrows = arrowsParam === 'on' ? true : (arrowsParam === 'off' || tvParam === '1' ? false : (availWidth <= 1200 || navigator.maxTouchPoints > 0));
+      /* v=19 TAP TV: in fullscreen-big mode the controls are gone, so the
+         nav-bar reserve is 0 and the panel scales to the full screen height. */
+      var bigMode = document.documentElement.classList.contains('farm-big');
+      var showArrows = bigMode ? false : (arrowsParam === 'on' ? true : (arrowsParam === 'off' || tvParam === '1' ? false : (availWidth <= 1200 || navigator.maxTouchPoints > 0)));
       var barReserve = showArrows ? 84 : 0;
       /* v=18 TV-ZOOM (scale alignment): in wide mode #container is
          box-sizing:border-box, so the 10px frame sits INSIDE the 854x480
@@ -1516,6 +1539,12 @@ setInterval(function(){
       if (r) r.call(el, { navigationUI: 'hide' });
     } catch (e) {}
   }
+  /* v=19 TAP TV: entering fullscreen (TAP TV button or panel tap) turns on
+     farm-big; exiting fullscreen turns it back off. Driven by the event so
+     a failed fullscreen request can never leave the controls hidden. */
+  document.addEventListener('fullscreenchange', function () {
+    document.documentElement.classList.toggle('farm-big', !!document.fullscreenElement);
+  });
   var twc = document.getElementById('divTwc');
   if (twc) twc.addEventListener('click', function (e) {
     var t = e.target;
