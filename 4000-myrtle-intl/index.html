@@ -29,7 +29,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=15" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=16" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -1657,23 +1657,29 @@ setInterval(function(){
          on every screen, phone and TV. */
       var framePx = 10;
       var targetWidth = 640;
-      var scale = isTvWide ? (availHeight / (480 + 2 * framePx))
+      /* v=16 ARROWS IN LANDSCAPE (Troy 2026-11-08: "no arrows on neither
+         one" — he taps the phone links with the phone SIDEWAYS, landscape
+         ~915px wide. The old gate (availWidth <= 900) hid the bar, and
+         isTvWide scaled the panel to the full viewport height with body
+         overflow hidden, so the bar would have sat below the fold with no
+         way to reach it even if shown. Now: arrows show on any phone-width
+         screen (<= 1200px) or any touch device — the TV (?tv=1) and the
+         1280px no-touch stream kiosk still hide them — and in wide mode the
+         panel leaves 84px at the bottom so the bar fits on screen. */
+      var showArrows = arrowsParam === 'on' ? true : (arrowsParam === 'off' || tvParam === '1' ? false : (availWidth <= 1200 || navigator.maxTouchPoints > 0));
+      var barReserve = showArrows ? 84 : 0;
+      var scale = isTvWide ? Math.max(0.2, (availHeight - barReserve) / (480 + 2 * framePx))
         : Math.min(availWidth / targetWidth, availHeight / (480 + 2 * framePx), 1.6);
       var totalW = (targetWidth + 2 * framePx) * scale;
       if (totalW > availWidth) { scale = availWidth / (targetWidth + 2 * framePx); totalW = availWidth; }
       var frameScreen = framePx * scale;
-      /* v=8 ARROWS (Troy): arrows are for phone only — hidden on TV and on
-         the YouTube stream (both are wide screens). ?arrows=off / ?tv=1
-         hides them, ?arrows=on forces them; otherwise shown only on
-         narrow (phone-width) screens. */
-      var showArrows = arrowsParam === 'on' ? true : (arrowsParam === 'off' || tvParam === '1' ? false : (availWidth <= 900));
       if (divTwc) { divTwc.classList.remove('wide'); } /* v=12: 4:3 panel on TV — no widescreen stretch, so the orange side bars show */
       /* v=8 TV-FILL: on a wide screen the scaled panel's positive bottom
          margin makes the document taller than the viewport, so a scrollbar
          appears and shrinks the viewport — the panel then never quite fills
          the frame. Hide page scroll on TV (the panel + bar are all there is
          to see in kiosk); phones are unaffected (their content fits). */
-      document.body.style.overflow = isTvWide ? 'hidden' : '';
+      document.body.style.overflow = (isTvWide && !showArrows) ? 'hidden' : '';
       if (scale < 1.0 || isTvWide || document.fullscreenElement || isKiosk || document.body.classList.contains('kiosk')) {
         container.style.transform = 'scale(' + scale + ')';
         container.style.transformOrigin = 'top left';
