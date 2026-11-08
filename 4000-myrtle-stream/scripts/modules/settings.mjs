@@ -79,7 +79,10 @@ const init = () => {
 	settings.scanLines = new Setting('scanLines', 'Enable Scan Lines', 'checkbox', false, scanLinesChange, true);
 
 	settings.wide = new Setting('wide', 'Widescreen', 'checkbox', false, wideScreenChange, true);
-	settings.kiosk = new Setting('kiosk', 'Kiosk', 'checkbox', false, kioskChange, false);
+	// KIOSK STICKY 2026-11-07: the farm preset forces Settings.kiosk=true on every load;
+	// sticky must be true or the stored value is ignored, the kiosk class is never added,
+	// and Webamp/search stay visible over the panel even with ?kiosk=true.
+	settings.kiosk = new Setting('kiosk', 'Kiosk', 'checkbox', false, kioskChange, true);
 
 	// generate html objects
 	const settingHtml = Object.values(settings).map((d) => d.generate());

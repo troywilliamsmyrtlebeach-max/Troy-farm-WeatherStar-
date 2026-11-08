@@ -27,7 +27,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=3" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=4" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -159,7 +159,7 @@ body{background:#000!important}
 .weather-display .header{background:linear-gradient(90deg,#3b1f5e 0%,#7a3a1a 48%,#e8730c 100%)!important;position:relative;overflow:hidden}
 .weather-display .header::after{content:"";position:absolute;right:22%;top:0;width:60px;height:100%;background:#f60;transform:skewX(-24deg);opacity:.55;pointer-events:none}
 /* emblem: white text, blue rounded box, thin white outline, replaces Logo3.png */
-.weather-display .header .logo.emblem{background:#0a3d9e!important;border:2px solid #fff!important;border-radius:8px!important;padding:4px 8px!important;color:#fff!important;font-family:"Star4000",monospace!important;font-size:11px!important;line-height:1.2!important;letter-spacing:1px!important;text-align:center!important;white-space:nowrap!important}
+.weather-display .header .logo.emblem{background:#0a3d9e!important;border:2px solid #fff!important;border-radius:12px!important;padding:6px 10px!important;color:#fff!important;font-family:"Star4000",monospace!important;font-size:11px!important;line-height:1.2!important;letter-spacing:1px!important;text-align:center!important;white-space:nowrap!important}
 .weather-display .header .logo.emblem img{display:none!important}
 /* titles: chunky yellow, black shadow */
 .weather-display .header .title,.weather-display .header .title.single,.weather-display .header .title.dual{color:#ff0!important;text-shadow:3px 3px 0 #000!important}
@@ -189,7 +189,8 @@ try {
   localStorage.setItem('latLon', JSON.stringify({lat: 33.92, lon: -78.57}));
   localStorage.setItem('latLonQuery', 'Carolina Shores, NC');
   localStorage.setItem('settings-kiosk-checkbox', 'true');
-  try { var _s = JSON.parse(localStorage.getItem('Settings') || '{}'); _s.windUnits = 4; _s.temperatureUnits = 2; _s.distanceUnits = 2; _s.pressureUnits = 2; localStorage.setItem('Settings', JSON.stringify(_s)); } catch(e) {}
+  try { var _s = JSON.parse(localStorage.getItem('Settings') || '{}'); _s.windUnits = 4; _s.temperatureUnits = 2; _s.distanceUnits = 2; _s.pressureUnits = 2; _s.kiosk = true; /* FARM KIOSK 2026-11-07: the kiosk Setting is non-sticky and reads Settings.kiosk, but the old preset wrote a standalone settings-kiosk-checkbox key nothing reads, so the kiosk class was never added and Webamp/search stayed visible. Force kiosk on here, every load. */ localStorage.setItem('Settings', JSON.stringify(_s)); } catch(e) {}
+  try { document.body.classList.add('kiosk'); } catch(e) {}
   localStorage.setItem('display-enabled: custom-weather-station', 'true');
   /* MYRTLE-INTL ORDER (Troy Oct 31): exactly these 8, in navigation order
      [13,2,3,7,9,8,5,10] patched in navigation.mjs. Everything else off. */
@@ -243,7 +244,7 @@ try {
       <div id="progress-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -286,7 +287,7 @@ try {
       <div id="hourly-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
 	
 	
 			<div class="title single">
@@ -323,7 +324,7 @@ try {
       <div id="hourly-graph-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
 	
 	
 			<div class="title single">
@@ -365,7 +366,7 @@ try {
       <div id="travel-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -405,7 +406,7 @@ try {
       <div id="current-weather-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -480,7 +481,7 @@ try {
       <div id="local-forecast-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -516,7 +517,7 @@ try {
       <div id="latest-observations-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -564,7 +565,7 @@ try {
       <div id="regional-forecast-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -602,7 +603,7 @@ try {
       <div id="almanac-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
 	
 	
 			<div class="title single">
@@ -652,7 +653,7 @@ try {
       <div id="extended-forecast-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -698,7 +699,7 @@ try {
       </div>
       <div id="radar-html" class="weather-display">
         <div class="header">
-	<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
+	<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
 	<div class="title dual">
 		<div class="top">
 			Local
@@ -751,7 +752,7 @@ try {
       <div id="marine-forecast-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
 	
 	
 			<div class="title single">
@@ -804,7 +805,7 @@ try {
       <div id="aqi-forecast-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -863,7 +864,7 @@ try {
       <div id="custom-weather-station-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo emblem">WEATHER<br>STAR<br>4000+</div>
+		<div class="logo emblem">THE<br>WEATHERSTAR<br>CHANNEL</div>
 	
 	
 		<div class="title dual" id="dualTitle">

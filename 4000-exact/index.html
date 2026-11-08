@@ -27,7 +27,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=3" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=4" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -129,7 +129,8 @@ try {
   localStorage.setItem('latLon', JSON.stringify({lat: 33.92, lon: -78.57}));
   localStorage.setItem('latLonQuery', 'Carolina Shores, NC');
   localStorage.setItem('settings-kiosk-checkbox', 'true');
-  try { var _s = JSON.parse(localStorage.getItem('Settings') || '{}'); _s.windUnits = 4; _s.temperatureUnits = 2; _s.distanceUnits = 2; _s.pressureUnits = 2; localStorage.setItem('Settings', JSON.stringify(_s)); } catch(e) {}
+  try { var _s = JSON.parse(localStorage.getItem('Settings') || '{}'); _s.windUnits = 4; _s.temperatureUnits = 2; _s.distanceUnits = 2; _s.pressureUnits = 2; _s.kiosk = true; /* FARM KIOSK 2026-11-07: the kiosk Setting is non-sticky and reads Settings.kiosk, but the old preset wrote a standalone settings-kiosk-checkbox key nothing reads, so the kiosk class was never added and Webamp/search stayed visible. Force kiosk on here, every load. */ localStorage.setItem('Settings', JSON.stringify(_s)); } catch(e) {}
+  try { document.body.classList.add('kiosk'); } catch(e) {}
   localStorage.setItem('display-enabled: custom-weather-station', 'true');
   // FARM-FIRST: the PWS display is disabled by default in the original
   // app (defaultEnabled=false), so on a fresh Pages load its checkbox
