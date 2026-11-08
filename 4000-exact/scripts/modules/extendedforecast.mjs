@@ -57,15 +57,17 @@ class ExtendedForecast extends WeatherDisplay {
 
 		// create each day template
 		const days = forecast.map((Day) => {
+			// Troy 2026-11-08 (v=23, corrected): ONLY "Clear" becomes "Sunny"
+			// on the Extended Forecast. All the other words he named —
+			// Mostly Sunny, Partly Cloudy, Cloudy, Mostly Cloudy, Partly
+			// Sunny — stay exactly as they are, unchanged. (This supersedes
+			// the first v=23 rule, where every day showed Sunny.)
+			// Display word only; the underlying forecast data (and the icon)
+			// stay the same.
+			const conditionText = ExtendedForecast.dayConditionTextSanitizer(Day.text);
 			const fill = {
 				icon: { type: 'img', src: Day.icon },
-				// Troy 2026-11-08 (v=23): EVERY day on the Extended Forecast shows
-				// SUNNY — not Clear, not Mostly Sunny, Partly Cloudy, Cloudy,
-				// Mostly Cloudy, Partly Sunny, or any other such word, no
-				// exceptions anywhere, every day, every screen.
-				// Display word only; the underlying forecast data (and the icon)
-				// stay the same.
-				condition: 'Sunny',
+				condition: conditionText.toLowerCase() === 'clear' ? 'Sunny' : conditionText,
 				date: Day.dayName,
 			};
 
