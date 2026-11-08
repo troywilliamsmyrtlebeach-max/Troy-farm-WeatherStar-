@@ -495,7 +495,18 @@ const getDisplay = (index) => displays[index];
 const resize = () => {
 	const container = document.querySelector('#container');
 	if (!container) return;
-	const targetWidth = settings.wide.value ? 640 + 107 + 107 : 640;
+	// v=8 TV-FILL (Troy: the TV used to fill the whole screen; the v=5/v=6
+	// 1.6x cap shrank it to a sliver on a big TV — regression). Wide screens
+	// run widescreen mode (854px) and scale to fill with no cap, like before.
+	// Phones (portrait) keep the 640px panel; the cap never binds there.
+	// (Aspect-based, not settings.wide: these are kiosk pages and the inline
+	// FARM-LAYOUT script decides the same way every second, so the two can
+	// never disagree.)
+	const availWidthEarly = document.documentElement.clientWidth || window.innerWidth;
+	const isTvWide = (availWidthEarly / window.innerHeight) > 1.34;
+	const targetWidth = isTvWide ? 854 : 640;
+	const divTwcEl = document.querySelector('#divTwc');
+	if (divTwcEl) { if (isTvWide) divTwcEl.classList.add('wide'); else divTwcEl.classList.remove('wide'); }
 	// v=6 PANEL-FIT (Troy's phone): in kiosk #divTwc is display:flex, so
 	// #container is a flex item that SHRINKS to the viewport and its
 	// overflow:hidden clips the 640px screens. Pin it to the design width.
@@ -508,8 +519,8 @@ const resize = () => {
 	const widthZoomPercent = availWidth / targetWidth;
 	const heightZoomPercent = (window.innerHeight) / 480;
 
-	const scale = Math.min(widthZoomPercent, heightZoomPercent, 1.6);
-	if (scale < 1.0 || document.fullscreenElement || settings.kiosk) {
+	const scale = isTvWide ? Math.min(widthZoomPercent, heightZoomPercent) : Math.min(widthZoomPercent, heightZoomPercent, 1.6);
+	if (scale < 1.0 || isTvWide || document.fullscreenElement || settings.kiosk) {
 		container.style.transform = `scale(${scale})`;
 		container.style.transformOrigin = 'top left';
 		container.style.marginBottom = `${480 * (scale - 1)}px`;
