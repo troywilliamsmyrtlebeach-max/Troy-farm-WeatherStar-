@@ -18,7 +18,15 @@ const start = () => {
 
 	// set up the interval if needed
 	if (!interval) {
-		interval = setInterval(incrementInterval, 12000);
+		// v=21 TICKER-SPEED (Troy 2026-11-08: "Can you make my conditions
+		// change quicker... its like it was taking its time awhile ago" — on the
+		// bottom ticker). Was 12000ms per frame (12s each, 96s for a full
+		// 8-frame cycle — that's the "taking its time"). Now 2000ms per
+		// frame (2s each, 16s for the full cycle), so the conditions change
+		// quicker. Still readable: the wipe is only 0.2s, so each frame sits
+		// fully visible for ~1.8s. Still cycles, never scrolls; every frame
+		// still shows; red-alert crawl untouched.
+		interval = setInterval(incrementInterval, 2000);
 	}
 
 	// draw the data
