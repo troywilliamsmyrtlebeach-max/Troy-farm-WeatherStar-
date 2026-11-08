@@ -193,10 +193,19 @@ const drawCondition = (text) => {
 		newLayer.className = 'text-layer';
 		const content = document.createElement('div');
 		content.className = 'text-content';
-		// Long farm label (CONDITIONS AT CALABASH-FARM AT BRUNSWICK, 38 chars)
-		// is clipped by the 640px ticker at 24pt. Shrink only long frames
-		// so BRUNSWICK stays fully visible; short frames keep 24pt.
-		if (text.length > 32) content.style.fontSize = '18pt';
+		// v=20 TICKER-SIZE (Troy 2026-11-08: "Where it says rain fall today
+		// on the bottom ticker make all the words on the current conditions
+		// match that size on the ticker" — and "even conditions at
+		// CALABASH-FARM AT BRUNSWICK and visib 10 mi ceiling unlimited").
+		// The RAINFALL TODAY frame is the reference size (24pt, the CSS base
+		// for .text-content). Every frame now renders at that same 24pt —
+		// CONDITIONS AT CALABASH-FARM AT BRUNSWICK, VISIB 10 MI CEILING
+		// UNLIMITED, and all the rest — no length-based shrink, so the ticker
+		// text never changes size as it cycles. The old shrink (18pt for
+		// text > 32 chars) is gone. Measured live 2026-11-08: the longest
+		// frame (CONDITIONS, 40 chars) is ~608px at 24pt in the Star4000
+		// font vs the 640px ticker bar, so it fits fully visible; VISIB is
+		// ~472px. The red alert crawl already uses 24pt and is untouched.
 		// Troy 2026-10-27: every ticker reading in capital letters.
 		content.textContent = text.toUpperCase();
 		newLayer.appendChild(content);
