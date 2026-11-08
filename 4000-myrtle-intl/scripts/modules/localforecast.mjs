@@ -37,22 +37,37 @@ class LocalForecast extends WeatherDisplay {
 
 		if (!conditions.length) {
 			this.screenTexts = [
-				// FRESH FORECAST 2026-11-07 ~9 PM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-08T01:58Z). Replaces the stale Oct 31 fallback text.
-				'TONIGHT... Mostly clear, with a low around 41. North wind around 3 mph.',
-				'SUNDAY... Sunny, with a high near 68. North wind around 3 mph.',
-				'SUNDAY NIGHT... Mostly clear, with a low around 44. West wind around 2 mph.',
-				'MONDAY... Sunny, with a high near 74. West wind 1 to 6 mph.',
-				'MONDAY NIGHT... Clear, with a low around 44. Southeast wind around 1 mph.',
-				'TUESDAY... Sunny, with a high near 74.',
-				'TUESDAY NIGHT... Partly cloudy, with a low around 48.',
-				'VETERANS DAY... Mostly sunny, with a high near 75.',
+				// FRESH FORECAST 2026-11-07 ~11:52 PM EST (NWS ILM gridpoint 68,59 for the farm,
+				// generated 2026-11-08T03:52Z). Written in the screenshot format (generator
+				// style) with precip chance on every period, like the live path.
+				'TONIGHT... Mostly clear. Low around 41. North wind around 3 mph. Precip chance 0%.',
+				'SUNDAY... Sunny. High 68. North wind around 3 mph. Precip chance 0%.',
+				'SUNDAY NIGHT... Mostly clear. Low 44. West wind around 2 mph. Precip chance 0%.',
+				'MONDAY... Sunny. High 74. West wind 1 to 6 mph. Precip chance 0%.',
+				'MONDAY NIGHT... Clear. Low 44. Southeast wind around 1 mph. Precip chance 0%.',
+				'TUESDAY... Sunny. High 74. Winds light and variable. Precip chance 0%.',
+				'TUESDAY NIGHT... Partly cloudy. Low 48. Winds light and variable. Precip chance 0%.',
+				'VETERANS DAY... Mostly sunny. High 75. Winds light and variable. Precip chance 0%.',
 			];
 		} else {
 			this.screenTexts = conditions.map((condition) => condition.Text);
 		}
 
-		const templates = this.screenTexts.map((text) => this.fillTemplate('forecast', { text }));
+		// Troy 2026-11-07 (screenshot 987_1_5ss8.png): the Local Forecast screen writes
+		// the forecast out in paragraph form, THREE periods on one screen — period label
+		// in yellow caps on its own line, then the text in white. Group the period texts
+		// into pages of 3; each page is one .forecast template (fillTemplate sets
+		// innerHTML, so the label span renders as HTML).
+		const pages = [];
+		for (let i = 0; i < this.screenTexts.length; i += 3) pages.push(this.screenTexts.slice(i, i + 3));
+		const templates = pages.map((pageTexts) => {
+			const html = pageTexts.map((text) => {
+				const m = text.match(/^([^.]*\.\.\.)\s*([\s\S]*)$/);
+				if (!m) return `<div class="fc-period"><div class="fc-body">${text}</div></div>`;
+				return `<div class="fc-period"><div class="fc-label">${m[1]}</div><div class="fc-body">${m[2]}</div></div>`;
+			}).join('');
+			return this.fillTemplate('forecast', { text: html });
+		});
 		const forecastsElem = this.elem.querySelector('.forecasts');
 		forecastsElem.innerHTML = '';
 		forecastsElem.append(...templates);

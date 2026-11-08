@@ -15,7 +15,9 @@ class Radar extends WeatherDisplay {
 	constructor(navId, elemId) {
 		super(navId, elemId, 'Local Radar', true);
 
-		this.okToDrawCurrentConditions = false;
+		// Troy 2026-11-07: the ticker NEVER pauses — it keeps cycling the farm
+		// conditions even while the radar screen shows (the radar screen has no
+		// ticker band of its own, so this flag only ever froze the cycle).
 		this.okToDrawCurrentDateTime = false;
 
 		// Single screen — the GIF loops on its own for the whole dwell.

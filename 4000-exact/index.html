@@ -214,6 +214,15 @@ html.farm-tv body{background:#0B1861!important;margin:0!important}
    (~3px up in the 70px band). Phone view unchanged. */
 html.farm-tv .weather-display .header .logo{top:8px!important}
 html.farm-tv .weather-display .scroll .fixed .text-layer{top:46%!important}
+/* v=11 LOCAL FORECAST (Troy 2026-11-07, screenshot 987_1_5ss8.png): written out
+   in paragraph form, 3 periods per screen, period label in yellow caps on its
+   own line, body in white mixed case. The shared .forecast rule uppercases
+   everything, so this turns that off for this screen only. 16pt so 3 periods
+   fit the 280px main area. */
+#local-forecast-html .forecast{font-size:16pt !important;line-height:26px !important;text-transform:none !important;min-height:0 !important}
+#local-forecast-html .fc-label{color:#FAFA2C !important}
+#local-forecast-html .fc-period{margin-bottom:10px !important}
+#local-forecast-html .fc-period:last-child{margin-bottom:0 !important}
 </style>
 
 </head>
@@ -266,7 +275,7 @@ try {
       <div id="progress-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
+		<div class="logo"><div class="twc-emblem">WEATHER<br>STAR<br>4000+</div></div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -309,7 +318,7 @@ try {
       <div id="hourly-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
+		<div class="logo"><div class="twc-emblem">WEATHER<br>STAR<br>4000+</div></div>
 	
 	
 			<div class="title single">
@@ -346,7 +355,7 @@ try {
       <div id="hourly-graph-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
+		<div class="logo"><div class="twc-emblem">WEATHER<br>STAR<br>4000+</div></div>
 	
 	
 			<div class="title single">
@@ -390,7 +399,7 @@ try {
       <div id="travel-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
+		<div class="logo"><div class="twc-emblem">WEATHER<br>STAR<br>4000+</div></div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -430,7 +439,7 @@ try {
       <div id="current-weather-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
+		<div class="logo"><div class="twc-emblem">WEATHER<br>STAR<br>4000+</div></div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -505,7 +514,7 @@ try {
       <div id="local-forecast-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
+		<div class="logo"><div class="twc-emblem">WEATHER<br>STAR<br>4000+</div></div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -541,7 +550,7 @@ try {
       <div id="latest-observations-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
+		<div class="logo"><div class="twc-emblem">WEATHER<br>STAR<br>4000+</div></div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -589,7 +598,7 @@ try {
       <div id="regional-forecast-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
+		<div class="logo"><div class="twc-emblem">WEATHER<br>STAR<br>4000+</div></div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -627,7 +636,7 @@ try {
       <div id="almanac-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
+		<div class="logo"><div class="twc-emblem">WEATHER<br>STAR<br>4000+</div></div>
 	
 	
 			<div class="title single">
@@ -677,7 +686,7 @@ try {
       <div id="extended-forecast-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
+		<div class="logo"><div class="twc-emblem">WEATHER<br>STAR<br>4000+</div></div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -723,7 +732,7 @@ try {
       </div>
       <div id="radar-html" class="weather-display">
         <div class="header">
-	<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
+	<div class="logo"><div class="twc-emblem">WEATHER<br>STAR<br>4000+</div></div>
 	<div class="title dual">
 		<div class="top">
 			Local
@@ -776,7 +785,7 @@ try {
       <div id="marine-forecast-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
+		<div class="logo"><div class="twc-emblem">WEATHER<br>STAR<br>4000+</div></div>
 	
 	
 			<div class="title single">
@@ -829,7 +838,7 @@ try {
       <div id="aqi-forecast-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
+		<div class="logo"><div class="twc-emblem">WEATHER<br>STAR<br>4000+</div></div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -888,7 +897,7 @@ try {
       <div id="custom-weather-station-html" class="weather-display">
         <div class="header">
 	
-		<div class="logo"><div class="twc-emblem">THE<br>WEATHERSTAR<br>CHANNEL</div></div>
+		<div class="logo"><div class="twc-emblem">WEATHER<br>STAR<br>4000+</div></div>
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -1381,7 +1390,7 @@ document.addEventListener('DOMContentLoaded', function(){
   b.id = 'farm-sound-btn';
   b.textContent = 'TAP FOR SOUND — FAIR WEATHER MUSIC';
   b.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:9999;padding:10px 14px;font-weight:bold;background:#003366;color:#fff;border:2px solid #fff;border-radius:6px;';
-  b.onclick = function(){ if(a.paused){ a.play(); b.textContent='NOW PLAYING: FAIR WEATHER — TAP TO MUTE'; } else { a.pause(); b.textContent='TAP FOR SOUND — FAIR WEATHER MUSIC'; } };
+  b.onclick = function(){ if(a.paused){ var p=a.play(); if(p&&p.then){ p.then(function(){ b.textContent='NOW PLAYING: FAIR WEATHER — TAP TO MUTE'; }).catch(function(){ b.textContent='TAP FOR SOUND — TAP TO TRY AGAIN'; }); } else { b.textContent='NOW PLAYING: FAIR WEATHER — TAP TO MUTE'; } } else { a.pause(); b.textContent='TAP FOR SOUND — FAIR WEATHER MUSIC'; } };
   document.body.appendChild(b);
 });
 

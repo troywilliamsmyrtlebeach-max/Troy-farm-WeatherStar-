@@ -173,7 +173,8 @@ body.kiosk{overflow-x:hidden}
 #container .weather-display .header .top,#container .weather-display .header .bottom{color:#FAFA2C!important;text-shadow:3px 3px 0 #000!important}
 #container .weather-display .header .date-time{color:#fff!important;text-shadow:2px 2px 0 #000!important}
 /* titles: chunky yellow, black shadow */
-.weather-display .header .title,.weather-display .header .title.single,.weather-display .header .title.dual{color:#FAFA2C!important;text-shadow:3px 3px 0 #000!important}
+/* v=11 COLOR-MATCH (Troy 2026-11-07: ALL the same colors exactly on BOTH emulators - Channel must match International exactly). This rule was unqualified, so main.css's #container .title{color:#ffe600!important} beat it and the Channel title rendered #FFE600 while International renders #FAFA2C. Qualifying with #divTwc #container (like exact) makes the Channel title #FAFA2C too. */
+#divTwc #container .weather-display .header .title,#divTwc #container .weather-display .header .title.single,#divTwc #container .weather-display .header .title.dual{color:#FAFA2C!important;text-shadow:3px 3px 0 #000!important}
 /* emblem: rounded royal-blue square, thick chunky compact letters, fully visible.
    Upstream .logo sits at top:30px left:50px in an 83px header; the old 18px emblem was ~86px tall so CHANNEL fell behind the body panel. Now top:4px, 16px, ~68px tall -> bottom ~72px, inside the header. */
 .weather-display .header .logo.emblem{background:#0d47c2!important;border:3px solid #fff!important;border-radius:12px!important;box-shadow:3px 4px 6px rgba(0,0,0,.55)!important;padding:6px 4px!important;color:#fff!important;font-family:"Arial Narrow",Arial,sans-serif!important;font-size:16px!important;font-weight:900!important;line-height:1.05!important;letter-spacing:-.5px!important;text-align:center!important;white-space:nowrap!important;left:6px!important;top:4px!important}
@@ -240,6 +241,15 @@ html.farm-tv body{background:#0B1861!important;margin:0!important}
    (~3px up in the 70px band). Phone view unchanged. */
 html.farm-tv .weather-display .header .logo.emblem{top:8px!important}
 html.farm-tv .weather-display .scroll .fixed .text-layer{top:46%!important}
+/* v=11 LOCAL FORECAST (Troy 2026-11-07, screenshot 987_1_5ss8.png): written out
+   in paragraph form, 3 periods per screen, period label in yellow caps on its
+   own line, body in white mixed case. The shared .forecast rule uppercases
+   everything, so this turns that off for this screen only. 16pt so 3 periods
+   fit the 280px main area. */
+#local-forecast-html .forecast{font-size:16pt !important;line-height:26px !important;text-transform:none !important;min-height:0 !important}
+#local-forecast-html .fc-label{color:#FAFA2C !important}
+#local-forecast-html .fc-period{margin-bottom:10px !important}
+#local-forecast-html .fc-period:last-child{margin-bottom:0 !important}
 </style>
 
 <!-- RETROCAST-RADAR (Troy Oct 31 23:42): radar screen only, matching his
@@ -253,20 +263,22 @@ html.farm-tv .weather-display .scroll .fixed .text-layer{top:46%!important}
 #radar-html .header .precip-header{color:#fff!important;font-weight:bold!important}
 #radar-html .header .scale .text{color:#fff!important}
 #radar-html .header .scale .box{width:16px!important;height:14px!important;border:1px solid #222!important}
-#radar-html .header .scale .box-1{background:#2aff00!important}
-#radar-html .header .scale .box-2{background:#00e000!important}
-#radar-html .header .scale .box-3{background:#a0ff00!important}
-#radar-html .header .scale .box-4{background:#ffff00!important}
-#radar-html .header .scale .box-5{background:#ffc800!important}
-#radar-html .header .scale .box-6{background:#ff8000!important}
-#radar-html .header .scale .box-7{background:#ff3000!important}
-#radar-html .header .scale .box-8{background:#c00000!important}
-#radar-html .main.radar{background:#2e6da8!important}
-#radar-html #map{background:#2e6da8!important}
+#radar-html .header .scale .box-1{background:#31d216!important}
+#radar-html .header .scale .box-2{background:#1c8a12!important}
+#radar-html .header .scale .box-3{background:#145a0f!important}
+#radar-html .header .scale .box-4{background:#0a280a!important}
+#radar-html .header .scale .box-5{background:#c4b346!important}
+#radar-html .header .scale .box-6{background:#be4813!important}
+#radar-html .header .scale .box-7{background:#ab0e0e!important}
+#radar-html .header .scale .box-8{background:#731f04!important}
+#radar-html .main.radar{background:#0B1861!important}
+#radar-html #map{background:transparent!important}
 /* Footer bar must fit inside the 480px display: header is 113px, footer
    44px, so the map gets the remaining 323px (was 367px, pushing the
    footer below the panel edge where it was clipped). */
 #radar-html .main.radar,#radar-html .main.radar .container,#radar-html #map{height:323px!important}
+/* v=11 COLOR-MATCH: International has no monthly footer element on its radar screen - hide it here so the Channel radar matches exactly. */
+#radar-html .radar-monthly-footer{display:none!important}
 #radar-html .radar-monthly-footer{background:#1e3a8f!important;color:#fff!important;font-family:"Star4000",monospace!important;font-size:20px!important;letter-spacing:1px!important;text-align:left!important;padding:10px 16px!important;text-shadow:2px 2px 0 #000!important;display:flex!important;justify-content:space-between!important;align-items:center!important}
 #radar-html .radar-footer-speaker{font-size:18px!important;text-shadow:none!important}
 </style>
@@ -1463,7 +1475,7 @@ document.addEventListener('DOMContentLoaded', function(){
   b.id = 'farm-sound-btn';
   b.textContent = 'TAP FOR SOUND — FAIR WEATHER MUSIC';
   b.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:9999;padding:10px 14px;font-weight:bold;background:#003366;color:#fff;border:2px solid #fff;border-radius:6px;';
-  b.onclick = function(){ if(a.paused){ a.play(); b.textContent='NOW PLAYING: FAIR WEATHER — TAP TO MUTE'; } else { a.pause(); b.textContent='TAP FOR SOUND — FAIR WEATHER MUSIC'; } };
+  b.onclick = function(){ if(a.paused){ var p=a.play(); if(p&&p.then){ p.then(function(){ b.textContent='NOW PLAYING: FAIR WEATHER — TAP TO MUTE'; }).catch(function(){ b.textContent='TAP FOR SOUND — TAP TO TRY AGAIN'; }); } else { b.textContent='NOW PLAYING: FAIR WEATHER — TAP TO MUTE'; } } else { a.pause(); b.textContent='TAP FOR SOUND — FAIR WEATHER MUSIC'; } };
   document.body.appendChild(b);
 });
 
