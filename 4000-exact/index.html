@@ -29,7 +29,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=13" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=14" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -239,7 +239,13 @@ html.farm-tv body { background: linear-gradient(180deg, #3A1428 0%, #7A3010 30%,
    panel itself wears the sunset-orange gradient as a 10px frame on every
    screen, phone and TV, and the TV panel is 4:3 again so the orange body
    gradient shows as side bars. */
-#container{border:10px solid transparent!important;border-image:linear-gradient(180deg,#3A1428 0%,#7A3010 30%,#A64707 60%,#C63F00 100%) 1!important;}
+/* v=14 FRAME COLORS (Troy 2026-11-08, ref 1347_0_xih8.png: orange edges with
+   blue around the other part — orange side bars flanking the panel, blue
+   below it and at the top. The frame echoes it: its left/right edges are the
+   sunset-orange gradient, its top/bottom edges are the screenshot's blue
+   #233371. Blue caps are 2.5% of the 500px border box, wider than the 10px
+   border, so the top/bottom edges read solid blue. */
+#container{border:10px solid transparent!important;border-image:linear-gradient(180deg,#233371 0%,#233371 2.5%,#3A1428 2.5%,#7A3010 32%,#A64707 62%,#C63F00 97.5%,#233371 97.5%,#233371 100%) 1!important;}
 /* v=13 NAVY PANEL (black strips on TV: main.css forces #container black, and
    the display's background image 404s so the black showed through wherever a
    screen paints nothing. The v=8 wide rule painted it navy only in wide
@@ -1623,6 +1629,22 @@ setInterval(function(){
       for (var hi = 0; hi < farmHide.length; hi++) { farmHide[hi].style.display = 'none'; }
       document.body.style.margin = '0';
     }
+    /* v=14 FRAME COLORS (re-asserted every tick): layer the body background
+       so the panel is flanked by orange side bars and blue everywhere else —
+       a blue center column exactly the panel's width over the orange vertical
+       gradient. On a portrait phone the panel spans the full width, so the
+       body is all blue and the orange shows only in the panel's frame. */
+    (function(){
+      var c = document.getElementById('container');
+      if (!c) return;
+      var r = c.getBoundingClientRect();
+      var w = window.innerWidth || document.documentElement.clientWidth;
+      var lp = Math.max(0, r.left / w * 100).toFixed(2);
+      var rp = Math.min(100, r.right / w * 100).toFixed(2);
+      document.body.style.setProperty('background-image',
+        'linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) ' + lp + '%, #233371 ' + lp + '%, #233371 ' + rp + '%, rgba(0,0,0,0) ' + rp + '%, rgba(0,0,0,0) 100%), linear-gradient(180deg, #3A1428 0%, #7A3010 30%, #A64707 60%, #C63F00 100%)',
+        'important');
+    })();
   }
   applyLayout();
   window.addEventListener('resize', applyLayout);
