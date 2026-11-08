@@ -29,7 +29,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=12" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=13" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -240,6 +240,12 @@ html.farm-tv body { background: linear-gradient(180deg, #3A1428 0%, #7A3010 30%,
    screen, phone and TV, and the TV panel is 4:3 again so the orange body
    gradient shows as side bars. */
 #container{border:10px solid transparent!important;border-image:linear-gradient(180deg,#3A1428 0%,#7A3010 30%,#A64707 60%,#C63F00 100%) 1!important;}
+/* v=13 NAVY PANEL (black strips on TV: main.css forces #container black, and
+   the display's background image 404s so the black showed through wherever a
+   screen paints nothing. The v=8 wide rule painted it navy only in wide
+   mode; the 4:3 panel needs the same navy. Specificity (0,3,1) beats the
+   black rule (0,2,1). */
+body #divTwc:not(.wide) #container{background-color:#0B1861!important;}
 </style>
 
 </head>
