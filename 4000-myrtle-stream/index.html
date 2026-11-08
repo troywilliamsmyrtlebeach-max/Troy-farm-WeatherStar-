@@ -29,7 +29,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=22" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=23" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -41,13 +41,13 @@
   <script type="module" src="scripts/modules/customweatherstation.mjs?v=c602f2d"></script>
   <script type="module" src="scripts/modules/almanac.mjs"></script>
   <script type="module" src="scripts/modules/icons.mjs?v=skyicons"></script>
-  <script type="module" src="scripts/modules/extendedforecast.mjs"></script>
+  <script type="module" src="scripts/modules/extendedforecast.mjs?v=sunny23"></script>
   <script type="module" src="scripts/modules/hourly-graph.mjs"></script>
   <script type="module" src="scripts/modules/marine-forecast.mjs"></script>
   <script type="module" src="scripts/modules/aqi-forecast.mjs"></script>
   <script type="module" src="scripts/modules/hourly.mjs"></script>
   <script type="module" src="scripts/modules/latestobservations.mjs?v=screenshot7"></script>
-  <script type="module" src="scripts/modules/localforecast.mjs"></script>
+  <script type="module" src="scripts/modules/localforecast.mjs?v=oneperpage23"></script>
   <script type="module" src="scripts/modules/radar.mjs"></script>
   <script type="module" src="scripts/modules/regionalforecast.mjs?v=skyicons"></script>
   <script type="module" src="scripts/modules/travelforecast.mjs"></script>
@@ -261,12 +261,13 @@ html.farm-tv body{margin:0!important}
    (~3px up in the 70px band). Phone view unchanged. */
 html.farm-tv .weather-display .header .logo.emblem{top:8px!important}
 html.farm-tv .weather-display .scroll .fixed .text-layer{top:50%!important;transform:translateY(-50%)!important}
-/* v=11 LOCAL FORECAST (Troy 2026-11-07, screenshot 987_1_5ss8.png): written out
-   in paragraph form, 3 periods per screen, period label in yellow caps on its
-   own line, body in white mixed case. The shared .forecast rule uppercases
-   everything, so this turns that off for this screen only. 16pt so 3 periods
-   fit the 280px main area. */
-#local-forecast-html .forecast{font-size:16pt !important;line-height:26px !important;text-transform:none !important;min-height:0 !important}
+/* v=23 LOCAL FORECAST (Troy 2026-11-08: ONE period per screen, in bigger letters
+   the size of the Almanac page — 24pt, line-height 40px, same as the shared
+   .forecast rule and the Almanac text. Written out in paragraph form, period
+   label in yellow caps on its own line, body in white mixed case. The shared
+   .forecast rule uppercases everything, so this turns that off for this
+   screen only. Supersedes the v=11 16pt rule, when 3 periods shared a screen. */
+#local-forecast-html .forecast{font-size:24pt !important;line-height:40px !important;text-transform:none !important;min-height:0 !important}
 #local-forecast-html .fc-label{color:#FAFA2C !important}
 #local-forecast-html .fc-period{margin-bottom:10px !important}
 #local-forecast-html .fc-period:last-child{margin-bottom:0 !important}

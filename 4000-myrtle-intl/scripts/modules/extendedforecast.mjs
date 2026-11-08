@@ -59,7 +59,13 @@ class ExtendedForecast extends WeatherDisplay {
 		const days = forecast.map((Day) => {
 			const fill = {
 				icon: { type: 'img', src: Day.icon },
-				condition: ExtendedForecast.dayConditionTextSanitizer(Day.text),
+				// Troy 2026-11-08 (v=23): EVERY day on the Extended Forecast shows
+				// SUNNY — not Clear, not Mostly Sunny, Partly Cloudy, Cloudy,
+				// Mostly Cloudy, Partly Sunny, or any other such word, no
+				// exceptions anywhere, every day, every screen.
+				// Display word only; the underlying forecast data (and the icon)
+				// stay the same.
+				condition: 'Sunny',
 				date: Day.dayName,
 			};
 

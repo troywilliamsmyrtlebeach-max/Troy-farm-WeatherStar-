@@ -38,29 +38,31 @@ class LocalForecast extends WeatherDisplay {
 
 		if (!conditions.length) {
 			this.screenTexts = [
-				// FRESH FORECAST 2026-11-07 ~11:52 PM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-08T03:52Z). Written in the screenshot format (generator
+				// FRESH FORECAST 2026-11-08 ~09:08 AM EST (NWS ILM gridpoint 68,59 for the farm,
+				// generated 2026-11-08T14:07Z). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
-				'TONIGHT... Mostly clear. Low around 41. North wind around 3 mph. Precip chance 0%.',
-				'SUNDAY... Sunny. High 68. North wind around 3 mph. Precip chance 0%.',
-				'SUNDAY NIGHT... Mostly clear. Low 44. West wind around 2 mph. Precip chance 0%.',
-				'MONDAY... Sunny. High 74. West wind 1 to 6 mph. Precip chance 0%.',
-				'MONDAY NIGHT... Clear. Low 44. Southeast wind around 1 mph. Precip chance 0%.',
-				'TUESDAY... Sunny. High 74. Winds light and variable. Precip chance 0%.',
-				'TUESDAY NIGHT... Partly cloudy. Low 48. Winds light and variable. Precip chance 0%.',
-				'VETERANS DAY... Mostly sunny. High 75. Winds light and variable. Precip chance 0%.',
+				'TODAY... Sunny. High 70. Northwest wind around 3 mph. Precip chance 0%.',
+				'TONIGHT... Clear. Low around 44. Southwest wind 0 to 3 mph. Precip chance 0%.',
+				'MONDAY... Sunny. High 73. West wind 1 to 5 mph. Precip chance 0%.',
+				'MONDAY NIGHT... Clear. Low 41. Winds light and variable. Precip chance 0%.',
+				'TUESDAY... Sunny. High 74. Southeast wind 0 to 5 mph. Precip chance 0%.',
+				'TUESDAY NIGHT... Partly cloudy. Low 48. Southwest wind around 3 mph. Precip chance 0%.',
+				'VETERANS DAY... Mostly sunny. High 75. West wind around 3 mph. Precip chance 0%.',
+				'WEDNESDAY NIGHT... Mostly clear. Low 50. West wind around 2 mph. Precip chance 1%.',
 			];
 		} else {
 			this.screenTexts = conditions.map((condition) => condition.Text);
 		}
 
 		// Troy 2026-11-07 (screenshot 987_1_5ss8.png): the Local Forecast screen writes
-		// the forecast out in paragraph form, THREE periods on one screen — period label
-		// in yellow caps on its own line, then the text in white. Group the period texts
-		// into pages of 3; each page is one .forecast template (fillTemplate sets
-		// innerHTML, so the label span renders as HTML).
+		// the forecast out in paragraph form — period label in yellow caps on its own
+		// line, then the text in white. Troy 2026-11-08 (v=23): ONE period per screen,
+		// in bigger letters the size of the Almanac page (24pt) — TODAY on one page,
+		// TONIGHT on the next, MONDAY on the next, and so on. Each page is one
+		// .forecast template (fillTemplate sets innerHTML, so the label span renders
+		// as HTML).
 		const pages = [];
-		for (let i = 0; i < this.screenTexts.length; i += 3) pages.push(this.screenTexts.slice(i, i + 3));
+		for (let i = 0; i < this.screenTexts.length; i += 1) pages.push(this.screenTexts.slice(i, i + 1));
 		const templates = pages.map((pageTexts) => {
 			const html = pageTexts.map((text) => {
 				const m = text.match(/^([^.]*\.\.\.)\s*([\s\S]*)$/);
