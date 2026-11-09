@@ -9,7 +9,7 @@
   <meta name="keywords" content="WeatherStar 4000+" />
   <meta name="author" content="Michael Wood" />
   <meta name="application-name" content="WeatherStar 4000+ International" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -29,16 +29,16 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=78" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=82" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/swiped-events.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/suncalc.js"></script>
   <script type="module" src="scripts/modules/hazards.mjs"></script>
-  <script type="module" src="scripts/modules/currentweatherscroll.mjs?v=sunny24"></script>
+  <script type="module" src="scripts/modules/currentweatherscroll.mjs?v=fair25"></script>
   <script type="module" src="scripts/modules/currentweather.mjs?v=gustfallback"></script>
-  <script type="module" src="scripts/modules/customweatherstation.mjs?v=sunny24"></script>
+  <script type="module" src="scripts/modules/customweatherstation.mjs?v=fair25"></script>
   <script type="module" src="scripts/modules/almanac.mjs"></script>
   <script type="module" src="scripts/modules/icons.mjs?v=skyicons"></script>
   <script type="module" src="scripts/modules/extendedforecast.mjs?v=clearsunny23"></script>
@@ -46,7 +46,7 @@
   <script type="module" src="scripts/modules/marine-forecast.mjs"></script>
   <script type="module" src="scripts/modules/aqi-forecast.mjs"></script>
   <script type="module" src="scripts/modules/hourly.mjs"></script>
-  <script type="module" src="scripts/modules/latestobservations.mjs?v=sunny24"></script>
+  <script type="module" src="scripts/modules/latestobservations.mjs?v=fair25"></script>
   <script type="module" src="scripts/modules/localforecast.mjs?v=oneperpage23"></script>
   <script type="module" src="scripts/modules/radar.mjs"></script>
   <script type="module" src="scripts/modules/regionalforecast.mjs?v=skyicons"></script>
@@ -124,12 +124,14 @@
 
 <!-- FARM-NAME-SHIFT-LEFT -->
 <style>
-/* FARM-NAME-SHIFT-LEFT (Troy Oct 31 19:43): CALABASH-FARM AT BRUNSWICK moved a little to the left,
-   so the WHOLE name shows across the top-right half of the screen, not clipped at the right edge.
-   Right column nudged left, farm name allowed to overflow leftwards (not clipped), nowrap kept. */
-.custom-weather-station.main .col.right{right:24px !important;}
-.custom-weather-station.main .farm-name-over-humidity{margin-left:-48px !important; width:320px !important; max-width:none !important; overflow:visible !important; text-align:left !important; white-space:nowrap !important;}
-.custom-weather-station.main .location{overflow:visible !important; max-width:none !important;}
+/* FARM-NAME-FIT 2026-11-09: the old -48px/320px overflow hack is gone — the
+   name fits INSIDE its 255px right column now. Measured with the real
+   Star4000 Large font: CALABASH-FARM AT BRUNSWICK is 274px at 16pt but
+   239px at 14pt, so the name runs at 14pt (rows stay 16pt), nowrap kept,
+   no overflow, no clipping. */
+
+.custom-weather-station.main .farm-name-over-humidity{margin-left:0 !important; width:auto !important; max-width:100% !important; overflow:hidden !important; text-align:left !important; white-space:nowrap !important;}
+
 </style>
 
 <!-- FARM-LOCATION-SMALLER -->
@@ -142,7 +144,7 @@
    location label on the app's screens. */
 .custom-weather-station.main .location{font-size:16pt !important; text-align:left !important; color:#7fe7ff !important; white-space:nowrap !important; line-height:1.2 !important; margin-bottom:6px !important; width:auto !important;}
 /* Troy Oct 31 19:14: farm name moved INTO the right column, directly over Humidity, like his screenshot — not a full-width centered line above both columns */
-.custom-weather-station.main .farm-name-over-humidity{font-size:16pt !important; color:#7fe7ff !important; text-align:left !important; white-space:nowrap !important; margin-bottom:8px !important; font-weight:bold !important;}
+.custom-weather-station.main .farm-name-over-humidity{font-size:14pt !important; color:#7fe7ff !important; text-align:left !important; white-space:nowrap !important; margin-bottom:8px !important; font-weight:bold !important;}
 .custom-weather-station.main .location.center{color:#7fe7ff !important;}
 .weather-display .location, .custom-weather-station .location{font-size:16pt !important; text-align:left !important;}
 </style>
@@ -154,14 +156,10 @@
 body{background:#000!important}
 #divTwc{background:#000!important}
 #container{position:relative}
-/* v=6 PANEL-FIT: in kiosk #divTwc is display:flex (upstream rule), so
-   #container is a flex item that SHRINKS to the viewport width and its
-   overflow:hidden then clips the 640px screens — the panel looked cut off
-   on Troy's phone. Pin the container to the design width, never shrink;
-   left-align the flex row so the scaled panel starts at x=0. */
-#divTwc #container{flex:0 0 640px!important;width:640px!important;min-width:640px!important}
-#divTwc.wide #container{flex-basis:854px!important;width:854px!important;min-width:854px!important}
-body.kiosk #divTwc{justify-content:flex-start!important;align-items:flex-start!important}
+/* LAYOUT 2026-11-09: the v=6 PANEL-FIT pinning lived here AND in compiled
+   main.css AND in navigation.mjs — three copies fighting. The pin now lives
+   in compiled main.css LAYOUT-FIX only (plus the inline styles
+   navigation.mjs resize() sets); this inline copy is deleted. */
 /* v=6 WINAMP: Webamp renders its player into a separate #webamp div on
    BODY, not inside #webamp-app — hiding #webamp-app alone left the bar
    showing at the top. Hide the real player root in kiosk (music still
@@ -236,16 +234,16 @@ body #divTwc.wide #container{box-sizing:border-box!important;background-color:#0
 #farm-nav-bar button:active{background:#0d47c2!important}
 /* v=9 TV-CLEAN (Troy 2026-11-07: casting his phone to the TV shows the phone-only arrows AND the TAP FOR SOUND / FULL SCREEN buttons on the TV — the width-based hide cannot tell a cast phone from a phone). In TV mode (?tv=1 or ?arrows=off) hide EVERY control so the TV shows a clean broadcast picture: nav bar, sound button, fullscreen button. Clock, ticker, emblem and screens stay visible. */
 html.farm-tv #farm-nav-bar,html.farm-tv #farm-sound-btn,html.farm-tv #farm-fullscreen-btn{display:none!important}
-/* v=19 TAP TV (Troy 2026-11-08: "tap tv on all of them to get big screen
-   and take off the browser at the top and the controls below so it will
-   fit the screen exactly perfectly"). Entering fullscreen turns on
-   farm-big: every control below the panel (nav bar, sound + fullscreen
-   buttons, the stock #divTwcBottom strip) hides, and applyLayout drops
-   the 84px nav-bar reserve so the panel scales to the full screen height.
-   Exiting fullscreen turns it back off. In ?tv=1 the TAP TV button stays
-   hidden (the TV view is already the clean big screen) and the panel tap
-   still works. */
-html.farm-big #farm-nav-bar,html.farm-big #farm-sound-btn,html.farm-big #farm-fullscreen-btn,html.farm-big #divTwcBottom{display:none!important}
+/* v=20 ARROWS STAY BIG (Troy 2026-11-08/09: "I want the arrows to show on
+   my phone where I can click through the pages" — going big took them
+   away). Fullscreen now targets the whole document (see
+   farmToggleFullscreen), so the PREV/PAUSE/NEXT bar is inside the
+   fullscreen element and stays visible and tappable while big; the panel
+   scales to the height above it (84px reserve in navigation.mjs resize()).
+   Sound + fullscreen buttons and the stock #divTwcBottom strip still hide
+   while big. In ?tv=1 the bar stays hidden (farm-tv rule) and the TAP TV
+   button stays hidden — the TV view is already the clean big screen. */
+html.farm-big #farm-sound-btn,html.farm-big #farm-fullscreen-btn,html.farm-big #divTwcBottom{display:none!important}
 /* v=10 EMULATOR-ONLY (Troy 2026-11-07: take off the browser top bar and the
    controls at the bottom — only the emulator itself on screen). In TV mode
    hide EVERYTHING outside the emulator panel: the settings/share/info
@@ -1291,9 +1289,9 @@ document.addEventListener('DOMContentLoaded', function(){
 // text-only). Serve the ORIGINAL author's own public assets from the
 // upstream Pages site instead of 404s, for <img> elements present now
 // and added later by canvas templates. No UI rewrite, no new images.
-// Tap-only fullscreen button below uses the app's own #divTwc
-// requestFullscreen (resize() scales it) — no forced CSS, which broke
-// the page twice on Oct 31.
+// Tap-only fullscreen button below uses the document's own
+// requestFullscreen (the nav bar stays inside it) — no forced CSS, which
+// broke the page twice on Oct 31.
 (function () {
   var UP = 'https://mwood77.github.io/ws4kp-international/';
   function fixImg(img) {
@@ -1320,8 +1318,10 @@ document.addEventListener('DOMContentLoaded', function(){
   f.textContent = 'TAP TV — FULL SCREEN';
   f.style.cssText = 'position:fixed;right:8px;bottom:8px;z-index:9999;padding:10px 14px;font-weight:bold;background:#003366;color:#fff;border:2px solid #fff;border-radius:6px;';
   f.onclick = function () {
-    var el = document.querySelector('#divTwc');
-    if (!el) return;
+    // v=20 ARROWS STAY BIG (2026-11-09): fullscreen the whole document, not
+    // #divTwc — a #divTwc-only fullscreen cut the PREV/PAUSE/NEXT bar (a
+    // body sibling) out of the picture. The bar stays visible while big.
+    var el = document.documentElement;
     var r = el.requestFullscreen || el.webkitRequestFullscreen;
     if (r) r.call(el, { navigationUI: 'hide' });
   };
@@ -1362,13 +1362,15 @@ setInterval(function(){
 </script>
 
 <script>
-/* FARM-LAYOUT 2026-11-07 (STREAM-MATCH v=6): the 640x480 panel MUST fit the
-   screen on a real phone — Troy's phone still showed the right side cut off
-   on v=4. This runs from the page HTML itself (always fresh), not from a
-   cached JS module: it scales #container from the top-left to fit the
-   viewport (capped at 1.6x), forces the kiosk class on, and hides the
-   Winamp bar. It re-asserts on resize and every second so a stale cached
-   module can never leave the panel unscaled or the music bar showing. */
+/* FARM-LAYOUT 2026-11-07 (STREAM-MATCH v=6), scaling moved 2026-11-09:
+   the 640x480 panel MUST fit the screen on a real phone — Troy's phone
+   still showed the right side cut off on v=4. This runs from the page HTML
+   itself (always fresh), not from a cached JS module: it forces the kiosk
+   class on and hides the Winamp bar / search box. Panel SCALING lives only
+   in navigation.mjs resize() (single scaler) — this script must not touch
+   #container geometry or the two scalers fight again. It re-asserts on
+   resize and every second so a stale cached module can never leave the
+   music bar or the search box showing. */
 (function () {
   var isKiosk = new URLSearchParams(window.location.search).get('kiosk') === 'true';
   var farmQs = new URLSearchParams(window.location.search);
@@ -1379,98 +1381,10 @@ setInterval(function(){
      ?arrows=on still forces the controls back on. */
   var tvMode = arrowsParam === 'on' ? false : (arrowsParam === 'off' || tvParam === '1');
   function applyLayout() {
-    var container = document.getElementById('container');
-    var divTwc = document.getElementById('divTwc');
-    if (container) {
-      var availWidth = document.documentElement.clientWidth || window.innerWidth;
-      var availHeight = window.innerHeight;
-      /* v=8 TV-FILL (Troy: the TV used to fill the whole screen; the v=5/v=6
-         1.6x scale cap shrank it to a sliver on a big TV — regression). On a
-         wide screen (wider than 4:3, e.g. a 16:9 TV) run widescreen mode
-         (854px design width) and scale to fill with NO cap, like the app
-         did before. On a phone (portrait) keep the 640px panel — the cap
-         never binds there, so the phone fit is untouched. */
-      var isTvWide = (availWidth / availHeight) > 1.34;
-      /* v=12 ORANGE FRAME (Troy 2026-11-08): the panel is 4:3 again on TV —
-         the 854px widescreen stretch filled the whole TV so the orange edges
-         had nowhere to show. Now the 640x480 panel fits the screen height
-         and centers, so the sunset-orange body gradient shows as side bars,
-         and the panel itself wears a 10px orange-gradient frame (border-image)
-         on every screen, phone and TV. */
-      var framePx = 10;
-      /* v=18 TV-ZOOM (Troy 2026-11-08: "zoomed more in on the TV" — black
-         still showed around the TV. The 4:3 panel in the 915x412 cast view
-         was only 544px wide, so the emulator looked small in the middle of
-         the TV. In TV mode on a wide screen, restore the app's own
-         widescreen 854px container (the v=8 wide mode): the 640x480 content
-         is NOT stretched or cropped — the extra 107px strips on each side
-         are part of the container — and the whole emulator scales to fill
-         the viewport height, so it fills the TV. Phone links (no ?tv=1)
-         keep the 640 panel, untouched. */
-      var targetWidth = (tvMode && isTvWide) ? 854 : 640;
-      /* v=16 ARROWS IN LANDSCAPE (Troy 2026-11-08: "no arrows on neither
-         one" — he taps the phone links with the phone SIDEWAYS, landscape
-         ~915px wide. The old gate (availWidth <= 900) hid the bar, and
-         isTvWide scaled the panel to the full viewport height with body
-         overflow hidden, so the bar would have sat below the fold with no
-         way to reach it even if shown. Now: arrows show on any phone-width
-         screen (<= 1200px) or any touch device — the TV (?tv=1) and the
-         1280px no-touch stream kiosk still hide them — and in wide mode the
-         panel leaves 84px at the bottom so the bar fits on screen. */
-      /* v=19 TAP TV: in fullscreen-big mode the controls are gone, so the
-         nav-bar reserve is 0 and the panel scales to the full screen height. */
-      var bigMode = document.documentElement.classList.contains('farm-big');
-      var showArrows = bigMode ? false : (arrowsParam === 'on' ? true : (arrowsParam === 'off' || tvParam === '1' ? false : (availWidth <= 1200 || navigator.maxTouchPoints > 0)));
-      var barReserve = showArrows ? 84 : 0;
-      /* v=18 TV-ZOOM (scale alignment): in wide mode #container is
-         box-sizing:border-box, so the 10px frame sits INSIDE the 854x480
-         design box — the true design size is 854x480, not 874x500. Using
-         500/874 under-scales (43px gap at the bottom of a 1080 TV, lopsided
-         orange bars: 16px left, 59px right). Use the true dims here, and
-         keep a 32px width reserve so the orange side bars still show. */
-      var designW = (tvMode && isTvWide) ? targetWidth : (targetWidth + 2 * framePx);
-      var designH = (tvMode && isTvWide) ? 480 : (480 + 2 * framePx);
-      var scale = isTvWide ? Math.max(0.2, Math.min((availHeight - barReserve) / designH, (availWidth - ((tvMode && isTvWide) ? 32 : 0)) / designW))
-        : Math.min(availWidth / targetWidth, availHeight / (480 + 2 * framePx), 1.6);
-      var totalW = designW * scale;
-      if (totalW > availWidth) { scale = availWidth / designW; totalW = availWidth; }
-      var frameScreen = framePx * scale;
-      /* v=18 TV-ZOOM: the 'wide' class (854px container) is back in TV mode
-         on a wide screen, so the emulator fills the TV; everywhere else the
-         4:3 panel stays (v=12), so the orange side bars still show there. */
-      if (divTwc) { if (tvMode && isTvWide) { divTwc.classList.add('wide'); } else { divTwc.classList.remove('wide'); } }
-      /* v=8 TV-FILL: on a wide screen the scaled panel's positive bottom
-         margin makes the document taller than the viewport, so a scrollbar
-         appears and shrinks the viewport — the panel then never quite fills
-         the frame. Hide page scroll on TV (the panel + bar are all there is
-         to see in kiosk); phones are unaffected (their content fits). */
-      document.body.style.overflow = (isTvWide && !showArrows) ? 'hidden' : '';
-      if (scale < 1.0 || isTvWide || document.fullscreenElement || isKiosk || document.body.classList.contains('kiosk')) {
-        container.style.transform = 'scale(' + scale + ')';
-        container.style.transformOrigin = 'top left';
-        /* v=6 PANEL-FIT: pin the container to the design width (see CSS) —
-           flex-shrink alone in CSS is not enough if a stale stylesheet wins. */
-        container.style.width = targetWidth + 'px';
-        container.style.minWidth = targetWidth + 'px';
-        container.style.flexShrink = '0';
-        container.style.flexGrow = '0';
-        container.style.flexBasis = targetWidth + 'px';
-        if (divTwc) { divTwc.style.justifyContent = 'flex-start'; divTwc.style.alignItems = 'flex-start'; }
-        container.style.marginBottom = (designH * (scale - 1)) + 'px';
-        var scaledWidth = targetWidth * scale;
-        container.style.marginLeft = availWidth > totalW ? ((availWidth - totalW) / 2) + 'px' : '0px';
-        /* v=7 FARM-NAV: keep the PREV/PAUSE/NEXT bar exactly under the scaled panel. */
-        var farmBar = document.getElementById('farm-nav-bar');
-        if (farmBar) { farmBar.style.width = scaledWidth + 'px'; farmBar.style.marginLeft = ((parseFloat(container.style.marginLeft) || 0) + frameScreen) + 'px'; farmBar.style.marginRight = '0px'; farmBar.style.display = showArrows ? 'flex' : 'none'; }
-      } else {
-        container.style.transform = 'unset';
-        container.style.transformOrigin = '';
-        container.style.marginBottom = '';
-        container.style.marginLeft = '';
-        var farmBar2 = document.getElementById('farm-nav-bar');
-        if (farmBar2) { farmBar2.style.width = ''; farmBar2.style.marginLeft = ''; farmBar2.style.marginRight = ''; farmBar2.style.display = showArrows ? 'flex' : 'none'; }
-      }
-    }
+    /* LAYOUT 2026-11-09: navigation.mjs resize() is the SINGLE scaler now.
+       This script keeps only the kiosk/TV hiding duties below — it must not
+       touch #container geometry, the nav bar, or the panel size, or the two
+       scalers fight again (0.591 vs 0.609 on a 390px phone, worse sideways). */
     if (isKiosk) {
       document.body.classList.add('kiosk');
       document.documentElement.classList.add('farm-kiosk');
@@ -1529,13 +1443,17 @@ setInterval(function(){
    system UI go away); tap again to come back out. Taps on the emulator's
    own controls (bottom nav icons, menu items, links, buttons) are left
    alone so they keep working. The FULL SCREEN button does the same thing
-   and stays hidden in TV mode — on TV the tap is the way in. */
+   and stays hidden in TV mode — on TV the tap is the way in.
+   v=20 ARROWS STAY BIG (2026-11-09): fullscreen targets the whole document,
+   not #divTwc — #divTwc-only fullscreen cut the PREV/PAUSE/NEXT bar out. */
 (function () {
   function farmToggleFullscreen() {
     try {
       if (document.fullscreenElement) { document.exitFullscreen(); return; }
-      var el = document.getElementById('divTwc');
-      if (!el) return;
+      // v=20 ARROWS STAY BIG (2026-11-09): fullscreen the whole document,
+      // not #divTwc — #divTwc-only fullscreen cut the PREV/PAUSE/NEXT bar
+      // (a body sibling) out of the picture.
+      var el = document.documentElement;
       var r = el.requestFullscreen || el.webkitRequestFullscreen;
       if (r) r.call(el, { navigationUI: 'hide' });
     } catch (e) {}

@@ -1,17 +1,17 @@
 {
   "conditionText": 0,
-  "dewPoint": 14.44,
-  "feelsLike": 21.11,
-  "humidity": 67,
-  "lastUpdated": "2026-11-09T11:26:00-05:00",
+  "dewPoint": 10.6,
+  "feelsLike": 24.4,
+  "humidity": 41,
+  "lastUpdated": "2026-11-09T15:59:00-05:00",
   "locationCity": "CALABASH-FARM AT BRUNSWICK",
-  "pressure": 1011.5,
+  "pressure": 1009.48,
   "rainTodayIn": 0.0,
-  "source": "OSOILM 11:26 AM (WU curl bot-blocked 3 UAs; dashboard crawl stale at 11:03 AM - same values as v=76; WunderMap map shell only, no observations): 70F, feels 70F, Sunny, ESE 4 mph gust 7, RH 67%, dewpoint 58F, pressure 29.87 inHg, visibility 10 mi, rain today 0.00 in. Sky sunny: WU Clouds Clear (11:03 AM crawl) + KCRE Clear at 11:10 AM (70F, dew 52F, NW 6 mph, vis 10 mi, P 30.08). OSOILM dew/RH/pressure offsets vs WU as in runs 2-43. No active NWS alerts for the farm.",
-  "temperature": 21.11,
+  "source": "WU page freshest obs 3:59 PM via RetroCast 15:56 data file (11 reads, fully consistent): 77F (25.0C) feels 76F (24.4C), Sunny, WU-first wind SW 2 mph gust 6, RH 41%, dewpoint 51F (10.6C), pressure 29.81 inHg (1009.48 hPa), visibility 10 mi, rain today 0.00 in. Cross-checks: OSOILM farm row 3:56 PM - 78F, dew 51, RH 39%, W 2 gust 6, P 29.81, rain 0.00/0.00 (temp 1F above the fresher WU-page 3:59 PM reading; all else agrees); WU dashboard curl bot-blocked again (shell only) and browser crawl stale (3:38 PM); KCRE Clear at 3:20 PM (73F, dew 45F, vis 10 mi, P 30.01). Sky sunny: WU page Sunny icon+word on all reads + KCRE Clear. Feels-like 76F, no wind chill. No active NWS alerts for the farm.",
+  "temperature": 25.0,
   "uvIndex": null,
   "visibility": 16.09,
-  "windDirection": "ESE",
-  "windGust": 11.27,
-  "windSpeed": 6.44
+  "windDirection": "SW",
+  "windGust": 9.66,
+  "windSpeed": 3.22
 }

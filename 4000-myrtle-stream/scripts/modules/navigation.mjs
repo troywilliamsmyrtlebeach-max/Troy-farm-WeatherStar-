@@ -35,6 +35,8 @@ let AutoRefreshCountMs = 0;
 const init = async () => {
 	// set up resize handler
 	window.addEventListener('resize', resize);
+	window.addEventListener('orientationchange', resize);
+	document.addEventListener('fullscreenchange', resize);
 	resize();
 
 	// set up custom event listener for custom messages from displays
@@ -501,23 +503,35 @@ const getDisplay = (index) => displays[index];
 const resize = () => {
 	const container = document.querySelector('#container');
 	if (!container) return;
-	// v=8 TV-FILL (Troy: the TV used to fill the whole screen; the v=5/v=6
-	// 1.6x cap shrank it to a sliver on a big TV — regression). Wide screens
-	// run widescreen mode (854px) and scale to fill with no cap, like before.
-	// Phones (portrait) keep the 640px panel; the cap never binds there.
-	// (Aspect-based, not settings.wide: these are kiosk pages and the inline
-	// FARM-LAYOUT script decides the same way every second, so the two can
-	// never disagree.)
-	const availWidthEarly = document.documentElement.clientWidth || window.innerWidth;
-	const isTvWide = (availWidthEarly / window.innerHeight) > 1.34;
+	// LAYOUT 2026-11-09 (single scaler): navigation.mjs resize() is the ONLY
+	// scaler. The inline FARM-LAYOUT script in index.html no longer touches
+	// #container geometry — two scalers (0.591 vs 0.609 on a 390px phone,
+	// worse sideways) made the panel shift/clip every second.
+	// Design box is 640x480; the 10px border-image frame sits OUTSIDE it
+	// (content-box) except in wide TV mode, where #container is
+	// box-sizing:border-box and the frame sits INSIDE 854x480. Frame counted
+	// once, here, nowhere else.
+	const FRAME_PX = 10;
+	const availWidth = document.documentElement.clientWidth || window.innerWidth;
+	const availHeight = window.innerHeight;
+	const isTvWide = (availWidth / availHeight) > 1.34;
 	// v=18 TV-ZOOM (Troy 2026-11-08: "zoomed more in on the TV"): the 854px
 	// widescreen container applies ONLY in TV mode (?tv=1) on a wide screen.
-	// The inline FARM-LAYOUT script decides the same way every second, so
-	// the two can never disagree. Phone links keep the 640px panel.
+	// Phone links keep the 640px panel.
 	const tvParams = new URLSearchParams(window.location.search);
-	const tvArrows = tvParams.get('arrows');
-	const tvMode = tvArrows === 'on' ? false : (tvArrows === 'off' || tvParams.get('tv') === '1');
+	const arrowsParam = tvParams.get('arrows');
+	const tvParam = tvParams.get('tv');
+	const tvMode = arrowsParam === 'on' ? false : (arrowsParam === 'off' || tvParam === '1');
+	// v=20 ARROWS STAY BIG (Troy 2026-11-08/09: arrows must show on the
+	// phone so he can click through the pages — going big took them away).
+	// bigMode no longer forces the bar off: fullscreen now targets the whole
+	// document (see farmToggleFullscreen), so the bar stays inside it and
+	// tappable. ?tv=1 still hides every control by design.
+	const showArrows = arrowsParam === 'on' ? true : (arrowsParam === 'off' || tvParam === '1' ? false : (availWidth <= 1200 || navigator.maxTouchPoints > 0));
+	const barReserve = showArrows ? 84 : 0;
 	const targetWidth = (tvMode && isTvWide) ? 854 : 640;
+	const designW = (tvMode && isTvWide) ? targetWidth : (targetWidth + 2 * FRAME_PX);
+	const designH = (tvMode && isTvWide) ? 480 : (480 + 2 * FRAME_PX);
 	const divTwcEl = document.querySelector('#divTwc');
 	if (divTwcEl) { if (tvMode && isTvWide) divTwcEl.classList.add('wide'); else divTwcEl.classList.remove('wide'); }
 	// v=6 PANEL-FIT (Troy's phone): in kiosk #divTwc is display:flex, so
@@ -528,25 +542,41 @@ const resize = () => {
 	container.style.flexShrink = '0';
 	container.style.flexGrow = '0';
 	container.style.flexBasis = `${targetWidth}px`;
-	const availWidth = document.documentElement.clientWidth || window.innerWidth;
-	// v=18 TV-ZOOM (scale alignment): same 32px width reserve as the inline
-	// FARM-LAYOUT script, so the orange side bars still show on a real TV.
-	const widthZoomPercent = (tvMode && isTvWide) ? (availWidth - 32) / targetWidth : availWidth / targetWidth;
-	const heightZoomPercent = (window.innerHeight) / 480;
-
-	const scale = isTvWide ? Math.min(widthZoomPercent, heightZoomPercent) : Math.min(widthZoomPercent, heightZoomPercent, 1.6);
+	// v=18 TV-ZOOM (scale alignment): same 32px width reserve as before, so
+	// the orange side bars still show on a real TV. The nav-bar reserve
+	// keeps the PREV/PAUSE/NEXT bar on screen in wide/landscape mode.
+	let scale;
+	if (isTvWide) {
+		scale = Math.max(0.2, Math.min((availHeight - barReserve) / designH, (availWidth - ((tvMode && isTvWide) ? 32 : 0)) / designW));
+	} else {
+		scale = Math.min(availWidth / targetWidth, availHeight / designH, 1.6);
+	}
+	let totalW = designW * scale;
+	if (totalW > availWidth) { scale = availWidth / designW; totalW = availWidth; }
+	const scaledWidth = targetWidth * scale;
+	const frameScreen = FRAME_PX * scale;
 	if (scale < 1.0 || isTvWide || document.fullscreenElement || settings.kiosk) {
 		container.style.transform = `scale(${scale})`;
 		container.style.transformOrigin = 'top left';
-		container.style.marginBottom = `${480 * (scale - 1)}px`;
-		const scaledWidth = targetWidth * scale;
-		container.style.marginLeft = availWidth > scaledWidth ? `${(availWidth - scaledWidth) / 2}px` : '0px';
+		if (divTwcEl) { divTwcEl.style.justifyContent = 'flex-start'; divTwcEl.style.alignItems = 'flex-start'; }
+		container.style.marginBottom = `${designH * (scale - 1)}px`;
+		container.style.marginLeft = availWidth > totalW ? `${(availWidth - totalW) / 2}px` : '0px';
+		// v=7 FARM-NAV: keep the PREV/PAUSE/NEXT bar exactly under the scaled panel.
+		const farmBar = document.getElementById('farm-nav-bar');
+		if (farmBar) { farmBar.style.width = `${scaledWidth}px`; farmBar.style.marginLeft = `${(parseFloat(container.style.marginLeft) || 0) + frameScreen}px`; farmBar.style.marginRight = '0px'; farmBar.style.display = showArrows ? 'flex' : 'none'; }
 	} else {
 		container.style.transform = 'unset';
 		container.style.transformOrigin = '';
 		container.style.marginBottom = '';
 		container.style.marginLeft = '';
+		const farmBar2 = document.getElementById('farm-nav-bar');
+		if (farmBar2) { farmBar2.style.width = ''; farmBar2.style.marginLeft = ''; farmBar2.style.marginRight = ''; farmBar2.style.display = showArrows ? 'flex' : 'none'; }
 	}
+	// v=8 TV-FILL: on a wide screen the scaled panel's positive bottom
+	// margin makes the document taller than the viewport, so a scrollbar
+	// appears and shrinks the viewport. Hide page scroll on TV (the panel +
+	// bar are all there is to see in kiosk); phones are unaffected.
+	document.body.style.overflow = (isTvWide && !showArrows) ? 'hidden' : '';
 };
 
 // reset all statuses to loading on all displays, used to keep the progress bar accurate during refresh

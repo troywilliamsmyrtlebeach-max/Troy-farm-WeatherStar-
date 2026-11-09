@@ -34,7 +34,7 @@ body #divTwc #container {
 #container .custom-weather-station.main .location,
 #container .custom-weather-station.main .farm-name-over-humidity {
   color: #7fe7ff !important; /* teal, Troy's reference frame */
-  font-size: 16pt !important;
+  font-size: 14pt !important;
   text-align: left !important;
   white-space: nowrap !important;
 }
@@ -60,7 +60,10 @@ body.kiosk #divQuery{display:none}
 body.kiosk #webamp-app{display:none !important}
 #webamp-app{max-width:100%;margin:0 auto;overflow:hidden}
 #divTwc{margin:0 auto}
-#divTwc #container{width:640px;height:480px;transform-origin:top left;overflow:hidden;background:#000;flex-shrink:0}
+#divTwc #container{width:640px;height:480px;transform-origin:top left;overflow:hidden;background:#000;flex-shrink:0;flex-grow:0;flex-basis:640px}
+/* LAYOUT 2026-11-09: single pin lives here only (was also inline + navigation.mjs). Wide + kiosk flex fallbacks kept so the panel pins even before JS runs. */
+#divTwc.wide #container{width:854px;min-width:854px;flex-basis:854px;flex-shrink:0;flex-grow:0}
+body.kiosk #divTwc{justify-content:flex-start;align-items:flex-start}
 body.kiosk #divTwc #container{width:640px;height:480px;transform-origin:top left}
 #divQuery{box-sizing:border-box}
 #divQuery #txtAddress{min-width:0}

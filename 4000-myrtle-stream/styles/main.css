@@ -2,6 +2,52 @@
 /* Screenshot-style Local Radar overlays (radar.mjs, Oct 29 2026) */
 .radar-city-code{font-family:Arial,sans-serif;font-weight:bold;font-size:15px;line-height:18px;color:#000;text-align:center;white-space:nowrap;text-shadow:-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff,0 0 3px #fff;background:transparent;border:none;pointer-events:none}.radar-interstate-shield{pointer-events:none}.radar-interstate-shield div{width:24px;height:24px;box-sizing:border-box;border:2px solid #fff;border-top:5px solid #c00;border-radius:4px;background:#1a3a8f;color:#fff;font-family:Arial,sans-serif;font-weight:bold;font-size:11px;line-height:17px;text-align:center}
 
+/* Final theme */
+body #divTwc #container {
+  background: #000 !important;
+}
+
+#container .weather-display .header {
+  background: linear-gradient(90deg, #5f0d0d 0%, #8c1a1d 18%, #c64418 52%, #eb8a20 100%) !important;
+}
+
+#container .weather-display .header .title,
+#container .weather-display .header .top,
+#container .weather-display .header .bottom,
+#container .weather-display .header .date-time,
+#container .weather-display .date-time {
+  color: #ffe600 !important;
+  text-shadow: 2px 2px 0 #000 !important;
+}
+
+#container .weather-display .main {
+  background: #123e8a !important;
+}
+
+#container .weather-display .scroll,
+#container .weather-display .scroll .fixed,
+#divTwcBottom {
+  background: #0a5bd3 !important;
+  color: #fff !important;
+}
+
+#container .custom-weather-station.main .location,
+#container .custom-weather-station.main .farm-name-over-humidity {
+  color: #7fe7ff !important; /* teal, Troy's reference frame */
+  font-size: 14pt !important;
+  text-align: left !important;
+  white-space: nowrap !important;
+}
+
+#divTwc .weather-display.show {
+  display: block;
+}
+
+#container::after,
+body::after {
+  pointer-events: none !important;
+}
+
 /* LAYOUT-FIX 2026-11-07 (Troy: colours OK, layout broken on phone):
    The 640x480 panel scaled from its centre (no transform-origin in this
    CSS), so on a phone it sat right and clipped left/right, and its layout
@@ -14,7 +60,10 @@ body.kiosk #divQuery{display:none}
 body.kiosk #webamp-app{display:none !important}
 #webamp-app{max-width:100%;margin:0 auto;overflow:hidden}
 #divTwc{margin:0 auto}
-#divTwc #container{width:640px;height:480px;transform-origin:top left;overflow:hidden;background:#000;flex-shrink:0}
+#divTwc #container{width:640px;height:480px;transform-origin:top left;overflow:hidden;background:#000;flex-shrink:0;flex-grow:0;flex-basis:640px}
+/* LAYOUT 2026-11-09: single pin lives here only (was also inline + navigation.mjs). Wide + kiosk flex fallbacks kept so the panel pins even before JS runs. */
+#divTwc.wide #container{width:854px;min-width:854px;flex-basis:854px;flex-shrink:0;flex-grow:0}
+body.kiosk #divTwc{justify-content:flex-start;align-items:flex-start}
 body.kiosk #divTwc #container{width:640px;height:480px;transform-origin:top left}
 #divQuery{box-sizing:border-box}
 #divQuery #txtAddress{min-width:0}
