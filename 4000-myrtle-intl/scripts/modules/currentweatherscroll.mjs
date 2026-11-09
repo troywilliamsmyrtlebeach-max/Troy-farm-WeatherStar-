@@ -59,6 +59,7 @@ const pwsTickerData = () => {
 	return {
 		city: 'CALABASH-FARM AT BRUNSWICK',
 		TextConditions: cw.conditionText,
+		TimeZone: getDisplay(13)?.weatherParameters?.timeZone ?? 'America/New_York',
 		Temperature: ConversionHelpers.convertTemperatureUnits(cw.temperature),
 		TemperatureUnit: ConversionHelpers.getTemperatureUnitText(),
 		// Troy 2026-11-07: the ticker cycles Temp + Feels Like (one frame) and Rainfall Today.
@@ -131,7 +132,7 @@ const screens = [
 	// labelled SKY so it cannot be mistaken for another reading. All caps
 	// is applied by drawCondition. Farm data: FOG on Oct 31 01:56 AM.
 	// Troy 2026-10-31: ticker reads just the sky condition itself, no SKY label — same as the main page.
-	(data) => `${getConditionText(data.TextConditions)}`,
+	(data) => `${getConditionText(data.TextConditions, data.TimeZone)}`,
 
 	// temperature + feels-like (Troy 2026-11-07: one frame, both numbers)
 	(data) => {

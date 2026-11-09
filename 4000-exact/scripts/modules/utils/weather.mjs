@@ -107,7 +107,13 @@ const weatherConditions = [
 	{ codes: [96, 99], text: ['Thunderstorm with slight hail', 'Thunderstorm with heavy hail'] },
 ];
 
-const getConditionText = (code) => {
+const getConditionText = (code, timeZone) => {
+	// Troy 2026-11-09: a completely clear sky in daytime reads "Sunny", never "Clear" or "Fair".
+	// Code 0 is WMO clear sky; at night it stays "Clear". Callers that pass no timeZone keep the old wording.
+	if (code === 0 && timeZone) {
+		const hour = Number(new Intl.DateTimeFormat('en-US', { hour: 'numeric', hour12: false, timeZone }).format(new Date()));
+		if (hour >= 6 && hour < 18) return 'Sunny';
+	}
 	const conditionIndex = weatherConditions.findIndex((condition) => condition.codes.includes(code));
 	const weatherConditionObject = weatherConditions[conditionIndex];
 

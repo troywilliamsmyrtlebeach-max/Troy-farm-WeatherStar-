@@ -74,7 +74,7 @@ class CustomWeatherStation extends WeatherDisplay {
 			return;
 		}
 
-		let condition = getConditionText(customWeatherParameters.conditionText);
+		let condition = getConditionText(customWeatherParameters.conditionText, this.weatherParameters.timeZone);
 		if (condition.length > 15) {
 			condition = `${condition.slice(0, 15)}...`;
 		}
