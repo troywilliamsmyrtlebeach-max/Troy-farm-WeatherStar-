@@ -37,18 +37,23 @@ class LocalForecast extends WeatherDisplay {
 
 		if (!conditions.length) {
 			this.screenTexts = [
-				// FRESH FORECAST 2026-11-08 ~10:02 PM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-09T03:02Z; Thursday Night added this run). Written in the screenshot format (generator
+				// FRESH FORECAST 2026-11-09 ~7:49 AM EST (NWS ILM gridpoint 68,59 for the farm,
+				// generated 2026-11-09T12:49Z; forecast through Sunday night, verified this run). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
-				'TONIGHT... Clear. Low around 45. West wind around 2 mph. Precip chance 0%.',
-				'MONDAY... Sunny. High 76. West wind 1 to 7 mph. Precip chance 0%.',
-				'MONDAY NIGHT... Clear. Low around 43. North wind around 2 mph. Precip chance 0%.',
-				'TUESDAY... Sunny. High 75. Southeast wind 1 to 6 mph. Precip chance 0%.',
-				'TUESDAY NIGHT... Partly cloudy. Low around 49. Southwest wind around 3 mph. Precip chance 0%.',
-				'VETERANS DAY... Mostly sunny. High 76. Precip chance 0%.',
-				'WEDNESDAY NIGHT... Partly cloudy. Low around 51. Precip chance 3%.',
-				'THURSDAY... Mostly sunny. High 75. Precip chance 7%.',
-				'THURSDAY NIGHT... Mostly cloudy. Low around 46. Precip chance 8%.',
+				'TODAY... Sunny. High 76. West wind 1 to 5 mph. Precip chance 0%.',
+				'TONIGHT... Clear. Low around 43. Northwest wind around 1 mph. Precip chance 0%.',
+				'TUESDAY... Sunny. High 75. Southeast wind 0 to 6 mph. Precip chance 0%.',
+				'TUESDAY NIGHT... Partly cloudy. Low around 47. West wind 0 to 3 mph. Precip chance 0%.',
+				'VETERANS DAY... Mostly sunny. High 75. West wind 0 to 5 mph. Precip chance 0%.',
+				'WEDNESDAY NIGHT... Partly cloudy. Low around 51. Precip chance 1%.',
+				'THURSDAY... Mostly sunny. High 74. Precip chance 11%.',
+				'THURSDAY NIGHT... Partly cloudy. Low around 46. Precip chance 11%.',
+				'FRIDAY... Mostly sunny. High 63. Precip chance 6%.',
+				'FRIDAY NIGHT... Mostly clear. Low around 38. Precip chance 6%.',
+				'SATURDAY... Sunny. High 59. Precip chance 1%.',
+				'SATURDAY NIGHT... Mostly clear. Low around 36. Precip chance 0%.',
+				'SUNDAY... Sunny. High 61. Precip chance 0%.',
+				'SUNDAY NIGHT... Clear. Low around 37. Precip chance 0%.',
 			];
 		} else {
 			this.screenTexts = conditions.map((condition) => condition.Text);

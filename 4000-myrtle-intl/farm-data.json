@@ -1,17 +1,17 @@
 {
   "conditionText": 0,
-  "dewPoint": 8.33,
-  "feelsLike": 8.89,
-  "humidity": 99,
-  "lastUpdated": "2026-11-08T22:31:00-05:00",
+  "dewPoint": 10.56,
+  "feelsLike": 16.67,
+  "humidity": 71,
+  "lastUpdated": "2026-11-09T09:49:00-05:00",
   "locationCity": "CALABASH-FARM AT BRUNSWICK",
-  "pressure": 1017.9,
+  "pressure": 1019.6,
   "rainTodayIn": 0.0,
-  "source": "WU dashboard (curl widgets, updated 10:31 PM): 48F, feels 48F, Clear, N 0 mph gust 0, RH 99%, dewpoint 47F, pressure 30.06 inHg sea-level (widget station pressure 1011.18 hPa = OSOILM 29.86), visibility 10 mi, rain today 0.00 in. Sky clear: WunderMap Clouds Clear (10:28 PM) + KCRE clear at 9:53 PM. No active NWS alerts for the farm.",
-  "temperature": 8.89,
+  "source": "WunderMap KNCCAROL120 (browser text fetch, crawled 9:51 AM, updated 9:49 AM): 62F, feels 62F, Sunny, N 7 mph, RH 71%, dewpoint 51F, pressure 30.11 inHg, visibility 10 mi, rain today 0.00 in. Gust 5 mph from OSOILM 9:41 AM farm row (61F, dew 56, RH 86%, SE 2 gust 5, P 29.89 station). Sky sunny: WunderMap Clouds Clear + KCRE Clear at 8:55 AM (61F, dew 52F, W 7 mph, vis 10 mi, P 30.09). WU dashboard curl + browser fetch returned nav shell only (no observations). No active NWS alerts for the farm.",
+  "temperature": 16.67,
   "uvIndex": null,
   "visibility": 16.09,
   "windDirection": "N",
-  "windGust": 0.0,
-  "windSpeed": 0.0
+  "windGust": 8.05,
+  "windSpeed": 11.27
 }
