@@ -1,17 +1,17 @@
 {
   "conditionText": 0,
-  "dewPoint": 9.44,
+  "dewPoint": 8.89,
   "feelsLike": 9.44,
-  "humidity": 99,
-  "lastUpdated": "2026-11-08T21:41:00-05:00",
+  "humidity": 94,
+  "lastUpdated": "2026-11-08T21:56:00-05:00",
   "locationCity": "CALABASH-FARM AT BRUNSWICK",
-  "pressure": 1011.2,
+  "pressure": 1018.3,
   "rainTodayIn": 0.0,
-  "source": "OSOILM fallback (WU curl bot-blocked; browser crawl stale at 9:25 PM): farm row 9:41 PM - 49F, feels 49F, Clear, S 0 mph gust 0, RH 99%, dewpoint 49F, pressure 29.86 inHg, visibility 10 mi (KCRE), rain today 0.00 in. Sky clear: WU Clouds Clear (9:25 PM crawl) + KCRE Clear at 9:20 PM. No active NWS alerts for the farm.",
+  "source": "WU dashboard (browser fetch, crawled 10:01 PM, updated 9:56 PM): farm 49F, feels 49F, Clear, N 2 mph gust 0 (OSOILM 9:56 PM farm row), RH 94%, dewpoint 48F, pressure 30.07 inHg, visibility 10 mi, rain today 0.00 in. Sky clear: WU Clouds Clear + KCRE Clear at 9:20 PM. No active NWS alerts for the farm.",
   "temperature": 9.44,
   "uvIndex": null,
   "visibility": 16.09,
-  "windDirection": "S",
+  "windDirection": "N",
   "windGust": 0.0,
-  "windSpeed": 0.0
+  "windSpeed": 3.22
 }
