@@ -1,17 +1,17 @@
 {
   "conditionText": 0,
   "dewPoint": 10.6,
-  "feelsLike": 24.4,
-  "humidity": 41,
-  "lastUpdated": "2026-11-09T15:59:00-05:00",
+  "feelsLike": 23.0,
+  "humidity": 44,
+  "lastUpdated": "2026-11-09T16:23:00-05:00",
   "locationCity": "CALABASH-FARM AT BRUNSWICK",
   "pressure": 1009.48,
   "rainTodayIn": 0.0,
-  "source": "WU page freshest obs 3:59 PM via RetroCast 15:56 data file (11 reads, fully consistent): 77F (25.0C) feels 76F (24.4C), Sunny, WU-first wind SW 2 mph gust 6, RH 41%, dewpoint 51F (10.6C), pressure 29.81 inHg (1009.48 hPa), visibility 10 mi, rain today 0.00 in. Cross-checks: OSOILM farm row 3:56 PM - 78F, dew 51, RH 39%, W 2 gust 6, P 29.81, rain 0.00/0.00 (temp 1F above the fresher WU-page 3:59 PM reading; all else agrees); WU dashboard curl bot-blocked again (shell only) and browser crawl stale (3:38 PM); KCRE Clear at 3:20 PM (73F, dew 45F, vis 10 mi, P 30.01). Sky sunny: WU page Sunny icon+word on all reads + KCRE Clear. Feels-like 76F, no wind chill. No active NWS alerts for the farm.",
-  "temperature": 25.0,
+  "source": "WU-first obs 4:23 PM via RetroCast 16:26 data file (five WU page reads, valid 16:23:12 EST): 73F (23C) feels 73F (23C), Sunny, WU-first wind W 5 mph (arrow 250deg, 8 km/h), gust 6, RH 44%, dewpoint 51F (10.6C), pressure 29.81 inHg (1009.48 hPa) Steady, visibility 10 mi, rain today 0.00 in. Cross-checks: OSOILM farm row 4:26 PM - 74F, dew 50, RH 45%, wind 340deg 0 mph gust 6, P 29.81, rain 0.00/0.00 (temp within 1F of WU; all else agrees); WunderMap Clouds Clear (crawled 4:40 PM; header 72F, '9 min ago' line 75F/dew 48/RH 72 internally inconsistent outlier as in prior runs, not staged); WU dashboard curl shell-only (bot-blocked) and WU API curl failed; KCRE Clear at 3:53 PM (73F, dew 45F, W 4, vis 10 mi, P 30.01). Sky sunny: WU page Sunny icon+word on all reads + WunderMap Clouds Clear + KCRE Clear. Feels-like 73F, no wind chill. No active NWS alerts for the farm.",
+  "temperature": 23.0,
   "uvIndex": null,
   "visibility": 16.09,
-  "windDirection": "SW",
+  "windDirection": "W",
   "windGust": 9.66,
-  "windSpeed": 3.22
+  "windSpeed": 8.0
 }
