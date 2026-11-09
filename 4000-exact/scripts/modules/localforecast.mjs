@@ -38,17 +38,17 @@ class LocalForecast extends WeatherDisplay {
 
 		if (!conditions.length) {
 			this.screenTexts = [
-				// FRESH FORECAST 2026-11-08 ~02:57 PM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-08T19:57Z). Written in the screenshot format (generator
+				// FRESH FORECAST 2026-11-08 ~07:19 PM EST (NWS ILM gridpoint 68,59 for the farm,
+				// generated 2026-11-09T00:12Z). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
-				'TODAY... Sunny. High 69. Northwest wind around 2 mph. Precip chance 0%.',
-				'TONIGHT... Clear. Low around 45. Southwest wind 0 to 3 mph. Precip chance 0%.',
-				'MONDAY... Sunny. High 74. West wind 1 to 5 mph. Precip chance 0%.',
-				'MONDAY NIGHT... Clear. Low around 43. North wind around 1 mph. Precip chance 0%.',
+				'TONIGHT... Clear. Low around 45. Southwest wind around 2 mph. Precip chance 0%.',
+				'MONDAY... Sunny. High 76. West wind 1 to 7 mph. Precip chance 0%.',
+				'MONDAY NIGHT... Clear. Low around 43. North wind around 2 mph. Precip chance 0%.',
 				'TUESDAY... Sunny. High 75. Southeast wind 1 to 6 mph. Precip chance 0%.',
 				'TUESDAY NIGHT... Partly cloudy. Low around 49. Southwest wind around 3 mph. Precip chance 0%.',
-				'VETERANS DAY... Mostly sunny. High 76. Southwest wind 1 to 5 mph. Precip chance 0%.',
-				'WEDNESDAY NIGHT... Partly cloudy. Low around 51. Southwest wind around 3 mph. Precip chance 3%.',
+				'VETERANS DAY... Mostly sunny. High 76. Precip chance 0%.',
+				'WEDNESDAY NIGHT... Partly cloudy. Low around 51. Precip chance 3%.',
+				'THURSDAY... Mostly sunny. High 75. Precip chance 7%.',
 			];
 		} else {
 			this.screenTexts = conditions.map((condition) => condition.Text);
