@@ -1,17 +1,17 @@
 {
   "conditionText": 0,
   "dewPoint": 10.0,
-  "feelsLike": 11.1,
-  "humidity": 94,
-  "lastUpdated": "2026-11-09T20:17:00-05:00",
+  "feelsLike": 10.6,
+  "humidity": 97,
+  "lastUpdated": "2026-11-09T20:38:00-05:00",
   "locationCity": "CALABASH-FARM AT BRUNSWICK",
   "pressure": 1011.85,
   "rainTodayIn": 0.0,
-  "source": "WU-first via RetroCast 2026 data file (WU page valid-time 8:17 PM EST): 52F feels 52F, Clear, dew 50F, RH 94%, wind CALM 0 mph gust 0, pressure 29.88 inHg Steady, rain 0.00 in. Cross-checks agree: OSOILM farm row 8:26 PM - 52F, dew 50, RH 97%, wind 160deg 0 mph gust 0, P 29.88, rain 0.00/0.00; WunderMap KNCCAROL120 (crawled 8:12 PM, updated 8:06 PM) - header 52F, Clouds Clear, vis 10 mi ('6 min ago' line 76F outlier as in prior runs, not staged; Additional Conditions pressure 30.1/dew 49/RH 86 are KCRE-blended, only visibility retained); KCRE Clear at 8:00 PM EST (54F, dew 50F, CALM, vis 10 mi, P 30.08). Sky clear: WunderMap Clouds Clear + KCRE Clear + WU clear-night icon/word (8:17 PM RetroCast read). Feels-like = temp (52F, wind 0, no wind chill). Cooling continues: 55 (7:10) -> 54 (7:26) -> 53 (7:35) -> 53 (7:56) -> 52 (8:06) -> 52 (8:17/8:26). No active NWS alerts for the farm.",
-  "temperature": 11.1,
+  "source": "WU-first via RetroCast 2041 data file (WU page valid-time 8:38 PM EST): 51F feels 51F, Clear, dew 50F, RH 97%, wind CALM 0 mph gust 0, pressure 29.88 inHg Steady, rain 0.00 in. Cross-checks agree: OSOILM farm row 8:41 PM - 51F, dew 51, RH 99%, wind 200deg 0 mph gust 0, P 29.89, rain 0.00/0.00; WunderMap KNCCAROL120 (crawled 8:47 PM, updated 8:43 PM) - header 51F, Clouds Clear, vis 10 mi ('4 min ago' line 75F outlier as in prior runs, not staged; Additional Conditions pressure 30.11/dew 48/RH 87 are KCRE-blended, only visibility retained). Sky clear: WunderMap Clouds Clear + WU clear-night icon/word (8:38 PM RetroCast read). Feels-like = temp (51F, wind 0, no wind chill). Cooling continues: 55 (7:10) -> 54 (7:26) -> 53 (7:35) -> 53 (7:56) -> 52 (8:06) -> 52 (8:17/8:26) -> 51 (8:38/8:41). No active NWS alerts for the farm.",
+  "temperature": 10.6,
   "uvIndex": null,
   "visibility": 16.09,
-  "windDirection": "SSE",
+  "windDirection": "SSW",
   "windGust": 0.0,
   "windSpeed": 0.0
 }
