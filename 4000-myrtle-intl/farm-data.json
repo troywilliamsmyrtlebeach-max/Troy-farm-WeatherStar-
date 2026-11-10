@@ -1,17 +1,17 @@
 {
   "conditionText": 0,
-  "dewPoint": 12.2,
-  "feelsLike": 18.5,
-  "humidity": 67,
-  "lastUpdated": "2026-11-09T17:21:00-05:00",
+  "dewPoint": 11.7,
+  "feelsLike": 18.0,
+  "humidity": 64,
+  "lastUpdated": "2026-11-09T17:28:00-05:00",
   "locationCity": "CALABASH-FARM AT BRUNSWICK",
   "pressure": 1010.16,
   "rainTodayIn": 0.0,
-  "source": "WU dashboard curl (4th curl success in 50 runs; updated 5:21 PM): 65F (65.3F, 18.5C) feels 65F, Sunny, SW 0 mph gust 2, RH 67%, dewpoint 54F (12.2C), pressure 29.83 inHg (1010.16 hPa), visibility 10 mi, rain today 0.00 in. Cross-checks: OSOILM farm row 5:11 PM - 67F, dew 53, RH 64%, wind SW (230 deg) 0 mph gust 5, P 29.83, rain 0.00/0.00 (temp 2F above the fresher 5:21 PM dashboard reading; cooling trend 67 at 5:08 -> 65.3 at 5:21; dew/RH/pressure agree within 1); WunderMap KNCCAROL120 (crawled 5:22 PM, updated 5:18 PM) - header 65F, Clouds Clear, vis 10 mi (Additional Conditions pressure 30.05 / dew 50 / RH 61 are KCRE-blended, only visibility retained); RetroCast 1711 data file (WU page valid-time 5:08 PM) 67F Sunny - superseded by the fresher dashboard reading; KCRE Clear at 3:53 PM (74F, dew 44F, W 17 mph, vis 10 mi, P 30.03). Sky sunny: WunderMap Clouds Clear + KCRE Clear; sunset 5:14 PM, Sunny per the 06:00-18:00 code rule. Feels-like = temp (65F, wind 0, no wind chill). No active NWS alerts for the farm.",
-  "temperature": 18.5,
+  "source": "WU-first via RetroCast 1726 data file (two WU page curl reads, valid-times 5:18:20 and 5:28:25 PM): 64F (18C) feels 64F, clear-night icon + 'Clear' word (first night run; sunset 5:14 PM), SE 2 mph (arrow 120-130deg), dew 53, RH 64, P 29.83 Steady, vis 10 mi, rain 0.00 in. Cross-checks agree: OSOILM farm row 5:11 PM - 67F, dew 53, RH 64%, wind SW (230 deg) 0 mph gust 5, P 29.83, rain 0.00/0.00; WunderMap KNCCAROL120 (crawled 5:22 PM, updated 5:18 PM) - header 65F, Clouds Clear, vis 10 mi ('4 min ago' line 75F/dew 49/RH 65 internally inconsistent outlier as in prior runs, not staged; Additional Conditions pressure 30.05/dew 50/RH 61 are KCRE-blended, only visibility retained); KCRE Clear at 3:53 PM (74F, dew 44F, W 5 mph, vis 10 mi, P 30.02). Sky: conditionText 0 - code renders 'Sunny' until 18:00 per Troy's 06:00-18:00 rule (word matches sun icon); WU page already shows its clear-night icon + 'Clear' word after the 5:14 PM sunset - noted, standing rule unchanged. Feels-like = temp (64F, no wind chill). No active NWS alerts for the farm.",
+  "temperature": 18.0,
   "uvIndex": null,
   "visibility": 16.09,
-  "windDirection": "SW",
-  "windGust": 3.22,
-  "windSpeed": 0.0
+  "windDirection": "SE",
+  "windGust": 8.05,
+  "windSpeed": 3.22
 }
