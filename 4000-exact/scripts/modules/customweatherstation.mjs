@@ -88,18 +88,26 @@ class CustomWeatherStation extends WeatherDisplay {
 		const windUnit = ConversionHelpers.getWindUnitText().toUpperCase();
 		// Troy Oct 31 19:48 (Myrtle main screen, now International too): wind speed ONLY, no MPH
 		const windText = windSpeed === 0 ? 'CALM' : `${customWeatherParameters.windDirection} ${windSpeed}`;
-		// Pressure trend vs the last PWS pressure drawn (0.02 inHg threshold,
-		// same as his standing rule): rising / falling arrow, steady = no arrow.
+		// Troy 2026-11-10: the arrow comes from the STAGED station trend
+		// (farm-data.json pressureTrend — same mechanical rule as XL: any
+		// increase = rising, any decrease = falling, equal = steady), so
+		// the arrow is right on first load, on any device. The localStorage
+		// comparison below runs ONLY when no staged trend exists.
 		// Stored for the bottom ticker's R/S/F letter too.
 		const pressureInHg = parseFloat(ConversionHelpers.convertPressureUnits(customWeatherParameters.pressure).toFixed(2));
 		let pressureArrow = '';
-		let pressureTrend = 'steady';
+		let pressureTrend = customWeatherParameters.pressureTrend;
+		if (pressureTrend !== 'rising' && pressureTrend !== 'falling' && pressureTrend !== 'steady') {
+			pressureTrend = 'steady';
+			try {
+				const prev = parseFloat(window.localStorage.getItem('pwsPressureInHg'));
+				if (!Number.isNaN(prev)) {
+					if (pressureInHg - prev >= 0.02) pressureTrend = 'rising';
+					else if (prev - pressureInHg >= 0.02) pressureTrend = 'falling';
+				}
+			} catch (e) { /* localStorage unavailable — keep steady */ }
+		}
 		try {
-			const prev = parseFloat(window.localStorage.getItem('pwsPressureInHg'));
-			if (!Number.isNaN(prev)) {
-				if (pressureInHg - prev >= 0.02) pressureTrend = 'rising';
-				else if (prev - pressureInHg >= 0.02) pressureTrend = 'falling';
-			}
 			window.localStorage.setItem('pwsPressureInHg', String(pressureInHg));
 			window.localStorage.setItem('pwsPressureTrend', pressureTrend);
 		} catch (e) { /* localStorage unavailable — no arrow, no crash */ }

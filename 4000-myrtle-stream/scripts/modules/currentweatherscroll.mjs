@@ -69,6 +69,12 @@ const pwsTickerData = () => {
 		DewPoint: ConversionHelpers.convertTemperatureUnits(cw.dewPoint),
 		Pressure: ConversionHelpers.convertPressureUnits(cw.pressure).toFixed(2),
 		PressureUnit: ConversionHelpers.getPressureUnitText(),
+		// Troy 2026-11-10: the staged station trend (farm-data.json
+		// pressureTrend — same mechanical rule as XL) rides along so the
+		// ticker letter is the station trend on first load, never the
+		// model and never a stored value from this browser.
+		PressureDirection: cw.pressureTrend ?? null,
+		PressureTrendStaged: !!cw.pressureTrend,
 		WindDirection: cw.windDirection,
 		WindSpeed: Math.round(ConversionHelpers.convertWindUnits(cw.windSpeed)),
 		WindGust: cw.windGust ? Math.round(ConversionHelpers.convertWindUnits(cw.windGust)) : 0,
@@ -144,10 +150,16 @@ const screens = [
 	(data) => `Humidity: ${data.Humidity}%   Dewpoint: ${data.DewPoint}${degree}${data.TemperatureUnit}`,
 
 	// barometric pressure — Troy 2026-10-26 evening: say "Barometric Pressure", not just "Pressure", with just the letter R / S / F beside the number
+	// Troy 2026-11-10: the letter comes from the STAGED station trend
+	// (farm-data.json pressureTrend, same mechanical rule as XL: any
+	// increase = rising, any decrease = falling, equal = steady) when
+	// present — steady reads S, never a stored value. localStorage is
+	// only a fallback when no staged trend exists (model-fallback path).
 	(data) => {
 		let letter = 'S';
 		if (data.PressureDirection === 'rising') letter = 'R';
 		else if (data.PressureDirection === 'falling') letter = 'F';
+		else if (data.PressureTrendStaged) letter = 'S';
 		else {
 			try {
 				const t = window.localStorage.getItem('pwsPressureTrend');
