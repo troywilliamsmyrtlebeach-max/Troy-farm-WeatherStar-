@@ -38,10 +38,9 @@ class LocalForecast extends WeatherDisplay {
 
 		if (!conditions.length) {
 			this.screenTexts = [
-				// FRESH FORECAST 2026-11-09 ~5:32 PM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-09T22:32:13Z; forecast through Sunday night, verified this run). Written in the screenshot format (generator
+				// FRESH FORECAST 2026-11-09 ~7:31 PM EST (NWS ILM gridpoint 68,59 for the farm,
+				// generated 2026-11-10T00:31:46Z; forecast through Monday, verified this run). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
-				'THIS AFTERNOON... Sunny. High 76. Southwest wind around 2 mph. Precip chance 0%.',
 				'TONIGHT... Mostly clear. Low around 44. Precip chance 0%.',
 				'TUESDAY... Sunny. High 76. Southwest wind 0 to 6 mph. Precip chance 0%.',
 				'TUESDAY NIGHT... Partly cloudy. Low around 50. West wind 0 to 5 mph. Precip chance 0%.',
@@ -55,6 +54,7 @@ class LocalForecast extends WeatherDisplay {
 				'SATURDAY NIGHT... Clear. Low around 35. Northwest wind 3 to 7 mph. Precip chance 0%.',
 				'SUNDAY... Sunny. High 61. Northwest wind 6 mph. Precip chance 0%.',
 				'SUNDAY NIGHT... Mostly clear. Low around 37. North wind 2 mph. Precip chance 1%.',
+				'MONDAY... A slight chance of rain showers after 1pm. Sunny. High 65. North wind 5 mph. Precip chance 15%.',
 			];
 		} else {
 			this.screenTexts = conditions.map((condition) => condition.Text);

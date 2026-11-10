@@ -1,17 +1,17 @@
 {
   "conditionText": 0,
-  "dewPoint": 11.7,
-  "feelsLike": 18.0,
-  "humidity": 64,
-  "lastUpdated": "2026-11-09T17:28:00-05:00",
+  "dewPoint": 10.0,
+  "feelsLike": 12.0,
+  "humidity": 88,
+  "lastUpdated": "2026-11-09T19:31:00-05:00",
   "locationCity": "CALABASH-FARM AT BRUNSWICK",
-  "pressure": 1010.16,
+  "pressure": 1011.51,
   "rainTodayIn": 0.0,
-  "source": "WU-first via RetroCast 1726 data file (two WU page curl reads, valid-times 5:18:20 and 5:28:25 PM): 64F (18C) feels 64F, clear-night icon + 'Clear' word (first night run; sunset 5:14 PM), SE 2 mph (arrow 120-130deg), dew 53, RH 64, P 29.83 Steady, vis 10 mi, rain 0.00 in. Cross-checks agree: OSOILM farm row 5:11 PM - 67F, dew 53, RH 64%, wind SW (230 deg) 0 mph gust 5, P 29.83, rain 0.00/0.00; WunderMap KNCCAROL120 (crawled 5:22 PM, updated 5:18 PM) - header 65F, Clouds Clear, vis 10 mi ('4 min ago' line 75F/dew 49/RH 65 internally inconsistent outlier as in prior runs, not staged; Additional Conditions pressure 30.05/dew 50/RH 61 are KCRE-blended, only visibility retained); KCRE Clear at 3:53 PM (74F, dew 44F, W 5 mph, vis 10 mi, P 30.02). Sky: conditionText 0 - code renders 'Sunny' until 18:00 per Troy's 06:00-18:00 rule (word matches sun icon); WU page already shows its clear-night icon + 'Clear' word after the 5:14 PM sunset - noted, standing rule unchanged. Feels-like = temp (64F, no wind chill). No active NWS alerts for the farm.",
-  "temperature": 18.0,
+  "source": "WU dashboard curl, updated 7:31 PM EST (obs 00:31:43 GMT): 53.6F feels 53.6F, dew 50F, RH 88%, wind S (180 deg) 0 mph gust 0, pressure 29.87 inHg, rain 0.00 in. Cross-checks agree: OSOILM farm row 7:26 PM - 54F, dew 50, RH 88%, wind 180deg 0 mph gust 0, P 29.86, rain 0.00/0.00; WunderMap KNCCAROL120 (crawled 7:32 PM, updated 7:25 PM) - header 54F, Clouds Clear, vis 10 mi, dew 50F ('7 min ago' line 75F outlier as in prior runs, not staged; Additional Conditions pressure 30.09 is KCRE-blended, only visibility retained); RetroCast 1911 data file (WU page valid-time 7:10 PM) - 55F Clear, dew 51, RH 87, P 29.86, CALM; KCRE CLR at 23:53Z (56F, dew 52F, CALM, vis 10 mi, P 30.03). Sky clear: WunderMap Clouds Clear + KCRE CLR + WU clear-night icon/word (7:10 PM RetroCast read). Feels-like = temp (54F, wind 0, no wind chill). Cooling continues: 55 (7:10) -> 54 (7:26) -> 54 (7:31). No active NWS alerts for the farm.",
+  "temperature": 12.0,
   "uvIndex": null,
   "visibility": 16.09,
-  "windDirection": "SE",
-  "windGust": 8.05,
-  "windSpeed": 3.22
+  "windDirection": "S",
+  "windGust": 0.0,
+  "windSpeed": 0.0
 }
