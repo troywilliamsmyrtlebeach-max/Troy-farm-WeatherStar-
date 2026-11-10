@@ -1,18 +1,18 @@
 {
   "conditionText": 0,
-  "dewPoint": 12.22,
-  "feelsLike": 22.78,
-  "humidity": 52,
-  "lastUpdated": "2026-11-10T11:34:36-05:00",
+  "dewPoint": 10.56,
+  "feelsLike": 23.89,
+  "humidity": 41,
+  "lastUpdated": "2026-11-10T13:02:24-05:00",
   "locationCity": "CALABASH-FARM AT BRUNSWICK",
-  "pressure": 1013.21,
+  "pressure": 1011.51,
   "pressureTrend": "falling",
   "rainTodayIn": 0.0,
-  "source": "WU page 11:34 AM EST 2026-11-10 (via RetroCast 11:41 data file - IMPERIAL render): 74F, feels 73F, Sunny (sunny-day icon), wind N 6 mph gust 0, vis 10 mi, rain 0.00 in. Dew 54F / RH 52% from OSOILM farm row 11:26 (74F, dew 54, RH 52, wind 180deg 0kt gust 2, P 29.92, rain 0.00/0.00, no MM) + getweather (agree exactly) - NOT the WU Additional Conditions block (blended KCRE dew 47 / RH 40, rejected per standing rule). Pressure 29.92 inHg (OSO + getweather agree exactly). Temp corroborated by CALABASH TOWN HALL row 11:24 (74F, dew 55, RH 52). Pressure trend FALLING per XL mechanical rule: previously staged 29.93 -> 29.92. Calm rule (Troy 2026-11-09 ~23:44) still in force: 0 wind reads 'Calm' at every location on Latest Observations.",
-  "temperature": 23.33,
+  "source": "WU page 1:02 PM EST 2026-11-10 (via RetroCast 13:11 data file - IMPERIAL render): 76F, feels 75F, Sunny (sunny-day icon), wind N 7 mph gust 0, vis 10 mi, rain 0.00 in. Cross-checks: WunderMap KNCCAROL120 crawled 1:25 PM (updated 1:19 PM) - 76F, Feels Like 74, Sunny, N 7, Clouds Clear, vis 10 mi (Additional Conditions pressure 30.08/dew 48/RH 38 are KCRE-blended, rejected per standing rule); OSOILM farm row 1:11 PM - 77F, dew 51, RH 41, wind 160deg 2kt gust 5, P 29.87, rain 0.00/0.00 (no MM values, row ~14 min old). Dew 51 / RH 41 / pressure 29.87 staged from the fresh OSO 1311 row (OSO 1256 row said dew 52/RH 42, same P 29.87). Temp 76 staged per WU-is-source-of-truth (OSO 77 is 1F above, same divergence pattern as prior runs). Pressure trend FALLING per XL mechanical rule: previously staged 29.92 -> 29.87. High/low stays [79, 42] per standing convention (yesterday's high 79, today's so-far low 42; live 76 neither exceeds 79 nor goes below 42). Calm rule (Troy 2026-11-09 ~23:44) still in force: 0 wind reads 'Calm' at every location on Latest Observations.",
+  "temperature": 24.44,
   "uvIndex": null,
   "visibility": 16.09,
   "windDirection": "N",
   "windGust": 0.0,
-  "windSpeed": 9.66
+  "windSpeed": 11.27
 }
