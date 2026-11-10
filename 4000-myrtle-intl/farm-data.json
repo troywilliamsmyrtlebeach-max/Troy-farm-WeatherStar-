@@ -1,18 +1,18 @@
 {
   "conditionText": 0,
-  "dewPoint": 16.11,
-  "feelsLike": 16.11,
-  "humidity": 96,
-  "lastUpdated": "2026-11-10T18:08:29-05:00",
+  "dewPoint": 15.56,
+  "feelsLike": 15.56,
+  "humidity": 99,
+  "lastUpdated": "2026-11-10T18:29:49-05:00",
   "locationCity": "CALABASH-FARM AT BRUNSWICK",
-  "pressure": 1010.84,
-  "pressureTrend": "steady",
+  "pressure": 1011.18,
+  "pressureTrend": "rising",
   "rainTodayIn": 0.0,
-  "source": "WU-first via RetroCast 1811 data file (WU page valid 6:08:29 PM EST 2026-11-10, IMPERIAL render): 61F, feels 61F, Clear (clear-night icon, after sunset 5:14 PM), wind N 4 mph gust 0, vis 10 mi, rain 0.00 in. WU dashboard curl bot-blocked again (155,541-byte shell page, 0 tempF). Cross-checks: OSOILM farm row 1756 fetched INDEPENDENTLY this run via forecast.weather.gov product page - 62F, dew 61, RH 96, wind 200deg 0kt gust 0, P 29.85, rain 0.00/0.00 (no MM values, row ~20 min old; the 1811 row is not in the OSO product yet - product created 6:00 PM EST). Dew 61 / RH 96 / pressure 29.85 staged from the OSO 1756 row (same values as the RetroCast file's row; no fresher row available this run). WU Additional Conditions block (pressure 30.06 / dew 56) is KCRE-blended, rejected per standing rule. Temp 61 staged per WU-is-source-of-truth (OSO 62, 1F divergence; WU obs ~12 min fresher). Wind N 4 per WU freshest-source precedent. Pressure trend STEADY per XL mechanical rule: previously staged 29.85 -> 29.85 (RetroCast's own 'Steady' agrees this run). High/low stays [79, 42] per standing convention (yesterday's high 79, today's so-far low 42; live 61 neither exceeds 79 nor goes below 42). Calm rule (Troy 2026-11-09 ~23:44) still in force: 0 wind reads 'Calm' at every location on Latest Observations. Sky is Clear at NIGHT: conditionText 0 stays; getConditionText(0, tz) returns 'Clear' after dark and icons.mjs gives code 0 the clear-night/moon icon (CC_Clear0.gif) at night - no sun icon on a night obs. No active NWS alerts for the farm (api.weather.gov alerts/active point 33.92,-78.57: 0; RetroCast 1811 alerts 0). NWS forecast generation 22:26:44Z per RetroCast 1811, SAME as staged set - pages fetch forecast live at runtime; no forecast edit.",
-  "temperature": 16.11,
+  "source": "WU-first via RetroCast 1826 data file (WU dashboard NEW WuNext widget variant, direct station feed, obs 6:29:49 PM and 6:33:28 PM EST 2026-11-10): 60F, feels 60F, Clear (clear-night icon, after sunset 5:14 PM), wind CALM 0 mph gust 0 (widget reads twice: speed 0, gust 0, dir 203), vis 10 mi, rain 0.00 in. WU dashboard curl bot-blocked again (155,553-byte shell page, 0 tempF); WunderMap curl also shell (116,637 bytes, 0 tempF). Cross-checks: OSOILM farm row 1826 fetched INDEPENDENTLY this run via forecast.weather.gov product page - 61F, dew 60, RH 99, wind 200deg 0kt gust 0, P 29.86, rain 0.00/0.00 (no MM values, row ~7 min old). Dew 60 / RH 99 / pressure 29.86 staged from the fresh OSO 1826 row (RetroCast file carried the 1811 row's dew 60 / RH 99 / P 29.86 - same values). WU Additional Conditions block (pressure 30.06 / dew 56) is KCRE-blended, rejected per standing rule. Temp 60 staged per WU-is-source-of-truth (OSO 61, 1F divergence; WU obs ~4 min fresher). Wind CALM per the RetroCast run's judgment call: two live widget reads + OSO 0kt + Lumberton METAR calm all agree 0; the WunderMap old-variant block's N 5 (arrow 160deg, same label-vs-arrow disagreement as 30 straight runs) is stale/wrong - NOT staged. No active NWS alerts for the farm (api.weather.gov alerts/active point 33.92,-78.57: 0; RetroCast 1826 alerts 0). NWS forecast NEW generation 23:30:19Z per RetroCast 1826 - pages fetch forecast live at runtime; no forecast edit. Pressure trend RISING per XL mechanical rule: previously staged 29.85 -> 29.86 (RetroCast's own 'Rising' agrees this run - it compares vs its own 1811 row's 29.85). High/low stays [79, 42] per standing convention (yesterday's high 79, today's so-far low 42; live 60 neither exceeds 79 nor goes below 42). Calm rule (Troy 2026-11-09 ~23:44) still in force: 0 wind reads 'Calm' at every location on Latest Observations. Sky is Clear at NIGHT: conditionText 0 stays; getConditionText(0, tz) returns 'Clear' after dark and icons.mjs gives code 0 the clear-night/moon icon (CC_Clear0.gif) at night - no sun icon on a night obs.",
+  "temperature": 15.56,
   "uvIndex": null,
   "visibility": 16.09,
-  "windDirection": "N",
+  "windDirection": "SSW",
   "windGust": 0.0,
-  "windSpeed": 6.44
+  "windSpeed": 0.0
 }
