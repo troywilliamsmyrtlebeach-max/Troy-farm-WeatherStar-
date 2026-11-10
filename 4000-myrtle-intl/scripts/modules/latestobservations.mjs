@@ -59,7 +59,8 @@ class LatestObservations extends WeatherDisplay {
 		// in this order, with live NWS readings — not the nearest-30 by distance.
 		//  Conway = KHYW, Lumberton = KLBT, Myrtle Beach = KMYR,
 		//  North Myrtle Beach = KCRE, Southport = KSUT (Brunswick County),
-		//  Wilmington = KILM. Wind is speed only, no MPH (screenshot style, already in drawCanvas).
+		//  Wilmington = KILM. TROY Nov 9 20:26: every nearby row shows wind
+		//  speed — direction in front, whole mph ("N 0 MPH", "W 3 MPH").
 		// Troy Oct 31 19:32: farm FIRST, Elizabethtown DROPPED. Oct 31 20:06: N. Myrtle Beach ADDED — 7 towns + farm = 8 rows.
 		const SCREENSHOT_TOWNS = [
 			{ id: 'KHYW', city: 'Conway Horry County Airport' },
@@ -129,7 +130,11 @@ class LatestObservations extends WeatherDisplay {
 
 			if (condition.temperature.value === null || condition.temperature.value === undefined) return null;
 			const	Temperature = Math.round(celsiusToFahrenheit(condition.temperature.value));
-			const WindSpeed = Math.round(kphToMph(condition.windSpeed.value));
+			// TROY Nov 9 20:26: wind may be null (NWS gap) — kphToMph(null)
+			// is 0, so test for null FIRST; null falls back to the last fresh
+			// verified wind for the station, else "NA".
+			const windKph = (condition.windSpeed && condition.windSpeed.value !== null && condition.windSpeed.value !== undefined) ? condition.windSpeed.value : null;
+			const WindSpeed = (windKph === null) ? null : Math.round(kphToMph(windKph));
 
 			// v=6: full TOWN names, never airport codes, never truncated
 			// mid-word — "Conway", "North Myrtle Beach" (not "Conway-Horry C" / "N. Myrtle Beach").
@@ -140,12 +145,23 @@ class LatestObservations extends WeatherDisplay {
 				weather: shortenCurrentConditions(condition.textDescription).substr(0, 9),
 			};
 
-			if (WindSpeed > 0) {
-				fill.wind = windDirection + (Array(6 - windDirection.length - WindSpeed.toString().length).join(' ')) + WindSpeed.toString();
-			} else if (WindSpeed === 'NA') {
-				fill.wind = 'NA';
+			// TROY Nov 9 20:26: every NEARBY row shows wind speed — direction
+			// in front, whole mph ("N 0 MPH", "W 3 MPH"); a regional 0 is
+			// "DIR 0 MPH", never "Calm". The FARM row keeps its old format
+			// (direction + speed, "Calm" bare when both farm winds are 0).
+			if (condition.StationId === 'FARM') {
+				if (WindSpeed > 0) {
+					fill.wind = windDirection + (Array(6 - windDirection.length - WindSpeed.toString().length).join(' ')) + WindSpeed.toString();
+				} else if (WindSpeed === null) {
+					fill.wind = 'NA';
+				} else {
+					fill.wind = 'Calm';
+				}
+			} else if (WindSpeed === null) {
+				fill.wind = lastGoodWind(condition.StationId) || 'NA';
 			} else {
-				fill.wind = 'Calm';
+				fill.wind = `${windDirection} ${WindSpeed} MPH`;
+				saveGoodWind(condition.StationId, fill.wind);
 			}
 
 			return this.fillTemplate('observation-row', fill);
@@ -178,14 +194,24 @@ const shortenCurrentConditions = (_condition) => {
 	return condition;
 };
 
+// TROY Nov 9 20:26: last fresh verified regional wind per station, so a row
+// whose NWS wind goes null still shows wind instead of dropping to "NA".
+const lastGoodWind = (stationId) => {
+	try { return (typeof localStorage !== 'undefined') ? localStorage.getItem(`latestObsWind:${stationId}`) : null; } catch (e) { return null; }
+};
+const saveGoodWind = (stationId, windText) => {
+	try { if (typeof localStorage !== 'undefined') localStorage.setItem(`latestObsWind:${stationId}`, windText); } catch (e) { /* storage optional */ }
+};
+
 const getStations = async (stations) => {
 	const stationData = await Promise.all(stations.map(async (station) => {
 		try {
 			const data = await json(`https://api.weather.gov/stations/${station.id}/observations/latest`, { retryCount: 1, stillWaiting: () => this.stillWaiting() });
-			// test for temperature, weather and wind values present
+			// test for temperature and weather values present. Wind may be
+			// null (NWS gap) — keep the row; drawCanvas carries the last
+			// fresh verified wind for that station, else "NA".
 			if (data.properties.temperature.value === null
-			|| data.properties.textDescription === ''
-			|| data.properties.windSpeed.value === null) return false;
+			|| data.properties.textDescription === '') return false;
 			// format the return values
 			return {
 				...data.properties,

@@ -2,9 +2,9 @@
 // type 0 = observations, 1 = first forecast, 2 = second forecast
 
 import STATUS from './status.mjs';
-import { distance as calcDistance } from './utils/calc.mjs';
+import { distance as calcDistance, directionToNSEW } from './utils/calc.mjs';
 import { json } from './utils/fetch.mjs';
-import { celsiusToFahrenheit } from './utils/units.mjs';
+import { celsiusToFahrenheit, kphToMph } from './utils/units.mjs';
 import { getWeatherRegionalIconFromIconLink } from './icons.mjs';
 import { preloadImg } from './utils/image.mjs';
 import { DateTime } from '../vendor/auto/luxon.mjs';
@@ -99,6 +99,8 @@ class RegionalForecast extends WeatherDisplay {
 					temperature: (observation.temperature && observation.temperature.value !== null && observation.temperature.value !== undefined) ? celsiusToFahrenheit(observation.temperature.value) : null,
 					name: utils.formatCity(city.city),
 					icon: observation.icon,
+					// TROY Nov 9 20:26: Regional Observations pins show wind too.
+					wind: formatRegionalWind(observation, city),
 					x: cityXY.x,
 					y: cityXY.y,
 				};
@@ -180,6 +182,9 @@ class RegionalForecast extends WeatherDisplay {
 			fill.city = period.name;
 			const { temperature } = period;
 			fill.temp = temperature;
+			// TROY Nov 9 20:26: observation pins (screen 0) show wind; forecast
+			// screens have no wind on the period, so the pin wind stays empty.
+			if (typeof period.wind === 'string') fill.wind = period.wind;
 
 			const { x, y } = period;
 
@@ -197,6 +202,19 @@ class RegionalForecast extends WeatherDisplay {
 		this.finishDraw();
 	}
 }
+
+// TROY Nov 9 20:26: "DIR N MPH" for a Regional Observations pin; a null NWS
+// wind carries the last fresh verified value for that city, else "NA".
+const formatRegionalWind = (observation, city) => {
+	const key = `regionalWind:${city.city || city.name || 'unknown'}`;
+	const speedVal = observation?.windSpeed?.value;
+	if (speedVal === null || speedVal === undefined) {
+		try { return (typeof localStorage !== 'undefined' && localStorage.getItem(key)) || 'NA'; } catch (e) { return 'NA'; }
+	}
+	const windText = `${directionToNSEW(observation?.windDirection?.value)} ${Math.round(kphToMph(speedVal))} MPH`;
+	try { if (typeof localStorage !== 'undefined') localStorage.setItem(key, windText); } catch (e) { /* storage optional */ }
+	return windText;
+};
 
 const getAndFormatPoint = async (lat, lon) => {
 	const point = await getPoint(lat, lon);

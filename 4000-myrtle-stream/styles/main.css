@@ -92,3 +92,6 @@ body.kiosk{overflow-x:hidden}
 html.farm-kiosk #webamp-app{display:none!important}
 html.farm-kiosk #webamp{display:none!important}
 html.farm-kiosk #divQuery{display:none!important}
+
+/* TROY Nov 9 20:26: Regional Observations pin wind line, under icon/temp. */
+.regional-forecast .location .wind{font-family:Star4000;font-size:18px;color:#fff;top:62px;left:0;width:140px;text-align:center}
