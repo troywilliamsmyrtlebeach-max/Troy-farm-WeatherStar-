@@ -1,18 +1,18 @@
 {
   "conditionText": 0,
-  "dewPoint": 7.78,
-  "feelsLike": 7.22,
-  "humidity": 99,
-  "lastUpdated": "2026-11-10T02:20:30-05:00",
+  "dewPoint": 12.22,
+  "feelsLike": 22.78,
+  "humidity": 52,
+  "lastUpdated": "2026-11-10T11:34:36-05:00",
   "locationCity": "CALABASH-FARM AT BRUNSWICK",
-  "pressure": 1012.87,
-  "pressureTrend": "steady",
+  "pressure": 1013.21,
+  "pressureTrend": "falling",
   "rainTodayIn": 0.0,
-  "source": "WU page 02:20 AM EST 2026-11-10 (via RetroCast 02:26 data file — IMPERIAL render): 45F, feels 45F, Clear (clear-night icon), dew 46F, RH 99%, pressure 29.91 inHg, wind CALM 0 mph gust 0, vis 10 mi, rain 0.00 in. Cross-check: OSOILM farm row 01:56 — 46F, dew 46, RH 99%, wind 090deg 0 mph gust 0, P 29.91, rain 0.00/0.00 (no MM values, row ~30 min old; 1F above WU at the metric rounding boundary — WU imperial render confirms 45F directly). getweather 02:27 — temp 45, dew 44 (OSO 46 wins), RH 99, P 29.91 Steady, wind N 0 CALM. Pressure trend STEADY per XL mechanical rule: previously staged 29.91 -> 29.91. Calm rule (Troy 2026-11-09 ~23:44) still in force: 0 wind reads 'Calm' at every location on Latest Observations.",
-  "temperature": 7.22,
+  "source": "WU page 11:34 AM EST 2026-11-10 (via RetroCast 11:41 data file - IMPERIAL render): 74F, feels 73F, Sunny (sunny-day icon), wind N 6 mph gust 0, vis 10 mi, rain 0.00 in. Dew 54F / RH 52% from OSOILM farm row 11:26 (74F, dew 54, RH 52, wind 180deg 0kt gust 2, P 29.92, rain 0.00/0.00, no MM) + getweather (agree exactly) - NOT the WU Additional Conditions block (blended KCRE dew 47 / RH 40, rejected per standing rule). Pressure 29.92 inHg (OSO + getweather agree exactly). Temp corroborated by CALABASH TOWN HALL row 11:24 (74F, dew 55, RH 52). Pressure trend FALLING per XL mechanical rule: previously staged 29.93 -> 29.92. Calm rule (Troy 2026-11-09 ~23:44) still in force: 0 wind reads 'Calm' at every location on Latest Observations.",
+  "temperature": 23.33,
   "uvIndex": null,
   "visibility": 16.09,
   "windDirection": "N",
   "windGust": 0.0,
-  "windSpeed": 0.0
+  "windSpeed": 9.66
 }
