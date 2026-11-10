@@ -3,15 +3,15 @@
   "dewPoint": 10.0,
   "feelsLike": 11.1,
   "humidity": 94,
-  "lastUpdated": "2026-11-09T20:06:00-05:00",
+  "lastUpdated": "2026-11-09T20:17:00-05:00",
   "locationCity": "CALABASH-FARM AT BRUNSWICK",
   "pressure": 1011.85,
   "rainTodayIn": 0.0,
-  "source": "WU-first via RetroCast 2011 data file (WU page valid-time 8:06 PM EST): 52F feels 52F, Clear, dew 50F, RH 94%, wind CALM 0 mph gust 0, pressure 29.88 inHg Steady, rain 0.00 in. Cross-checks agree: OSOILM farm row 7:56 PM - 53F, dew 50, RH 94%, wind 180deg 0 mph gust 0, P 29.88, rain 0.00/0.00; WunderMap KNCCAROL120 (crawled 8:12 PM, updated 8:06 PM) - header 52F, Clouds Clear, vis 10 mi ('6 min ago' line 76F outlier as in prior runs, not staged; Additional Conditions pressure 30.1/dew 49/RH 86 are KCRE-blended, only visibility retained). Sky clear: WunderMap Clouds Clear + WU clear-night icon/word (8:06 PM RetroCast read). Feels-like = temp (52F, wind 0, no wind chill). Cooling continues: 55 (7:10) -> 54 (7:26) -> 53 (7:35) -> 53 (7:56) -> 52 (8:06). No active NWS alerts for the farm.",
+  "source": "WU-first via RetroCast 2026 data file (WU page valid-time 8:17 PM EST): 52F feels 52F, Clear, dew 50F, RH 94%, wind CALM 0 mph gust 0, pressure 29.88 inHg Steady, rain 0.00 in. Cross-checks agree: OSOILM farm row 8:26 PM - 52F, dew 50, RH 97%, wind 160deg 0 mph gust 0, P 29.88, rain 0.00/0.00; WunderMap KNCCAROL120 (crawled 8:12 PM, updated 8:06 PM) - header 52F, Clouds Clear, vis 10 mi ('6 min ago' line 76F outlier as in prior runs, not staged; Additional Conditions pressure 30.1/dew 49/RH 86 are KCRE-blended, only visibility retained); KCRE Clear at 8:00 PM EST (54F, dew 50F, CALM, vis 10 mi, P 30.08). Sky clear: WunderMap Clouds Clear + KCRE Clear + WU clear-night icon/word (8:17 PM RetroCast read). Feels-like = temp (52F, wind 0, no wind chill). Cooling continues: 55 (7:10) -> 54 (7:26) -> 53 (7:35) -> 53 (7:56) -> 52 (8:06) -> 52 (8:17/8:26). No active NWS alerts for the farm.",
   "temperature": 11.1,
   "uvIndex": null,
   "visibility": 16.09,
-  "windDirection": "S",
+  "windDirection": "SSE",
   "windGust": 0.0,
   "windSpeed": 0.0
 }
