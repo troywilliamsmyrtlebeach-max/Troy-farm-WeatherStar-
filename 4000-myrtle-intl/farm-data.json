@@ -1,18 +1,18 @@
 {
   "conditionText": 0,
-  "dewPoint": 13.89,
-  "feelsLike": 24.44,
-  "humidity": 55,
-  "lastUpdated": "2026-11-10T15:20:27-05:00",
+  "dewPoint": 15.56,
+  "feelsLike": 20.0,
+  "humidity": 77,
+  "lastUpdated": "2026-11-10T16:54:33-05:00",
   "locationCity": "CALABASH-FARM AT BRUNSWICK",
-  "pressure": 1010.84,
+  "pressure": 1010.5,
   "pressureTrend": "falling",
   "rainTodayIn": 0.0,
-  "source": "WU-first via RetroCast 1526 data file (WU page valid 3:20:27 PM EST 2026-11-10, IMPERIAL render): 76F, feels 76F, Sunny (sunny-day icon), wind N 8 mph gust 0, vis 10 mi, rain 0.00 in. WU dashboard curl bot-blocked again (155,567-byte shell page, 0 tempF). Cross-checks: OSOILM farm row 1526 fetched INDEPENDENTLY this run via forecast.weather.gov product page - 76F, dew 57, RH 55, wind 180deg 0kt gust 3, P 29.85, rain 0.00/0.00 (no MM values, row ~17 min old). Dew 57 / RH 55 / pressure 29.85 staged from the fresh OSO 1526 row (1511 row said dew 58 / RH 56, same P). WU Additional Conditions block (pressure 30.05 / dew 52 / RH 49) is KCRE-blended, rejected per standing rule. Temp 76 staged per WU-is-source-of-truth (OSO 76 agrees exactly). Wind N 8 per WU freshest-source precedent (OSO 180deg 0kt ~17 min older; gust 0 - WU page publishes no gust element). Pressure trend FALLING per XL mechanical rule: previously staged 29.87 -> 29.85 (RetroCast's own 'Steady' NOT copied - it uses a 0.02 threshold). High/low stays [79, 42] per standing convention (yesterday's high 79, today's so-far low 42; live 76 neither exceeds 79 nor goes below 42). Calm rule (Troy 2026-11-09 ~23:44) still in force: 0 wind reads 'Calm' at every location on Latest Observations. No active NWS alerts for the farm (api.weather.gov alerts/active point 33.92,-78.57: 0; RetroCast 1526 alerts 0). NWS forecast generation 19:42:20Z per RetroCast 1526, SAME as staged set - pages fetch forecast live at runtime; no forecast edit. NOTE: this push also lands the TROY'S / WEATHER / CHANNEL emblem rename (Troy 2026-11-10) staged by the unlogged 14:16 run on all three copies.",
-  "temperature": 24.44,
+  "source": "WU-first via RetroCast 1656 data file (WU page valid 4:54:33 PM EST 2026-11-10, IMPERIAL render): 68F, feels 68F, Sunny (sunny-day icon), wind N 5 mph gust 0, vis 10 mi, rain 0.00 in. Cross-checks: OSOILM farm row 1656 fetched INDEPENDENTLY this run via forecast.weather.gov product page - 68F, dew 60, RH 77, wind 180deg 0kt gust 0, P 29.84, rain 0.00/0.00 (no MM values, row ~10 min old). Dew 60 / RH 77 / pressure 29.84 staged from the fresh OSO 1656 row (1641 row said dew 59 / RH 71, same P). WU Additional Conditions block (pressure 30.05 / dew 55 / clouds Partly Cloudy) is KCRE-blended, rejected per standing rule. Temp 68 staged per WU-is-source-of-truth (OSO 68 agrees exactly). Wind N 5 per WU freshest-source precedent (OSO 180deg 0kt ~10 min older; gust 0 - WU page publishes no gust element). Pressure trend FALLING per XL mechanical rule: previously staged 29.85 -> 29.84 (RetroCast's own 'Steady' NOT copied - it compares vs its own 1641 row). High/low stays [79, 42] per standing convention (yesterday's high 79, today's so-far low 42; live 68 neither exceeds 79 nor goes below 42). Calm rule (Troy 2026-11-09 ~23:44) still in force: 0 wind reads 'Calm' at every location on Latest Observations. No active NWS alerts for the farm (api.weather.gov alerts/active point 33.92,-78.57: 0; RetroCast 1656 alerts 0). NWS forecast generation 21:58:49Z per RetroCast 1656, SAME as staged set - pages fetch forecast live at runtime; no forecast edit.",
+  "temperature": 20.0,
   "uvIndex": null,
   "visibility": 16.09,
   "windDirection": "N",
   "windGust": 0.0,
-  "windSpeed": 12.87
+  "windSpeed": 8.05
 }
