@@ -205,13 +205,16 @@ class RegionalForecast extends WeatherDisplay {
 
 // TROY Nov 9 20:26: "DIR N MPH" for a Regional Observations pin; a null NWS
 // wind carries the last fresh verified value for that city, else "NA".
+// TROY Nov 9 23:44: a calm wind reads "Calm" at EVERY location —
+// a 0 is "Calm", no direction, no speed.
 const formatRegionalWind = (observation, city) => {
 	const key = `regionalWind:${city.city || city.name || 'unknown'}`;
 	const speedVal = observation?.windSpeed?.value;
 	if (speedVal === null || speedVal === undefined) {
 		try { return (typeof localStorage !== 'undefined' && localStorage.getItem(key)) || 'NA'; } catch (e) { return 'NA'; }
 	}
-	const windText = `${directionToNSEW(observation?.windDirection?.value)} ${Math.round(kphToMph(speedVal))} MPH`;
+	const mph = Math.round(kphToMph(speedVal));
+	const windText = mph === 0 ? 'Calm' : `${directionToNSEW(observation?.windDirection?.value)} ${mph} MPH`;
 	try { if (typeof localStorage !== 'undefined') localStorage.setItem(key, windText); } catch (e) { /* storage optional */ }
 	return windText;
 };

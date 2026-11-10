@@ -60,7 +60,7 @@ class LatestObservations extends WeatherDisplay {
 		//  Conway = KHYW, Lumberton = KLBT, Myrtle Beach = KMYR,
 		//  North Myrtle Beach = KCRE, Southport = KSUT (Brunswick County),
 		//  Wilmington = KILM. TROY Nov 9 20:26: every nearby row shows wind
-		//  speed — direction in front, whole mph ("N 0 MPH", "W 3 MPH").
+		//  speed — direction in front, whole mph ("W 3 MPH"); a 0 reads "Calm".
 		// Troy Oct 31 19:32: farm FIRST, Elizabethtown DROPPED. Oct 31 20:06: N. Myrtle Beach ADDED — 7 towns + farm = 8 rows.
 		const SCREENSHOT_TOWNS = [
 			{ id: 'KHYW', city: 'Conway Horry County Airport' },
@@ -146,9 +146,10 @@ class LatestObservations extends WeatherDisplay {
 			};
 
 			// TROY Nov 9 20:26: every NEARBY row shows wind speed — direction
-			// in front, whole mph ("N 0 MPH", "W 3 MPH"); a regional 0 is
-			// "DIR 0 MPH", never "Calm". The FARM row keeps its old format
-			// (direction + speed, "Calm" bare when both farm winds are 0).
+			// in front, whole mph ("W 3 MPH"). TROY Nov 9 23:44: when the
+			// wind is calm at a location, show "Calm" for EVERY location —
+			// a 0 is "Calm", no direction, no speed. The FARM row keeps its
+			// old format (direction + speed, "Calm" bare when both farm winds are 0).
 			if (condition.StationId === 'FARM') {
 				if (WindSpeed > 0) {
 					fill.wind = windDirection + (Array(6 - windDirection.length - WindSpeed.toString().length).join(' ')) + WindSpeed.toString();
@@ -160,7 +161,7 @@ class LatestObservations extends WeatherDisplay {
 			} else if (WindSpeed === null) {
 				fill.wind = lastGoodWind(condition.StationId) || 'NA';
 			} else {
-				fill.wind = `${windDirection} ${WindSpeed} MPH`;
+				fill.wind = WindSpeed === 0 ? 'Calm' : `${windDirection} ${WindSpeed} MPH`;
 				saveGoodWind(condition.StationId, fill.wind);
 			}
 
