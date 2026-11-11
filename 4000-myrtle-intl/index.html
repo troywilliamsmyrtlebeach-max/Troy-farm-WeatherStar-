@@ -29,7 +29,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=119" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=120" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -168,6 +168,8 @@ html.farm-kiosk #webamp{display:none!important}
 body.kiosk{overflow-x:hidden}
 /* header: purple top -> orange/maroon middle -> purple bottom strip (stream, pixel-sampled). #container-qualified so it beats the compiled "Final theme" gradient in main.css (same specificity, this <style> comes later). No overflow:hidden — that is what clipped the emblem. */
 #container .weather-display .header{background:linear-gradient(180deg,#150644 0%,#944B11 30%,#793815 55%,#652D21 78%,#1B0046 100%)!important;position:relative;overflow:visible;border-bottom:2px solid #a00}
+/* v=13 FRAMED PANEL (Troy 2026-11-10: the Channel rendered stretched full-width with no orange side bars, while the International shows the centered panel flanked by orange. Root cause: .weather-display carried the navy BackGround1_1.png image, which painted over the .main's 64px side margins; the International overrides that image with this same orange-purple gradient, so the margins show as orange side bars beside the body. This rule matches the International exactly — same gradient, same margins, same look. */
+#container .weather-display{background:linear-gradient(180deg,#150644 0%,#944B11 30%,#793815 55%,#652D21 78%,#1B0046 100%)!important}
 #container .weather-display .header .top,#container .weather-display .header .bottom{color:#FAFA2C!important;text-shadow:3px 3px 0 #000!important}
 #container .weather-display .header .date-time{color:#fff!important;text-shadow:2px 2px 0 #000!important}
 /* titles: chunky yellow, black shadow */
@@ -176,7 +178,8 @@ body.kiosk{overflow-x:hidden}
 /* emblem: rounded royal-blue square, thick chunky compact letters, fully visible.
    Upstream .logo sits at top:30px left:50px in an 83px header; the old 18px emblem was ~86px tall so CHANNEL fell behind the body panel. Now top:4px, 16px, ~68px tall -> bottom ~72px, inside the header. */
 /* v=12 COMPACT EMBLEM (Troy 2026-11-08: the Channel emblem looked stretched — measured 130.6x68.4 design px, ratio 1.91. Now 12px type with taller padding so the blue box is square-ish, three lines tight and compact, fully visible. Troy 2026-11-10: emblem renamed to TROY'S / WEATHER / CHANNEL on Channel, International and stream. */
-.weather-display .header .logo.emblem{background:#0d47c2!important;border:3px solid #fff!important;border-radius:12px!important;box-shadow:3px 4px 6px rgba(0,0,0,.55)!important;padding:16px 4px!important;color:#fff!important;font-family:"Arial Narrow",Arial,sans-serif!important;font-size:12px!important;font-weight:900!important;line-height:1.12!important;letter-spacing:-1px!important;text-align:center!important;white-space:nowrap!important;left:6px!important;top:4px!important}
+/* v=13 EMBLEM UNSQUEEZE (Troy 2026-11-10 ~18:58: the Channel emblem looked 'squeezed together' vs the International where it looks right. The 12px type + 16px padding made a tall narrow box (measured 66.8x78.4 design px, ratio 0.85). Match the International's exact values — 16px type, 6px padding, 1.05 line-height, -.5px letter-spacing — for the same compact square (~90x68 design px, ratio 1.32). */
+.weather-display .header .logo.emblem{background:#0d47c2!important;border:3px solid #fff!important;border-radius:12px!important;box-shadow:3px 4px 6px rgba(0,0,0,.55)!important;padding:6px 4px!important;color:#fff!important;font-family:"Arial Narrow",Arial,sans-serif!important;font-size:16px!important;font-weight:900!important;line-height:1.05!important;letter-spacing:-.5px!important;text-align:center!important;white-space:nowrap!important;left:6px!important;top:4px!important}
 .weather-display .header .logo.emblem img{display:none!important}
 /* content panels: stream dark navy */
 #container .weather-display .main{background:#0B1861!important}
