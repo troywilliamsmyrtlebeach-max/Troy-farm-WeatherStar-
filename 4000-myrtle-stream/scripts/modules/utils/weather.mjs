@@ -184,6 +184,11 @@ const aggregateWeatherForecastData = (getPointResponse) => {
 	// 	},
 	// }
 
+	// A failed forecast fetch (e.g. Open-Meteo rate-limit 429) returns false:
+	// return an empty forecast instead of throwing, so the app still loads
+	// and the displays fall back to their staged data.
+	if (!getPointResponse || !getPointResponse.hourly || !getPointResponse.daily) return {};
+
 	const { hourly, daily } = getPointResponse;
 	const keys = Object.keys(hourly).filter((key) => key !== 'time');
 

@@ -123,6 +123,16 @@ const getWeather = async (latLon, haveDataCallback) => {
 		locality = await getGeocoding(localityName.split(',')[0]);
 	}
 
+	// If the geocoding lookup failed (e.g. Open-Meteo rate-limited), fall back
+	// to the farm locality so one failed lookup cannot wedge the whole app.
+	if (!locality || !locality.results || !locality.results.length) {
+		locality = {
+			results: [{
+				name: 'Carolina Shores', country: 'United States', admin1: 'North Carolina', timezone: 'America/New_York', latitude: latLon.lat, longitude: latLon.lon,
+			}],
+		};
+	}
+
 	// we need to confirm that the stored latLon matches the latLon of the weather data we
 	// just retrieved. This ensures that we don't have a mismatch between the locality and the
 	// weather data

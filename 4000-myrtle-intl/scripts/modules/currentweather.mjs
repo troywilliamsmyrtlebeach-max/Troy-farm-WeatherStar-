@@ -165,6 +165,9 @@ const getCurrentWeatherByHourFromTime = (data) => {
 
 // format the received data
 const parseData = (data) => {
+	// No forecast data (e.g. Open-Meteo rate-limited): return the data as-is
+	// rather than throwing on the missing day.
+	if (!data || !data.forecast || !Object.keys(data.forecast).length) return data;
 	const currentForecast = getCurrentWeatherByHourFromTime(data);
 
 	// values from api are provided in metric
