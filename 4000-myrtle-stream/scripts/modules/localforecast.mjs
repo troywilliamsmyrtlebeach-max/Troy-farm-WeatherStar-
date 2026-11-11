@@ -37,12 +37,12 @@ class LocalForecast extends WeatherDisplay {
 
 		if (!conditions.length) {
 			this.screenTexts = [
-				// FRESH FORECAST 2026-11-11 ~2:19 PM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-11T19:18:48Z; forecast through Tuesday Night, verified this run). Written in the screenshot format (generator
+				// FRESH FORECAST 2026-11-11 ~5:56 PM EST (NWS ILM gridpoint 68,59 for the farm,
+				// generated 2026-11-11T22:56:43Z; forecast through Tuesday Night, verified this run). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
-				'VETERANS DAY... Partly sunny. High near 76, with temperatures falling to around 69 in the afternoon. South wind around 6 mph. Precip chance 0%.',
-				'TONIGHT... Partly cloudy, with a low around 56. Southwest wind 2 to 7 mph. Precip chance 4%.',
-				'THURSDAY... Sunny, with a high near 76. West wind 8 to 14 mph, with gusts as high as 23 mph. Precip chance 7%.',
+				'VETERANS DAY... Partly sunny, with a high near 74. South wind around 3 mph. Precip chance 0%.',
+				'TONIGHT... Partly cloudy, with a low around 55. Southwest wind 2 to 7 mph. Precip chance 4%.',
+				'THURSDAY... Sunny, with a high near 75. West wind 8 to 14 mph, with gusts as high as 23 mph. Precip chance 7%.',
 				'THURSDAY NIGHT... Mostly clear, with a low around 46. West wind 6 to 10 mph, with gusts as high as 18 mph. Precip chance 0%.',
 				'FRIDAY... Sunny, with a high near 64. Northwest wind around 9 mph. Precip chance 0%.',
 				'FRIDAY NIGHT... Mostly clear, with a low around 39. Precip chance 0%.',
