@@ -1,18 +1,18 @@
 {
   "conditionText": 0,
-  "dewPoint": 13.89,
-  "feelsLike": 20.0,
-  "humidity": 68,
-  "lastUpdated": "2026-11-11T11:02:11-05:00",
+  "dewPoint": 14.44,
+  "feelsLike": 20.56,
+  "humidity": 67,
+  "lastUpdated": "2026-11-11T11:17:01-05:00",
   "locationCity": "CALABASH-FARM AT BRUNSWICK",
-  "pressure": 1008.47,
-  "pressureTrend": "steady",
+  "pressure": 1007.79,
+  "pressureTrend": "falling",
   "rainTodayIn": 0.0,
-  "source": "WU-first via my own WU dashboard curl this run (widget variant, Imperial, obs 11:02:11 AM EST 2026-11-11, data-temp 68.4F -> 68F, data-feels-like 68.4F -> 68F, data-dew-point 57F, data-pressure 29.78 inHg, humidity 68, wind-speed 0, wind-gust 0, data-obs-time-utc Wed Nov 11 2026 16:02:11 GMT): 68F, feels 68F, Sunny (WunderMap sunny-day icon, title Sunny, temp 68, updated 10:59 AM), wind CALM 0 mph gust 0, rain 0.00 in. Cross-checks: WunderMap station-conditions block fetched this run - icon sunny-day, title Sunny, temp 68. OSOILM farm row 1056 fetched INDEPENDENTLY this run via forecast.weather.gov product page - 68F, dew 57, RH 68, wind 110deg 0kt gust 0, P 29.78, rain 0.00/0.00 (no MM values, row ~6 min old; product HAS advanced past 1041). RetroCast 1056 data file (obs 10:57:42 AM): 68F, dew 57, RH 68, Calm, Sunny, P 29.78. All sources agree on every field this run. Dew 57 / RH 68 / pressure 29.78 staged from the fresh WU obs (OSO 1056 and RetroCast 1056 agree exactly). Temp 68 staged per WU-is-source-of-truth (freshest WU obs 11:02 AM). Wind CALM per the 1856 judgment call, still holding: WU wind widget speed 0 gust 0 + OSO 1056 row 0kt. Wind staged as windSpeed 0.0 / windDirection ESE (OSO 1056 row 110deg - direction invisible when calm: main screen CALM, ticker 'Wind: Calm', Latest Observations farm row 'Calm' bare). Visibility 10 mi / ceiling Unlimited per RetroCast 1056 (KCRE 10SM CLR). No active NWS alerts for the farm (api.weather.gov alerts/active point 33.92,-78.57: 0; RetroCast 1056 alerts 0). NWS forecast: served generation 15:07:52Z is OLDER than RetroCast's staged 15:26:52Z - do not adopt; no forecast edit; pages fetch forecast live at runtime. Sky is Sunny in DAYTIME (past sunrise 6:43 AM): conditionText 0; getConditionText(0, tz) returns 'Sunny' after sunrise and icons.mjs gives code 0 the sun icon by day - no moon icon on a day obs. Pressure trend STEADY per the XL mechanical rule: previously staged 29.78 -> 29.78 (RetroCast's own 'Steady' agrees this run). High/low Nov 11 so-far [68, 47] per RetroCast 1056. Calm rule (Troy 2026-11-09 ~23:44) still in force: 0 wind reads 'Calm' at every location on Latest Observations.",
-  "temperature": 20.0,
+  "source": "WU-first via my own WU dashboard curl this run (widget variant, Imperial, obs 11:17:01 AM EST 2026-11-11, data-temp 69.1F -> 69F, data-feels-like 69.1F -> 69F, data-dew-point 58F, data-pressure 29.76 inHg, humidity 67, wind-speed 2, wind-gust 4, data-obs-time-utc Wed Nov 11 2026 16:17:01 GMT): 69F, feels 69F, Sunny (WunderMap sunny-day icon, title Sunny, temp 69), wind ESE 4 mph (higher of sustained 2 / gust 4, below-16 rule, no gust wording), rain 0.00 in. Cross-checks: WunderMap station-conditions block fetched this run - icon sunny-day, title Sunny, temp 69. OSOILM farm row 1111 fetched INDEPENDENTLY this run via forecast.weather.gov product page - 69F, dew 59, RH 69, wind 110deg 0kt gust 4kt, P 29.77, rain 0.00/0.00 (no MM values, row ~6 min old; product HAS advanced past 1056). RetroCast 1056 data file (obs 10:57:42 AM): 68F, dew 57, RH 68, Calm, Sunny, P 29.78. Dew 58 / RH 67 / pressure 29.76 staged from the fresh WU obs (OSO dew 59/RH 69 and RetroCast 1056 dew 57/RH 68 are older obs - station warming/drying; WU freshest governs, do not blend). Temp 69 staged per WU-is-source-of-truth (freshest WU obs 11:17 AM; WunderMap 69 and OSO 69 agree; RetroCast 1056 68 is the older 10:57 obs). Wind ESE 4 mph: WU widget sustained 2 gust 4 + OSO 1111 row 0kt gust 4kt - higher of sustained/gust is 4 mph, staged as windSpeed 6.44 km/h, windGust 0.0 per the established staging convention (precedent 67bcadd: 4 mph staged 6.44/0.0); main screen 'ESE 4', Latest Observations farm row 'ESE 4', no gust wording below 16 mph. Visibility 10 mi / ceiling Unlimited per RetroCast 1056 (KCRE 10SM CLR). No active NWS alerts for the farm (api.weather.gov alerts/active point 33.92,-78.57: 0; RetroCast 1056 alerts 0). NWS forecast: served generation 15:07:52Z is OLDER than RetroCast's staged 15:26:52Z - do not adopt; no forecast edit; pages fetch forecast live at runtime. Sky is Sunny in DAYTIME (past sunrise 6:43 AM): conditionText 0; getConditionText(0, tz) returns 'Sunny' after sunrise and icons.mjs gives code 0 the sun icon by day - no moon icon on a day obs. Pressure trend FALLING per the XL mechanical rule: previously staged 29.78 -> 29.76 (RetroCast's own trend on its older 29.78 is 'Steady' - the staged rule compares previously staged vs current). High/low Nov 11 so-far [69, 47] per RetroCast 1056 [68, 47] updated by this 69F obs.",
+  "temperature": 20.56,
   "uvIndex": null,
   "visibility": 16.09,
   "windDirection": "ESE",
   "windGust": 0.0,
-  "windSpeed": 0.0
+  "windSpeed": 6.44
 }
