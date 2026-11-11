@@ -29,7 +29,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=127" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=128" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -273,6 +273,8 @@ html.farm-tv .weather-display .scroll .fixed .text-layer{top:50%!important;trans
 #local-forecast-html .fc-label{color:#FAFA2C !important}
 #local-forecast-html .fc-period{margin-bottom:10px !important}
 #local-forecast-html .fc-period:last-child{margin-bottom:0 !important}
+/* NOAA TAG (Troy 2026-11-10: "NOAA" beside the Local Forecast word at the top). Same yellow caps, same 24pt as the title; sits in the gap between the title and the clock. */
+#local-forecast-html .noaa-tag{position:absolute;left:150px;top:12px;color:#FAFA2C !important;font-family:"Star4000";font-size:24pt;text-shadow:3px 3px 0 #000 !important}
 /* v=11 SUNSET-ORANGE EDGES (Troy 2026-11-08: the original WeatherStar 4000+ had
    sunset-orange edges around the screen — side strips + frame/body, all screens,
    all the time. Sampled from his screenshots 946_0_qa1h.jpg + 987_1_5ss8.png:
@@ -664,6 +666,7 @@ try {
 			<div class="bottom" id="bottomTitle">
 				Forecast
 			</div>
+			<div class="noaa-tag">NOAA</div>
 		</div>
 		
 				
