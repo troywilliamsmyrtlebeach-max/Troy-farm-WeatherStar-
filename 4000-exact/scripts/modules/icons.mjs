@@ -73,10 +73,12 @@ const getWeatherRegionalIconFromIconLink = (text, isDay) => {
 		case 'sunny':
 			return addPath('Sunny.gif');
 
+		case 'fair':
+			return addPath('Partly-Cloudy.gif');
+		case 'fair-night':
+			return addPath('Mostly-Clear.gif');
 		case 'clear-sky-night':
 		case 'clear-night':
-		case 'fair':
-		case 'fair-night':
 		case 'sunny-night':
 			return addPath('Clear-1992.gif');
 
@@ -253,7 +255,7 @@ const getWeatherIconFromIconLink = (text, timeZone, extendedForecast) => {
 	}
 
 	// Numeric clear codes get the night icon after dark, like the text codes.
-	if (!extendedForecast && nightTime && (tidyText === 0 || tidyText === 1)) {
+	if (!extendedForecast && nightTime && tidyText === 0) {
 		return addPath('CC_Clear0.gif');
 	}
 
@@ -269,10 +271,12 @@ const getWeatherIconFromIconLink = (text, timeZone, extendedForecast) => {
 		case 'sunny':
 			return addPath('CC_Clear1.gif');
 
+		case 'fair':
+			return addPath(nightTime ? 'CC_PartlyCloudy0.gif' : 'CC_PartlyCloudy1.gif');
+		case 'fair-night':
+			return addPath('CC_PartlyCloudy0.gif');
 		case 'clear-sky-night':
 		case 'clear-night':
-		case 'fair':
-		case 'fair-night':
 		case 'sunny-night':
 			return addPath('CC_Clear0.gif');
 
@@ -297,6 +301,7 @@ const getWeatherIconFromIconLink = (text, timeZone, extendedForecast) => {
 			return addPath('CC_PartlyCloudy0.gif');
 
 		case 1:
+			return addPath(nightTime ? 'CC_PartlyCloudy0.gif' : 'CC_PartlyCloudy1.gif');
 		case 'mainly-clear':
 			return addPath('CC_Clear1.gif');
 

@@ -93,7 +93,7 @@ const getGeocoding = async (name) => {
 
 const weatherConditions = [
 	{ codes: [0], text: ['Clear'] },
-	{ codes: [1, 2, 3], text: ['Mostly clear', 'Partly cloudy', 'Cloudy'] },
+	{ codes: [1, 2, 3], text: ['Fair', 'Partly cloudy', 'Cloudy'] },
 	{ codes: [45, 48], text: ['Fog', 'Depositing rime fog'] },
 	{ codes: [51, 53, 55], text: ['Light Drizzle', 'Moderate Drizzle', 'Dense Drizzle'] },
 	{ codes: [56, 57], text: ['Light Freezing Drizzle', 'Dense Freezing Drizzle'] },
@@ -114,9 +114,10 @@ const getConditionText = (code, timeZone) => {
 		const hour = Number(new Intl.DateTimeFormat('en-US', { hour: 'numeric', hour12: false, timeZone }).format(new Date()));
 		if (hour >= 6 && hour < 18) return 'Sunny';
 	}
-	// Troy 2026-11-09: a few clouds reads "Fair" (day or night) on the farm screens.
-	// Code 1 is WMO mainly clear. Callers that pass no timeZone keep the old wording.
-	if (code === 1 && timeZone) return 'Fair';
+	// Troy 2026-11-09/11-11: a few clouds reads "Fair" (day or night) on the farm screens.
+	// Code 1 is WMO mainly clear. Unconditional since 2026-11-11: every caller
+	// (hero, ticker, Latest Observations, hourly, extended) must read Fair, never "Mostly clear".
+	if (code === 1) return 'Fair';
 	const conditionIndex = weatherConditions.findIndex((condition) => condition.codes.includes(code));
 	const weatherConditionObject = weatherConditions[conditionIndex];
 
