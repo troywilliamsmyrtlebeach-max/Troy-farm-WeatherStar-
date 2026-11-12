@@ -37,15 +37,14 @@ class LocalForecast extends WeatherDisplay {
 
 		if (!conditions.length) {
 			this.screenTexts = [
-				// FRESH FORECAST 2026-11-11 ~5:56 PM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-11T22:56:43Z; forecast through Tuesday Night, verified this run). Written in the screenshot format (generator
+				// FRESH FORECAST 2026-11-11 ~7:03 PM EST (NWS ILM gridpoint 68,59 for the farm,
+				// generated 2026-11-12T00:03:34Z; forecast through Wednesday, verified this run). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
-				'VETERANS DAY... Partly sunny, with a high near 74. South wind around 3 mph. Precip chance 0%.',
 				'TONIGHT... Partly cloudy, with a low around 55. Southwest wind 2 to 7 mph. Precip chance 4%.',
 				'THURSDAY... Sunny, with a high near 75. West wind 8 to 14 mph, with gusts as high as 23 mph. Precip chance 7%.',
 				'THURSDAY NIGHT... Mostly clear, with a low around 46. West wind 6 to 10 mph, with gusts as high as 18 mph. Precip chance 0%.',
 				'FRIDAY... Sunny, with a high near 64. Northwest wind around 9 mph. Precip chance 0%.',
-				'FRIDAY NIGHT... Mostly clear, with a low around 39. Precip chance 0%.',
+				'FRIDAY NIGHT... Mostly clear, with a low around 39. Northwest wind 3 to 7 mph. Precip chance 0%.',
 				'SATURDAY... Sunny, with a high near 58. Precip chance 0%.',
 				'SATURDAY NIGHT... Clear, with a low around 34. Precip chance 0%.',
 				'SUNDAY... Sunny, with a high near 59. Precip chance 0%.',
@@ -54,6 +53,7 @@ class LocalForecast extends WeatherDisplay {
 				'MONDAY NIGHT... Mostly cloudy, with a low around 39. Precip chance 12%.',
 				'TUESDAY... A slight chance of rain showers between 7am and 1pm. Mostly sunny, with a high near 60. Precip chance 16%.',
 				'TUESDAY NIGHT... Partly cloudy, with a low around 39. Precip chance 14%.',
+				'WEDNESDAY... Sunny, with a high near 63. Precip chance 13%.',
 			];
 		} else {
 			this.screenTexts = conditions.map((condition) => condition.Text);
