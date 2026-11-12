@@ -1,0 +1,15 @@
+Troy's WeatherStar Battaglia — build log
+Built: 2026-11-12 ~03:00 EST from battaglia.ddns.net/twc ?v=86
+Base: Mike Battaglia's WeatherStar 4000+ (MIT, see LICENSE.txt)
+Farm: KNCCAROL120 / CALABASH-FARM AT BRUNSWICK (33.92N 78.57W)
+Patches P1-P11: see build-battaglia.py in ~/workspace/github-push/
+Binary assets (fonts/images/audio) are HOTLINKED from
+  https://battaglia.ddns.net/twc/ — the GitHub snapshot push
+  accepts UTF-8 text files only. Battaglia's server sends
+  Access-Control-Allow-Origin: * on every static asset.
+Staged data (refresh via the 15-min Channel cron in future):
+  farm-data.json (fallback; primary is ../4000-myrtle-intl/farm-data.json)
+  zone-forecast.txt (NCZ109, issued 1:25 AM EST Nov 12)
+  regional-metars.xml (KCRE/KILM/KMYR/KSUT/KCPC, 06:53-06:55Z)
+Tides: Calabash River (8660148, Dunn Sound/Little River Inlet)
+  + Sunset Beach Bridge (8659899), live from CO-OPS datagetter.

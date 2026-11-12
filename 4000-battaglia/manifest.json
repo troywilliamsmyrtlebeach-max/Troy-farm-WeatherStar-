@@ -1,0 +1,13 @@
+{
+  //"short_name": "WS4K+",
+  "name": "Troy's WeatherStar Battaglia",
+  "icons": [
+    {
+      "src": "https://battaglia.ddns.net/twc/images/Logo192.png",
+      "sizes": "192x192",
+      "type": "https://battaglia.ddns.net/twc/images/png"
+    }
+  ],
+  "start_url": "index.html",
+  "display": "standalone"
+}

@@ -1,0 +1,18 @@
+{
+  "conditionText": 2,
+  "dewPoint": 10.0,
+  "feelsLike": 13.33,
+  "humidity": 84,
+  "lastUpdated": "2026-11-12T02:38:58-05:00",
+  "locationCity": "CALABASH-FARM AT BRUNSWICK",
+  "pressure": 1000.0,
+  "pressureTrend": "steady",
+  "rainTodayIn": 0.0,
+  "source": "WU-first via my own WU dashboard curl this run (widget variant, obs 02:38:58 AM EST 2026-11-12, data-obs-time-utc Thu Nov 12 2026 07:38:58 GMT): Imperial, NO metric flip (temp 55.9F, feels 55.9F, dew 50F, pressure 29.53 inHg, humidity 84, wind-speed 2, wind-gust 5, data-wind-dir 180, precip-total 0, precip-rate 0). Values converted whole-degree-F first: 56F -> 13.33C, feels 56F -> 13.33C, dew 50 -> 10.0C, pressure 29.53 inHg -> 1000.00 hPa, RH 84, rain 0.00 in. Cross-checks: WunderMap station-conditions block fetched this run - icon clear-night, word 'Clear', temp 56F, updated 2:31 AM EST. OSOILM farm row 0211 fetched INDEPENDENTLY this run via forecast.weather.gov product page - 56F, dew 52, RH 83, wind 110deg 0kt gust 5kt, P 29.53, rain 0.00/0.00 (no MM values, row ~28 min old). RetroCast 0226 data file (obs 02:26:30 AM): 56F, feels 56, dew 50, RH 83, Clear, P 29.53, wind 0 gust 5 dir 338, vis 10, ceiling Unlimited, alerts 0, metric_flip false. Dew 50 staged from freshest WU obs (OSO 52). RH 84 staged from freshest WU obs (OSO/RetroCast 83). Wind: no corroboration (WU 180 S / OSO 110 ESE / RetroCast 338 NNW, sustained 0-2, gust 5) - WU freshest governs: S 5 mph (gust, below-16 rule, windSpeed 8.05 km/h, windGust 0.0). Visibility 10 mi / ceiling Unlimited per RetroCast 0226. No active NWS alerts for the farm (api.weather.gov alerts/active point 33.92,-78.57: 0). NWS forecast: direct gridpoint ILM 68,59 fetch this run returned generatedAt 2026-11-12T07:39:04Z, NEWER than the staged 06:31:43Z generation - but all 14 period temps/PoP/shortForecast/detailed text match the staged fallback exactly, so no forecast edit this run (RetroCast 0226 forecast periods match it: Overnight 56 Clear PoP 1, Thursday 77 Sunny PoP 1). Sky is PARTLY CLOUDY per Troy's eye report (11:38 PM Nov 11, fresh until ~2:38 AM; run scheduled 02:31) - conditionText 2 overrides the automated Clear (WunderMap clear-night, RetroCast Clear) while fresh.",
+  "temperature": 13.33,
+  "uvIndex": null,
+  "visibility": 16.09,
+  "windDirection": "S",
+  "windGust": 0.0,
+  "windSpeed": 8.05
+}

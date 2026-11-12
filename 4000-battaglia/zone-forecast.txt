@@ -1,0 +1,35 @@
+Expires:202611121930;;678003
+FPUS52 KILM 120625
+ZFPILM
+
+Zone Forecast Product
+National Weather Service Wilmington NC
+125 AM EST Thu Nov 12 2026
+
+
+NCZ109-121930-
+Inland Brunswick-
+Including the cities of Boiling Spring Lakes, Leland, 
+and Shallotte
+125 AM EST Thu Nov 12 2026
+
+.REST OF TONIGHT...Clear. Near steady temperature in the upper
+50s. Southwest winds around 5 mph. 
+.THURSDAY...Sunny. Highs in the upper 70s. Southwest winds 10 to
+15 mph with gusts up to 25 mph. 
+.THURSDAY NIGHT...Clear. Lows in the upper 40s. West winds 5 to
+10 mph. 
+.FRIDAY...Sunny. Highs in the mid 60s. West winds 5 to 10 mph. 
+.FRIDAY NIGHT...Mostly clear. Lows in the upper 30s. Northwest
+winds around 5 mph. 
+.SATURDAY AND SATURDAY NIGHT...Clear. Highs in the upper 50s.
+Lows in the mid 30s. 
+.SUNDAY...Sunny. Highs in the upper 50s. 
+.SUNDAY NIGHT AND MONDAY...Mostly clear. Lows in the mid 30s.
+Highs in the upper 50s. 
+.MONDAY NIGHT THROUGH WEDNESDAY...Partly cloudy. Lows in the
+upper 30s. Highs in the lower 60s. 
+
+$$
+
+
