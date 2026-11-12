@@ -3295,7 +3295,10 @@ var GetWeatherMetar = function (WeatherParameters)
     //var Url = "https://aviationweather.gov/api/data/dataserver?dataSource=metars&requestType=retrieve&format=xml&hoursBeforeNow=3";
     //Url += "&stationString=" + WeatherParameters.StationId;
     var Url = "https://aviationweather.gov/api/data/metar?format=xml&hours=3";
-    Url += "&ids=" + WeatherParameters.StationId;
+    // TROY-FARM P13: the METAR fetch needs a real aviation station, so
+    // it uses MetarStationId (KCRE) when set; the displayed StationId
+    // is Troy's own KNCCAROL120.
+    Url += "&ids=" + (WeatherParameters.MetarStationId || WeatherParameters.StationId);
 
     //Url += "," + (new Date().getTime()); // Prevents caching
     //Url = "https://crossorigin.me/" + Url; // Need to do this for Chrome and CORS
@@ -3665,7 +3668,12 @@ setTimeout(() =>
                 _WeatherParameters.Longitude = _farmLon;
                 _WeatherParameters.ZoneId = "NCZ109";
                 _WeatherParameters.RadarId = "KLTX";
-                _WeatherParameters.StationId = "KCRE";
+                // TROY-FARM P13 (2026-11-12): the main station shown is
+                // Troy's own KNCCAROL120, not KCRE. KCRE stays behind the
+                // scenes as the METAR station (MetarStationId) for the
+                // airport ceiling/visibility the app needs.
+                _WeatherParameters.StationId = "KNCCAROL120";
+                _WeatherParameters.MetarStationId = "KCRE";
                 _WeatherParameters.City = "Calabash";
                 _WeatherParameters.State = "NC";
                 _WeatherParameters.TimeZone = new Date().toLocaleTimeString("en-US", { timeZone: "America/New_York", timeZoneName: "short" }).split(" ").pop();
