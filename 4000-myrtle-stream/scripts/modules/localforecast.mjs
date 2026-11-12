@@ -37,23 +37,23 @@ class LocalForecast extends WeatherDisplay {
 
 		if (!conditions.length) {
 			this.screenTexts = [
-				// FRESH FORECAST 2026-11-12 ~01:32 AM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-12T06:31:43Z; forecast through Wednesday, verified this run). Written in the screenshot format (generator
+				// FRESH FORECAST 2026-11-12 ~03:16 PM EST (NWS ILM gridpoint 68,59 for the farm,
+				// generated 2026-11-12T20:16:57Z; forecast through Wednesday night, verified this run). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
-				'OVERNIGHT... Clear, with a low around 56. Southwest wind around 5 mph. Precip chance 1%.',
-				'THURSDAY... Sunny. High near 77, with temperatures falling to around 71 in the afternoon. Southwest wind 5 to 14 mph, with gusts as high as 23 mph. Precip chance 1%.',
-				'THURSDAY NIGHT... Clear, with a low around 46. West wind 6 to 9 mph, with gusts as high as 16 mph. Precip chance 0%.',
-				'FRIDAY... Sunny, with a high near 64. Northwest wind 6 to 9 mph. Precip chance 0%.',
-				'FRIDAY NIGHT... Mostly clear, with a low around 39. Northwest wind 2 to 6 mph. Precip chance 0%.',
-				'SATURDAY... Sunny, with a high near 59. Precip chance 0%.',
+				'TODAY... Sunny. High near 77, with temperatures falling to around 71 in the afternoon. West wind around 13 mph, with gusts as high as 21 mph. Precip chance 3%.',
+				'TONIGHT... Mostly clear, with a low around 44. Northwest wind 3 to 9 mph. Precip chance 6%.',
+				'FRIDAY... Sunny, with a high near 64. West wind 2 to 9 mph. Precip chance 0%.',
+				'FRIDAY NIGHT... Mostly clear, with a low around 39. Northwest wind around 5 mph. Precip chance 0%.',
+				'SATURDAY... Sunny, with a high near 59. Northwest wind 5 to 10 mph. Precip chance 0%.',
 				'SATURDAY NIGHT... Clear, with a low around 34. Precip chance 0%.',
 				'SUNDAY... Sunny, with a high near 59. Precip chance 0%.',
-				'SUNDAY NIGHT... Mostly clear, with a low around 35. Precip chance 0%.',
-				'MONDAY... Sunny, with a high near 60. Precip chance 1%.',
-				'MONDAY NIGHT... Partly cloudy, with a low around 37. Precip chance 3%.',
-				'TUESDAY... Mostly sunny, with a high near 61. Precip chance 7%.',
-				'TUESDAY NIGHT... Partly cloudy, with a low around 38. Precip chance 8%.',
-				'WEDNESDAY... Mostly sunny, with a high near 64. Precip chance 8%.',
+				'SUNDAY NIGHT... Mostly clear, with a low around 36. Precip chance 0%.',
+				'MONDAY... Sunny, with a high near 61. Precip chance 0%.',
+				'MONDAY NIGHT... Partly cloudy, with a low around 38. Precip chance 1%.',
+				'TUESDAY... Mostly sunny, with a high near 62. Precip chance 2%.',
+				'TUESDAY NIGHT... Partly cloudy, with a low around 39. Precip chance 3%.',
+				'WEDNESDAY... Sunny, with a high near 67. Precip chance 4%.',
+				'WEDNESDAY NIGHT... Mostly clear, with a low around 42. Precip chance 4%.',
 			];
 		} else {
 			this.screenTexts = conditions.map((condition) => condition.Text);
