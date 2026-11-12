@@ -3646,6 +3646,85 @@ setTimeout(() =>
             }
             window.clearInterval(GetWeatherIntervalId);
 
+            // TROY-FARM P12 (2026-11-12): GitHub Pages has no cors/ proxy,
+            // so the MapClick.php scrape below can never succeed here and
+            // the app wedges on "Loading" with blank Station/Zone IDs.
+            // For Troy's farm area, resolve the IDs directly from the
+            // known farm values and run the same downstream chain as the
+            // scrape's success path. Any other location falls through to
+            // the original MapClick scrape unchanged.
+            var _farmLat = getParameterByName("lat", _Url);
+            var _farmLon = getParameterByName("lon", _Url);
+            var _farmLatF = parseFloat(_farmLat);
+            var _farmLonF = parseFloat(_farmLon);
+            if (!isNaN(_farmLatF) && !isNaN(_farmLonF)
+                && Math.abs(_farmLatF - 33.92) < 0.05
+                && Math.abs(_farmLonF - (-78.57)) < 0.05)
+            {
+                _WeatherParameters.Latitude = _farmLat;
+                _WeatherParameters.Longitude = _farmLon;
+                _WeatherParameters.ZoneId = "NCZ109";
+                _WeatherParameters.RadarId = "KLTX";
+                _WeatherParameters.StationId = "KCRE";
+                _WeatherParameters.City = "Calabash";
+                _WeatherParameters.State = "NC";
+                _WeatherParameters.TimeZone = new Date().toLocaleTimeString("en-US", { timeZone: "America/New_York", timeZoneName: "short" }).split(" ").pop();
+
+                var _farmRequest = $.ajax({
+                    url: location.protocol + '//geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode',
+                    data: {
+                        location: _farmLon + "," + _farmLat,
+                        distance: 1000, // Find location upto 1 KM.
+                        f: 'json',
+                        featureTypes: 'postal',
+                    },
+                    jsonp: 'callback',
+                    dataType: 'jsonp'
+                });
+                _farmRequest.done(function (data)
+                {
+                    console.log(data);
+
+                    if (!("error" in data))
+                    {
+                        var ZipCode = data.address.Postal;
+                        var Country = data.address.CountryCode;
+
+                        switch (ZipCode)
+                        {
+                            case "88888": // The North Pole.
+                                ZipCode = "20001";
+                                break;
+                        }
+
+                        _WeatherParameters.ZipCode = ZipCode;
+                        _WeatherParameters.Country = Country;
+                    }
+
+                    GetMonthPrecipitation(_WeatherParameters);
+                    GetTravelWeather(_WeatherParameters);
+                    //GetAirQuality2(_WeatherParameters);
+                    GetAirQuality3(_WeatherParameters);
+                    ShowRegionalMap(_WeatherParameters, true);
+                    ShowRegionalMap(_WeatherParameters, false, true);
+                    //ShowDopplerMap(_WeatherParameters);
+                    ShowDopplerMap2(_WeatherParameters);
+                    GetWeatherHazards3(_WeatherParameters);
+
+                    if (_UpdateWeatherCanvasInterval)
+                    {
+                        window.clearInterval(_UpdateWeatherCanvasInterval);
+                    }
+                    _UpdateWeatherCanvasInterval = window.setInterval(function ()
+                    {
+                        UpdateWeatherCanvases(_WeatherParameters);
+                    }, _UpdateWeatherUpdateMs);
+
+                    if (_CallBack) _CallBack({ Status: "WEATHERPARAMETERS", WeatherParameters: _WeatherParameters, });
+                });
+                return;
+            }
+
             $.ajax({
                 type: "GET",
                 url: _Url,
