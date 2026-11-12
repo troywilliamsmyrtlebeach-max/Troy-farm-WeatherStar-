@@ -724,6 +724,14 @@ var GetMonthPrecipitation = function (WeatherParameters) {
         },
         error: function (xhr, error, errorThrown) {
             console.error("GetMonthPrecipitation failed: " + errorThrown);
+            // TROY-FARM P14 (2026-11-12): the weather.com lookup this
+            // gates on times out on static hosting, which wedged Current
+            // Conditions on "Loading" forever. Fall through to current
+            // conditions anyway (the farm override supplies the readings);
+            // monthly precipitation / almanac simply shows No Data.
+            WeatherParameters.Progress.Almanac = LoadStatuses.NoData;
+            GetCurrentWeather(WeatherParameters);
+            ShowRegionalMap(_WeatherParameters);
         }
     });
 
