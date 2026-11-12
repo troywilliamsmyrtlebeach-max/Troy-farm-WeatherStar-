@@ -41,7 +41,7 @@ class LocalForecast extends WeatherDisplay {
 				// FRESH FORECAST 2026-11-11 ~11:04 PM EST (NWS ILM gridpoint 68,59 for the farm,
 				// generated 2026-11-12T04:04:25Z; forecast through Wednesday, verified this run). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
-				'TONIGHT... Mostly clear, with a low around 55. Southwest wind around 7 mph. Precip chance 2%.',
+				'OVERNIGHT... Mostly clear, with a low around 55. Southwest wind around 7 mph. Precip chance 2%.',
 				'THURSDAY... Sunny, with a high near 75. West wind 8 to 14 mph, with gusts as high as 23 mph. Precip chance 7%.',
 				'THURSDAY NIGHT... Mostly clear, with a low around 46. West wind 6 to 10 mph, with gusts as high as 18 mph. Precip chance 0%.',
 				'FRIDAY... Sunny, with a high near 64. Northwest wind around 9 mph. Precip chance 0%.',
