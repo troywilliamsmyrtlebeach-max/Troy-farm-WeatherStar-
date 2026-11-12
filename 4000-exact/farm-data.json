@@ -1,18 +1,18 @@
 {
   "conditionText": 0,
-  "dewPoint": 12.78,
+  "dewPoint": 13.33,
   "feelsLike": 25.56,
-  "humidity": 45,
-  "lastUpdated": "2026-11-12T15:16:50-05:00",
+  "humidity": 47,
+  "lastUpdated": "2026-11-12T15:46:35-05:00",
   "locationCity": "CALABASH-FARM AT BRUNSWICK",
-  "pressure": 993.23,
-  "pressureTrend": "falling",
+  "pressure": 993.57,
+  "pressureTrend": "rising",
   "rainTodayIn": 0.0,
-  "source": "WU-first via my own WU dashboard fetch this run (widget variant, obs 3:16:50 PM EST 2026-11-12, data-obs-time-utc Thu Nov 12 2026 20:16:50 GMT): Imperial, NO metric flip (all widgets data-unit='e'; temp 78.3F, feels 77.9F, dew-point 55F, pressure 29.33 inHg, humidity 45, wind-speed 3, wind-gust 14, data-wind-dir 225, precip-total 0, precip-rate 0). Values converted whole-degree-F first: 78F -> 25.56C, feels 78F -> 25.56C, dew 55 -> 12.78C, pressure 29.33 inHg -> 993.23 hPa, RH 45, rain 0.00 in. Cross-checks: WunderMap station-conditions block fetched this run - icon sunny-day, word 'Sunny', temp 78F, updated 5 seconds ago. OSOILM farm row 1511 fetched INDEPENDENTLY this run via forecast.weather.gov product page - 80F, dew 54, RH 43, wind 270deg 4kt gust 14kt, P 29.33, rain 0.00/0.00 (no MM values, row ~6 min old); OSO temp 80 is the outlier vs WU 78.3 and RetroCast 78.1 - WU freshest governs, staged 78F. RetroCast 1511 data file (obs 3:12:04 PM): 78F, feels 78, dew 55, RH 45, P 29.33, wind 3 gust 14 dir 270, vis 10, ceiling Unlimited, sky Sunny, alerts 0, metric_flip false. Temp 78 / feels 78 / dew 55 / RH 45 / P 29.33 agree across WU + RetroCast. Wind: OSO 270 (W) + RetroCast 270 (W) corroborate W; WU 225 (SW) is the lone outlier on light variable wind - staged W 14 mph (gust, below-16 rule, windSpeed 22.53 km/h, windGust 0.0). Visibility 10 mi / ceiling Unlimited per RetroCast 1511. No active NWS alerts for the farm (api.weather.gov alerts/active point 33.92,-78.57: 0). NWS forecast: direct gridpoint ILM 68,59 fetch this run returned generatedAt 2026-11-12T20:16:57+00:00, newer than the staged 19:52:24Z generation; only change on all 14 periods is This Afternoon gusts 22 -> 21 mph - TODAY line refreshed in localforecast.mjs x3. Sky is SUNNY (conditionText 0) - Troy's eye report (Partly Cloudy, 11:38 PM Nov 11) expired ~2:38 AM; daytime now, WunderMap sunny-day 'Sunny' + KCRE Clear + RetroCast Sunny agree Clear, daytime Clear -> Sunny, word matches icon. GAP NOTE: live HEAD was still run 148's 6f0203f when this run started (runs 149-156 staged but their push approval cards timed out untapped); this push carries fresh run-157 values plus the carried-forward forecast refresh and CSS bumps. Pressure trend FALLING: previously staged 29.34 inHg -> now 29.33 inHg (decrease).",
-  "temperature": 25.56,
+  "source": "WU-first via my own WU dashboard fetch this run (widget variant, obs 3:46:35 PM EST 2026-11-12, data-obs-time-utc Thu Nov 12 2026 20:46:35 GMT): Imperial, NO metric flip (all widgets data-unit='e'; temp 78.6F, feels 78.4F, dew-point 56F, pressure 29.34 inHg, humidity 47, wind-speed 4, wind-gust 11, data-wind-dir 248, precip-total 0, precip-rate 0). Values converted whole-degree-F first: 79F -> 26.11C, feels 78F -> 25.56C, dew 56 -> 13.33C, pressure 29.34 inHg -> 993.57 hPa, RH 47, rain 0.00 in. Cross-checks: WunderMap station-conditions block fetched this run - icon sunny-day, word 'Sunny', temp 79F, updated 4 seconds ago. OSOILM farm row 1526 fetched INDEPENDENTLY this run via forecast.weather.gov product page - 79F, dew 55, RH 45, wind 270deg 4kt gust 14kt, P 29.33, rain 0.00/0.00 (no MM values, row ~21 min old); OSO dew 55/RH 45/pressure 29.33 differ slightly from WU 56/47/29.34 - WU freshest governs, staged WU values. RetroCast 1541 data file (obs 3:41:44 PM): 79F, feels 79, dew 56, RH 47, P 29.34, wind 5 gust 11 dir 270, vis 10, ceiling Unlimited, sky Sunny, alerts 0, metric_flip false. Temp 79 / dew 56 / RH 47 / P 29.34 agree across WU + RetroCast. Wind: OSO 270 (W) + RetroCast 270 (W) corroborate W; WU 248 (WSW) is the lone outlier on light variable wind - staged W 11 mph (gust, below-16 rule, windSpeed 17.70 km/h, windGust 0.0). Visibility 10 mi / ceiling Unlimited per RetroCast 1541. No active NWS alerts for the farm (api.weather.gov alerts/active point 33.92,-78.57: 0). NWS forecast: direct gridpoint ILM 68,59 fetch this run returned generatedAt 2026-11-12T20:40:10Z, newer than the staged 20:16:57Z generation, but all 14 period temps/PoP/shortForecast/winds match the staged fallback exactly - no forecast edit. Sky is SUNNY (conditionText 0) - Troy's eye report (Partly Cloudy, 11:38 PM Nov 11) expired ~2:38 AM; daytime now, WunderMap sunny-day 'Sunny' + RetroCast Sunny + KCRE Clear agree, daytime Clear -> Sunny, word matches icon. Pressure trend RISING: previously staged 29.33 inHg -> now 29.34 inHg (increase).",
+  "temperature": 26.11,
   "uvIndex": null,
   "visibility": 16.09,
   "windDirection": "W",
   "windGust": 0.0,
-  "windSpeed": 22.53
+  "windSpeed": 17.7
 }
