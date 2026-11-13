@@ -37,15 +37,14 @@ class LocalForecast extends WeatherDisplay {
 
 		if (!conditions.length) {
 			this.screenTexts = [
-				// FRESH FORECAST 2026-11-12 ~04:02 PM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-12T21:02:29Z; forecast through Wednesday night, verified this run). Written in the screenshot format (generator
+				// FRESH FORECAST 2026-11-12 ~10:47 PM EST (NWS ILM gridpoint 68,59 for the farm,
+				// generated 2026-11-13T03:17:37Z; forecast through Thursday, verified this run). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
-				'TODAY... Sunny. High near 77, with temperatures falling to around 71 in the afternoon. West wind around 13 mph, with gusts as high as 18 mph. Precip chance 3%.',
-				'TONIGHT... Mostly clear, with a low around 44. Northwest wind 3 to 9 mph. Precip chance 6%.',
+				'TONIGHT... Mostly clear, with a low around 45. Northwest wind 2 to 6 mph. Precip chance 0%.',
 				'FRIDAY... Sunny, with a high near 64. West wind 2 to 9 mph. Precip chance 0%.',
 				'FRIDAY NIGHT... Mostly clear, with a low around 39. Northwest wind around 5 mph. Precip chance 0%.',
 				'SATURDAY... Sunny, with a high near 59. Northwest wind 5 to 10 mph. Precip chance 0%.',
-				'SATURDAY NIGHT... Clear, with a low around 34. Precip chance 0%.',
+				'SATURDAY NIGHT... Clear, with a low around 34. Northwest wind around 3 mph. Precip chance 0%.',
 				'SUNDAY... Sunny, with a high near 59. Precip chance 0%.',
 				'SUNDAY NIGHT... Mostly clear, with a low around 36. Precip chance 0%.',
 				'MONDAY... Sunny, with a high near 61. Precip chance 0%.',
@@ -54,6 +53,7 @@ class LocalForecast extends WeatherDisplay {
 				'TUESDAY NIGHT... Partly cloudy, with a low around 39. Precip chance 3%.',
 				'WEDNESDAY... Sunny, with a high near 67. Precip chance 4%.',
 				'WEDNESDAY NIGHT... Mostly clear, with a low around 42. Precip chance 4%.',
+				'THURSDAY... Sunny, with a high near 71. Precip chance 3%.',
 			];
 		} else {
 			this.screenTexts = conditions.map((condition) => condition.Text);
