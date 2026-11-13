@@ -3709,37 +3709,20 @@ setTimeout(() =>
                 _WeatherParameters.State = "NC";
                 _WeatherParameters.TimeZone = new Date().toLocaleTimeString("en-US", { timeZone: "America/New_York", timeZoneName: "short" }).split(" ").pop();
 
-                var _farmRequest = $.ajax({
-                    url: location.protocol + '//geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode',
-                    data: {
-                        location: _farmLon + "," + _farmLat,
-                        distance: 1000, // Find location upto 1 KM.
-                        f: 'json',
-                        featureTypes: 'postal',
-                    },
-                    jsonp: 'callback',
-                    dataType: 'jsonp'
-                });
-                _farmRequest.done(function (data)
+                // TROY-FARM P16 (2026-11-12): the P12 reverse-geocode to
+                // geocode.arcgis.com was the boot wedge -- a plain JSONP
+                // $.ajax with NO timeout and NO .fail(), and the entire
+                // downstream chain lived only inside its .done(). When the
+                // ArcGIS request hangs/times out (net::ERR_TIMED_OUT in
+                // the P15 probe), .done() never runs and nothing loads.
+                // The geocode only supplied ZipCode + Country, both known
+                // for the farm (28467 / US), so skip it entirely and run
+                // the chain directly. P15's timeouts downstream still
+                // apply to the weather.com / DWML fetches.
+                _WeatherParameters.ZipCode = "28467";
+                _WeatherParameters.Country = "US";
+
                 {
-                    console.log(data);
-
-                    if (!("error" in data))
-                    {
-                        var ZipCode = data.address.Postal;
-                        var Country = data.address.CountryCode;
-
-                        switch (ZipCode)
-                        {
-                            case "88888": // The North Pole.
-                                ZipCode = "20001";
-                                break;
-                        }
-
-                        _WeatherParameters.ZipCode = ZipCode;
-                        _WeatherParameters.Country = Country;
-                    }
-
                     GetMonthPrecipitation(_WeatherParameters);
                     GetTravelWeather(_WeatherParameters);
                     //GetAirQuality2(_WeatherParameters);
@@ -3760,7 +3743,7 @@ setTimeout(() =>
                     }, _UpdateWeatherUpdateMs);
 
                     if (_CallBack) _CallBack({ Status: "WEATHERPARAMETERS", WeatherParameters: _WeatherParameters, });
-                });
+                }
                 return;
             }
 
