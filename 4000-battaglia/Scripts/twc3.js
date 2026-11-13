@@ -438,6 +438,29 @@ var GetCurrentWeather = function(WeatherParameters)
 
             console.error("GetCurrentWeather failed: " + errorThrown);
             WeatherParameters.Progress.FourDayForecast = LoadStatuses.Failed;
+            // TROY-FARM P15 (2026-11-12): the DWML fetch can hang/fail on
+            // static hosting, and the farm PWS readings in farm-data.json
+            // are enough to render Current Conditions on their own. The
+            // stock constructor needs a DWML parser, so seed a plain
+            // conditions object (ApplyFarmConditions fills every field from
+            // the farm data) and render from the farm instead of leaving
+            // the main screen on "Loading" forever. Day/night for the seed
+            // icon comes from the local hour; the farm sky word rules.
+            var _p15h = new Date().getHours();
+            var _p15night = (_p15h < 6 || _p15h >= 18);
+            WeatherParameters.WeatherCurrentConditions = {
+                Icon: _p15night ? "https://forecast.weather.gov/images/wtf/small/nskc.png" : "https://forecast.weather.gov/images/wtf/small/skc.png",
+                StationName: "", Temperature: "", DewPoint: "", Humidity: "",
+                Pressure: "", PressureDirection: "S", WindDirection: "", WindSpeed: "",
+                WindGust: "", Visibility: "", Ceiling: "", HeatIndex: "", WindChill: "",
+                Conditions: ""
+            };
+            LoadFarmData(function ()
+            {
+                ApplyFarmConditions(WeatherParameters);
+                PopulateCurrentConditions(WeatherParameters);
+                GetRegionalStations(_WeatherParameters);
+            });
         }
     });
 };
@@ -13665,6 +13688,12 @@ $.ajaxCORS = function (e)
             dataType: DataType,
             crossDomain: CrossDomain,
             cache: Cache,
+            // TROY-FARM P15 (2026-11-12): without a timeout a hung
+            // cross-origin request waits forever and the whole boot chain
+            // wedges on "Loading" (the weather.com near lookup hangs on
+            // static hosting instead of failing). 15s then error out so
+            // the method chain / caller error handler gets its chance.
+            timeout: 15000,
             success: Success,
             error: function (xhr, error, errorThrown)
             {
