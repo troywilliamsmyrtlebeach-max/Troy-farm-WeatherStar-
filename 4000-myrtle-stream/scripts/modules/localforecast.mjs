@@ -37,15 +37,14 @@ class LocalForecast extends WeatherDisplay {
 
 		if (!conditions.length) {
 			this.screenTexts = [
-				// FRESH FORECAST 2026-11-14 ~4:17 AM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-14T09:17:13Z; forecast through Friday, verified this run). Written in the screenshot format (generator
+				// FRESH FORECAST 2026-11-14 ~06:31 AM EST (NWS ILM gridpoint 68,59 for the farm,
+				// generated 2026-11-14T11:20:55Z; forecast through Friday night, verified this run). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
-				'OVERNIGHT... Clear, with a low around 39. North wind around 5 mph. Precip chance 0%.',
-				'SATURDAY... Sunny, with a high near 60. Northwest wind 5 to 9 mph. Precip chance 0%.',
-				'SATURDAY NIGHT... Areas of frost after 3am. Clear, with a low around 34. Northwest wind around 5 mph. Precip chance 0%.',
+				'TODAY... Sunny. High near 61, with temperatures falling to around 55 in the afternoon. Northwest wind 3 to 8 mph. Precip chance 0%.',
+				'TONIGHT... Areas of frost after 3am. Clear, with a low around 34. Northwest wind around 5 mph. Precip chance 0%.',
 				'SUNDAY... Areas of frost before 8am. Sunny, with a high near 60. North wind 2 to 7 mph. Precip chance 0%.',
 				'SUNDAY NIGHT... Clear, with a low around 35. North wind 1 to 5 mph. Precip chance 0%.',
-				'MONDAY... Sunny, with a high near 60. Precip chance 0%.',
+				'MONDAY... Sunny, with a high near 60. Northeast wind 5 to 8 mph. Precip chance 0%.',
 				'MONDAY NIGHT... Partly cloudy, with a low around 36. Precip chance 0%.',
 				'TUESDAY... Sunny, with a high near 64. Precip chance 0%.',
 				'TUESDAY NIGHT... Mostly clear, with a low around 37. Precip chance 0%.',
@@ -54,6 +53,7 @@ class LocalForecast extends WeatherDisplay {
 				'THURSDAY... Sunny, with a high near 72. Precip chance 0%.',
 				'THURSDAY NIGHT... Mostly clear, with a low around 43. Precip chance 0%.',
 				'FRIDAY... Sunny, with a high near 73. Precip chance 1%.',
+				'FRIDAY NIGHT... Partly cloudy, with a low around 44. Precip chance 2%.',
 			];
 		} else {
 			this.screenTexts = conditions.map((condition) => condition.Text);
