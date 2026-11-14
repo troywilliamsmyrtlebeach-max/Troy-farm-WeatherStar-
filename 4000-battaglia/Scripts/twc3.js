@@ -199,7 +199,8 @@ var ApplyFarmConditions = function (WeatherParameters)
     // hour instead (06:00-18:00), the same rule the P15/P18 seeds use;
     // it drives both the sky word (Sunny by day, Clear at night) and
     // the day/night icon variant.
-    var _p19h = new Date().getHours();
+    // TROY-FARM P20 (2026-11-14): farm-local hour in America/New_York — new Date().getHours() is the VIEWER's zone, so a UTC browser read 06:38 as day at 1:38 AM farm time and showed Sunny at night.
+    var _p19h = parseInt(new Intl.DateTimeFormat('en-US', { hour: 'numeric', hour12: false, timeZone: 'America/New_York' }).format(new Date()), 10);
     var isDay = (_p19h >= 6 && _p19h < 18);
     var word = "Clear";
     var ct = parseInt(f.conditionText, 10);
