@@ -192,7 +192,15 @@ var ApplyFarmConditions = function (WeatherParameters)
     var dwmlIcon = (cc.Icon || "").toLowerCase();
     var slash = dwmlIcon.lastIndexOf("/");
     var fname = slash >= 0 ? dwmlIcon.substr(slash + 1) : dwmlIcon;
-    var isDay = (fname.charAt(0) !== "n");
+    // TROY-FARM P19 (2026-11-14): day/night used to come from the DWML
+    // icon filename prefix (skc vs nskc), but the NWS current-conditions
+    // icon slot can carry a day icon after dark — the 01:03 probe showed
+    // "Sunny" with a sun icon at 1 AM. Derive it from the farm-local
+    // hour instead (06:00-18:00), the same rule the P15/P18 seeds use;
+    // it drives both the sky word (Sunny by day, Clear at night) and
+    // the day/night icon variant.
+    var _p19h = new Date().getHours();
+    var isDay = (_p19h >= 6 && _p19h < 18);
     var word = "Clear";
     var ct = parseInt(f.conditionText, 10);
     if (ct === 1) word = "Fair";
@@ -3423,9 +3431,21 @@ var GetWeatherForecast = function (WeatherParameters)
     };
     var _ParseForecastText = function (text)
     {
-        WeatherParameters.WeatherForecastParser = new WeatherForecastParser(text);
-        WeatherParameters.WeatherLocalForecast = new WeatherLocalForecast(WeatherParameters.WeatherForecastParser);
-        PopulateLocalForecast(WeatherParameters);
+        // TROY-FARM P19 (2026-11-14): a throw in the parser or in
+        // PopulateLocalForecast used to escape the $.ajaxCORS success
+        // handler as an uncaught exception and leave WordedForecast at
+        // Loading forever (blocking auto-play). Fail the item instead.
+        try
+        {
+            WeatherParameters.WeatherForecastParser = new WeatherForecastParser(text);
+            WeatherParameters.WeatherLocalForecast = new WeatherLocalForecast(WeatherParameters.WeatherForecastParser);
+            PopulateLocalForecast(WeatherParameters);
+        }
+        catch (ex)
+        {
+            console.error("GetWeatherForecast parse failed: " + ex);
+            WeatherParameters.Progress.WordedForecast = LoadStatuses.Failed;
+        }
     };
     //Url += "," + (new Date().getTime()); // Prevents caching
     //Url = "https://crossorigin.me/" + Url; // Need to do this for Chrome and CORS
@@ -3732,6 +3752,18 @@ setTimeout(() =>
                     //ShowDopplerMap(_WeatherParameters);
                     ShowDopplerMap2(_WeatherParameters);
                     GetWeatherHazards3(_WeatherParameters);
+                    // TROY-FARM P19 (2026-11-14): Local Forecast never
+                    // loaded because GetWeatherForecast was reachable only
+                    // at the end of the marine/air-quality waterfall
+                    // (GetAirQuality3 -> ... -> GetMarineForecast), and
+                    // both GetMarineForecast error handlers drop the call
+                    // without ever running it — so WordedForecast stayed
+                    // at Loading forever and auto-play (which needs
+                    // GetTotalPercentage() == 100) never started. Fetch
+                    // the staged zone-forecast.txt directly, in parallel
+                    // with the other calls; the waterfall may still call
+                    // it later, and PopulateLocalForecast is idempotent.
+                    GetWeatherForecast(_WeatherParameters);
 
                     if (_UpdateWeatherCanvasInterval)
                     {
@@ -3741,6 +3773,27 @@ setTimeout(() =>
                     {
                         UpdateWeatherCanvases(_WeatherParameters);
                     }, _UpdateWeatherUpdateMs);
+
+                    // TROY-FARM P19 (2026-11-14): last-resort net. Any
+                    // progress item still at Loading 60s after boot is a
+                    // wedge this run will never clear (a hung image, a
+                    // dead upstream, a missed error path) — mark it Failed
+                    // so GetTotalPercentage() can still reach 100 and the
+                    // screens that DID load can play. Failed counts the
+                    // same as Loaded for the total; a late success still
+                    // overwrites Failed with Loaded.
+                    window.setTimeout(function ()
+                    {
+                        var _p19Names = ["CurrentConditions", "WordedForecast", "FourDayForecast", "TravelForecast", "NearbyConditions", "CurrentRegionalMap", "TomorrowsRegionalMap", "Almanac", "DopplerRadar", "Hazards"];
+                        $(_p19Names).each(function ()
+                        {
+                            if (_WeatherParameters.Progress[this] == LoadStatuses.Loading)
+                            {
+                                console.warn("P19 watchdog: " + this + " still Loading after 60s; marking Failed so auto-play can start.");
+                                _WeatherParameters.Progress[this] = LoadStatuses.Failed;
+                            }
+                        });
+                    }, 60000);
 
                     if (_CallBack) _CallBack({ Status: "WEATHERPARAMETERS", WeatherParameters: _WeatherParameters, });
                 }
@@ -6648,9 +6701,9 @@ var PopulateCurrentConditions = function (WeatherParameters)
     var DrawCurrentConditions = function ()
     {
         var BackGroundImage = new Image();
-        BackGroundImage.onload = function ()
+        var _DrawCurrentConditions = function (_p19Loaded)
         {
-            context.drawImage(BackGroundImage, 0, 0);
+            if (_p19Loaded) { context.drawImage(BackGroundImage, 0, 0); }
             DrawHorizontalGradientSingle(context, 0, 30, 500, 90, _TopColor1, _TopColor2);
             DrawTriangle(context, "rgb(28, 10, 87)", 500, 30, 450, 90, 500, 90);
             DrawHorizontalGradientSingle(context, 0, 90, 52, 399, _SideColor1, _SideColor2);
@@ -6753,6 +6806,15 @@ var PopulateCurrentConditions = function (WeatherParameters)
 
             UpdateWeatherCanvas(WeatherParameters, canvasCurrentWeather);
         };
+        // TROY-FARM P19 (2026-11-14): same hung-image gate as E6 — the
+        // photo background is hotlinked from battaglia.ddns.net (hung
+        // PENDING 119s in the P16 probe). Proceed exactly once on load,
+        // error, or an 8s timeout; draw the photo only if it loaded.
+        var _p19CurrentConditionsDone = false;
+        var _p19CurrentConditionsProceed = function (_loaded) { if (_p19CurrentConditionsDone) return; _p19CurrentConditionsDone = true; _DrawCurrentConditions(_loaded); };
+        BackGroundImage.onload = function () { _p19CurrentConditionsProceed(true); };
+        BackGroundImage.onerror = function () { _p19CurrentConditionsProceed(false); };
+        window.setTimeout(function () { _p19CurrentConditionsProceed(false); }, 8000);
         BackGroundImage.src = "https://battaglia.ddns.net/twc/images/BackGround1_1.png";
         //BackGroundImage.src = "https://battaglia.ddns.net/twc/images/BackGround1_" + _Themes.toString() + ".png";
     };
@@ -7837,9 +7899,9 @@ var PopulateLocalForecast = function (WeatherParameters)
     var context = canvas.getContext("2d", { willReadFrequently: true });
 
     var BackGroundImage = new Image();
-    BackGroundImage.onload = function ()
+    var _DrawLocalForecast = function (_p19Loaded)
     {
-        context.drawImage(BackGroundImage, 0, 0);
+        if (_p19Loaded) { context.drawImage(BackGroundImage, 0, 0); }
         DrawHorizontalGradientSingle(context, 0, 30, 500, 90, _TopColor1, _TopColor2);
         DrawTriangle(context, "rgb(28, 10, 87)", 500, 30, 450, 90, 500, 90);
         DrawHorizontalGradientSingle(context, 0, 90, 52, 399, _SideColor1, _SideColor2);
@@ -8006,6 +8068,17 @@ var PopulateLocalForecast = function (WeatherParameters)
 
         UpdateWeatherCanvas(WeatherParameters, canvasLocalForecast);
     };
+    // TROY-FARM P19 (2026-11-14): the background is hotlinked from
+    // battaglia.ddns.net, which hung PENDING 119s in the P16 probe —
+    // with only an onload, a hung/errored image leaves WordedForecast
+    // at Loading forever and auto-play never starts. Proceed exactly
+    // once on load, error, or an 8s timeout; draw the photo only if it
+    // actually loaded (same pattern as P17's DrawProgress fix).
+    var _p19LocalForecastDone = false;
+    var _p19LocalForecastProceed = function (_loaded) { if (_p19LocalForecastDone) return; _p19LocalForecastDone = true; _DrawLocalForecast(_loaded); };
+    BackGroundImage.onload = function () { _p19LocalForecastProceed(true); };
+    BackGroundImage.onerror = function () { _p19LocalForecastProceed(false); };
+    window.setTimeout(function () { _p19LocalForecastProceed(false); }, 8000);
     BackGroundImage.src = "https://battaglia.ddns.net/twc/images/BackGround1_1.png";
     //BackGroundImage.src = "https://battaglia.ddns.net/twc/images/BackGround1_" + _Themes.toString() + ".png";
 
@@ -12266,7 +12339,10 @@ var ShowDopplerMap2 = function (WeatherParameters)
 
                             //RadarContext.drawImage(contextWorker.canvas, RadarSourceX * .986, RadarSourceY * 1.04, (RadarOffsetX * 2), (RadarOffsetY * 2.33), 0, 0, 640, 367);
                             RadarContext.drawImage(contextWorker.canvas, RadarSourceX, RadarSourceY, (RadarOffsetX * 2), (RadarOffsetY * 2.33), 0, 0, 640, 367);
-                            RemoveDopplerRadarImageNoise2(RadarContext);
+                            // TROY-FARM P19: never let one bad radar frame
+                            // abort the image loop (and with it the
+                            // DopplerRadar completion below).
+                            try { RemoveDopplerRadarImageNoise2(RadarContext); } catch (ex) { console.warn("RemoveDopplerRadarImageNoise2 failed for one frame: " + ex); }
 
                         });
 
@@ -12288,11 +12364,11 @@ var ShowDopplerMap2 = function (WeatherParameters)
 
                         // Draw canvas
                         var BackGroundImage = new Image();
-                        BackGroundImage.onload = function ()
+                        var _DrawLocalRadar = function (_p19Loaded)
                         {
                             var canvas = canvasLocalRadar[0];
                             var context = canvas.getContext("2d", { willReadFrequently: true });
-                            context.drawImage(BackGroundImage, 0, 0);
+                            if (_p19Loaded) { context.drawImage(BackGroundImage, 0, 0); }
 
                             // Title
                             DrawText(context, "Arial", "bold 28pt", "#ffffff", 175, 65, "Local", 2);
@@ -12326,6 +12402,17 @@ var ShowDopplerMap2 = function (WeatherParameters)
 
                             WeatherParameters.Progress.DopplerRadar = LoadStatuses.Loaded;
                         };
+                        // TROY-FARM P19 (2026-11-14): same hung-image gate
+                        // as E6/E7 for BackGround4_1.png — without it, a
+                        // hung/errored radar background leaves DopplerRadar
+                        // at Loading forever and auto-play never starts.
+                        // Proceed exactly once on load, error, or an 8s
+                        // timeout; draw the photo only if it loaded.
+                        var _p19LocalRadarDone = false;
+                        var _p19LocalRadarProceed = function (_loaded) { if (_p19LocalRadarDone) return; _p19LocalRadarDone = true; _DrawLocalRadar(_loaded); };
+                        BackGroundImage.onload = function () { _p19LocalRadarProceed(true); };
+                        BackGroundImage.onerror = function () { _p19LocalRadarProceed(false); };
+                        window.setTimeout(function () { _p19LocalRadarProceed(false); }, 8000);
                         BackGroundImage.src = "https://battaglia.ddns.net/twc/images/BackGround4_1.png";
                     }
                 };
@@ -12552,7 +12639,31 @@ var RemoveDopplerRadarImageNoise = function (RadarContext)
 
 var RemoveDopplerRadarImageNoise2 = function (RadarContext)
 {
-    var RadarImageData = RadarContext.getImageData(0, 0, RadarContext.canvas.width, RadarContext.canvas.height);
+    // TROY-FARM P19 (2026-11-14): the radar frames come from IEM
+    // cross-origin with no CORS, so the canvas is tainted and
+    // getImageData throws SecurityError — the throw aborted the radar
+    // image loop before Progress.DopplerRadar could be set to Loaded
+    // (the single uncaught exception in the P18 probe, twc3.js:12554).
+    // Noise removal is cosmetic; skip it and let the radar completion
+    // run with the raw frame colors.
+    if (!RadarContext || !RadarContext.getImageData || !RadarContext.canvas)
+    {
+        return;
+    }
+    var RadarImageData = null;
+    try
+    {
+        RadarImageData = RadarContext.getImageData(0, 0, RadarContext.canvas.width, RadarContext.canvas.height);
+    }
+    catch (ex)
+    {
+        console.warn("RemoveDopplerRadarImageNoise2 skipped (tainted canvas): " + ex);
+        return;
+    }
+    if (!RadarImageData || !RadarImageData.data)
+    {
+        return;
+    }
 
     // examine every pixel, 
     // change any old rgb to the new-rgb
