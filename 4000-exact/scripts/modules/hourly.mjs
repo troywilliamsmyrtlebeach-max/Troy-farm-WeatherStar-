@@ -153,7 +153,8 @@ const getCurrentWeatherByHourFromTime = (data) => {
 
 // extract specific values from forecast and format as an array
 const parseForecast = (data) => {
-	if (!data) return;
+	// No forecast data (e.g. Open-Meteo rate-limited): nothing to parse.
+	if (!data || !data.forecast || !Object.keys(data.forecast).length) return;
 	const currentForecast = getCurrentWeatherByHourFromTime(data);
 
 	// Split today's date at the returned hourly index and iterate through 'todayAndTomorrow' from currentForecast to create hourly rows

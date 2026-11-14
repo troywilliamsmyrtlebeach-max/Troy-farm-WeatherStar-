@@ -29,7 +29,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=198" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=209" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -46,7 +46,7 @@
   <script type="module" src="scripts/modules/marine-forecast.mjs"></script>
   <script type="module" src="scripts/modules/aqi-forecast.mjs"></script>
   <script type="module" src="scripts/modules/hourly.mjs"></script>
-  <script type="module" src="scripts/modules/latestobservations.mjs?v=nounit1-fair"></script>
+  <script type="module" src="scripts/modules/latestobservations.mjs?v=nounit1-fair-farmrow"></script>
   <script type="module" src="scripts/modules/localforecast.mjs?v=oneperpage23"></script>
   <script type="module" src="scripts/modules/radar.mjs?v=retrocast-radar6"></script>
   <script type="module" src="scripts/modules/regionalforecast.mjs?v=calm1"></script>
@@ -427,7 +427,8 @@ try {
 			<div class="bottom" id="bottomTitle">
 				CALABASH-FARM AT BRUNSWICK
 			</div>
-		</div>
+					<div class="noaa-tag">NOAA</div>
+</div>
 		
 				
 					<div class="date-time date"></div>
@@ -465,7 +466,8 @@ try {
 	
 			<div class="title single">
 				Hourly Forecast
-			</div>
+						<div class="noaa-tag">NOAA</div>
+</div>
 			
 				
 					<div class="date-time date"></div>
@@ -502,7 +504,8 @@ try {
 	
 			<div class="title single">
 				Hourly Graph
-			</div>
+						<div class="noaa-tag">NOAA</div>
+</div>
 			
 				
 						<div class="date-time date"></div>
@@ -551,7 +554,8 @@ try {
 			<div class="bottom" id="bottomTitle">
 				For 
 			</div>
-		</div>
+					<div class="noaa-tag">NOAA</div>
+</div>
 		
 				
 					<div class="date-time date"></div>
@@ -591,7 +595,8 @@ try {
 			<div class="bottom" id="bottomTitle">
 				Conditions
 			</div>
-		</div>
+					<div class="noaa-tag">NOAA</div>
+</div>
 		
 				
 					<div class="date-time date"></div>
@@ -703,16 +708,14 @@ try {
 			<div class="bottom" id="bottomTitle">
 				Observations
 			</div>
-		</div>
+					<div class="noaa-tag">NOAA</div>
+</div>
 		
 				
 					<div class="date-time date"></div>
 					<div class="date-time time"></div>
 					
 						
-							<div class="noaa-logo">
-								<img src="images/noaa5.gif" />
-							</div>
 							
 </div>
 	<div class="main has-scroll latest-observations has-box">
@@ -751,7 +754,8 @@ try {
 			<div class="bottom" id="bottomTitle">
 				Observations
 			</div>
-		</div>
+					<div class="noaa-tag">NOAA</div>
+</div>
 		
 				
 					<div class="date-time date"></div>
@@ -785,7 +789,8 @@ try {
 	
 			<div class="title single">
 				Almanac
-			</div>
+						<div class="noaa-tag">NOAA</div>
+</div>
 			
 				
 					<div class="date-time date"></div>
@@ -840,7 +845,8 @@ try {
 			<div class="bottom" id="bottomTitle">
 				Forecast
 			</div>
-		</div>
+					<div class="noaa-tag">NOAA</div>
+</div>
 		
 				
 					<div class="date-time date"></div>
@@ -884,7 +890,8 @@ try {
 		<div class="bottom">
 			Radar
 		</div>
-	</div>
+				<div class="noaa-tag">NOAA</div>
+</div>
 	<div class="right">
 		<div class="precip">
 			<div class="precip-header">PRECIP</div>
@@ -912,7 +919,7 @@ try {
 		 <div id="map"></div>
 	</div>
 </div>
-<div class="radar-monthly-footer"><span id="radar-footer-text">CONDITIONS AT CALABASH-FARM AT BRUNSWICK</span><span class="radar-footer-speaker">🔊</span></div>
+<div class="radar-monthly-footer"><span id="radar-footer-text"><span style="color:#FAFA2C">CONDITIONS AT CALABASH-FARM AT BRUNSWICK</span></span><span class="radar-footer-speaker">🔊</span></div>
 <script>
 /* RETROCAST-FOOTER-ROTATE (Troy Oct 31 23:55, live RetroCast check):
    the live RetroCast footer band ROTATES messages — a conditions line
@@ -922,7 +929,7 @@ try {
    verified farm October total — see report). The conditions line uses
    Troy's farm label, the farm analog of the live "CONDITIONS AT
    CAROLINA SHORES" line. */
-(function(){var msgs=[{t:'CONDITIONS AT CALABASH-FARM AT BRUNSWICK',s:true},{t:'OCTOBER PRECIPITATION: 4.8 IN.',s:false}];var i=0;var el=document.getElementById('radar-footer-text');var sp=document.querySelector('#radar-html .radar-footer-speaker');if(!el)return;setInterval(function(){i=(i+1)%msgs.length;el.textContent=msgs[i].t;if(sp)sp.style.visibility=msgs[i].s?'visible':'hidden';},8000);})();
+(function(){var msgs=[{t:'<span style="color:#FAFA2C">CONDITIONS AT CALABASH-FARM AT BRUNSWICK</span>',s:true},{t:'OCTOBER PRECIPITATION: 4.8 IN.',s:false}];var i=0;var el=document.getElementById('radar-footer-text');var sp=document.querySelector('#radar-html .radar-footer-speaker');if(!el)return;setInterval(function(){i=(i+1)%msgs.length;el.innerHTML=msgs[i].t;if(sp)sp.style.visibility=msgs[i].s?'visible':'hidden';},8000);})();
 </script>
       </div>
       <div id="hazards-html" class="weather-display">
@@ -946,7 +953,8 @@ try {
 	
 			<div class="title single">
 				Marine Forecast
-			</div>
+						<div class="noaa-tag">NOAA</div>
+</div>
 			
 				
 					<div class="date-time date"></div>
@@ -1004,7 +1012,8 @@ try {
 			<div class="bottom" id="bottomTitle">
 				Today
 			</div>
-		</div>
+					<div class="noaa-tag">NOAA</div>
+</div>
 		
 				
 					<div class="date-time date"></div>
@@ -1063,7 +1072,8 @@ try {
 			<div class="bottom" id="bottomTitle">
 				Conditions
 			</div>
-		</div>
+					<div class="noaa-tag">NOAA</div>
+</div>
 		
 				
 					<div class="date-time date"></div>

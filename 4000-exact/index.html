@@ -29,7 +29,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=197" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=208" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -46,7 +46,7 @@
   <script type="module" src="scripts/modules/marine-forecast.mjs"></script>
   <script type="module" src="scripts/modules/aqi-forecast.mjs"></script>
   <script type="module" src="scripts/modules/hourly.mjs"></script>
-  <script type="module" src="scripts/modules/latestobservations.mjs?v=nounit1-fair"></script>
+  <script type="module" src="scripts/modules/latestobservations.mjs?v=nounit1-fair-farmrow"></script>
   <script type="module" src="scripts/modules/localforecast.mjs?v=oneperpage23"></script>
   <script type="module" src="scripts/modules/radar.mjs"></script>
   <script type="module" src="scripts/modules/regionalforecast.mjs?v=calm1"></script>
@@ -240,6 +240,8 @@ html.farm-tv .weather-display .scroll .fixed .text-layer{top:50%!important;trans
 #local-forecast-html .fc-label{color:#FAFA2C !important}
 #local-forecast-html .fc-period{margin-bottom:10px !important}
 #local-forecast-html .fc-period:last-child{margin-bottom:0 !important}
+/* NOAA TAG (Troy 2026-11-10: "NOAA" beside the Local Forecast word at the top). Same yellow caps, same 24pt as the title; sits in the gap between the title and the clock. */
+#local-forecast-html .noaa-tag{position:absolute;left:150px;top:12px;color:#FAFA2C !important;font-family:"Star4000";font-size:24pt;text-shadow:3px 3px 0 #000 !important}
 /* v=11 SUNSET-ORANGE EDGES (Troy 2026-11-08: the original WeatherStar 4000+ had
    sunset-orange edges around the screen — side strips + frame/body, all screens,
    all the time. Sampled from his screenshots 946_0_qa1h.jpg + 987_1_5ss8.png:
@@ -346,7 +348,8 @@ try {
 			<div class="bottom" id="bottomTitle">
 				v12.1.0 (Itl)
 			</div>
-		</div>
+					<div class="noaa-tag">NOAA</div>
+</div>
 		
 				
 					<div class="date-time date"></div>
@@ -384,7 +387,8 @@ try {
 	
 			<div class="title single">
 				Hourly Forecast
-			</div>
+						<div class="noaa-tag">NOAA</div>
+</div>
 			
 				
 					<div class="date-time date"></div>
@@ -421,7 +425,8 @@ try {
 	
 			<div class="title single">
 				Hourly Graph
-			</div>
+						<div class="noaa-tag">NOAA</div>
+</div>
 			
 				
 						<div class="date-time date"></div>
@@ -470,7 +475,8 @@ try {
 			<div class="bottom" id="bottomTitle">
 				For 
 			</div>
-		</div>
+					<div class="noaa-tag">NOAA</div>
+</div>
 		
 				
 					<div class="date-time date"></div>
@@ -510,7 +516,8 @@ try {
 			<div class="bottom" id="bottomTitle">
 				Conditions
 			</div>
-		</div>
+					<div class="noaa-tag">NOAA</div>
+</div>
 		
 				
 					<div class="date-time date"></div>
@@ -585,6 +592,7 @@ try {
 			<div class="bottom" id="bottomTitle">
 				Forecast
 			</div>
+			<div class="noaa-tag">NOAA</div>
 		</div>
 		
 				
@@ -621,16 +629,14 @@ try {
 			<div class="bottom" id="bottomTitle">
 				Observations
 			</div>
-		</div>
+					<div class="noaa-tag">NOAA</div>
+</div>
 		
 				
 					<div class="date-time date"></div>
 					<div class="date-time time"></div>
 					
 						
-							<div class="noaa-logo">
-								<img src="images/noaa5.gif" />
-							</div>
 							
 </div>
 	<div class="main has-scroll latest-observations has-box">
@@ -669,7 +675,8 @@ try {
 			<div class="bottom" id="bottomTitle">
 				Observations
 			</div>
-		</div>
+					<div class="noaa-tag">NOAA</div>
+</div>
 		
 				
 					<div class="date-time date"></div>
@@ -703,7 +710,8 @@ try {
 	
 			<div class="title single">
 				Almanac
-			</div>
+						<div class="noaa-tag">NOAA</div>
+</div>
 			
 				
 					<div class="date-time date"></div>
@@ -758,7 +766,8 @@ try {
 			<div class="bottom" id="bottomTitle">
 				Forecast
 			</div>
-		</div>
+					<div class="noaa-tag">NOAA</div>
+</div>
 		
 				
 					<div class="date-time date"></div>
@@ -802,7 +811,8 @@ try {
 		<div class="bottom">
 			Radar
 		</div>
-	</div>
+				<div class="noaa-tag">NOAA</div>
+</div>
 	<div class="right">
 		<div class="precip">
 			<div class="precip-header">PRECIP</div>
@@ -852,7 +862,8 @@ try {
 	
 			<div class="title single">
 				Marine Forecast
-			</div>
+						<div class="noaa-tag">NOAA</div>
+</div>
 			
 				
 					<div class="date-time date"></div>
@@ -910,7 +921,8 @@ try {
 			<div class="bottom" id="bottomTitle">
 				Today
 			</div>
-		</div>
+					<div class="noaa-tag">NOAA</div>
+</div>
 		
 				
 					<div class="date-time date"></div>
@@ -969,7 +981,8 @@ try {
 			<div class="bottom" id="bottomTitle">
 				Conditions
 			</div>
-		</div>
+					<div class="noaa-tag">NOAA</div>
+</div>
 		
 				
 					<div class="date-time date"></div>
