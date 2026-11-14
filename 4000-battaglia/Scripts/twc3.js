@@ -5896,8 +5896,70 @@ var ResponseDataMetarSkyCondition = function(sky_condition)
 
 var WeatherCurrentConditions = function (WeatherDwmlParser, WeatherMetarsParser)
 {
-    var CurrentObservations = WeatherDwmlParser.data_current_observations;
+    // TROY-FARM P18 (2026-11-14): the METAR fetch fails on static hosting
+    // (aviationweather.gov sends no CORS headers), so the error path in
+    // GetWeatherMetar calls this constructor with WeatherMetarsParser ===
+    // null — and the stock code dereferenced MetarData.station_id with no
+    // guard (twc3.js:5910:32), throwing before LoadFarmData/ApplyFarm-
+    // Conditions/PopulateCurrentConditions could run, so Current Conditions
+    // stayed "Loading" forever. Normalize both parsers here so the
+    // constructor can never throw on a missing parser or a partial DWML:
+    // missing fields seed safe placeholders and ApplyFarmConditions
+    // overwrites every field from farm-data.json.
+    var CurrentObservations = (WeatherDwmlParser && WeatherDwmlParser.data_current_observations) || null;
     var MetarData = (WeatherMetarsParser ? WeatherMetarsParser.data_METAR :  null);
+    if (!CurrentObservations)
+    {
+        // No DWML at all (or a null parser): seed the full shape the body
+        // below reads. Icon URL follows the P15 seed (day/night by local hour).
+        var _p18h = new Date().getHours();
+        var _p18night = (_p18h < 6 || _p18h >= 18);
+        CurrentObservations = {
+            location: { area_description: "", point: { latitude: "", longitude: "" } },
+            moreWeatherInformation: { value: "" },
+            parameters: {
+                temperature_apparent: { value: [""] },
+                temperature_dew_point: { value: [""] },
+                humidity: { value: "" },
+                weather: { weather_conditions: [ { weather_summary: "" }, { visibility: { value: "" } } ] },
+                conditions_icon: { icon_link: [ _p18night ? "https://forecast.weather.gov/images/wtf/small/nskc.png" : "https://forecast.weather.gov/images/wtf/small/skc.png" ] },
+                pressure: { value: "" },
+                direction: { value: "" },
+                wind_speed_sustained: { value: "NA" },
+                wind_speed_gust: { value: "NA" }
+            }
+        };
+    }
+    else
+    {
+        // DWML present but possibly partial: fill any missing nested
+        // structure the body below reads. Real values are never replaced.
+        CurrentObservations.location = CurrentObservations.location || { area_description: "", point: { latitude: "", longitude: "" } };
+        CurrentObservations.location.point = CurrentObservations.location.point || { latitude: "", longitude: "" };
+        CurrentObservations.moreWeatherInformation = CurrentObservations.moreWeatherInformation || { value: "" };
+        var _p18p = CurrentObservations.parameters = CurrentObservations.parameters || {};
+        _p18p.temperature_apparent = _p18p.temperature_apparent || { value: [""] };
+        if (!_p18p.temperature_apparent.value || !_p18p.temperature_apparent.value.length) _p18p.temperature_apparent.value = [""];
+        _p18p.temperature_dew_point = _p18p.temperature_dew_point || { value: [""] };
+        if (!_p18p.temperature_dew_point.value || !_p18p.temperature_dew_point.value.length) _p18p.temperature_dew_point.value = [""];
+        _p18p.humidity = _p18p.humidity || { value: "" };
+        _p18p.weather = _p18p.weather || {};
+        _p18p.weather.weather_conditions = _p18p.weather.weather_conditions || [];
+        if (!_p18p.weather.weather_conditions[0]) _p18p.weather.weather_conditions[0] = { weather_summary: "" };
+        if (!_p18p.weather.weather_conditions[1]) _p18p.weather.weather_conditions[1] = { visibility: { value: "" } };
+        _p18p.weather.weather_conditions[0].weather_summary = _p18p.weather.weather_conditions[0].weather_summary || "";
+        _p18p.weather.weather_conditions[1].visibility = _p18p.weather.weather_conditions[1].visibility || { value: "" };
+        _p18p.conditions_icon = _p18p.conditions_icon || { icon_link: [] };
+        if (!_p18p.conditions_icon.icon_link || !_p18p.conditions_icon.icon_link[0])
+        {
+            var _p18h2 = new Date().getHours();
+            _p18p.conditions_icon.icon_link = [ (_p18h2 < 6 || _p18h2 >= 18) ? "https://forecast.weather.gov/images/wtf/small/nskc.png" : "https://forecast.weather.gov/images/wtf/small/skc.png" ];
+        }
+        _p18p.pressure = _p18p.pressure || { value: "" };
+        _p18p.direction = _p18p.direction || { value: "" };
+        _p18p.wind_speed_sustained = _p18p.wind_speed_sustained || { value: "NA" };
+        _p18p.wind_speed_gust = _p18p.wind_speed_gust || { value: "NA" };
+    }
 
     if (CurrentObservations.location.area_description && CurrentObservations.location.area_description != ", ")
     {
@@ -5905,10 +5967,13 @@ var WeatherCurrentConditions = function (WeatherDwmlParser, WeatherMetarsParser)
     }
     else
     {
-        this.StationName = MetarData.station_id;
+        // TROY-FARM P18: MetarData is null when the METAR fetch fails.
+        this.StationName = (MetarData && MetarData.station_id) || "";
     }
     //this.StationId = GetStationIdFromUrl(CurrentObservations.moreWeatherInformation.value);
-    this.StationId = (MetarData.station_id || GetStationIdFromUrl(CurrentObservations.moreWeatherInformation.value));
+    // TROY-FARM P18: MetarData is null when the METAR fetch fails; the
+    // StationId must stay a string — `undefined in _StationInfo` below throws.
+    this.StationId = ((MetarData && MetarData.station_id) || GetStationIdFromUrl(CurrentObservations.moreWeatherInformation.value) || "");
     this.Latitude = CurrentObservations.location.point.latitude;
     this.Longitude = CurrentObservations.location.point.longitude;
 
