@@ -4259,7 +4259,11 @@ var Navigate = function (Offset)
             canvasCurrentWeather.scrollIntoView();
             break;
         case CanvasTypes.LatestObservations:
-            if (_WeatherParameters.Progress.NearbyConditions != LoadStatuses.Loaded)
+            // TROY-FARM P25 (item 2): the click handler lets the tap
+            // through when the LO table exists, so Navigate must too —
+            // in P24 this second gate silently swallowed the tap even
+            // when the menu row was (correctly) tapped.
+            if (!_P25LoReady())
             {
                 if (Offset) { Navigate(Offset); } return;
             }
@@ -4581,7 +4585,9 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
 
     //LatestObservations
     _PlayMsOffsets.LatestObservations_Start = _PlayMsOffsets.CurrentWeather_End;
-    if (Progress.NearbyConditions == LoadStatuses.Loaded)
+    // TROY-FARM P25 (item 2): give LO its cycle slot whenever the
+    // table exists, not only when progress says Loaded.
+    if (_P25LoReady())
     {
         _PlayMsOffsets.LatestObservations_Length = 10000;
     }
@@ -4778,7 +4784,9 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
             }
             _PlayMsOffsets.CurrentWeather_Loaded = true;
         }
-        if (Progress.NearbyConditions == LoadStatuses.Loaded && _PlayMsOffsets.LatestObservations_Loaded == false)
+        // TROY-FARM P25 (item 2): same ready check as the offsets
+        // above — a late-arriving LO table still earns its slot.
+        if (_P25LoReady() && _PlayMsOffsets.LatestObservations_Loaded == false)
         {
             //if (_PlayMs > _PlayMsOffsets.LatestObservations_End)
             //if (_PlayMs <= _PlayMsOffsets.LatestObservations_Start)
@@ -5251,7 +5259,10 @@ var NavigatePlayToggle = function ()
 
         _PlayIntervalId = window.setInterval(function ()
         {
-            if (_WeatherParameters.Progress.GetTotalPercentage() != 100)
+            // TROY-FARM P25 (item 3): the first tick can fire before
+            // Progress is constructed (one TypeError seen in P24 run
+            // 1 of 5) — guard so a missing Progress just waits.
+            if (!_WeatherParameters || !_WeatherParameters.Progress || _WeatherParameters.Progress.GetTotalPercentage() != 100)
             {
                 return;
             }
@@ -5320,7 +5331,10 @@ var canvasProgress_click = function (e)
         else if (e.offsetY >= (129 * RatioY) && e.offsetY < (158 * RatioY))
         {
             // Latest Observations
-            if (_WeatherParameters.Progress.NearbyConditions == LoadStatuses.Loaded)
+            // TROY-FARM P25 (item 2): navigate whenever the LO table
+            // exists, not only when progress says Loaded (see
+            // _P25LoReady — progress lagged the data in P24).
+            if (_P25LoReady())
             {
                 _CurrentCanvasType = CanvasTypes.LatestObservations;
                 AssignPlayMsOffsets();
@@ -10641,8 +10655,18 @@ var GetDwmlRegionalStations = function (WeatherParameters, Distance)
                     (_p24cc.Temperature == undefined);
                 var _p24LegitSkip = (StationName == WeatherParameters.WeatherCurrentConditions.StationName) ||
                     (WeatherParameters.WeatherCurrentRegionalConditions.StationNames.indexOf(StationName) != -1);
-                var _p24MetarRow = _p24BadData ? _P24MetarOnlyRow(WeatherParameters, StationId) : null;
-                if (_p24LegitSkip || (_p24BadData && !_p24MetarRow))
+                // TROY-FARM P25 (item 1a): the METAR row is computed
+                // unconditionally now. In P24 it was only built when
+                // the DWML data was bad, so a station whose DWML name
+                // matched the farm name (or a name already seen — the
+                // MapClick area_description is shared across nearby
+                // points, so the duplicate check fires on good rows in
+                // async order) was spliced even though the staged
+                // METAR holds a perfectly good row for it. A valid
+                // METAR row now always wins over the splice; splice
+                // only when there is no usable row at all.
+                var _p24MetarRow = _P24MetarOnlyRow(WeatherParameters, StationId);
+                if ((_p24LegitSkip || _p24BadData) && !_p24MetarRow)
                 {
                     //WeatherParameters.WeatherCurrentRegionalConditions.StationNames = [];
                     WeatherParameters.WeatherCurrentRegionalConditions.SkipStationIds.push(StationId);
@@ -10668,8 +10692,16 @@ var GetDwmlRegionalStations = function (WeatherParameters, Distance)
                 {
                     if (NeedToGetRegionalStations == true)
                     {
-                        WeatherParameters.WeatherCurrentRegionalConditions.StationNames = [];
-                        GetRegionalStations(WeatherParameters, Distance);
+                        // TROY-FARM P25 (item 1b): do NOT re-run
+                        // GetRegionalStations after splices. The staged
+                        // regional-metars.xml is the complete universe
+                        // of stations (6); a re-scan can only re-read
+                        // the same file, and every spliced station is
+                        // in SkipStationIds, so the re-scan can never
+                        // re-add one — an all-splice pass always ended
+                        // in the 500-mile Failed branch. Populate with
+                        // the survivors (+ farm row) instead.
+                        PopulateRegionalObservations(WeatherParameters);
                     }
                     else
                     {
@@ -10711,8 +10743,11 @@ var GetDwmlRegionalStations = function (WeatherParameters, Distance)
                 {
                     if (NeedToGetRegionalStations == true)
                     {
-                        WeatherParameters.WeatherCurrentRegionalConditions.StationNames = [];
-                        GetRegionalStations(WeatherParameters, Distance);
+                        // TROY-FARM P25 (item 1b): do NOT re-run
+                        // GetRegionalStations after splices — see the
+                        // success path above. Populate with the
+                        // survivors (+ farm row) instead.
+                        PopulateRegionalObservations(WeatherParameters);
                     }
                     else
                     {
@@ -10724,6 +10759,20 @@ var GetDwmlRegionalStations = function (WeatherParameters, Distance)
     });
 };
 
+
+var _P25LoReady = function ()
+{
+    // TROY-FARM P25 (item 2): Latest Observations is reachable when
+    // its progress is Loaded OR when PopulateRegionalObservations has
+    // built the table (SortedArray non-empty). Progress can lag the
+    // data — in P24 it flipped to Failed after the 7-row table was
+    // built, and the menu canvas can show a stale "Press Here" — so
+    // the navigation gates must not trust progress alone.
+    if (!_WeatherParameters) return false;
+    if (_WeatherParameters.Progress && _WeatherParameters.Progress.NearbyConditions == LoadStatuses.Loaded) return true;
+    var _p25rc = _WeatherParameters.WeatherCurrentRegionalConditions;
+    return !!(_p25rc && _p25rc.SortedArray && _p25rc.SortedArray.length > 0);
+};
 
 var _P23FarmRowRetryArmed = false;
 var _P23FarmSkyWord = function (f)
@@ -10846,6 +10895,17 @@ var PopulateRegionalObservations = function (WeatherParameters)
     });
 
     WeatherCurrentRegionalConditions.SortedArray = SortedArray;
+
+    // TROY-FARM P25 (item 1c): the table is built and SortedArray is
+    // non-empty — the screen has real data. Mark Loaded here. The old
+    // code set it only inside BackGroundImage.onload below, gated on a
+    // hotlinked battaglia.ddns.net image, so a slow or failed image
+    // left a complete table unreachable (menu tap ignored, cycle
+    // skipped LO). The onload assignment below stays (idempotent).
+    if (SortedArray.length > 0)
+    {
+        WeatherParameters.Progress.NearbyConditions = LoadStatuses.Loaded;
+    }
 
     // Draw canvas
     var canvas = canvasLatestObservations[0];
