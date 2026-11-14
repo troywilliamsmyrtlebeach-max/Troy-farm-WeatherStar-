@@ -761,7 +761,13 @@ var GetMonthPrecipitation = function (WeatherParameters) {
             // Conditions on "Loading" forever. Fall through to current
             // conditions anyway (the farm override supplies the readings);
             // monthly precipitation / almanac simply shows No Data.
-            WeatherParameters.Progress.Almanac = LoadStatuses.NoData;
+            // TROY-FARM P23: never clobber a locally populated Almanac
+            // back to NoData — the stock chain failing late must not
+            // re-gate the Tides screen.
+            if (!WeatherParameters.AlmanacInfo)
+            {
+                WeatherParameters.Progress.Almanac = LoadStatuses.NoData;
+            }
             GetCurrentWeather(WeatherParameters);
             ShowRegionalMap(_WeatherParameters);
         }
@@ -864,7 +870,11 @@ var GetMonthPrecipitationProcessResponse = function (WeatherParameters, json, in
 {
     if (index > json.location.airportName.length - 1)
     {
-        WeatherParameters.Progress.Almanac = LoadStatuses.NoData;
+        // TROY-FARM P23: same guard as the error path above.
+        if (!WeatherParameters.AlmanacInfo)
+        {
+            WeatherParameters.Progress.Almanac = LoadStatuses.NoData;
+        }
         GetCurrentWeather(WeatherParameters);
         ShowRegionalMap(_WeatherParameters);
         return;
@@ -899,7 +909,14 @@ var GetMonthPrecipitationProcessResponse = function (WeatherParameters, json, in
             WeatherParameters.WeatherMonthlyTotalsParser = new WeatherMonthlyTotalsParser(text);
             console.log(WeatherParameters.WeatherMonthlyTotalsParser);
 
-            WeatherParameters.WeatherMonthlyTotals = new WeatherMonthlyTotals(WeatherParameters.WeatherMonthlyTotalsParser);
+            // TROY-FARM P23: the staged monthly-precip.json value is the
+            // FARM's own month-to-date total (summed from his station);
+            // the CLI total here is the nearest airport's. Keep the farm
+            // value when one was staged.
+            if (!WeatherParameters._P23MonthlyPrecipStaged)
+            {
+                WeatherParameters.WeatherMonthlyTotals = new WeatherMonthlyTotals(WeatherParameters.WeatherMonthlyTotalsParser);
+            }
             console.log(WeatherParameters.WeatherMonthlyTotals);
 
             // Check to see if we need to also parse the Almanac information
@@ -1753,68 +1770,19 @@ var GetMarineForecast = function (WeatherParameters)
     //Url += WeatherParameters.ZipCode;
     //// mjb 08/02/19 End
 
-    var Url = "https://l-36.com/weather_marine_cg.php?lat_long2=";
-    Url += encodeURIComponent(WeatherParameters.Latitude) + "," + encodeURIComponent(WeatherParameters.Longitude);
-    // mjb 08/28/19 End
-
+        // TROY-FARM P23 (item 4): l-36.com is CORS-blocked (no ACAO header)
+    // and has no fallback, so MarineForecast never populated and the
+    // screen never appeared in 45 stepped screens. Skip it: the farm's
+    // marine zone is AMZ254 ("Coastal waters from Little River Inlet to
+    // Murrells Inlet SC out 20 NM") — the zone l-36.com itself returns
+    // FIRST for the farm coordinates (verified 2026-11-14) — and
+    // shmrn.php sends ACAO: *, so the direct fetch works on static
+    // hosting. The stock shmrn.php parser below is unchanged (it still
+    // reads the live page's font headers, which the current page keeps).
+    var MarineZoneId = "AMZ254";
+    WeatherParameters.MarineZoneId = MarineZoneId;
     WeatherParameters.MarineForecast = null;
-
-    // Load the xml file using ajax 
-    $.ajaxCORS({
-        type: "GET",
-        url: Url,
-        dataType: "html",
-        crossDomain: true,
-        cache: false,
-        success: function (html)
-        {
-            ////var $html = $(html);
-            ////$html.find("[src]").attr("src", ""); // Prevents the browser from loading any images on this page.
-
-            //////<a href="/marine-weather/AN/350.html" id="water-link">Marine Forecast</a>
-            ////var aWaterLink = $html.find("#water-link");
-
-            ////if (aWaterLink.length == 0)
-            ////{
-            ////    // Marine forecast available for this location.
-
-            ////    //PopulateAlmanacInfo(_WeatherParameters);
-            ////    //GetCurrentWeather(WeatherParameters);
-            ////    //ShowRegionalMap(_WeatherParameters);
-
-            ////    GetWeatherForecast(_WeatherParameters);
-
-            ////    return;
-            ////}
-
-            ////var href = aWaterLink.attr("href");
-            ////var MarineZoneId = href.replaceAll("/marine-weather/", "").replaceAll(".html", "").replaceAll("/", "Z");
-
-            //var index1 = text.indexOf("https://www.wunderground.com/MAR/")
-            //var href = text.substr(index1, "https://www.wunderground.com/MAR/XY/123.html".length);
-            //var MarineZoneId = href.replaceAll("https://www.wunderground.com/MAR/", "").replaceAll(".html", "").replaceAll("/", "Z");
-
-            var $html = $(html);
-            $html.find("[src]").attr("src", ""); // Prevents the browser from loading any images on this page.
-            var MarineZoneId = null;
-
-            var select = $html.find("select[name=zone1]");
-            var options = select.find("option");
-            if (options.length != 0)
-            {
-                MarineZoneId = options.val();
-            }
-
-            WeatherParameters.MarineZoneId = MarineZoneId;
-
-            if (MarineZoneId == null)
-            {
-                GetWeatherForecast(_WeatherParameters);
-                return;
-            }
-
-            var Url = "https://forecast.weather.gov/shmrn.php?mz=";
-            Url += MarineZoneId;
+    var Url = "https://forecast.weather.gov/shmrn.php?mz=" + MarineZoneId;
 
             // Load the xml file using ajax 
             $.ajaxCORS({
@@ -2177,16 +2145,17 @@ var GetMarineForecast = function (WeatherParameters)
                 },
                 error: function (xhr, error, errorThrown)
                 {
+                    // TROY-FARM P23: one retry — a transient shmrn.php
+                    // failure must not lose the whole Marine screen.
+                    if (!WeatherParameters._P23MarineRetried)
+                    {
+                        WeatherParameters._P23MarineRetried = true;
+                        window.setTimeout(function () { GetMarineForecast(WeatherParameters); }, 5000);
+                        return;
+                    }
                     console.error("GetMarineForecast failed: " + errorThrown);
                 }
             });
-
-        },
-        error: function (xhr, error, errorThrown)
-        {
-            console.error("GetMarineForecast failed: " + errorThrown);
-        }
-    });
 };
 
 var PopulateMarineForecast = function (WeatherParameters)
@@ -2987,7 +2956,12 @@ var GetTimeZone = function (WeatherParameters)
         function (errorThrown)
         {
             console.error("GetTimeZone failed: " + errorThrown);
-            WeatherParameters.Progress.Almanac = LoadStatuses.Failed;
+            // TROY-FARM P23: same guard — a late astro failure must not
+            // clobber a locally populated Almanac back to Failed.
+            if (!WeatherParameters.AlmanacInfo)
+            {
+                WeatherParameters.Progress.Almanac = LoadStatuses.Failed;
+            }
         });
 
 };
@@ -3045,7 +3019,12 @@ var GetMoonPhases = function (WeatherParameters)
         error: function (xhr, error, errorThrown)
         {
             console.error("GetMoonPhases failed: " + errorThrown);
-            WeatherParameters.Progress.Almanac = LoadStatuses.Failed;
+            // TROY-FARM P23: same guard — a late astro failure must not
+            // clobber a locally populated Almanac back to Failed.
+            if (!WeatherParameters.AlmanacInfo)
+            {
+                WeatherParameters.Progress.Almanac = LoadStatuses.Failed;
+            }
 
             //GetSunRiseSets(WeatherParameters);
             Done();
@@ -3136,7 +3115,12 @@ var GetSunRiseSets = function (WeatherParameters, Tomorrow)
         error: function (xhr, error, errorThrown)
         {
             console.error("GetSunRiseSets failed: " + errorThrown);
-            WeatherParameters.Progress.Almanac = LoadStatuses.Failed;
+            // TROY-FARM P23: same guard — a late astro failure must not
+            // clobber a locally populated Almanac back to Failed.
+            if (!WeatherParameters.AlmanacInfo)
+            {
+                WeatherParameters.Progress.Almanac = LoadStatuses.Failed;
+            }
             Done();
         }
     });
@@ -3259,13 +3243,18 @@ var GetWeatherHazards3 = function (WeatherParameters)
     var Url = "https://api.weather.gov/alerts/active?zone=" + ZoneId;
     //Url = "cors/?u=" + encodeURIComponent(Url);
 
-    // Load the alerts using ajax 
+    // Load the alerts using ajax
+    // TROY-FARM P23 (side note): cache:false makes jQuery append a
+    // "_=<timestamp>" cache-buster, and api.weather.gov rejects unknown
+    // query params with HTTP 400 — the direct alerts fetch failed on
+    // every boot (the ZFP fallback covered Hazards). cache:true drops
+    // the buster; the URL has no other params to break.
     $.ajaxCORS({
         type: "GET",
         url: Url,
         dataType: "json",
         crossDomain: true,
-        cache: false,
+        cache: true,
         success: function (json)
         {
             console.log(json);
@@ -3805,6 +3794,14 @@ setTimeout(() =>
                     // failure left Tides [] forever. The CO-OPS datagetter is
                     // CORS-enabled — fetch tides directly, in parallel.
                     GetTideInfo2(_WeatherParameters);
+                    // TROY-FARM P23 (2026-11-14): decouple the Almanac
+                    // from the dead weather.com monthly chain — compute
+                    // sun/moon locally, load staged monthly precip +
+                    // outlook, and open the Tides screen whenever tides
+                    // are populated (item 1); also arm the first-tap
+                    // audio unlock (item 6).
+                    _P23PopulateLocalAlmanac(_WeatherParameters);
+                    _P23InstallAudioUnlock();
 
                     if (_UpdateWeatherCanvasInterval)
                     {
@@ -9270,6 +9267,158 @@ var AlmanacInfo = function (MoonPhasesParser, SunRiseSetParserToday, SunRiseSetP
 
 };
 
+
+// TROY-FARM P23 (2026-11-14, item 1): full Almanac decoupling. The stock
+// Almanac chain (GetMonthPrecipitation -> weather.com astro -> GetOutlook
+// -> GetTideInfo2) is dead on static hosting, so Progress.Almanac sat at
+// NoData forever and the menu, Navigate, and the play cycle all skipped
+// the whole Almanac group even though the tide times were populated.
+// These functions populate AlmanacInfo locally — NOAA solar math for
+// sunrise/sunset, a synodic-month moon-phase calculator, staged monthly
+// precipitation and staged 30-day outlook — then call the stock
+// PopulateAlmanacInfo, which sets Progress.Almanac = Loaded at the end
+// of its image chain and unlocks every gate at once (menu "Press Here",
+// canvasProgress_click, Navigate cases, AssignPlayMsOffsets slots).
+var _P23SolarTimes = function (date)
+{
+    // NOAA solar calculator (Meeus, low precision) for the farm
+    // (33.92N, 78.57W). Returns { sunrise: "HH:MM", sunset: "HH:MM" }
+    // in farm-local time (America/New_York).
+    var lat = 33.92, lon = -78.57;
+    var rad = Math.PI / 180;
+    var noon = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12, 0, 0);
+    var julianDay = noon.getTime() / 86400000 + 2440587.5;
+    var julianCentury = (julianDay - 2451545) / 36525;
+    var geomMeanLongSun = (280.46646 + julianCentury * (36000.76983 + julianCentury * 0.0003032)) % 360;
+    var geomMeanAnomSun = 357.52911 + julianCentury * (35999.05029 - 0.0001537 * julianCentury);
+    var eccentEarthOrbit = 0.016708634 - julianCentury * (0.000042037 + 0.0000001267 * julianCentury);
+    var sunEqOfCtr = Math.sin(rad * geomMeanAnomSun) * (1.914602 - julianCentury * (0.004817 + 0.000014 * julianCentury)) + Math.sin(rad * 2 * geomMeanAnomSun) * (0.019993 - 0.000101 * julianCentury) + Math.sin(rad * 3 * geomMeanAnomSun) * 0.000289;
+    var sunTrueLong = geomMeanLongSun + sunEqOfCtr;
+    var sunAppLong = sunTrueLong - 0.00569 - 0.00478 * Math.sin(rad * (125.04 - 1934.136 * julianCentury));
+    var meanObliqEcliptic = 23 + (26 + ((21.448 - julianCentury * (46.815 + julianCentury * (0.00059 - julianCentury * 0.001813)))) / 60) / 60;
+    var obliqCorr = meanObliqEcliptic + 0.00256 * Math.cos(rad * (125.04 - 1934.136 * julianCentury));
+    var sunDeclin = Math.asin(Math.sin(rad * obliqCorr) * Math.sin(rad * sunAppLong)) / rad;
+    var varY = Math.tan(rad * (obliqCorr / 2)) * Math.tan(rad * (obliqCorr / 2));
+    var eqOfTime = 4 * (varY * Math.sin(2 * rad * geomMeanLongSun) - 2 * eccentEarthOrbit * Math.sin(rad * geomMeanAnomSun) + 4 * eccentEarthOrbit * varY * Math.sin(rad * geomMeanAnomSun) * Math.cos(2 * rad * geomMeanLongSun) - 0.5 * varY * varY * Math.sin(4 * rad * geomMeanLongSun) - 1.25 * eccentEarthOrbit * eccentEarthOrbit * Math.sin(2 * rad * geomMeanAnomSun)) / rad;
+    var haSunrise = Math.acos(Math.cos(rad * 90.833) / (Math.cos(rad * lat) * Math.cos(rad * sunDeclin)) - Math.tan(rad * lat) * Math.tan(rad * sunDeclin)) / rad;
+    var solarNoon = (720 - 4 * lon - eqOfTime) / 1440;
+    var sunriseUTC = solarNoon - haSunrise * 4 / 1440;
+    var sunsetUTC = solarNoon + haSunrise * 4 / 1440;
+    var fmt = function (frac)
+    {
+        var ms = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) + frac * 86400000;
+        return new Intl.DateTimeFormat("en-US", { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "America/New_York" }).format(new Date(ms));
+    };
+    return { sunrise: fmt(sunriseUTC), sunset: fmt(sunsetUTC) };
+};
+
+var _P23MoonPhases = function ()
+{
+    // Next 4 moon phase events from the synodic month (29.530588853 d)
+    // counted from the 2000-01-06T18:14:00Z new moon. Returned in the
+    // stock MoonPhasesParser.Phases shape ({ date: "M/D/YYYY",
+    // time: "12:00:00", phase: "New"|"First"|"Full"|"Last" }) so the
+    // stock AlmanacInfo constructor consumes it unchanged. Accurate to
+    // ~+/-0.5 day — the screen shows a date + phase name, not a time.
+    var synodic = 29.530588853;
+    var epoch = Date.UTC(2000, 0, 6, 18, 14, 0);
+    var now = Date.now();
+    var age = ((now - epoch) / 86400000) % synodic;
+    var bounds = [{ at: 0, phase: "New" }, { at: synodic * 0.25, phase: "First" }, { at: synodic * 0.5, phase: "Full" }, { at: synodic * 0.75, phase: "Last" }];
+    var out = [];
+    var cycleStart = now - age * 86400000;
+    for (var i = 0; i < 8 && out.length < 4; i++)
+    {
+        var b = bounds[i % 4];
+        var t = cycleStart + (Math.floor(i / 4) * synodic + b.at) * 86400000;
+        if (t < now - 3600000) continue; // only future events (1h grace)
+        var d = new Date(t);
+        out.push({ date: (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear(), time: "12:00:00", phase: b.phase });
+    }
+    return out;
+};
+
+var _P23FarmIsDay = function ()
+{
+    var h = parseInt(new Intl.DateTimeFormat("en-US", { hour: "numeric", hour12: false, timeZone: "America/New_York" }).format(new Date()), 10);
+    return (h >= 6 && h < 18);
+};
+
+var _P23PopulateLocalAlmanac = function (WeatherParameters)
+{
+    if (!WeatherParameters) return;
+    try
+    {
+        var _p23moon = { Phases: _P23MoonPhases() };
+        var _p23today = _P23SolarTimes(new Date());
+        var _p23tomorrow = _P23SolarTimes(new Date().addDays(1));
+        // Feed the STOCK AlmanacInfo constructor with locally computed
+        // parsers in exactly its expected shape — the object it builds
+        // is what PopulateAlmanacInfo, PopulateTideInfo, and the
+        // narration builder all read.
+        WeatherParameters.AlmanacInfo = new AlmanacInfo(_p23moon,
+            { SunRiseLocal: _p23today.sunrise, SunSetLocal: _p23today.sunset },
+            { SunRiseLocal: _p23tomorrow.sunrise, SunSetLocal: _p23tomorrow.sunset });
+        PopulateAlmanacInfo(WeatherParameters);
+    }
+    catch (ex)
+    {
+        console.error("P23 local almanac failed: " + ex);
+        WeatherParameters.AlmanacInfo = null;
+    }
+    _P23LoadStagedMonthlyPrecip(WeatherParameters);
+    _P23LoadStagedOutlook(WeatherParameters);
+};
+
+var _P23LoadStagedMonthlyPrecip = function (WeatherParameters)
+{
+    // monthly-precip.json is staged by the 15-min Channel cron:
+    // { "month": "November", "precipIn": 0.02 } — the FARM's own
+    // month-to-date total, summed from his station's daily history.
+    // Absent, stale, or unverifiable -> leave WeatherMonthlyTotals
+    // undefined and keep the P22 F1 blank behavior (never invent it).
+    $.ajaxCORS({
+        type: "GET",
+        url: "monthly-precip.json",
+        dataType: "json",
+        crossDomain: true,
+        cache: false,
+        success: function (json)
+        {
+            if (!json || typeof json.precipIn !== "number" || isNaN(json.precipIn)) return;
+            var _p23month = new Date().getMonthName();
+            if (json.month && json.month !== _p23month) return;
+            WeatherParameters.WeatherMonthlyTotals = { MonthName: _p23month, PrecipitationTotal: json.precipIn.toFixed(2), PrecipitationTotalC: ConvertInchesToCentimeters(json.precipIn.toFixed(2)) };
+            WeatherParameters._P23MonthlyPrecipStaged = true;
+        },
+        error: function () { /* keep the F1 blank behavior */ }
+    });
+};
+
+var _P23LoadStagedOutlook = function (WeatherParameters)
+{
+    // outlook.json is staged by the 15-min Channel cron from the CPC
+    // 30-day GIFs (farm pixel 560,468; see the P23 report for the
+    // recipe): { "Temperature": "A"|"B"|"N", "Precipitation": "A"|"B"|"N",
+    // "From": "Nov", "To": "Dec" }. Absent/stale -> Outlook stays null
+    // and the screen is skipped, exactly as today.
+    $.ajaxCORS({
+        type: "GET",
+        url: "outlook.json",
+        dataType: "json",
+        crossDomain: true,
+        cache: false,
+        success: function (json)
+        {
+            if (!json || !json.Temperature || !json.Precipitation || !json.From || !json.To) return;
+            WeatherParameters.Outlook = { Temperature: json.Temperature, Precipitation: json.Precipitation, From: json.From, To: json.To };
+            PopulateOutlook(WeatherParameters);
+        },
+        error: function () { /* Outlook screen stays skipped, as today */ }
+    });
+};
+
+
 var PopulateAlmanacInfo = function (WeatherParameters)
 {
     if (WeatherParameters == null || (_DontLoadGifs == true && WeatherParameters.Progress.Almanac != LoadStatuses.Loaded))
@@ -9278,6 +9427,16 @@ var PopulateAlmanacInfo = function (WeatherParameters)
     }
 
     var AlmanacInfo = WeatherParameters.AlmanacInfo;
+    // TROY-FARM P23 (item 2): TideStationDone calls this before the
+    // astro chain has run (and the weather.com chain is dead on static
+    // hosting), so AlmanacInfo is undefined and the .TodaySunRise read
+    // below threw on every tide load (twc3.js:9282). Bail out quietly —
+    // the P23 local populate fills AlmanacInfo at boot, and the tides
+    // draw does not need it.
+    if (!AlmanacInfo)
+    {
+        return;
+    }
     divSunrise.html("Sunrise:");
 
     divSunriseTodayName.html(AlmanacInfo.TodaySunRise.getDayName());
@@ -9309,8 +9468,15 @@ var PopulateAlmanacInfo = function (WeatherParameters)
         if (MoonImageCounter == 4)
         {
             var BackGroundImage = new Image();
-            BackGroundImage.onload = function ()
+            // TROY-FARM P23: proceed once on load, error, or an 8s
+            // timeout — a hung/missing background must not wedge
+            // Almanac at Loading (same pattern as P17/P19). Drawing a
+            // failed image is a no-op, so the text still renders.
+            var _p23AlmanacDrawn = false;
+            var _p23DrawAlmanac = function ()
             {
+                if (_p23AlmanacDrawn) return;
+                _p23AlmanacDrawn = true;
                 context.drawImage(BackGroundImage, 0, 0);
                 DrawHorizontalGradientSingle(context, 0, 30, 500, 90, _TopColor1, _TopColor2);
                 DrawTriangle(context, "rgb(28, 10, 87)", 500, 30, 450, 90, 500, 90);
@@ -9403,6 +9569,9 @@ var PopulateAlmanacInfo = function (WeatherParameters)
 
                 UpdateWeatherCanvas(WeatherParameters, canvasAlmanac);
             };
+            BackGroundImage.onload = _p23DrawAlmanac;
+            BackGroundImage.onerror = _p23DrawAlmanac;
+            window.setTimeout(_p23DrawAlmanac, 8000);
             BackGroundImage.src = "https://battaglia.ddns.net/twc/images/BackGround3_1.png";
             //BackGroundImage.src = "https://battaglia.ddns.net/twc/images/BackGround3_" + _Themes.toString() + ".png";
         }
@@ -9410,21 +9579,25 @@ var PopulateAlmanacInfo = function (WeatherParameters)
 
     var FullMoonImage = new Image();
     FullMoonImage.onload = MoonImageLoaded;
+    FullMoonImage.onerror = MoonImageLoaded; // TROY-FARM P23: a failed moon image must not wedge the counter at <4.
     //FullMoonImage.src = "https://battaglia.ddns.net/twc/images/Moon1.gif";
     FullMoonImage.src = "https://battaglia.ddns.net/twc/images/2/Full-Moon.gif";
 
     var LastMoonImage = new Image();
     LastMoonImage.onload = MoonImageLoaded;
+    LastMoonImage.onerror = MoonImageLoaded; // TROY-FARM P23: a failed moon image must not wedge the counter at <4.
     //LastMoonImage.src = "https://battaglia.ddns.net/twc/images/Moon2.gif";
     LastMoonImage.src = "https://battaglia.ddns.net/twc/images/2/Last-Quarter.gif";
 
     var NewMoonImage = new Image();
     NewMoonImage.onload = MoonImageLoaded;
+    NewMoonImage.onerror = MoonImageLoaded; // TROY-FARM P23: a failed moon image must not wedge the counter at <4.
     //NewMoonImage.src = "https://battaglia.ddns.net/twc/images/Moon3.gif";
     NewMoonImage.src = "https://battaglia.ddns.net/twc/images/2/New-Moon.gif";
 
     var FirstMoonImage = new Image();
     FirstMoonImage.onload = MoonImageLoaded;
+    FirstMoonImage.onerror = MoonImageLoaded; // TROY-FARM P23: a failed moon image must not wedge the counter at <4.
     //FirstMoonImage.src = "https://battaglia.ddns.net/twc/images/Moon4.gif";
     FirstMoonImage.src = "https://battaglia.ddns.net/twc/images/2/First-Quarter.gif";
 
@@ -10334,6 +10507,12 @@ var WeatherCurrentRegionalConditions = function ()
     this.SkipStationIds.push("KLVN"); // "Mnpls"
     this.SkipStationIds.push("KFCM"); // "Mnpls"
     this.SkipStationIds.push("KC99"); // "Boulder Municipal Airport, CO""
+    // TROY-FARM P23 (item 7): Elizabethtown (KEYF, Curtis L. Brown Jr.
+    // Field) must never render on Latest Observations — Troy asked for
+    // it off the list. It is not in the staged file; this skip is the
+    // belt-and-braces so a future staged file carrying it cannot bring
+    // it back.
+    this.SkipStationIds.push("KEYF"); // "Elizabethtown"
 
 };
 //var WeatherCurrentRegionalCondition = function (MetarData)
@@ -10467,6 +10646,53 @@ var GetDwmlRegionalStations = function (WeatherParameters, Distance)
     });
 };
 
+
+var _P23FarmRowRetryArmed = false;
+var _P23FarmSkyWord = function (f)
+{
+    // Same conditionText map as ApplyFarmConditions, with the night word
+    // for code 0 (farm-local hour, America/New_York).
+    var code = f.conditionText;
+    if (code == 1) return "Fair";
+    if (code == 2) return "Partly Cloudy";
+    if (code == 3) return "Mostly Cloudy";
+    var hour = 12;
+    try { hour = parseInt(new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", hour: "numeric", hour12: false }).format(new Date()), 10); } catch (e) { }
+    return (hour >= 6 && hour < 18) ? "Sunny" : "Clear";
+};
+var _P23BuildFarmRow = function ()
+{
+    // TROY-FARM P23 (item 7): the Latest Observations farm row, built
+    // from the live farm-data.json (the same source Current Conditions
+    // uses) — NOT from a METAR. Whole numbers per Troy's display rules;
+    // wind uses the below-16 rule (higher of sustained/gust, no gust
+    // wording) — the Channel cron already stages farm-data.json that
+    // way (windGust 0.0), so windSpeed alone is the display wind.
+    // Plain object: the draw loop reads only StationName, Temperature,
+    // TemperatureC, ShortConditions, WindDirection, WindSpeed and
+    // WindSpeedC. The label is "CALABASH-FARM" (13 chars) — the full
+    // 28-char name would overwrite the temperature column
+    // (substr(0, 14)); the full name is on Current Conditions.
+    if (!_FarmDataReady || !_FarmData) return null;
+    var f = _FarmData;
+    var sky = _P23FarmSkyWord(f);
+    var shortSky = sky;
+    if (shortSky == "Partly Cloudy") shortSky = "P Cloudy";
+    if (shortSky == "Mostly Cloudy") shortSky = "M Cloudy";
+    var wmph = kmhToMph(f.windSpeed);
+    return {
+        StationId: "KNCCAROL120",
+        StationName: "CALABASH-FARM",
+        Temperature: Math.round(f.temperature * 9 / 5 + 32),
+        TemperatureC: Math.round(f.temperature),
+        ShortConditions: shortSky,
+        Conditions: sky,
+        WindDirection: (wmph > 0 && f.windDirection) ? f.windDirection : "",
+        WindSpeed: (wmph > 0) ? wmph : 0,
+        WindSpeedC: Math.round(f.windSpeed || 0)
+    };
+};
+
 var PopulateRegionalObservations = function (WeatherParameters)
 {
     if (WeatherParameters == null || (_DontLoadGifs == true && WeatherParameters.Progress.NearbyConditions != LoadStatuses.Loaded))
@@ -10502,6 +10728,31 @@ var PopulateRegionalObservations = function (WeatherParameters)
         var bName = b.StationName.toLowerCase();
         return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
     });
+
+    // TROY-FARM P23 (item 7): the farm row comes FIRST — Troy's own
+    // station (KNCCAROL120) at the top of Latest Observations, ahead of
+    // Conway-Horry and the rest. The alphabetical sort above already
+    // yields his order for the METAR rows (Conway-Horry Cty < Lumberton
+    // < Myrtle Beach < Southport < Whiteville < Wilmington), so the farm
+    // row is simply unshifted ahead of them. The farm row does not count
+    // toward _MaximumRegionalStations (KNCCAROL120 is skipped during
+    // collection), so the staged file carries 6 METAR stations and the
+    // screen shows 7 rows.
+    var _p23FarmRow = _P23BuildFarmRow();
+    if (_p23FarmRow)
+    {
+        SortedArray.unshift(_p23FarmRow);
+    }
+    else if (!_P23FarmRowRetryArmed)
+    {
+        // Farm data was not ready when the regional rows populated —
+        // retry once when it arrives (guarded; never loops).
+        _P23FarmRowRetryArmed = true;
+        LoadFarmData(function ()
+        {
+            PopulateRegionalObservations(WeatherParameters);
+        });
+    }
 
     $(SortedArray).each(function ()
     {
@@ -10600,6 +10851,54 @@ var PopulateRegionalObservations = function (WeatherParameters)
     BackGroundImage.src = "https://battaglia.ddns.net/twc/images/BackGround1_1.png";
     //BackGroundImage.src = "https://battaglia.ddns.net/twc/images/BackGround1_" + _Themes.toString() + ".png";
 
+};
+
+
+var _P23MapMetarsXml = null;        // parsed staged regional-map-metars.xml (once per boot)
+var _P23MapMetarsState = "unloaded"; // unloaded | loading | ready | failed
+var _P23MapMetarsWaiters = [];
+var _P23GetStagedMapMetar = function (StationId, onFound, onMiss)
+{
+    // TROY-FARM P23 (item 3): regional-map METARs from the staged file.
+    // aviationweather.gov sends no CORS headers, so the per-city live
+    // fetch below always fails on static hosting and the map draws with
+    // zero observations. The 15-min Channel cron stages
+    // regional-map-metars.xml (one bbox fetch around the map extent,
+    // minLat 31.8004, minLon -84.3151, maxLat 36.0396, maxLon -73.8249);
+    // if it holds this station, run the caller's success path with the
+    // staged document. Otherwise fall through to the live fetch.
+    var _p23check = function ()
+    {
+        if (_P23MapMetarsState !== "ready" || !_P23MapMetarsXml) { onMiss(); return; }
+        var $x = $(_P23MapMetarsXml);
+        if ($x.find("response").find("data").find("METAR").find("station_id:contains(" + StationId + ")").length > 0) { onFound(_P23MapMetarsXml); }
+        else { onMiss(); }
+    };
+    if (_P23MapMetarsState === "ready" || _P23MapMetarsState === "failed") { _p23check(); return; }
+    _P23MapMetarsWaiters.push(_p23check);
+    if (_P23MapMetarsState === "loading") return;
+    _P23MapMetarsState = "loading";
+    $.ajaxCORS({
+        type: "GET",
+        url: "regional-map-metars.xml",
+        dataType: "xml",
+        crossDomain: true,
+        cache: false,
+        success: function (xml)
+        {
+            _P23MapMetarsXml = xml;
+            _P23MapMetarsState = "ready";
+            var w = _P23MapMetarsWaiters; _P23MapMetarsWaiters = [];
+            $(w).each(function () { this(); });
+        },
+        error: function ()
+        {
+            _P23MapMetarsXml = null;
+            _P23MapMetarsState = "failed";
+            var w = _P23MapMetarsWaiters; _P23MapMetarsWaiters = [];
+            $(w).each(function () { this(); });
+        }
+    });
 };
 
 var ShowRegionalMap = function (WeatherParameters, TomorrowForecast1, TomorrowForecast2)
@@ -11358,14 +11657,13 @@ var ShowRegionalMap = function (WeatherParameters, TomorrowForecast1, TomorrowFo
                     Url += "&ids=" + StationId;
 
                     // Load the xml file using ajax 
-                    $.ajaxCORS({
-                        type: "GET",
-                        url: Url,
-                        dataType: "xml",
-                        crossDomain: true,
-                        cache: false,
-                        success: function (xml)
-                        {
+                                        // TROY-FARM P23 (item 3): staged regional-map METARs first —
+                    // aviationweather.gov sends no CORS headers, so the live fetch
+                    // below always fails on static hosting. If the staged
+                    // regional-map-metars.xml holds this station, run the same
+                    // success path with the staged document.
+                    var _p23MetarDone = function (xml)
+                    {
                             var $xml = $(xml);
                             console.log(xml);
                             //console.log($xml);
@@ -11438,25 +11736,39 @@ var ShowRegionalMap = function (WeatherParameters, TomorrowForecast1, TomorrowFo
                                 PopulateRegionalMap();
                             }
 
-                        },
-                        error: function (xhr, error, errorThrown)
+                                            };
+                    _P23GetStagedMapMetar(StationId,
+                        function (xml) { _p23MetarDone(xml); },
+                        function ()
                         {
-                            console.error("GetRegionalMapCity METARS failed: " + errorThrown);
-
-                            for (var RegionalCityIndex = 0; RegionalCityIndex < RegionalCities.length; RegionalCityIndex++)
+    $.ajaxCORS({
+                            type: "GET",
+                            url: Url,
+                            dataType: "xml",
+                            crossDomain: true,
+                            cache: false,
+                            success: _p23MetarDone,
+                            error: function (xhr, error, errorThrown)
                             {
-                                if (RegionalCity.Latitude == RegionalCities[RegionalCityIndex].Latitude &&
-                                    RegionalCity.Longitude == RegionalCities[RegionalCityIndex].Longitude)
-                                {
-                                    RegionalCities.splice(RegionalCityIndex, 1);
-                                    Total--;
-                                }
-                            }
+                                console.error("GetRegionalMapCity METARS failed: " + errorThrown);
 
-                            RegionalMapOnLoad();
-                            return;
+                                for (var RegionalCityIndex = 0; RegionalCityIndex < RegionalCities.length; RegionalCityIndex++)
+                                {
+                                    if (RegionalCity.Latitude == RegionalCities[RegionalCityIndex].Latitude &&
+                                        RegionalCity.Longitude == RegionalCities[RegionalCityIndex].Longitude)
+                                    {
+                                        RegionalCities.splice(RegionalCityIndex, 1);
+                                        Total--;
+                                    }
+                                }
+
+                                RegionalMapOnLoad();
+                                return;
+                            }
                         }
-                    });
+                            );
+                        });
+
 
                 },
                 error: function (xhr, error, errorThrown)
@@ -12487,6 +12799,17 @@ var ShowDopplerMap2 = function (WeatherParameters)
                         BackGroundImage.src = "https://battaglia.ddns.net/twc/images/BackGround4_1.png";
                     }
                 };
+                // TROY-FARM P23 (item 5): same CORS treatment as the base
+                // map — the IEM frames send ACAO: *, so the pixel remap
+                // (black -> transparent) can run and the map shows
+                // through. Retry once without CORS if the CORS load fails.
+                RadarImage.crossOrigin = "anonymous";
+                RadarImage.onerror = function ()
+                {
+                    RadarImage.onerror = null;
+                    RadarImage.removeAttribute("crossorigin");
+                    RadarImage.src = Url;
+                };
                 RadarImage.src = Url;
                 RadarImages.push(RadarImage);
 
@@ -12506,6 +12829,19 @@ var ShowDopplerMap2 = function (WeatherParameters)
 
     };
 
+    // TROY-FARM P23 (item 5): load the base map with CORS so the radar
+    // merge can read its pixels (getImageData). Without this the map
+    // canvas is tainted, the P22 fallback paints the black frame
+    // background over it, and the map renders black. Both hosts send
+    // ACAO: * (verified 2026-11-14). If the CORS load ever fails, retry
+    // once as a plain image (degrades to the old black map, not no radar).
+    img.crossOrigin = "anonymous";
+    img.onerror = function ()
+    {
+        img.onerror = null;
+        img.removeAttribute("crossorigin");
+        img.src = img.src + ((img.src.indexOf("?") == -1) ? "?" : "&") + "_p23retry=1";
+    };
     if (WeatherParameters.State == "HI")
     {
         img.src = "https://battaglia.ddns.net/twc/images/HawaiiRadarMap2.png";
@@ -13723,8 +14059,24 @@ var DrawCurrentConditions = function (WeatherParameters, context)
     switch(_UpdateWeatherCurrentConditionType)
     {
         case CurrentConditionTypes.Title:
-            // mjb 06/01/19 text = "Conditions at " + WeatherCurrentConditions.StationName;
-            text = "Conditions at " + WeatherCurrentConditions.StationName.substr(0, 20); // mjb 06/01/19
+            // TROY-FARM P23 (item 8): the full label — Troy's exact
+            // words are "Conditions at CALABASH-FARM AT BRUNSWICK
+            // instead of cutting the last part". The old substr(0, 20)
+            // cut it to "CALABASH-FARM AT BRUN". Use the full name,
+            // start at x=5, and shrink this frame's font (24pt down to
+            // 12pt) until the whole label fits the 640px canvas.
+            // (x/size are re-initialised at the top of every
+            // DrawCurrentConditions call, so this touches the Title
+            // frame only; the other frames keep x=70 / 24pt.)
+            text = "Conditions at " + WeatherCurrentConditions.StationName;
+            x = 5;
+            size = "24pt";
+            context.font = size + " '" + font + "'";
+            while (context.measureText(text).width > 630 && parseInt(size, 10) > 12)
+            {
+                size = (parseInt(size, 10) - 2) + "pt";
+                context.font = size + " '" + font + "'";
+            }
             break;
         case CurrentConditionTypes.Conditions:
             text = WeatherCurrentConditions.Conditions;
@@ -14124,6 +14476,52 @@ var RefreshSegments = function ()
     window.setTimeout(function () { _RefreshGifs = false; }, 200);
 };
 
+
+var _P23AudioUnlockInstalled = false;
+var _P23AudioUnlock = function ()
+{
+    // TROY-FARM P23 (item 6): the first tap INSIDE the emulator gives
+    // this frame sticky user activation, which is what an AudioContext
+    // needs to run. (A tap on the parent page's volume button cannot
+    // activate this frame's context — activation is per-document — and
+    // a parent-document pointerdown handler must NOT flip
+    // _IsAudioPlaying: it would fight the volume button's own toggle.)
+    // If a context exists and is suspended, resume it. If no track has
+    // loaded yet this visit, start the next song inside the gesture so
+    // the context is born RUNNING — this also repairs a persisted mute
+    // left by the pre-fix loop (a suspended context used to report
+    // "not playing", and the parent stored TwcAudioPlay=false). Once a
+    // track has loaded, display taps only resume — they never flip
+    // _IsAudioPlaying, so the Mute button stays the mute control.
+    if (_AudioContext)
+    {
+        if (_AudioContext.state === "suspended")
+        {
+            _AudioContext.resume();
+        }
+    }
+    else if (_AudioDuration == 0)
+    {
+        if (!_IsAudioPlaying)
+        {
+            _IsAudioPlaying = true;
+            _CallBack({ Status: "ISAUDIOPLAYING", Value: true });
+        }
+        LoadAudio(GetNextMusicUrl());
+    }
+};
+var _P23InstallAudioUnlock = function ()
+{
+    if (_P23AudioUnlockInstalled) return;
+    _P23AudioUnlockInstalled = true;
+    var _p23doc = (typeof document !== "undefined") ? document : null;
+    if (_p23doc)
+    {
+        _p23doc.addEventListener("pointerdown", _P23AudioUnlock, false);
+        _p23doc.addEventListener("touchstart", _P23AudioUnlock, false);
+    }
+};
+
 var AudioPlayToggle = function ()
 {
     //var audio = $("#audMusic")[0];
@@ -14196,6 +14594,13 @@ var audMusic_OnError = function ()
 var RefreshStateOfMusicAudio = function ()
 {
     var IsAudioPlaying = _IsAudioPlaying;
+
+    // TROY-FARM P23 (item 6): a SUSPENDED context is "not yet started",
+    // not "muted" — reporting false here makes the parent persist
+    // TwcAudioPlay=false, so every later visit starts muted even after
+    // a tap. Return early while suspended; AudioPlayToggle reports an
+    // explicit off when the user taps Mute.
+    if (window.AudioContext && _AudioContext && _AudioContext.state === "suspended") return;
 
     if (window.AudioContext)
     {
