@@ -1147,6 +1147,12 @@ var GetTideInfo2 = function (WeatherParameters) {
     var MaxStationCount = 2;
     var StationCount = 0;
     var TideInfoCount = 0;
+    // TROY-FARM P22 (2026-11-14): called directly from the P12 farm branch
+    // now (it used to be reachable only via the weather.com astro chain),
+    // so run at most once per boot.
+    if (WeatherParameters._TideInfo2Started) { return; }
+    WeatherParameters._TideInfo2Started = true;
+
     var _TideChainAdvanced = false;
 
     WeatherParameters.WeatherTides = null;
@@ -1300,7 +1306,9 @@ var PopulateTideInfo = function (WeatherParameters)
         DrawTitleText(context, "Almanac", "Tides");
 
         var Sunrise = "";
-        if (isNaN(AlmanacInfo.TodaySunRise) == true)
+        // TROY-FARM P22 (2026-11-14): AlmanacInfo is null when the astro
+        // fetch fails; treat that like the stock NaN-times case ("None").
+        if (!AlmanacInfo || isNaN(AlmanacInfo.TodaySunRise) == true)
         {
             Sunrise = "None";
         }
@@ -1313,7 +1321,8 @@ var PopulateTideInfo = function (WeatherParameters)
         DrawText(context, "Star4000", "24pt", "#FFFFFF", 115, 375, "Sunrise " + Sunrise, 2);
 
         var Sunset = "";
-        if (isNaN(AlmanacInfo.TodaySunSet) == true)
+        // TROY-FARM P22 (2026-11-14): same null guard as sunrise above.
+        if (!AlmanacInfo || isNaN(AlmanacInfo.TodaySunSet) == true)
         {
             Sunset = "None";
         }
@@ -3320,6 +3329,31 @@ var GetWeatherHazards3 = function (WeatherParameters)
         error: function (xhr, error, errorThrown)
         {
             console.error("GetWeatherHazards3 failed: " + errorThrown);
+            // TROY-FARM P22 (2026-11-14): the alerts API answers 200 from
+            // the browser (in-page fetch returned the Freeze Warning), so
+            // a boot-minute failure is transient (shared-egress
+            // rate-limit/timeout). Retry once; on a second failure fall
+            // back to the headline already parsed from the staged
+            // zone-forecast.txt so the warning still shows.
+            WeatherParameters._HazardsRetries = (WeatherParameters._HazardsRetries || 0) + 1;
+            if (WeatherParameters._HazardsRetries <= 1)
+            {
+                window.setTimeout(function () { GetWeatherHazards3(WeatherParameters); }, 10000);
+                return;
+            }
+            var _p22alerts = (WeatherParameters.WeatherLocalForecast && WeatherParameters.WeatherLocalForecast.Alerts) || "";
+            if (_p22alerts)
+            {
+                WeatherParameters.WeatherHazardConditions.Headline = _p22alerts;
+                WeatherParameters.WeatherHazardConditions.Hazards = [_p22alerts];
+                PopulateHazardConditions(WeatherParameters);
+                WeatherParameters.Progress.Hazards = LoadStatuses.Loaded;
+                if (WeatherParameters.Progress.WordedForecast == LoadStatuses.Loaded)
+                {
+                    PopulateLocalForecast(WeatherParameters);
+                }
+                return;
+            }
             WeatherParameters.Progress.Hazards = LoadStatuses.Failed;
         }
     });
@@ -3765,6 +3799,12 @@ setTimeout(() =>
                     // with the other calls; the waterfall may still call
                     // it later, and PopulateLocalForecast is idempotent.
                     GetWeatherForecast(_WeatherParameters);
+                    // TROY-FARM P22 (2026-11-14): tides were reachable only
+                    // through the weather.com astro chain (GetMonthPrecipitation
+                    // -> astro -> GetOutlook -> GetTideInfo2), so a weather.com
+                    // failure left Tides [] forever. The CO-OPS datagetter is
+                    // CORS-enabled — fetch tides directly, in parallel.
+                    GetTideInfo2(_WeatherParameters);
 
                     if (_UpdateWeatherCanvasInterval)
                     {
@@ -10247,6 +10287,18 @@ var GetRegionalStations = function (WeatherParameters, Distance)
 
                 if (Distance >= 500)
                 {
+                    // TROY-FARM P22 (2026-11-14): the staged
+                    // regional-metars.xml holds 5 stations but
+                    // _MaximumRegionalStations is 7, so the stock code
+                    // recursed to 500 miles and failed Latest Observations
+                    // outright. Use the stations found (better than Failed);
+                    // fail only when the file yielded nothing at all. (The
+                    // primary fix is the cron recipe fetching >=7 stations.)
+                    if (WeatherParameters.WeatherCurrentRegionalConditions.StationIds.length > 0)
+                    {
+                        GetDwmlRegionalStations(WeatherParameters, Distance);
+                        return;
+                    }
                     console.error("GetRegionalStations unable to find weather upto 500 miles");
                     WeatherParameters.Progress.NearbyConditions = LoadStatuses.Failed;
                     return;
@@ -12792,8 +12844,20 @@ var RemoveDopplerRadarImageNoise2 = function (RadarContext)
 
 var MergeDopplerRadarImage = function (MapContext, RadarContext)
 {
-    var MapImageData = MapContext.getImageData(0, 0, MapContext.canvas.width, MapContext.canvas.height);
-    var RadarImageData = RadarContext.getImageData(0, 0, RadarContext.canvas.width, RadarContext.canvas.height);
+    // TROY-FARM P22 (2026-11-14): the map/radar canvases are tainted by
+    // cross-origin images loaded without CORS, so getImageData throws
+    // SecurityError at all three call sites (12044, 12382, 12502) and the
+    // radar never reaches Loaded. Guard once here; on taint, draw the
+    // radar frame without the pixel remap and return.
+    var MapImageData;
+    var RadarImageData;
+    try {
+        MapImageData = MapContext.getImageData(0, 0, MapContext.canvas.width, MapContext.canvas.height);
+        RadarImageData = RadarContext.getImageData(0, 0, RadarContext.canvas.width, RadarContext.canvas.height);
+    } catch (ex) {
+        MapContext.drawImage(RadarContext.canvas, 0, 0);
+        return;
+    }
 
     // examine every pixel, 
     // change any old rgb to the new-rgb
@@ -12881,9 +12945,19 @@ var Progress = function (e)
 
         if (Progress == 100)
         {
-            gifProgress.pause();
-            window.clearInterval(_ProgressInterval);
-            if (_CallBack) _CallBack({ Status: "LOADED", LastUpdate: new Date(), });
+            // TROY-FARM P22 (2026-11-14): the old code cleared the interval
+            // BEFORE checking _CallBack, so a tick that reached 100 while
+            // _CallBack was unset lost the LOADED fire forever and the
+            // footer stayed "Last Update: (None)" (seen live at total=100).
+            // Only pause/clear once the callback has actually been
+            // delivered; otherwise keep ticking so a late SetCallBack
+            // still gets the fire.
+            if (_CallBack)
+            {
+                gifProgress.pause();
+                window.clearInterval(_ProgressInterval);
+                _CallBack({ Status: "LOADED", LastUpdate: new Date(), });
+            }
         }
 
     }, 250);
@@ -13605,7 +13679,11 @@ var DrawCurrentConditions = function (WeatherParameters, context)
             Visibility = WeatherCurrentConditions.Visibility;
             Ceiling = WeatherCurrentConditions.Ceiling;
             CeilingUnit = " ft.";
-            PrecipitationTotal = WeatherMonthlyTotals.PrecipitationTotal;
+            // TROY-FARM P22 (2026-11-14): WeatherMonthlyTotals is undefined
+            // whenever the weather.com monthly chain fails; the unguarded
+            // read threw on every draw after total==100 and the CC screen
+            // (and the P21 moon repaint downstream of it) never ran.
+            PrecipitationTotal = (WeatherMonthlyTotals ? WeatherMonthlyTotals.PrecipitationTotal : "");
             PrecipitationTotalUnit = " in";
             break;
 
@@ -13626,7 +13704,8 @@ var DrawCurrentConditions = function (WeatherParameters, context)
             Visibility = WeatherCurrentConditions.VisibilityC;
             Ceiling = WeatherCurrentConditions.CeilingC;
             CeilingUnit = " m.";
-            PrecipitationTotal = WeatherMonthlyTotals.PrecipitationTotalC;
+            // TROY-FARM P22 (2026-11-14): same guard as the English read above.
+            PrecipitationTotal = (WeatherMonthlyTotals ? WeatherMonthlyTotals.PrecipitationTotalC : "");
             PrecipitationTotalUnit = " cm";
             break;
     }
