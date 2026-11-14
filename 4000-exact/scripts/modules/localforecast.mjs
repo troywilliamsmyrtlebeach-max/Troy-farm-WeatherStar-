@@ -38,15 +38,14 @@ class LocalForecast extends WeatherDisplay {
 
 		if (!conditions.length) {
 			this.screenTexts = [
-				// FRESH FORECAST 2026-11-14 ~5:32 PM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-14T22:32:38Z; forecast through Friday night, verified this run). Written in the screenshot format (generator
+				// FRESH FORECAST 2026-11-14 ~6:17 PM EST (NWS ILM gridpoint 68,59 for the farm,
+				// generated 2026-11-14T23:21:44+00:00; forecast through Saturday, verified this run). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
-				'THIS AFTERNOON... Sunny. High near 61, with temperatures falling to around 54 in the afternoon. Northwest wind around 6 mph. Precip chance 0%.',
 				'TONIGHT... Patchy frost after 3am. Clear, with a low around 34. Northwest wind 1 to 5 mph. Precip chance 0%.',
 				'SUNDAY... Areas of frost before 8am. Sunny, with a high near 59. North wind 1 to 7 mph. Precip chance 0%.',
 				'SUNDAY NIGHT... Clear, with a low around 36. North wind around 3 mph. Precip chance 0%.',
 				'MONDAY... Sunny, with a high near 61. North wind 3 to 8 mph. Precip chance 0%.',
-				'MONDAY NIGHT... Mostly clear, with a low around 37. Precip chance 0%.',
+				'MONDAY NIGHT... Mostly clear, with a low around 37. Northeast wind around 5 mph. Precip chance 0%.',
 				'TUESDAY... Sunny, with a high near 65. Precip chance 1%.',
 				'TUESDAY NIGHT... Clear, with a low around 38. Precip chance 1%.',
 				'WEDNESDAY... Sunny, with a high near 69. Precip chance 0%.',
@@ -55,6 +54,7 @@ class LocalForecast extends WeatherDisplay {
 				'THURSDAY NIGHT... Mostly clear, with a low around 44. Precip chance 0%.',
 				'FRIDAY... Mostly sunny, with a high near 73. Precip chance 0%.',
 				'FRIDAY NIGHT... Partly cloudy, with a low around 44. Precip chance 1%.',
+				'SATURDAY... Sunny, with a high near 74. Precip chance 1%.',
 			];
 		} else {
 			this.screenTexts = conditions.map((condition) => condition.Text);
