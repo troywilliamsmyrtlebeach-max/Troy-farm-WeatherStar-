@@ -30,7 +30,7 @@ body #divTwc #container { background: #000 !important; }
 }
 #divTwc #container .custom-weather-station.main .location,
 #divTwc #container .custom-weather-station.main .farm-name-over-humidity {
-  color: #7fe7ff !important; /* teal/cyan, Troy's reference main page */
+  color: #FAFA2C !important; /* teal/cyan, Troy's reference main page */
   font-size: 14pt !important;
   text-align: left !important;
   white-space: nowrap !important;
