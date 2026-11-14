@@ -181,13 +181,19 @@ var LoadFarmData = function (callback)
                 error: function () { _done(null); } });
         } });
 };
+// TROY-FARM P24 (F1): kmhToMph was a LOCAL inside ApplyFarmConditions,
+// but _P23BuildFarmRow (global scope) also calls it, so every Latest
+// Observations populate threw "ReferenceError: kmhToMph is not defined"
+// and the LO screen never appeared (menu "Failed"). Hoisted to a single
+// global definition; both callers use it (same 0.621371 km/h -> mph).
+var kmhToMph = function (k) { return Math.round(parseFloat(k) * 0.621371); };
+
 var ApplyFarmConditions = function (WeatherParameters)
 {
     if (!_FarmData || !WeatherParameters || !WeatherParameters.WeatherCurrentConditions) return;
     var cc = WeatherParameters.WeatherCurrentConditions;
     var f = _FarmData;
     var cToF = function (c) { return Math.round(parseFloat(c) * 9 / 5 + 32); };
-    var kmhToMph = function (k) { return Math.round(parseFloat(k) * 0.621371); };
     var tempF = cToF(f.temperature);
     var dwmlIcon = (cc.Icon || "").toLowerCase();
     var slash = dwmlIcon.lastIndexOf("/");
@@ -3275,8 +3281,14 @@ var GetWeatherHazards3 = function (WeatherParameters)
             {
                 var Properties = this.properties;
 
-                // Ignore everything that isn't an alert.
-                if (Properties == null || Properties.messageType != "Alert")
+                // Ignore everything that isn't an alert or an update.
+                // TROY-FARM P24 (F3): NWS re-issues an active warning as
+                // messageType "Update" — the Freeze Warning in effect now
+                // IS an Update, not an Alert — so the old filter dropped
+                // it, Hazards[] stayed empty, and the Hazards screen read
+                // "No Data" with a warning in effect. The ZFP fallback
+                // below is unchanged.
+                if (Properties == null || (Properties.messageType != "Alert" && Properties.messageType != "Update"))
                 {
                     return true;
                 }
@@ -10538,6 +10550,33 @@ var WeatherCurrentRegionalConditions = function ()
 //    }
 //};
 
+
+var _P24MetarOnlyRow = function (WeatherParameters, StationId)
+{
+    // TROY-FARM P24 (F4): build a Latest Observations row from the staged
+    // METAR alone when the live DWML fetch fails or comes back unusable.
+    // The P18-hardened WeatherCurrentConditions constructor accepts a null
+    // DWML parser: temperature/wind/sky come from the METAR, the station
+    // name from _StationInfo (Conway-Horry Cty, Lumberton, Myrtle Beach,
+    // Southport, Whiteville, Wilmington). Returns null when even the METAR
+    // has no usable temperature, so the caller can splice the station
+    // exactly as before.
+    try
+    {
+        var _p24Parser = WeatherParameters.WeatherCurrentRegionalConditions.WeatherMetarsParser[StationId];
+        if (!_p24Parser) return null;
+        var _p24Row = new WeatherCurrentConditions(null, _p24Parser);
+        var _p24Temp = parseFloat(_p24Row.Temperature);
+        if (_p24Row.Temperature === "NA" || _p24Row.Temperature === undefined || _p24Row.Temperature === null || _p24Row.Temperature === "" || isNaN(_p24Temp)) return null;
+        return _p24Row;
+    }
+    catch (ex)
+    {
+        console.error("P24 METAR-only row failed for " + StationId + ": " + ex);
+        return null;
+    }
+};
+
 var GetDwmlRegionalStations = function (WeatherParameters, Distance)
 {
     var Total = WeatherParameters.WeatherCurrentRegionalConditions.StationIds.length;
@@ -10586,13 +10625,24 @@ var GetDwmlRegionalStations = function (WeatherParameters, Distance)
                 WeatherParameters.WeatherCurrentRegionalConditions.WeatherCurrentConditions[StationId] = new WeatherCurrentConditions(_WeatherDwmlParser, _WeatherMetarsParser);
 
                 var StationName = WeatherParameters.WeatherCurrentRegionalConditions.WeatherCurrentConditions[StationId].StationName;
-                if ((StationName == WeatherParameters.WeatherCurrentConditions.StationName) ||
-                    (WeatherParameters.WeatherCurrentRegionalConditions.StationNames.indexOf(StationName) != -1) ||
-                    (WeatherParameters.WeatherCurrentRegionalConditions.WeatherCurrentConditions[StationId].Conditions == "") ||
-                    (WeatherParameters.WeatherCurrentRegionalConditions.WeatherCurrentConditions[StationId].Conditions == "NA") ||
-                    (WeatherParameters.WeatherCurrentRegionalConditions.WeatherCurrentConditions[StationId].Conditions.trim() == "Unknown Precip") ||
-                    (WeatherParameters.WeatherCurrentRegionalConditions.WeatherCurrentConditions[StationId].Temperature == "NA") ||
-                    (WeatherParameters.WeatherCurrentRegionalConditions.WeatherCurrentConditions[StationId].Temperature == undefined))
+                // TROY-FARM P24 (F4): split the stock splice. A station
+                // that IS the farm's own current-conditions station or a
+                // duplicate name is still skipped outright. But a row whose
+                // DWML came back empty/"NA"/"Unknown Precip" (or with no
+                // temperature) is NOT dropped — the staged METAR already
+                // holds a real temperature, wind, and parsed sky word for
+                // it, so rebuild the row from the METAR alone and keep
+                // the station (KCPC/KLBT/KSUT were lost this way at P23).
+                var _p24cc = WeatherParameters.WeatherCurrentRegionalConditions.WeatherCurrentConditions[StationId];
+                var _p24BadData = (_p24cc.Conditions == "") ||
+                    (_p24cc.Conditions == "NA") ||
+                    (_p24cc.Conditions.trim() == "Unknown Precip") ||
+                    (_p24cc.Temperature == "NA") ||
+                    (_p24cc.Temperature == undefined);
+                var _p24LegitSkip = (StationName == WeatherParameters.WeatherCurrentConditions.StationName) ||
+                    (WeatherParameters.WeatherCurrentRegionalConditions.StationNames.indexOf(StationName) != -1);
+                var _p24MetarRow = _p24BadData ? _P24MetarOnlyRow(WeatherParameters, StationId) : null;
+                if (_p24LegitSkip || (_p24BadData && !_p24MetarRow))
                 {
                     //WeatherParameters.WeatherCurrentRegionalConditions.StationNames = [];
                     WeatherParameters.WeatherCurrentRegionalConditions.SkipStationIds.push(StationId);
@@ -10604,6 +10654,12 @@ var GetDwmlRegionalStations = function (WeatherParameters, Distance)
                 }
                 else
                 {
+                    if (_p24MetarRow)
+                    {
+                        // DWML unusable — the METAR-only rebuild is the row.
+                        WeatherParameters.WeatherCurrentRegionalConditions.WeatherCurrentConditions[StationId] = _p24MetarRow;
+                        StationName = _p24MetarRow.StationName;
+                    }
                     WeatherParameters.WeatherCurrentRegionalConditions.StationNames.push(StationName);
                 }
 
@@ -10627,10 +10683,28 @@ var GetDwmlRegionalStations = function (WeatherParameters, Distance)
             {
                 console.error("GetDwmlRegionalStations failed: " + errorThrown);
 
-                //WeatherParameters.WeatherCurrentRegionalConditions.StationNames = [];
-                WeatherParameters.WeatherCurrentRegionalConditions.SkipStationIds.push(StationId);
-                WeatherParameters.WeatherCurrentRegionalConditions.StationIds.splice(WeatherParameters.WeatherCurrentRegionalConditions.StationIds.indexOf(StationId), 1);
-                NeedToGetRegionalStations = true;
+                // TROY-FARM P24 (F4): a failed DWML fetch must not drop
+                // the station — the staged METAR already holds its
+                // temperature, wind, and sky word. Rebuild the row from
+                // the METAR alone and keep the station. Only splice when
+                // even the METAR has no usable temperature. When every
+                // station is accounted for (fallback rows included),
+                // populate — the stock code had no else branch here, so a
+                // last-completing failed fetch with all others kept would
+                // never have drawn Latest Observations at all.
+                var _p24MetarRow = _P24MetarOnlyRow(WeatherParameters, StationId);
+                if (_p24MetarRow)
+                {
+                    WeatherParameters.WeatherCurrentRegionalConditions.WeatherCurrentConditions[StationId] = _p24MetarRow;
+                    WeatherParameters.WeatherCurrentRegionalConditions.StationNames.push(_p24MetarRow.StationName);
+                }
+                else
+                {
+                    //WeatherParameters.WeatherCurrentRegionalConditions.StationNames = [];
+                    WeatherParameters.WeatherCurrentRegionalConditions.SkipStationIds.push(StationId);
+                    WeatherParameters.WeatherCurrentRegionalConditions.StationIds.splice(WeatherParameters.WeatherCurrentRegionalConditions.StationIds.indexOf(StationId), 1);
+                    NeedToGetRegionalStations = true;
+                }
 
                 Count++;
                 if (Count == Total)
@@ -10639,6 +10713,10 @@ var GetDwmlRegionalStations = function (WeatherParameters, Distance)
                     {
                         WeatherParameters.WeatherCurrentRegionalConditions.StationNames = [];
                         GetRegionalStations(WeatherParameters, Distance);
+                    }
+                    else
+                    {
+                        PopulateRegionalObservations(WeatherParameters);
                     }
                 }
             }
@@ -11668,7 +11746,11 @@ var ShowRegionalMap = function (WeatherParameters, TomorrowForecast1, TomorrowFo
                             console.log(xml);
                             //console.log($xml);
 
-                            var weatherMetarsParser = new WeatherMetarsParser($xml);
+                            // TROY-FARM P24 (F2): pass the StationId — without
+                            // it the parser takes the FIRST METAR in the
+                            // document (KGKT 5C = 41F) for EVERY city, so the
+                            // Regional Observations map read 41F everywhere.
+                            var weatherMetarsParser = new WeatherMetarsParser($xml, StationId);
                             //console.log(WeatherParameters.WeatherMetarsParser);
 
                             var weatherCurrentConditions = new WeatherCurrentConditions(weatherDwmlParser, weatherMetarsParser);
