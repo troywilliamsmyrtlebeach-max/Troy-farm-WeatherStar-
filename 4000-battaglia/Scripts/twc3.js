@@ -6803,6 +6803,24 @@ var PopulateCurrentConditions = function (WeatherParameters)
                 DrawText(context, "Star4000 Large", "bold 16pt", "#FFFFFF", 560, 365, WindChill + String.fromCharCode(176), 2, "right");
             }
 
+            // TROY-FARM P21 (2026-11-14): repaint the icon. The moon
+            // is a STATIC 1-frame GIF (Clear.gif) while the sun is a
+            // 7-frame animation (Sunny.gif). libgif's putFrame() never
+            // redraws a 1-frame GIF after its first draw (battery-saver
+            // early return: first_time == false && _RefreshGifs == false
+            // && frames.length == 1), so the photo background painted
+            // above erased the moon for good — the sun kept repainting
+            // itself every step, which is why it drew. Mirror the stock
+            // Extended Forecast pattern: reset the player's first-time
+            // flag so its next step (<=100ms later; the loop runs forever
+            // because overrideLoopMode defaults to 'auto') repaints the
+            // icon on top of the background. Guarded: in the no-gif path
+            // (_DontLoadGifs / empty Icon) gifIcon is never created.
+            if (typeof gifIcon !== "undefined" && gifIcon && gifIcon.setFirstTime)
+            {
+                gifIcon.setFirstTime();
+            }
+
             WeatherParameters.Progress.CurrentConditions = LoadStatuses.Loaded;
 
             UpdateWeatherCanvas(WeatherParameters, canvasCurrentWeather);
