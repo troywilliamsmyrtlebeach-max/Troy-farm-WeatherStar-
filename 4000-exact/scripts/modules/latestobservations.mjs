@@ -165,7 +165,10 @@ class LatestObservations extends WeatherDisplay {
 				saveGoodWind(condition.StationId, fill.wind);
 			}
 
-			return this.fillTemplate('observation-row', fill);
+			// TROY Nov 14: farm row gets the yellow farm name (CSS .farm-row).
+			const row = this.fillTemplate('observation-row', fill);
+			if (condition.StationId === 'FARM' && row) row.classList.add('farm-row');
+			return row;
 		});
 
 		const linesFiltered = lines.filter(Boolean);
