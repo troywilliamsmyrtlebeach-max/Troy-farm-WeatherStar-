@@ -5,6 +5,7 @@ import { wrap } from './utils/calc.mjs';
 import {
 	getPoint, getMarinePoint, getGeocoding, aggregateWeatherForecastData, getAirQualityPoint,
 } from './utils/weather.mjs';
+import { farmIsNight } from './icons.mjs';
 // eslint-disable-next-line import/no-cycle
 import settings from './settings.mjs';
 import NearbyCities from './utils/nearby-cities.mjs';
@@ -76,6 +77,28 @@ const init = async () => {
 	}
 	document.querySelector(CHK_AUTO_REFRESH_SELECTOR).addEventListener('change', autoRefreshChange);
 	generateCheckboxes();
+
+	// DAY/NIGHT ICON FLIP (Troy 2026-11-14: moon at night, sun in the day,
+	// ALWAYS). Screens redraw as they cycle, but a page left paused on one
+	// screen would keep the icon it loaded with. Re-check the farm
+	// day/night state every 60 s; when it flips, redraw the currently
+	// visible display so its icon swaps at sunset/sunrise. Only the two
+	// screens whose icons come from the view-time icon function need it
+	// (farm Current Conditions, navId 13, and Current Conditions, navId 1);
+	// hourly icons are per-hour and the rest are data-driven.
+	let lastFarmNight = null;
+	window.setInterval(() => {
+		let nightNow;
+		try { nightNow = farmIsNight(); } catch (e) { return; }
+		if (lastFarmNight === null) { lastFarmNight = nightNow; return; }
+		if (nightNow === lastFarmNight) return;
+		lastFarmNight = nightNow;
+		const cur = currentDisplay();
+		if (!cur || (cur.navId !== 13 && cur.navId !== 1)) return;
+		if (typeof cur.drawCanvas === 'function') {
+			try { cur.drawCanvas(); } catch (e) { console.warn('day/night flip redraw failed', e); }
+		}
+	}, 60_000);
 };
 
 const message = (data) => {

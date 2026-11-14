@@ -1,14 +1,37 @@
 /* spell-checker: disable */
 
-function isNightTime(timeZone) {
-	const now = new Date();
-	const hour = new Intl.DateTimeFormat('en-US', {
-		hour: 'numeric',
-		hour12: false,
-		timeZone,
-	}).format(now);
+// TROY 2026-11-14: moon icons at night, sun icons in the day, ALWAYS.
+// Night is REAL night at the farm (33.92N 78.57W) from the sun's actual
+// position — NOAA rule: night = solar zenith > 90.833° (sun more than
+// 0.833° below the horizon) — NOT the old fixed 18:00–06:00 window. In
+// mid-November the sun sets ~5:11 PM and rises ~6:45 AM, so the fixed
+// window showed day icons for ~50 min after sunset and night icons for
+// ~45 min after sunrise. SunCalc is loaded as a classic script by
+// index.html (almanac.mjs already uses the global); if it is ever
+// unavailable, fall back to the 18:00–06:00 farm-local window. Never
+// throws: an unparseable date renders as day, never crashes a screen.
+const FARM_LATITUDE = 33.92;
+const FARM_LONGITUDE = -78.57;
+const NIGHT_ALTITUDE_RAD = -0.01454; // -0.833°
 
-	return hour >= 18 || hour < 6;
+const farmIsNight = (atDate) => {
+	const date = atDate instanceof Date ? atDate : new Date();
+	try {
+		if (Number.isNaN(date.getTime())) return false;
+		if (typeof SunCalc !== 'undefined' && SunCalc.getPosition) {
+			return SunCalc.getPosition(date, FARM_LATITUDE, FARM_LONGITUDE).altitude < NIGHT_ALTITUDE_RAD;
+		}
+		const hour = Number(new Intl.DateTimeFormat('en-US', {
+			hour: 'numeric',
+			hour12: false,
+			timeZone: 'America/New_York',
+		}).format(date));
+		return hour >= 18 || hour < 6;
+	} catch (e) { return false; }
+};
+
+function isNightTime() {
+	return farmIsNight(new Date());
 }
 
 const getWaveIconFromCondition = (condition) => {
@@ -63,7 +86,11 @@ const getWeatherRegionalIconFromIconLink = (text, isDay) => {
 	if (tidyText === 'clear' || tidyText === 'sunny') tidyText = isDay === 0 ? 'clear-night' : 'clear';
 	if (tidyText.includes(' ')) tidyText = tidyText.replaceAll(' ', '-');
 
-	if (isDay === 0) tidyText += '-night';
+	// TROY 2026-11-14: only append once — the clear/sunny normalisation
+	// above (and the NWS-URL parse) may already have set '-night';
+	// appending again made 'clear-night-night', which matched no case and
+	// fell back to the DAY Partly-Cloudy icon at night.
+	if (isDay === 0 && !tidyText.endsWith('-night')) tidyText += '-night';
 
 	// find the icon
 	switch (tidyText) {
@@ -207,9 +234,13 @@ const getWeatherRegionalIconFromIconLink = (text, isDay) => {
 		case 86:
 		case 'slight-snow-showers':
 		case 'heavy-snow-showers':
-		case 'slight-snow-showers-night':
-		case 'heavy-snow-showers-night':
 			return addPath('Scattered-Snow-Showers-1994-2.gif');
+		// TROY 2026-11-14: the snow-showers file shows a SUN — at night use
+		// the plain snow icons instead (both verified sun-free).
+		case 'slight-snow-showers-night':
+			return addPath('Light-Snow.gif');
+		case 'heavy-snow-showers-night':
+			return addPath('Heavy-Snow.gif');
 
 		case 95:
 		case 'thunderstorm':
@@ -226,7 +257,9 @@ const getWeatherRegionalIconFromIconLink = (text, isDay) => {
 		default:
 			console.log(`Unable to locate icon for: ${text}`);
 			// Troy Oct 31 19:28: NEVER Logo3 (WeatherStar 4000+ logo) on regional maps — fall back to a sky icon instead.
-			return addPath('Partly-Cloudy.gif');
+			// TROY 2026-11-14: the fallback is night-aware too — an unknown
+			// condition at night gets the moon icon, never the day sun.
+			return addPath(isDay === 0 ? 'Mostly-Clear.gif' : 'Partly-Cloudy.gif');
 	}
 };
 
@@ -247,6 +280,9 @@ const getWeatherIconFromIconLink = (text, timeZone, extendedForecast) => {
 	const addPath = (icon) => `images/${icon}`;
 
 	const nightTime = isNightTime(timeZone);
+	// TROY 2026-11-14: extended-forecast day columns always show DAY
+	// icons, even at night — only the current-conditions screens flip.
+	const nightIcon = !extendedForecast && nightTime;
 	let tidyText;
 	if (text.length > 3) {
 		tidyText = text.toLowerCase().replaceAll(' ', '-');
@@ -260,7 +296,10 @@ const getWeatherIconFromIconLink = (text, timeZone, extendedForecast) => {
 	}
 
 	if (!extendedForecast && tidyText.length > 3) {
-		if (nightTime && tidyText.includes('clear')) tidyText += '-night';
+		// 'clear', 'mostly-clear', 'mainly-clear', 'partly-clear' all carry
+		// 'clear'; 'sunny' is the daytime word for code 0 and must also flip
+		// to the moon icon if it ever arrives at night.
+		if (nightTime && (tidyText.includes('clear') || tidyText === 'sunny')) tidyText += '-night';
 	}
 
 	// find the icon
@@ -272,7 +311,7 @@ const getWeatherIconFromIconLink = (text, timeZone, extendedForecast) => {
 			return addPath('CC_Clear1.gif');
 
 		case 'fair':
-			return addPath(nightTime ? 'CC_PartlyCloudy0.gif' : 'CC_PartlyCloudy1.gif');
+			return addPath(nightIcon ? 'CC_PartlyCloudy0.gif' : 'CC_PartlyCloudy1.gif');
 		case 'fair-night':
 			return addPath('CC_PartlyCloudy0.gif');
 		case 'clear-sky-night':
@@ -286,12 +325,12 @@ const getWeatherIconFromIconLink = (text, timeZone, extendedForecast) => {
 			return addPath('CC_Clear0.gif');
 
 		case 'mostly-cloudy':
-			return addPath('CC_MostlyCloudy1.gif');
+			return addPath(nightIcon ? 'CC_MostlyCloudy0.gif' : 'CC_MostlyCloudy1.gif');
 		case 'mostly-cloudy-night':
 			return addPath('CC_MostlyCloudy0.gif');
 
 		case 'cloudy':
-			return addPath('Cloudy.gif');
+			return addPath(nightIcon ? 'CC_MostlyCloudy0.gif' : 'Cloudy.gif');
 		case 'cloudy-night':
 			return addPath('CC_MostlyCloudy0.gif');
 
@@ -301,7 +340,7 @@ const getWeatherIconFromIconLink = (text, timeZone, extendedForecast) => {
 			return addPath('CC_PartlyCloudy0.gif');
 
 		case 1:
-			return addPath(nightTime ? 'CC_PartlyCloudy0.gif' : 'CC_PartlyCloudy1.gif');
+			return addPath(nightIcon ? 'CC_PartlyCloudy0.gif' : 'CC_PartlyCloudy1.gif');
 		case 'mainly-clear':
 			return addPath('CC_Clear1.gif');
 
@@ -310,14 +349,14 @@ const getWeatherIconFromIconLink = (text, timeZone, extendedForecast) => {
 
 		case 2:
 		case 'partly-cloudy':
-			return addPath('CC_PartlyCloudy1.gif');
+			return addPath(nightIcon ? 'CC_PartlyCloudy0.gif' : 'CC_PartlyCloudy1.gif');
 
 		case 'partly-cloudy-night':
 			return addPath('CC_PartlyCloudy0.gif');
 
 		case 3:
 		case 'overcast':
-			return addPath('Cloudy.gif');
+			return addPath(nightIcon ? 'CC_MostlyCloudy0.gif' : 'Cloudy.gif');
 
 		case 45:
 		case 48:
@@ -401,7 +440,9 @@ const getWeatherIconFromIconLink = (text, timeZone, extendedForecast) => {
 		default:
 			console.log(`Unable to locate icon for: ${text}`);
 			// Troy Oct 31 19:28: NEVER Logo3 (WeatherStar 4000+ logo) on regional maps — fall back to a sky icon instead.
-			return addPath('Partly-Cloudy.gif');
+			// TROY 2026-11-14: the fallback is night-aware too — an unknown
+			// condition at night gets the moon icon, never the day sun.
+			return addPath(nightIcon ? 'CC_PartlyCloudy0.gif' : 'Partly-Cloudy.gif');
 	}
 };
 
@@ -459,5 +500,6 @@ export {
 	getWeatherIconFromIconLink,
 	getWeatherRegionalIconFromIconLink,
 	getWaveIconFromCondition,
+	farmIsNight,
 	// getHourlyIcon,
 };

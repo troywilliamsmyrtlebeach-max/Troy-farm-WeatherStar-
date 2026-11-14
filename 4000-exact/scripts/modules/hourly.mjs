@@ -2,7 +2,7 @@
 
 import STATUS from './status.mjs';
 import { DateTime } from '../vendor/auto/luxon.mjs';
-import { getWeatherRegionalIconFromIconLink } from './icons.mjs';
+import { getWeatherRegionalIconFromIconLink, farmIsNight } from './icons.mjs';
 import { directionToNSEW } from './utils/calc.mjs';
 import WeatherDisplay from './weatherdisplay.mjs';
 import { registerDisplay } from './navigation.mjs';
@@ -158,18 +158,26 @@ const parseForecast = (data) => {
 	const currentForecast = getCurrentWeatherByHourFromTime(data);
 
 	// Split today's date at the returned hourly index and iterate through 'todayAndTomorrow' from currentForecast to create hourly rows
-	const iterableHourlyData = currentForecast.todayAndTomorrow.slice(currentForecast.index).map((hour) => ({
-		temperature: hour.temperature_2m,
-		apparentTemperature: hour.apparent_temperature,
-		windSpeed: hour.wind_speed_10m,
-		windDirection: hour.wind_direction_10m,
-		probabilityOfPrecipitation: hour.precipitation_probability,
-		skyCover: hour.cloud_cover,
-		icon: getWeatherRegionalIconFromIconLink(getConditionText(hour.weather_code), hour.is_day),
-		// is_day appears to be "buggy," in that it uses the calling application's IP/location to
-		// determine whether is_day is day or night relative to the calling machine's timezone....
-		isDay: hour.is_day,
-	}));
+	const iterableHourlyData = currentForecast.todayAndTomorrow.slice(currentForecast.index).map((hour) => {
+		// TROY 2026-11-14: each hour's icon uses THAT hour's own day/night
+		// at the farm (real sunrise/sunset), never Open-Meteo's is_day —
+		// the app requests timezone=auto, so is_day follows the calling
+		// machine's IP location, not the farm. hour.time is farm-local
+		// (America/New_York); parse it in the data's timezone so the solar
+		// check is right on any viewer.
+		const hourDate = DateTime.fromISO(hour.time, { zone: data.timeZone || 'America/New_York' }).toJSDate();
+		const hourIsDay = farmIsNight(hourDate) ? 0 : 1;
+		return {
+			temperature: hour.temperature_2m,
+			apparentTemperature: hour.apparent_temperature,
+			windSpeed: hour.wind_speed_10m,
+			windDirection: hour.wind_direction_10m,
+			probabilityOfPrecipitation: hour.precipitation_probability,
+			skyCover: hour.cloud_cover,
+			icon: getWeatherRegionalIconFromIconLink(getConditionText(hour.weather_code), hourIsDay),
+			isDay: hourIsDay,
+		};
+	});
 
 	// eslint-disable-next-line consistent-return
 	return iterableHourlyData;
