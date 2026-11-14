@@ -12836,8 +12836,23 @@ var Progress = function (e)
     {
         var DontLoadGifs = _DontLoadGifs;
 
-        BackGroundImage.onload = function ()
+        // TROY-FARM P17 (2026-11-12): the whole boot was gated on this
+        // one image -- BackGroundImage.onload is the ONLY path that sets
+        // Loaded and calls e.OnLoad() (-> GetWeather). The Image request
+        // to battaglia.ddns.net can wedge on a dead connection (observed:
+        // pending 119s+ with no load/error/timeout, while a fresh fetch
+        // of the same URL succeeds in <1s), so the app sat on a black
+        // canvas forever. Proceed on load OR error OR after an 8s
+        // timeout, exactly once; draw the photo background only if it
+        // actually loaded.
+        var _bgProceeded = false;
+        var _bgTimeout = null;
+        var _bgProceed = function ()
         {
+            if (_bgProceeded) { return; }
+            _bgProceeded = true;
+            if (_bgTimeout) { window.clearTimeout(_bgTimeout); }
+
             _self.Loaded = false;
 
             //context.drawImage(BackGroundImage, 0, 0);
@@ -12858,7 +12873,11 @@ var Progress = function (e)
 
             //SmoothingEnabled(context, false);
 
-            context.drawImage(BackGroundImage, 0, 0);
+            // TROY-FARM P17: only draw the photo background when it loaded.
+            if (BackGroundImage.complete && BackGroundImage.naturalWidth > 0)
+            {
+                context.drawImage(BackGroundImage, 0, 0);
+            }
             //DrawHorizontalGradientSingle(context, 0, 30, 500, 90, "rgb(114, 27, 200)", "rgb(73, 34, 66)");
             DrawHorizontalGradientSingle(context, 0, 30, 500, 90, _TopColor1, _TopColor2);
             DrawTriangle(context, "rgb(28, 10, 87)", 500, 30, 450, 90, 500, 90);
@@ -12905,6 +12924,9 @@ var Progress = function (e)
                 e.OnLoad();
             }
         };
+        BackGroundImage.onload = _bgProceed;
+        BackGroundImage.onerror = _bgProceed;
+        _bgTimeout = window.setTimeout(_bgProceed, 8000);
         //BackGroundImage.src = "https://battaglia.ddns.net/twc/images/BackGround1_1.png";
         //BackGroundImage.src = "https://battaglia.ddns.net/twc/images/BackGround1_" + _Themes.toString() + ".png";
         BackGroundImage.src = "https://battaglia.ddns.net/twc/images/BackGround1_1.png";
