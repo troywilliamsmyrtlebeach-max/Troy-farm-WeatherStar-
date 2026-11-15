@@ -10,7 +10,7 @@ This project was originally created by Mike Battaglia in the Fall of 2016 becaus
 
 * Current Conditions
 * Latest Observations
-* Travel Forecast
+* Hourly Forecast
 * Regional Forecast
 * Regional Observations
 * Local Forecast

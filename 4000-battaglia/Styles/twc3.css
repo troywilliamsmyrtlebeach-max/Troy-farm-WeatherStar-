@@ -155,7 +155,7 @@ jsgif
 
 #divDebug
 {
-    /* Cannot hide the entire div otherwise the Travel Forecast doesn't work */
+    /* Cannot hide the entire div otherwise the Hourly Forecast doesn't work */
     /*display: none;*/
 
     visibility: hidden;

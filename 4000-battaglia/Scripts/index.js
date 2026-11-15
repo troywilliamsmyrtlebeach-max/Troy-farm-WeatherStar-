@@ -90,7 +90,7 @@ var _canvasIds = [
     "canvasProgress",
     "canvasCurrentWeather",
     "canvasLatestObservations",
-    "canvasTravelForecast",
+    "canvasHourlyForecast",
     "canvasRegionalForecast1",
     "canvasRegionalForecast2",
     "canvasRegionalObservations",

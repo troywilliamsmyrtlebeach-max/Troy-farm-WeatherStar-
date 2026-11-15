@@ -106,12 +106,7 @@ var canvasDailyHistory;
 var canvasMarineForecast;
 var canvasAirQuality;
 
-var tblTravelCities;
-var divTravelCitiesLow;
-var divTravelCitiesHigh;
-var tblTravelCitiesScroll;
-var divTravelCitiesScroll;
-var canvasTravelForecast;
+var canvasHourlyForecast;
 
 var tblOutlook;
 var divOutlookTemp;
@@ -275,10 +270,6 @@ var _UpdateWeatherCurrentConditionCounterMs = 0;
 var _UpdateCustomScrollTextMs = 0;
 var _UpdateScrollHazardTextMs = 0;
 
-//var _UpdateTravelCitiesInterval = 30;
-var _UpdateTravelCitiesInterval = 150;
-var _UpdateTravelCitiesCounterMs = 0;
-var _UpdateTravelCitiesY = 0;
 
 //var _UpdateHazardsInterval = 30;
 var _UpdateHazardsInterval = 150;
@@ -292,7 +283,7 @@ var CanvasTypes = {
     Progress: 0,
     CurrentWeather: 1,
     LatestObservations: 2,
-    TravelForecast: 3,
+    HourlyForecast: 3,
     RegionalForecast1: 4,
     RegionalForecast2: 5,
     RegionalObservations: 6,
@@ -3666,12 +3657,7 @@ setTimeout(() =>
         divOutlookTemp = $("#divOutlookTemp");
         divOutlookPrcp = $("#divOutlookPrcp");
 
-        tblTravelCities = $("#tblTravelCities");
-        divTravelCitiesHigh = $("#divTravelCitiesHigh");
-        divTravelCitiesLow = $("#divTravelCitiesLow");
-        tblTravelCitiesScroll = $("#tblTravelCitiesScroll");
-        divTravelCitiesScroll = $("#divTravelCitiesScroll");
-        canvasTravelForecast = $("#canvasTravelForecast");
+        canvasHourlyForecast = $("#canvasHourlyForecast");
 
         tblRegionalObservations = $("#tblRegionalObservations");
         divRegionalObservationsCityName = $("#divRegionalObservationsCityName");
@@ -3702,7 +3688,7 @@ setTimeout(() =>
         WeatherCanvases.push(canvasProgress);
         WeatherCanvases.push(canvasCurrentWeather);
         WeatherCanvases.push(canvasLatestObservations);
-        WeatherCanvases.push(canvasTravelForecast);
+        WeatherCanvases.push(canvasHourlyForecast);
         WeatherCanvases.push(canvasRegionalForecast1);
         WeatherCanvases.push(canvasRegionalForecast2);
         WeatherCanvases.push(canvasRegionalObservations);
@@ -3729,7 +3715,6 @@ setTimeout(() =>
         });
         canvasProgress.show();
 
-        _WeatherParameters.TravelCities = _TravelCities;
 
         var GetWeatherIntervalId = null;
         var GetWeather = function ()
@@ -3784,7 +3769,7 @@ setTimeout(() =>
 
                 {
                     GetMonthPrecipitation(_WeatherParameters);
-                    GetTravelWeather(_WeatherParameters);
+                    _P28LoadStagedHourlyForecast(_WeatherParameters);
                     //GetAirQuality2(_WeatherParameters);
                     GetAirQuality3(_WeatherParameters);
                     ShowRegionalMap(_WeatherParameters, true);
@@ -3838,7 +3823,7 @@ setTimeout(() =>
                     // overwrites Failed with Loaded.
                     window.setTimeout(function ()
                     {
-                        var _p19Names = ["CurrentConditions", "WordedForecast", "FourDayForecast", "TravelForecast", "NearbyConditions", "CurrentRegionalMap", "TomorrowsRegionalMap", "Almanac", "DailyHistory", "DopplerRadar", "Hazards"];
+                        var _p19Names = ["CurrentConditions", "WordedForecast", "FourDayForecast", "HourlyForecast", "NearbyConditions", "CurrentRegionalMap", "TomorrowsRegionalMap", "Almanac", "DailyHistory", "DopplerRadar", "Hazards"];
                         $(_p19Names).each(function ()
                         {
                             if (_WeatherParameters.Progress[this] == LoadStatuses.Loading)
@@ -3982,7 +3967,7 @@ setTimeout(() =>
                         }
 
                         GetMonthPrecipitation(_WeatherParameters);
-                        GetTravelWeather(_WeatherParameters);
+                        _P28LoadStagedHourlyForecast(_WeatherParameters);
                         //GetAirQuality2(_WeatherParameters);
                         GetAirQuality3(_WeatherParameters);
                         ShowRegionalMap(_WeatherParameters, true);
@@ -4112,7 +4097,6 @@ var Navigate = function (Offset)
 {
     var LocalForecastScreenTexts = _WeatherParameters.LocalForecastScreenTexts;
     var Hazards = _WeatherParameters.WeatherHazardConditions.Hazards;
-    var cnvTravelCitiesScroll = $("#cnvTravelCitiesScroll");
     var cnvHazardsScroll = $("#cnvHazardsScroll");
 
     if (Offset == 0)
@@ -4140,16 +4124,6 @@ var Navigate = function (Offset)
                         }
                         break;
 
-                    case CanvasTypes.TravelForecast:
-                        if (_WeatherParameters.Progress.TravelForecast == LoadStatuses.Loaded)
-                        {
-                            if (_UpdateTravelCitiesY < cnvTravelCitiesScroll.height() - 289)
-                            {
-                                UpdateTravelCities(1);
-                                return;
-                            }
-                        }
-                        break;
 
                     case CanvasTypes.Hazards:
                         if (_WeatherParameters.Progress.Hazards == LoadStatuses.Loaded && Hazards.length > 0)
@@ -4193,16 +4167,6 @@ var Navigate = function (Offset)
                         }
                         break;
 
-                    case CanvasTypes.TravelForecast:
-                        if (_WeatherParameters.Progress.TravelForecast == LoadStatuses.Loaded)
-                        {
-                            if (_UpdateTravelCitiesY > 0)
-                            {
-                                UpdateTravelCities(-1);
-                                return;
-                            }
-                        }
-                        break;
 
                     case CanvasTypes.Hazards:
                         if (_WeatherParameters.Progress.Hazards == LoadStatuses.Loaded && Hazards.length > 0)
@@ -4274,21 +4238,13 @@ var Navigate = function (Offset)
             //window.location.hash = "aLatestObservations";
             canvasLatestObservations.scrollIntoView();
             break;
-        case CanvasTypes.TravelForecast:
-            if (_WeatherParameters.Progress.TravelForecast != LoadStatuses.Loaded)
+        case CanvasTypes.HourlyForecast:
+            if (_WeatherParameters.Progress.HourlyForecast != LoadStatuses.Loaded)
             {
                 if (Offset) { Navigate(Offset); } return;
             }
-            if (Offset == 1)
-            {
-                UpdateTravelCities(0);
-            }
-            else if (Offset == -1)
-            {
-                UpdateTravelCities(Infinity);
-            }
-            //window.location.hash = "aTravelForecast";
-            canvasTravelForecast.scrollIntoView();
+            //window.location.hash = "aHourlyForecast";
+            canvasHourlyForecast.scrollIntoView();
             break;
         case CanvasTypes.RegionalForecast1:
             if (_WeatherParameters.Progress.TomorrowsRegionalMap != LoadStatuses.Loaded)
@@ -4516,10 +4472,10 @@ var _PlayMsOffsets = {
     LatestObservations_End: 0,
     LatestObservations_Length: 10000,
     LatestObservations_Loaded: false,
-    TravelForecast_Start: 0,
-    TravelForecast_End: 0,
-    TravelForecast_Length: 60000,
-    TravelForecast_Loaded: false,
+    HourlyForecast_Start: 0,
+    HourlyForecast_End: 0,
+    HourlyForecast_Length: 10000,
+    HourlyForecast_Loaded: false,
     RegionalForecast1_Start: 0,
     RegionalForecast1_End: 0,
     RegionalForecast1_Length: 10000,
@@ -4580,7 +4536,6 @@ var _PlayMsOffsets = {
 
 var AssignPlayMsOffsets = function (CalledFromProgress)
 {
-    var cnvTravelCitiesScroll = $("#cnvTravelCitiesScroll");
     var LocalForecastScreenTexts = _WeatherParameters.LocalForecastScreenTexts;
     var cnvHazardsScroll = $("#cnvHazardsScroll");
     var Hazards = _WeatherParameters.WeatherHazardConditions.Hazards;
@@ -4612,20 +4567,20 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
     }
     _PlayMsOffsets.LatestObservations_End = _PlayMsOffsets.LatestObservations_Start + _PlayMsOffsets.LatestObservations_Length;
 
-    //TravelForecast
-    _PlayMsOffsets.TravelForecast_Start = _PlayMsOffsets.LatestObservations_End;
-    if (Progress.TravelForecast == LoadStatuses.Loaded)
+    //HourlyForecast
+    _PlayMsOffsets.HourlyForecast_Start = _PlayMsOffsets.LatestObservations_End;
+    if (Progress.HourlyForecast == LoadStatuses.Loaded)
     {
-        _PlayMsOffsets.TravelForecast_Length = 60000;
+        _PlayMsOffsets.HourlyForecast_Length = 10000;
     }
     else
     {
-        _PlayMsOffsets.TravelForecast_Length = 0;
+        _PlayMsOffsets.HourlyForecast_Length = 0;
     }
-    _PlayMsOffsets.TravelForecast_End = _PlayMsOffsets.TravelForecast_Start + _PlayMsOffsets.TravelForecast_Length;
+    _PlayMsOffsets.HourlyForecast_End = _PlayMsOffsets.HourlyForecast_Start + _PlayMsOffsets.HourlyForecast_Length;
 
     //RegionalForecast1
-    _PlayMsOffsets.RegionalForecast1_Start = _PlayMsOffsets.TravelForecast_End;
+    _PlayMsOffsets.RegionalForecast1_Start = _PlayMsOffsets.HourlyForecast_End;
     if (Progress.TomorrowsRegionalMap == LoadStatuses.Loaded)
     {
         _PlayMsOffsets.RegionalForecast1_Length = 10000;
@@ -4824,16 +4779,16 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
             }
             _PlayMsOffsets.LatestObservations_Loaded = true;
         }
-        if (Progress.TravelForecast == LoadStatuses.Loaded && _PlayMsOffsets.TravelForecast_Loaded == false)
+        if (Progress.HourlyForecast == LoadStatuses.Loaded && _PlayMsOffsets.HourlyForecast_Loaded == false)
         {
-            //if (_PlayMs > _PlayMsOffsets.TravelForecast_End)
-            //if (_PlayMs <= _PlayMsOffsets.TravelForecast_Start)
-            //if (_PlayMs < _PlayMsOffsets.TravelForecast_End)
-            if (_CurrentCanvasType > CanvasTypes.TravelForecast)
+            //if (_PlayMs > _PlayMsOffsets.HourlyForecast_End)
+            //if (_PlayMs <= _PlayMsOffsets.HourlyForecast_Start)
+            //if (_PlayMs < _PlayMsOffsets.HourlyForecast_End)
+            if (_CurrentCanvasType > CanvasTypes.HourlyForecast)
             {
-                _PlayMs += _PlayMsOffsets.TravelForecast_Length;
+                _PlayMs += _PlayMsOffsets.HourlyForecast_Length;
             }
-            _PlayMsOffsets.TravelForecast_Loaded = true;
+            _PlayMsOffsets.HourlyForecast_Loaded = true;
         }
         if (Progress.TomorrowsRegionalMap == LoadStatuses.Loaded && _PlayMsOffsets.RegionalForecast1_Loaded == false)
         {
@@ -4985,8 +4940,8 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
             case CanvasTypes.LatestObservations:
                 _PlayMs = _PlayMsOffsets.LatestObservations_Start;
                 break;
-            case CanvasTypes.TravelForecast:
-                _PlayMs = _PlayMsOffsets.TravelForecast_Start;
+            case CanvasTypes.HourlyForecast:
+                _PlayMs = _PlayMsOffsets.HourlyForecast_Start;
                 break;
             case CanvasTypes.RegionalForecast1:
                 _PlayMs = _PlayMsOffsets.RegionalForecast1_Start;
@@ -5037,7 +4992,6 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
 
 var UpdatePlayPosition = function ()
 {
-    var cnvTravelCitiesScroll = $("#cnvTravelCitiesScroll");
     var LocalForecastScreenTexts = _WeatherParameters.LocalForecastScreenTexts;
     var cnvHazardsScroll = $("#cnvHazardsScroll");
     var Hazards = _WeatherParameters.WeatherHazardConditions.Hazards;
@@ -5068,32 +5022,10 @@ var UpdatePlayPosition = function ()
         _CurrentCanvasType = CanvasTypes.LatestObservations;
         _CurrentPosition = _CurrentCanvasType;
     }
-    else if (_PlayMs >= _PlayMsOffsets.TravelForecast_Start && _PlayMs < _PlayMsOffsets.TravelForecast_End)
+    else if (_PlayMs >= _PlayMsOffsets.HourlyForecast_Start && _PlayMs < _PlayMsOffsets.HourlyForecast_End)
     {
-        _CurrentCanvasType = CanvasTypes.TravelForecast;
+        _CurrentCanvasType = CanvasTypes.HourlyForecast;
         _CurrentPosition = _CurrentCanvasType;
-        SubMs = _PlayMs - _PlayMsOffsets.TravelForecast_Start;
-
-        // Wait 3 seconds and then start scrolling.
-        if (SubMs < 3000)
-        {
-            _UpdateTravelCitiesY = 0;
-        }
-        if (SubMs >= 3000)
-        {
-            //y += 1;
-            _UpdateTravelCitiesY = 3 * ((SubMs - 3000) / _PlayInterval);
-        }
-        if (_UpdateTravelCitiesY > cnvTravelCitiesScroll.height() - 289)
-        {
-            _UpdateTravelCitiesY = cnvTravelCitiesScroll.height() - 289;
-
-            // Wait 10 seconds and start all over.
-        }
-
-        //_CurrentPosition += Math.floor(_UpdateTravelCitiesY / 72) / 10;
-
-        UpdateTravelCities();
     }
     else if (_PlayMs >= _PlayMsOffsets.RegionalForecast1_Start && _PlayMs < _PlayMsOffsets.RegionalForecast1_End)
     {
@@ -5240,7 +5172,7 @@ var UpdatePlayPosition = function ()
 
     //switch (_CurrentCanvasType)
     //{
-    //    case CanvasTypes.TravelForecast:
+    //    case CanvasTypes.HourlyForecast:
     //        // Wait 3 seconds and then start scrolling.
     //        if (_PlayMs < 3000)
     //        {
@@ -5387,13 +5319,12 @@ var canvasProgress_click = function (e)
         }
         else if (e.offsetY >= (154 * RatioY) && e.offsetY < (181 * RatioY))
         {
-            // Travel Forecast
-            if (_WeatherParameters.Progress.TravelForecast == LoadStatuses.Loaded)
+            // Hourly Forecast
+            if (_WeatherParameters.Progress.HourlyForecast == LoadStatuses.Loaded)
             {
-                _CurrentCanvasType = CanvasTypes.TravelForecast;
-                UpdateTravelCities(0);
+                _CurrentCanvasType = CanvasTypes.HourlyForecast;
                 AssignPlayMsOffsets();
-                //window.location.hash = "#aTravelForecast";
+                //window.location.hash = "#aHourlyForecast";
                 NavigateReset();
             }
         }
@@ -9745,6 +9676,168 @@ var PopulateDailyHistory = function (WeatherParameters)
     BackGroundImage.src = "https://battaglia.ddns.net/twc/images/BackGround3_1.png";
 };
 
+// TROY-FARM P28 (2026-11-15): Hourly Forecast screen — Troy's own words,
+// "take off the travel cities forecast and have my hourly forecast in its
+// place." Reads hourly-forecast.json, staged fresh every 15 min by the
+// Channel cron from the NWS hourly forecast for the farm gridpoint
+// ILM 68,59 (see stage_hourly_forecast.py in the Battaglia goal): 12
+// hourly rows — hour, temp, sky word, wind, precip chance — farm point
+// only, never town/airport data. Same slot as Travel Cities Forecast
+// (CanvasTypes 3), static 12-row table, no scroll.
+var _P28LoadStagedHourlyForecast = function (WeatherParameters)
+{
+    $.ajaxCORS({
+        type: "GET",
+        url: "hourly-forecast.json",
+        dataType: "json",
+        crossDomain: true,
+        cache: false,
+        success: function (json)
+        {
+            if (!_P28ValidateHourlyForecast(json))
+            {
+                console.warn("P28: hourly-forecast.json invalid or stale; Hourly Forecast screen skipped.");
+                WeatherParameters.Progress.HourlyForecast = LoadStatuses.Failed;
+                return;
+            }
+            WeatherParameters.HourlyForecast = json;
+            PopulateHourlyForecast(WeatherParameters);
+        },
+        error: function ()
+        {
+            WeatherParameters.Progress.HourlyForecast = LoadStatuses.Failed;
+        }
+    });
+};
+
+var _P28ValidateHourlyForecast = function (json)
+{
+    if (!json || json.station !== "KNCCAROL120") return false;
+    if (!json.hours || json.hours.length !== 12) return false;
+    // The app ignores a file whose generatedAt is older than 2 hours
+    // (the cron re-stages it every 15 min, so a stale file means the
+    // staging broke — fail soft and skip the screen, never show old hours).
+    var _gen = new Date(json.generatedAt);
+    if (isNaN(_gen.getTime())) return false;
+    if ((new Date() - _gen) > 2 * 60 * 60 * 1000) return false;
+    for (var i = 0; i < json.hours.length; i++)
+    {
+        var h = json.hours[i];
+        if (typeof h.hourLabel !== "string" || h.hourLabel === "") return false;
+        if (typeof h.tempF !== "number" || isNaN(h.tempF)) return false;
+        if (typeof h.shortForecast !== "string" || h.shortForecast === "") return false;
+        if (typeof h.windSpeedMph !== "number" || isNaN(h.windSpeedMph)) return false;
+        if (h.pop !== null && typeof h.pop !== "number") return false;
+        if (typeof h.isDaytime !== "boolean") return false;
+        if (h.iconUrl !== null && typeof h.iconUrl !== "string") return false;
+        // Wind direction: a string when the wind blows, null only for Calm.
+        if (h.windSpeedMph === 0)
+        {
+            if (h.windDir !== null && typeof h.windDir !== "string") return false;
+        }
+        else if (typeof h.windDir !== "string" || h.windDir === "") return false;
+    }
+    return true;
+};
+
+var PopulateHourlyForecast = function (WeatherParameters)
+{
+    if (WeatherParameters == null || !WeatherParameters.HourlyForecast)
+    {
+        return;
+    }
+
+    var HourlyForecast = WeatherParameters.HourlyForecast;
+
+    // Draw canvas
+    var canvas = canvasHourlyForecast[0];
+    var context = canvas.getContext("2d", { willReadFrequently: true });
+
+    var BackGroundImage = new Image();
+    // TROY-FARM P23 pattern: proceed once on load, error, or an 8s
+    // timeout — a hung/missing background must not wedge the screen.
+    var _p28Drawn = false;
+    var _p28Draw = function ()
+    {
+        if (_p28Drawn) return;
+        _p28Drawn = true;
+        context.drawImage(BackGroundImage, 0, 0);
+
+        DrawTitleText(context, "Hourly", "Forecast");
+
+        // Header row (12pt) + 12 hourly rows (19pt). First row baseline
+        // y=134, 23px spacing, last baseline y=387 — the ticker strip
+        // starts ~y405, so nothing crosses it. Columns: hour left x52,
+        // icon 26x26 at x120, temp right-aligned x205, sky word left
+        // x225, wind right-aligned x500, rain chance right-aligned x600.
+        // Wind reads direction + number only, no MPH — this is a forecast
+        // table like Latest Observations (main-screen GUSTS rows and the
+        // ticker keep MPH); 0 wind reads Calm, never a bare 0.
+        DrawText(context, "Star4000", "12pt", "#FFFFFF", 52, 112, "HOUR", 2);
+        DrawText(context, "Star4000", "12pt", "#FFFFFF", 205, 112, "TEMP", 2, "end");
+        DrawText(context, "Star4000", "12pt", "#FFFFFF", 225, 112, "SKY", 2);
+        DrawText(context, "Star4000", "12pt", "#FFFFFF", 500, 112, "WIND", 2, "end");
+        DrawText(context, "Star4000", "12pt", "#FFFFFF", 600, 112, "RAIN %", 2, "end");
+
+        for (var i = 0; i < HourlyForecast.hours.length; i++)
+        {
+            var _row = HourlyForecast.hours[i];
+            var _y = 134 + i * 23;
+
+            DrawText(context, "Star4000", "19pt", "#FFFFFF", 52, _y, _row.hourLabel, 2);
+            DrawText(context, "Star4000", "19pt", "#FFFFFF", 205, _y, _row.tempF + "\u00B0", 2, "end");
+
+            // Sky word: NWS shortForecast can be long ("Chance Rain
+            // Showers" = 20 chars). Shrink that row's font until it fits
+            // the x225→x440 column (min 14pt) — never truncate, never clip.
+            // DrawText sets context.font as size + " 'Star4000'", so the
+            // measure uses the same format.
+            var _skySize = 19;
+            context.font = "19pt 'Star4000'";
+            while (_skySize > 14 && context.measureText(_row.shortForecast).width > 215)
+            {
+                _skySize -= 1;
+                context.font = _skySize + "pt 'Star4000'";
+            }
+            DrawText(context, "Star4000", _skySize + "pt", "#FFFFFF", 225, _y, _row.shortForecast, 2);
+
+            var _wind = (_row.windSpeedMph === 0) ? "Calm" : _row.windDir + " " + _row.windSpeedMph;
+            DrawText(context, "Star4000", "19pt", "#FFFFFF", 500, _y, _wind, 2, "end");
+
+            var _pop = (_row.pop === null ? 0 : _row.pop) + "%";
+            DrawText(context, "Star4000", "19pt", "#FFFFFF", 600, _y, _pop, 2, "end");
+
+            // Sky icon (best-effort, must never wedge the screen): the
+            // staged URL already carries the night 'n' prefix — moon at
+            // night, sun by day. Each icon draws in as it arrives; the
+            // screen's Loaded state depends only on the JSON + row
+            // drawing, never on icon loads.
+            if (_row.iconUrl)
+            {
+                (function (_iconY, _iconUrl)
+                {
+                    var _img = new Image();
+                    _img.onload = function ()
+                    {
+                        context.drawImage(_img, 120, _iconY - 20, 26, 26);
+                    };
+                    _img.src = _iconUrl;
+                })(_y, _row.iconUrl);
+            }
+        }
+
+        WeatherParameters.Progress.HourlyForecast = LoadStatuses.Loaded;
+
+        UpdateWeatherCanvas(WeatherParameters, canvasHourlyForecast);
+        // Late-load adjust: the slot only exists once this data lands.
+        AssignPlayMsOffsets(true);
+    };
+    BackGroundImage.onload = _p28Draw;
+    BackGroundImage.onerror = _p28Draw;
+    window.setTimeout(_p28Draw, 8000);
+    BackGroundImage.src = "https://battaglia.ddns.net/twc/images/BackGround3_1.png";
+};
+
 
 var PopulateAlmanacInfo = function (WeatherParameters)
 {
@@ -10138,81 +10231,6 @@ Date.prototype.toTimeAMPM = function ()
     return strTime;
 }
 
-var GetTravelWeather = function (WeatherParameters)
-{
-    var TravelCities = WeatherParameters.TravelCities;
-    var Total = TravelCities.length;
-    var Count = 0;
-
-    $(TravelCities).each(function ()
-    {
-        var TravelCity = this;
-
-        //var Url = "https://forecast.weather.gov/MapClick.php?FcstType=dwml";
-        var Url;
-
-        //if (TravelCity.WFO)
-        //{
-        //    Url = "https://api.weather.gov/gridpoints";
-        //    Url += "/" + TravelCity.WFO.toString();
-        //    Url += "/" + TravelCity.X.toString();
-        //    Url += "," + TravelCity.Y.toString();
-        //    Url += "/forecast";
-
-        //    //Url = "https://api.weather.gov/gridpoints/LWX/96,70/forecast";
-        //}
-        //else
-        {
-            Url = "https://forecast.weather.gov/MapClick.php?FcstType=dwml";
-            Url += "&lat=" + TravelCity.Latitude.toString();
-            Url += "&lon=" + TravelCity.Longitude.toString();
-        }
-
-        //console.log("TravelCities: Url='" + Url + "'");
-
-        //Url = "cors/?u=" + encodeURIComponent(Url);
-
-        // Load the xml file using ajax 
-        $.ajaxCORS({
-            type: "GET",
-            url: Url,
-            dataType: "xml",
-            crossDomain: true,
-            cache: false,
-            success: function (xml)
-            {
-                var $xml = $(xml);
-                //console.log(xml);
-
-                TravelCity.WeatherDwmlParser = new WeatherDwmlParser($xml);
-                //console.log(WeatherDwmlParser);
-
-                TravelCity.WeatherTravelForecast = new WeatherTravelForecast(TravelCity.WeatherDwmlParser);
-
-                Count++;
-                if (Count == Total)
-                {
-                    PopulateTravelCities(WeatherParameters);
-                    //WeatherParameters.Progress.TravelForecast = LoadStatuses.Loaded;
-                }
-            },
-            error: function (xhr, error, errorThrown)
-            {
-                console.error("GetTravelWeather for city '" + TravelCity.Name + "' failed: " + errorThrown);
-
-                Count++;
-                if (Count == Total)
-                {
-                    PopulateTravelCities(WeatherParameters);
-                    //WeatherParameters.Progress.TravelForecast = LoadStatuses.Loaded;
-                }
-            }
-        });
-
-    });
-
-};
-
 var WeatherTravelForecast = function (WeatherDwmlParser, ForceToday, ForceTonight, ForceTomorrow)
 {
     var Today = new Date();
@@ -10367,242 +10385,6 @@ var WeatherTravelForecast = function (WeatherDwmlParser, ForceToday, ForceTonigh
     this.DayName = DayName;
 };
 
-var PopulateTravelCities = function (WeatherParameters)
-{
-    if (WeatherParameters == null || (_DontLoadGifs == true && WeatherParameters.Progress.TravelForecast != LoadStatuses.Loaded))
-    {
-        return;
-    }
-
-    var TravelCities = WeatherParameters.TravelCities;
-    //console.log(TravelCities);
-
-    var Html = "";
-
-    var tbodyTravelCities = tblTravelCities.find("tbody");
-    tbodyTravelCities.empty();
-
-    Html = "<tr>";
-    Html += "<td></td>";
-    Html += "<td></td>";
-    Html += "<td>LOW</td>";
-    Html += "<td>HIGH</td>";
-    Html += "</tr>";
-    tbodyTravelCities.append(Html);
-
-    $(TravelCities).each(function ()
-    {
-        var WeatherTravelForecast = this.WeatherTravelForecast;
-
-        Html = "<tr>";
-        Html += "<td>" + this.Name + "</td>";
-
-        if (WeatherTravelForecast)
-        {
-            Html += "<td><img src='" + WeatherTravelForecast.Icon + "' /></td>";
-            Html += "<td>" + WeatherTravelForecast.MinimumTemperature + "</td>";
-            Html += "<td>" + WeatherTravelForecast.MaximumTemperature + "</td>";
-        }
-        else
-        {
-            Html += "<td colspan='3'>NO TRAVEL DATA AVAILABLE</td>";
-        }
-        Html += "</tr>";
-        tbodyTravelCities.append(Html);
-    });
-
-    var DrawTravelCities = function ()
-    {
-        // Draw canvas
-        var canvas = canvasTravelForecast[0];
-        var context = canvas.getContext("2d", { willReadFrequently: true });
-
-        var BackGroundImage = new Image();
-        BackGroundImage.onload = function ()
-        {
-            context.drawImage(BackGroundImage, 0, 0);
-            DrawHorizontalGradientSingle(context, 0, 30, 500, 90, _TopColor1, _TopColor2);
-            DrawTriangle(context, "rgb(28, 10, 87)", 500, 30, 450, 90, 500, 90);
-
-            //DrawTitleText(context, "Travel Forecast", "For " + TravelCities[0].WeatherTravelForecast.DayName);
-            DrawTitleText(context, "Travel Forecast", "For " + GetTravelCitiesDayName(TravelCities));
-
-            DrawText(context, "Star4000 Small", "24pt", "#FFFF00", 455, 105, "LOW", 2);
-            DrawText(context, "Star4000 Small", "24pt", "#FFFF00", 510, 105, "HIGH", 2);
-
-            var y = 0;
-
-            //window.setInterval(function ()
-            //{
-            //    context.drawImage(cnvTravelCitiesScroll[0], 0, y, 640, 289, 0, 110, 640, 289);
-
-            //    // Wait until the weather has been loaded.
-            //    if (WeatherParameters.Progress.GetTotalPercentage() != 100)
-            //    {
-            //        return;
-            //    }
-
-            //    // Wait 3 seconds and then start scrolling.
-            //    if (_UpdateTravelCitiesCounterMs == 0)
-            //    {
-            //        y = 0;
-            //    }
-            //    if (_UpdateTravelCitiesCounterMs > 3000)
-            //    {
-            //        //y += 1;
-            //        y += 5;
-            //    }
-            //    if (y > cnvTravelCitiesScroll.height() - 289)
-            //    {
-            //        y = cnvTravelCitiesScroll.height() - 289;
-
-            //        // Wait 10 seconds and start all over.
-            //        _UpdateTravelCitiesCounterMs = -10000;
-            //    }
-
-            //}, _UpdateTravelCitiesInterval);
-
-            window.setInterval(function ()
-            {
-                var Elm = document.elementFromPoint(0, 100);
-                if (Elm != canvas)
-                {
-                    return;
-                }
-
-                context.drawImage(cnvTravelCitiesScroll[0], 0, _UpdateTravelCitiesY, 640, 289, 0, 110, 640, 289);
-            }, 100);
-
-            WeatherParameters.Progress.TravelForecast = LoadStatuses.Loaded;
-
-            UpdateWeatherCanvas(WeatherParameters, canvasTravelForecast);
-        };
-        BackGroundImage.src = "https://battaglia.ddns.net/twc/images/BackGround6_1.png";
-        //BackGroundImage.src = "https://battaglia.ddns.net/twc/images/BackGround6_" + _Themes.toString() + ".png";
-    };
-
-    var cnvTravelCitiesScroll;
-
-    var ShowTravelCitiesScroll = function ()
-    {
-        var img = new Image();
-        var cnvTravelCitiesScrollId;
-        var context;
-        var TravelCities = WeatherParameters.TravelCities;
-
-        cnvTravelCitiesScrollId = "cnvTravelCitiesScroll";
-
-        if (_DontLoadGifs == false)
-        {
-            // Clear the current image.
-            divTravelCitiesScroll.empty();
-
-            divTravelCitiesScroll.html("<canvas id='" + cnvTravelCitiesScrollId + "' />");
-            cnvTravelCitiesScroll = $("#" + cnvTravelCitiesScrollId);
-            cnvTravelCitiesScroll.attr("width", "640"); // For Chrome.
-            cnvTravelCitiesScroll.attr("height", "1728"); // For Chrome.
-            cnvTravelCitiesScroll[0].RelatedCanvas = canvasTravelForecast[0];
-            //cnvTravelCitiesScroll.css("background",  "repeating-linear-gradient(#4040ff, #202080, #202080, #4040ff 20%)");
-        }
-        cnvTravelCitiesScroll = $("#" + cnvTravelCitiesScrollId);
-        context = cnvTravelCitiesScroll[0].getContext("2d", { willReadFrequently: true });
-
-        DrawBox(context, "rgb(35, 50, 112)", 0, 0, 640, 1728);
-
-        for (var Index = 0; Index <= 4; Index++)
-        {
-            var y = Index * 346;
-            DrawHorizontalGradient(context, 0, y, 640, y + 346, "#102080", "#001040");
-        }
-
-        var y = 50;
-        var Counter = 0;
-        var MaxIcons = TravelCities.length;
-
-        $(TravelCities).each(function ()
-        {
-            var TravelCity = this;
-            var WeatherTravelForecast = TravelCity.WeatherTravelForecast;
-            
-            DrawText(context, "Star4000 Large Compressed", "24pt", "#FFFF00", 80, y, TravelCity.Name, 2);
-
-            if (WeatherTravelForecast && WeatherTravelForecast.Icon != "https://battaglia.ddns.net/twc/images/r/")
-            {
-                var MinimumTemperature;
-                var MaximumTemperature;
-
-                switch (_Units)
-                {
-                    case Units.English:
-                        MinimumTemperature = WeatherTravelForecast.MinimumTemperature.toString();
-                        MaximumTemperature = WeatherTravelForecast.MaximumTemperature.toString();
-                        break;
-
-                    case Units.Metric:
-                        MinimumTemperature = Math.round(WeatherTravelForecast.MinimumTemperatureC).toString();
-                        MaximumTemperature = Math.round(WeatherTravelForecast.MaximumTemperatureC).toString();
-                        break;
-                }
-
-                //DrawText(context, "Star4000 Large", "24pt", "#FFFF00", 460, y, WeatherTravelForecast.MinimumTemperature, 2);
-                //var MinimumTemperature = WeatherTravelForecast.MinimumTemperature.toString();
-                var x = (500 - (MinimumTemperature.length * 20));
-                DrawText(context, "Star4000 Large", "24pt", "#FFFF00", x, y, MinimumTemperature, 2);
-
-                //DrawText(context, "Star4000 Large", "24pt", "#FFFF00", 520, y, WeatherTravelForecast.MaximumTemperature, 2);
-                //var MaximumTemperature = WeatherTravelForecast.MaximumTemperature.toString();
-                var x = (560 - (MaximumTemperature.length * 20));
-                DrawText(context, "Star4000 Large", "24pt", "#FFFF00", x, y, MaximumTemperature, 2);
-
-                if (_DontLoadGifs == true)
-                {
-                    Counter++;
-                    if (Counter == MaxIcons)
-                    {
-                        DrawTravelCities();
-                    }
-                }
-                else
-                {
-                    var gifIcon = new SuperGif({
-                        src: WeatherTravelForecast.Icon,
-                        loop_delay: 100,
-                        auto_play: true,
-                        canvas: cnvTravelCitiesScroll[0],
-                        x: 330,
-                        y: y - 35,
-                        max_width: 47,
-                    });
-
-                    gifIcon.load(function ()
-                    {
-                        Counter++;
-                        if (Counter == MaxIcons)
-                        {
-                            DrawTravelCities();
-                        };
-                    });
-                }
-            }
-            else
-            {
-                DrawText(context, "Star4000 Small", "24pt", "#FFFFFF", 400, y - 18, "NO TRAVEL", 2);
-                DrawText(context, "Star4000 Small", "24pt", "#FFFFFF", 400, y, "DATA AVAILABLE", 2);
-
-                Counter++;
-                if (Counter == MaxIcons)
-                {
-                    DrawTravelCities();
-                };
-            }
-
-            y += 72;
-        });
-    };
-    ShowTravelCitiesScroll();
-
-};
-
 var DrawHorizontalGradient = function (context, x1, y1, x2, y2, color1, color2)
 {
     // http://www.w3schools.com/tags/canvas_createlineargradient.asp
@@ -10626,58 +10408,6 @@ var DrawHorizontalGradientSingle = function (context, x1, y1, x2, y2, color1, co
     context.fillStyle = LinearGradient;
     context.fillRect(x1, y1, x2 - x1, y2 - y1);
 };
-
-var UpdateTravelCities = function (Offset)
-{
-    var canvas = canvasTravelForecast[0];
-    var context = canvas.getContext("2d", { willReadFrequently: true });
-    var cnvTravelCitiesScroll = $("#cnvTravelCitiesScroll");
-
-    switch (Offset)
-    {
-        case undefined:
-            break;
-        case 0:
-            _UpdateTravelCitiesY = 0;
-            break;
-        case Infinity:
-            _UpdateTravelCitiesY = cnvTravelCitiesScroll.height() - 289;
-            break;
-        default:
-            _UpdateTravelCitiesY += (289 * Offset);
-            if (_UpdateTravelCitiesY > cnvTravelCitiesScroll.height() - 289)
-            {
-                _UpdateTravelCitiesY = cnvTravelCitiesScroll.height() - 289;
-            }
-            else if (_UpdateTravelCitiesY < 0)
-            {
-                _UpdateTravelCitiesY = 0;
-            }
-            break;
-    }
-
-    context.drawImage(cnvTravelCitiesScroll[0], 0, _UpdateTravelCitiesY, 640, 289, 0, 110, 640, 289);
-
-    //// Wait 3 seconds and then start scrolling.
-    //if (_UpdateTravelCitiesCounterMs == 0)
-    //{
-    //    y = 0;
-    //}
-    //if (_UpdateTravelCitiesCounterMs > 3000)
-    //{
-    //    //y += 1;
-    //    y += 5;
-    //}
-    //if (y > cnvTravelCitiesScroll.height() - 289)
-    //{
-    //    y = cnvTravelCitiesScroll.height() - 289;
-
-    //    // Wait 10 seconds and start all over.
-    //    _UpdateTravelCitiesCounterMs = -10000;
-    //}
-
-};
-
 
 var GetRegionalStations = function (WeatherParameters, Distance)
 {
@@ -13672,7 +13402,7 @@ var Progress = function (e)
     this.CurrentConditions = LoadStatuses.Loading;
     this.WordedForecast = LoadStatuses.Loading;
     this.FourDayForecast = LoadStatuses.Loading;
-    this.TravelForecast = LoadStatuses.Loading;
+    this.HourlyForecast = LoadStatuses.Loading;
     this.NearbyConditions = LoadStatuses.Loading;
     this.CurrentRegionalMap = LoadStatuses.Loading;
     this.TomorrowsRegionalMap = LoadStatuses.Loading;
@@ -13807,7 +13537,7 @@ var Progress = function (e)
 
         __DrawText("Current Conditions", WeatherParameters.Progress.CurrentConditions);
         __DrawText("Latest Observations", WeatherParameters.Progress.NearbyConditions);
-        __DrawText("Travel Forecast", WeatherParameters.Progress.TravelForecast);
+        __DrawText("Hourly Forecast", WeatherParameters.Progress.HourlyForecast);
         __DrawText("Regional Forecast", WeatherParameters.Progress.TomorrowsRegionalMap);
         __DrawText("Regional Observations", WeatherParameters.Progress.CurrentRegionalMap);
         __DrawText("Local Forecast", WeatherParameters.Progress.WordedForecast);
@@ -13819,7 +13549,7 @@ var Progress = function (e)
 
         ////DrawText(context, "Star4000 Extended", "16pt", "#ffffff", 70, OffsetY, "Current Coniditions: " + (WeatherParameters.Progress.CurrentConditions == true ? "Loaded" : "Loading...")); OffsetY += 25;
         //DrawText(context, "Star4000 Extended", "16pt", "#ffffff", 70, OffsetY, "Latest Observations: " + (WeatherParameters.Progress.NearbyConditions == true ? "Loaded" : "Loading...")); OffsetY += 25;
-        //DrawText(context, "Star4000 Extended", "16pt", "#ffffff", 70, OffsetY, "Travel Forecast: " + (WeatherParameters.Progress.TravelForecast == true ? "Loaded" : "Loading...")); OffsetY += 25;
+        //DrawText(context, "Star4000 Extended", "16pt", "#ffffff", 70, OffsetY, "Travel Forecast: " + (WeatherParameters.Progress.HourlyForecast == true ? "Loaded" : "Loading...")); OffsetY += 25;
         //DrawText(context, "Star4000 Extended", "16pt", "#ffffff", 70, OffsetY, "Today's Forecast: " + (WeatherParameters.Progress.TomorrowsRegionalMap == true ? "Loaded" : "Loading...")); OffsetY += 25;
         //DrawText(context, "Star4000 Extended", "16pt", "#ffffff", 70, OffsetY, "Regional Observations: " + (WeatherParameters.Progress.CurrentRegionalMap == true ? "Loaded" : "Loading...")); OffsetY += 25;
         //DrawText(context, "Star4000 Extended", "16pt", "#ffffff", 70, OffsetY, "Local Forecast: " + (WeatherParameters.Progress.WordedForecast == true ? "Loaded" : "Loading...")); OffsetY += 25;
@@ -13849,7 +13579,7 @@ var Progress = function (e)
         {
             Percentage += IncreaseAmount;
         }
-        if (this.TravelForecast != LoadStatuses.Loading)
+        if (this.HourlyForecast != LoadStatuses.Loading)
         {
             Percentage += IncreaseAmount;
         }
@@ -14070,7 +13800,6 @@ var UpdateWeatherCanvases = function (WeatherParameters)
     if (WeatherParameters.Progress.GetTotalPercentage() == 100)
     {
         _UpdateWeatherCurrentConditionCounterMs += _UpdateWeatherUpdateMs;
-        _UpdateTravelCitiesCounterMs += _UpdateWeatherUpdateMs;
         _UpdateHazardsCounterMs += _UpdateWeatherUpdateMs;
         _UpdateLocalForecastCounterMs += _UpdateWeatherUpdateMs;
         _UpdateCustomScrollTextMs += _UpdateWeatherUpdateMs;
@@ -14137,7 +13866,7 @@ var UpdateWeatherCanvas = function (WeatherParameters, Canvas)
         // TROY-FARM: NOAA emblem stays on every screen.
     }
 
-    if (Canvas[0] == canvasTravelForecast[0])
+    if (Canvas[0] == canvasHourlyForecast[0])
     {
         // TROY-FARM: NOAA emblem stays on every screen.
     }
@@ -14915,7 +14644,7 @@ var RefreshSegments = function ()
     PopulateOutlook(_WeatherParameters);
     PopulateMarineForecast(_WeatherParameters);
     PopulateAirQuality(_WeatherParameters);
-    PopulateTravelCities(_WeatherParameters);
+    PopulateHourlyForecast(_WeatherParameters);
     ShowRegionalMap(_WeatherParameters, true);
     ShowRegionalMap(_WeatherParameters, false, true);
     ShowRegionalMap(_WeatherParameters);
@@ -16231,53 +15960,30 @@ var GetNarrationText = function ()
             Text = "Your local radar.";
             break;
 
-        case CanvasTypes.TravelForecast:
-            var TravelCities = _WeatherParameters.TravelCities;
-            var UpdateTravelCitiesIndex = SubCanvasType;
+        case CanvasTypes.HourlyForecast:
+            var HourlyForecast = _WeatherParameters.HourlyForecast;
 
-            if (UpdateTravelCitiesIndex == 0)
+            if (HourlyForecast && HourlyForecast.hours)
             {
-                //Text += "Travel Forecast for " + TravelCities[0].WeatherTravelForecast.DayName + " for the following cities. ";
-                Text += "Travel Forecast for " + GetTravelCitiesDayName(TravelCities) + " for the following cities. ";
-            }
-
-            //for (var Index = (UpdateTravelCitiesIndex * 3) ; Index <= ((UpdateTravelCitiesIndex * 3) + 3) - 1; Index++)
-            $(TravelCities).each(function ()
-            {
-                var TravelCity = this;
-                var WeatherTravelForecast = TravelCity.WeatherTravelForecast;
-
-                Text += TravelCity.Name + " ";
-
-                if (WeatherTravelForecast && WeatherTravelForecast.Icon != "https://battaglia.ddns.net/twc/images/r/")
+                // TROY-FARM P28 (2026-11-15): Travel Cities Forecast is
+                // gone — Troy asked for his hourly forecast in its place.
+                // Read the 12 staged NWS hourly rows for the farm point.
+                Text += "Hourly forecast for Calabash Farm at Brunswick. ";
+                $(HourlyForecast.hours).each(function ()
                 {
-                    Text += WeatherTravelForecast.Conditions + " ";
-
-                    var MinimumTemperature;
-                    var MaximumTemperature;
-
-                    switch (_Units)
+                    var _p28Hour = this;
+                    Text += _p28Hour.hourLabel + ", " + _p28Hour.tempF + " degrees, " + _p28Hour.shortForecast + ", ";
+                    if (_p28Hour.windSpeedMph === 0)
                     {
-                        case Units.English:
-                            MinimumTemperature = WeatherTravelForecast.MinimumTemperature.toString();
-                            MaximumTemperature = WeatherTravelForecast.MaximumTemperature.toString();
-                            break;
-
-                        case Units.Metric:
-                            MinimumTemperature = Math.round(WeatherTravelForecast.MinimumTemperatureC).toString();
-                            MaximumTemperature = Math.round(WeatherTravelForecast.MaximumTemperatureC).toString();
-                            break;
+                        Text += "wind Calm, ";
                     }
-
-                    Text += " with high of " + MaximumTemperature.replaceAll(".", " point ") + " ";
-                    Text += " and low of " + MinimumTemperature.replaceAll(".", " point ") + " ";
-                }
-                else
-                {
-                    Text += " No travel data available ";
-                }
-                Text += ". ";
-            });
+                    else
+                    {
+                        Text += "wind " + GetWindDirectionWords(_p28Hour.windDir) + _p28Hour.windSpeedMph + " miles per hour, ";
+                    }
+                    Text += (_p28Hour.pop === null ? 0 : _p28Hour.pop) + " percent chance of rain. ";
+                });
+            }
 
             break;
 
@@ -16429,24 +16135,6 @@ var GetRssFeed = function (RssUrl)
             AssignScrollText(null);
         }
     });
-};
-
-var GetTravelCitiesDayName = function (TravelCities)
-{
-    var DayName = "";
-
-    $(TravelCities).each(function ()
-    {
-        var TravelCity = this;
-
-        if (TravelCity.WeatherTravelForecast)
-        {
-            DayName = TravelCity.WeatherTravelForecast.DayName;
-            return false;
-        }
-    });
-
-    return DayName;
 };
 
 var ScrollHazardText = function (enable)
