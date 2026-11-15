@@ -9522,7 +9522,7 @@ var _P26LoadStagedDailyHistory = function (WeatherParameters)
         {
             if (!_P26ValidateDailyHistory(json))
             {
-                console.warn("P26: daily-history.json invalid or not today; Daily History screen skipped.");
+                console.warn("P26: daily-history.json invalid or older than yesterday; Daily History screen skipped.");
                 WeatherParameters.Progress.DailyHistory = LoadStatuses.Failed;
                 return;
             }
@@ -9539,12 +9539,26 @@ var _P26LoadStagedDailyHistory = function (WeatherParameters)
 var _P26ValidateDailyHistory = function (json)
 {
     if (!json || json.station !== "KNCCAROL120") return false;
-    // Today, farm-local (the browser runs in America/New_York).
+    // P27 CADENCE (Troy's own words, 2026-11-15 ~02:02 EST): "Update it
+    // each night at 11:55 pm and leave that history up until the next
+    // night at 11:55 pm every night so you will always know the weather
+    // history for the prior day before each day." The screen shows the
+    // PRIOR COMPLETED day, not today's running totals. So the staged
+    // file is dated yesterday almost all the time (today only in the
+    // ~5 minutes between the 11:55 PM staging and midnight). Accept
+    // today or yesterday, farm-local (the browser runs in
+    // America/New_York); anything older is a missed nightly update and
+    // still fails soft. The screen always prints the file's own date
+    // (dateShort), so it can never be misread as another day.
     var _today = new Date();
-    var _yyyymmdd = _today.getFullYear() + "-" +
-        ("0" + (_today.getMonth() + 1)).slice(-2) + "-" +
-        ("0" + _today.getDate()).slice(-2);
-    if (json.date !== _yyyymmdd) return false;
+    var _yesterday = new Date(_today.getFullYear(), _today.getMonth(), _today.getDate() - 1);
+    var _fmt = function (d)
+    {
+        return d.getFullYear() + "-" +
+            ("0" + (d.getMonth() + 1)).slice(-2) + "-" +
+            ("0" + d.getDate()).slice(-2);
+    };
+    if (json.date !== _fmt(_today) && json.date !== _fmt(_yesterday)) return false;
     // P27: avgTempF + dateShort are required (the Daily Summary screen
     // shows them); peakGustDir is a string, or null when the peak gust
     // is 0 and no direction applies.
@@ -15926,7 +15940,9 @@ var GetNarrationText = function ()
                 // P27: narration matches the Daily Summary screen — average
                 // temp, gust direction words, Calm/None at 0. The screen
                 // no longer shows sunrise/sunset, so they are not read.
-                Text += "Weather history for today at Calabash Farm at Brunswick. ";
+                // P27 CADENCE: the screen shows the PRIOR day, so the
+                // narration names the file's own date, never "today".
+                Text += "Weather history for " + DailyHistory.dateLabel + " at Calabash Farm at Brunswick. ";
                 Text += "High " + DailyHistory.highF + ", low " + DailyHistory.lowF + ", average " + DailyHistory.avgTempF + ". ";
                 Text += "Humidity " + DailyHistory.humidityLow + " to " + DailyHistory.humidityHigh + " percent. ";
                 Text += "High dew point " + DailyHistory.dewHigh + ". ";
