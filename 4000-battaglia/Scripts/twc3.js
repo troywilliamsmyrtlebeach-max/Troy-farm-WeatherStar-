@@ -9545,18 +9545,23 @@ var _P26ValidateDailyHistory = function (json)
         ("0" + (_today.getMonth() + 1)).slice(-2) + "-" +
         ("0" + _today.getDate()).slice(-2);
     if (json.date !== _yyyymmdd) return false;
-    var _nums = ["highF", "lowF", "humidityHigh", "humidityLow", "dewHigh",
-        "dewLow", "peakWindMph", "peakGustMph", "pressureMax", "pressureMin",
-        "rainIn"];
+    // P27: avgTempF + dateShort are required (the Daily Summary screen
+    // shows them); peakGustDir is a string, or null when the peak gust
+    // is 0 and no direction applies.
+    var _nums = ["highF", "lowF", "avgTempF", "humidityHigh", "humidityLow",
+        "dewHigh", "dewLow", "peakWindMph", "peakGustMph", "pressureMax",
+        "pressureMin", "rainIn"];
     for (var i = 0; i < _nums.length; i++)
     {
         if (typeof json[_nums[i]] !== "number" || isNaN(json[_nums[i]])) return false;
     }
-    var _strs = ["dateLabel", "asOfLabel", "highTime", "lowTime", "sunrise", "sunset"];
+    var _strs = ["dateLabel", "dateShort", "asOfLabel", "highTime", "lowTime", "sunrise", "sunset"];
     for (var j = 0; j < _strs.length; j++)
     {
         if (typeof json[_strs[j]] !== "string" || json[_strs[j]] === "") return false;
     }
+    if (json.peakGustDir !== null && typeof json.peakGustDir !== "string") return false;
+    if (json.peakGustMph > 0 && !json.peakGustDir) return false;
     return true;
 };
 
@@ -9582,47 +9587,135 @@ var PopulateDailyHistory = function (WeatherParameters)
         if (_p26Drawn) return;
         _p26Drawn = true;
         context.drawImage(BackGroundImage, 0, 0);
-        DrawHorizontalGradientSingle(context, 0, 30, 500, 90, _TopColor1, _TopColor2);
-        DrawTriangle(context, "rgb(28, 10, 87)", 500, 30, 450, 90, 500, 90);
-        DrawHorizontalGradientSingle(context, 0, 90, 52, 399, _SideColor1, _SideColor2);
-        DrawHorizontalGradientSingle(context, 584, 90, 640, 399, _SideColor1, _SideColor2);
 
-        DrawTitleText(context, "Almanac", "Daily History");
+        // TROY-FARM P27 (2026-11-15): restyled to look like Troy's Daily
+        // Summary picture (Sat Oct 3, 2026) — he said "Something similar
+        // to that I guess" / "My daily weather history". The reference is
+        // 1280x720; this canvas is 640x480, so sizes are halved and the
+        // field rows run at 19pt (Star4000 24pt is ~15.2px/char — a
+        // two-column 24pt layout collided in P26; 19pt was measured live
+        // to fit every row, see the P27 harness). The app still draws its
+        // own chrome on top afterwards (logo box, NOAA emblem, ticking
+        // clock top-right, ticker strip at the bottom) via
+        // UpdateWeatherCanvas, so this draw only fills the middle.
+        // Header band: orange gradient like the picture (top #C27328 to
+        // bottom #A05A1C), full width, no triangle. Dark-purple backdrop
+        // behind the panel (#201247, as in the picture).
+        var _hdrGrad = context.createLinearGradient(0, 30, 0, 90);
+        _hdrGrad.addColorStop(0, "#C27328");
+        _hdrGrad.addColorStop(1, "#A05A1C");
+        context.fillStyle = _hdrGrad;
+        context.fillRect(0, 30, 640, 60);
+        DrawBox(context, "#201247", 0, 90, 640, 315);
 
-        DrawText(context, "Star4000", "24pt", "#FFFF00", 320, 125, DailyHistory.dateLabel, 2, "center");
-        DrawText(context, "Star4000", "19pt", "#FFFFFF", 320, 155, "KNCCAROL120 - CALABASH-FARM AT BRUNSWICK", 2, "center");
+        DrawTitleText(context, "Daily", "Summary");
 
-        // Single-column label/value rows, values right-aligned at x=580.
+        // Crescent moon icon from the picture: blue disc, white rim,
+        // white crescent on the left. Sits between the title ("Summary"
+        // ends ~x276) and the NOAA emblem (x356) — no overlap either side.
+        context.beginPath();
+        context.arc(312, 60, 23, 0, Math.PI * 2);
+        context.fillStyle = "#0a2a6b";
+        context.fill();
+        context.lineWidth = 2;
+        context.strokeStyle = "#ffffff";
+        context.stroke();
+        context.beginPath();
+        context.arc(303, 60, 16, 0, Math.PI * 2);
+        context.fillStyle = "#ffffff";
+        context.fill();
+        context.beginPath();
+        context.arc(314, 60, 15, 0, Math.PI * 2);
+        context.fillStyle = "#0a2a6b";
+        context.fill();
+
+        // Blue panel, rounded corners, like the picture (#2438a8 fill).
+        var _p27RoundRect = function (x, y, w, h, r)
+        {
+            context.beginPath();
+            context.moveTo(x + r, y);
+            context.lineTo(x + w - r, y);
+            context.arcTo(x + w, y, x + w, y + r, r);
+            context.lineTo(x + w, y + h - r);
+            context.arcTo(x + w, y + h, x + w - r, y + h, r);
+            context.lineTo(x + r, y + h);
+            context.arcTo(x, y + h, x, y + h - r, r);
+            context.lineTo(x, y + r);
+            context.arcTo(x, y, x + r, y, r);
+            context.closePath();
+        };
+        _p27RoundRect(28, 100, 584, 300, 10);
+        context.fillStyle = "#2438a8";
+        context.fill();
+
+        // Date (picture format, this day's own date) + farm name in teal.
+        // The ticking clock top-right already shows the day/date, so the
+        // full date line sits here under the header, as in the picture's
+        // panel top.
+        DrawText(context, "Star4000", "19pt", "#FFFF00", 320, 132, DailyHistory.dateShort, 2, "center");
+        DrawText(context, "Star4000", "24pt", "#68bde4", 320, 162, "CALABASH-FARM AT BRUNSWICK", 2, "center");
+
+        // Two-column fields, exactly the picture's fields and order.
         // Canvas screens show bare numbers (no degree symbol — Star4000
         // has none); labels carry the meaning. Whole numbers except
         // pressure/rain (2 decimals), per Troy's rules. 0 wind reads Calm;
-        // 0 gust reads None (his standing rules).
-        // P26 FIX (live screenshot 2026-11-15): the first two-column layout
-        // collided — Star4000 24pt runs ~15.2px/char, not ~11px, so "35
-        // (12 AM)" (152px) overran the right labels and "30.00 / 29.99"
-        // (197.6px) ran off the right edge. Measured live widths: widest
-        // value "63 (2 PM) / 35 (11 PM)" ~334px, widest label "Peak Wind /
-        // Gust" ~243px — every row below fits with >=18px to spare.
-        var _wind = (DailyHistory.peakWindMph === 0) ? "Calm" : DailyHistory.peakWindMph + " MPH";
-        var _gust = (DailyHistory.peakGustMph === 0) ? "None" : DailyHistory.peakGustMph + " MPH";
-        var _rows = [
-            // [label, value, y]
-            ["High / Low", DailyHistory.highF + " (" + DailyHistory.highTime + ") / " + DailyHistory.lowF + " (" + DailyHistory.lowTime + ")", 188],
-            ["Humidity", DailyHistory.humidityHigh + "% / " + DailyHistory.humidityLow + "%", 216],
-            ["Dew Point", DailyHistory.dewHigh + " / " + DailyHistory.dewLow, 244],
-            ["Peak Wind / Gust", _wind + " / " + _gust, 272],
-            ["Pressure", DailyHistory.pressureMax.toFixed(2) + " / " + DailyHistory.pressureMin.toFixed(2), 300],
-            ["Rain Today", DailyHistory.rainIn.toFixed(2) + " in", 328]
+        // 0 gust reads None (his standing rules); a gust over 0 shows its
+        // direction from the same WU history row that held the peak gust.
+        // Values use the picture's lowercase "mph".
+        var _wind = (DailyHistory.peakWindMph === 0) ? "Calm" : DailyHistory.peakWindMph + " mph";
+        var _gust = (DailyHistory.peakGustMph === 0) ? "None" :
+            DailyHistory.peakGustDir + " " + DailyHistory.peakGustMph + " mph";
+        var _rowsL = [
+            // [label, value, y] — left column, values right-aligned at x=300
+            ["HIGH TEMP", DailyHistory.highF.toString(), 196],
+            ["AVG TEMP", DailyHistory.avgTempF.toString(), 226],
+            ["HUMIDITY", DailyHistory.humidityLow + "-" + DailyHistory.humidityHigh + "%", 256],
+            ["PEAK GUST", _gust, 286],
+            ["RAIN TODAY", DailyHistory.rainIn.toFixed(2) + " in", 316]
         ];
-        for (var i = 0; i < _rows.length; i++)
+        var _rowsR = [
+            // [label, value, y] — right column, values right-aligned at x=588
+            ["LOW TEMP", DailyHistory.lowF.toString(), 196],
+            ["HIGH DEWPOINT", DailyHistory.dewHigh.toString(), 226],
+            ["PEAK WIND", _wind, 256],
+            ["PRESSURE", DailyHistory.pressureMin.toFixed(2) + "-" + DailyHistory.pressureMax.toFixed(2), 286]
+        ];
+        for (var i = 0; i < _rowsL.length; i++)
         {
-            var _r = _rows[i];
-            DrawText(context, "Star4000", "24pt", "#FFFFFF", 60, _r[2], _r[0], 2);
-            DrawText(context, "Star4000", "24pt", "#FFFFFF", 580, _r[2], _r[1], 2, "end");
+            var _rl = _rowsL[i];
+            DrawText(context, "Star4000", "19pt", "#FFFFFF", 52, _rl[2], _rl[0], 2);
+            DrawText(context, "Star4000", "19pt", "#FFFFFF", 300, _rl[2], _rl[1], 2, "end");
+        }
+        for (var j = 0; j < _rowsR.length; j++)
+        {
+            var _rr = _rowsR[j];
+            DrawText(context, "Star4000", "19pt", "#FFFFFF", 328, _rr[2], _rr[0], 2);
+            DrawText(context, "Star4000", "19pt", "#FFFFFF", 588, _rr[2], _rr[1], 2, "end");
         }
 
-        DrawText(context, "Star4000", "24pt", "#FFFFFF", 320, 366, "Sunrise " + DailyHistory.sunrise + "    Sunset " + DailyHistory.sunset, 2, "center");
-        DrawText(context, "Star4000", "19pt", "#FFFFFF", 320, 394, "AS OF " + DailyHistory.asOfLabel, 2, "center");
+        // Footer line from the picture.
+        DrawText(context, "Star4000", "12pt", "#FFFFFF", 320, 344, "Official daily summary from your station's Weather Underground history.", 2, "center");
+
+        // Bottom bar from the picture (#2c4b9e), square top, rounded
+        // bottom corners matching the panel.
+        context.beginPath();
+        context.moveTo(28, 356);
+        context.lineTo(612, 356);
+        context.lineTo(612, 390);
+        context.arcTo(612, 400, 602, 400, 10);
+        context.lineTo(38, 400);
+        context.arcTo(28, 400, 28, 390, 10);
+        context.closePath();
+        context.fillStyle = "#2c4b9e";
+        context.fill();
+        DrawText(context, "Star4000", "14pt", "#FFFFFF", 320, 375, "Daily summary for TROY'S WEATHER AT", 2, "center");
+        DrawText(context, "Star4000", "14pt", "#FFFFFF", 320, 393, "CALABASH-FARM AT BRUNSWICK", 2, "center");
+
+        // Panel outline last so it stays crisp over the bottom bar.
+        _p27RoundRect(28, 100, 584, 300, 10);
+        context.lineWidth = 3;
+        context.strokeStyle = "#5a6fe0";
+        context.stroke();
 
         WeatherParameters.Progress.DailyHistory = LoadStatuses.Loaded;
 
@@ -15830,14 +15923,19 @@ var GetNarrationText = function ()
 
             if (DailyHistory)
             {
+                // P27: narration matches the Daily Summary screen — average
+                // temp, gust direction words, Calm/None at 0. The screen
+                // no longer shows sunrise/sunset, so they are not read.
                 Text += "Weather history for today at Calabash Farm at Brunswick. ";
-                Text += "High " + DailyHistory.highF + " at " + DailyHistory.highTime + ", low " + DailyHistory.lowF + " at " + DailyHistory.lowTime + ". ";
-                Text += "Humidity " + DailyHistory.humidityHigh + " to " + DailyHistory.humidityLow + " percent. ";
-                Text += "Dew point " + DailyHistory.dewHigh + " to " + DailyHistory.dewLow + ". ";
-                Text += "Peak wind " + DailyHistory.peakWindMph + " miles per hour, peak gust " + DailyHistory.peakGustMph + " miles per hour. ";
-                Text += "Pressure " + DailyHistory.pressureMax.toString().replaceAll(".", " point ") + " to " + DailyHistory.pressureMin.toString().replaceAll(".", " point ") + ". ";
+                Text += "High " + DailyHistory.highF + ", low " + DailyHistory.lowF + ", average " + DailyHistory.avgTempF + ". ";
+                Text += "Humidity " + DailyHistory.humidityLow + " to " + DailyHistory.humidityHigh + " percent. ";
+                Text += "High dew point " + DailyHistory.dewHigh + ". ";
+                var _nWind = (DailyHistory.peakWindMph === 0) ? "Calm" : DailyHistory.peakWindMph + " miles per hour";
+                var _nGust = (DailyHistory.peakGustMph === 0) ? "None" :
+                    GetWindDirectionWords(DailyHistory.peakGustDir) + DailyHistory.peakGustMph + " miles per hour";
+                Text += "Peak wind " + _nWind + ", peak gust " + _nGust + ". ";
+                Text += "Pressure " + DailyHistory.pressureMin.toString().replaceAll(".", " point ") + " to " + DailyHistory.pressureMax.toString().replaceAll(".", " point ") + ". ";
                 Text += "Rain today " + DailyHistory.rainIn.toString().replaceAll(".", " point ") + " inches. ";
-                Text += "Sunrise " + DailyHistory.sunrise + ", sunset " + DailyHistory.sunset + ". ";
             }
 
             break;
