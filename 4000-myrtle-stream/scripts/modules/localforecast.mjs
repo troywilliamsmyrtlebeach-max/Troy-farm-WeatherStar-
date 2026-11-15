@@ -37,12 +37,12 @@ class LocalForecast extends WeatherDisplay {
 
 		if (!conditions.length) {
 			this.screenTexts = [
-				// FRESH FORECAST 2026-11-15 ~1:33 PM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-15T18:30:18+00:00; forecast through Saturday night, verified this run). Written in the screenshot format (generator
+				// FRESH FORECAST 2026-11-15 ~2:05 PM EST (NWS ILM gridpoint 68,59 for the farm,
+				// generated 2026-11-15T19:03:52+00:00; forecast through Saturday night, verified this run). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
 				'THIS AFTERNOON... Sunny. High near 60, with temperatures falling to around 54 in the afternoon. North wind around 6 mph. Precip chance 0%.',
-				'TONIGHT... Areas of frost after 3am. Clear, with a low around 34. North wind around 2 mph. Precip chance 0%.',
-				'MONDAY... Areas of frost before 8am. Sunny. High near 62, with temperatures falling to around 56 in the afternoon. North wind 3 to 9 mph. Precip chance 0%.',
+				'TONIGHT... Clear, with a low around 34. North wind around 2 mph. Precip chance 0%.',
+				'MONDAY... Sunny. High near 62, with temperatures falling to around 56 in the afternoon. North wind 3 to 9 mph. Precip chance 0%.',
 				'MONDAY NIGHT... Clear, with a low around 36. Northeast wind around 5 mph. Precip chance 0%.',
 				'TUESDAY... Sunny, with a high near 65. Northeast wind 5 to 9 mph. Precip chance 0%.',
 				'TUESDAY NIGHT... Clear, with a low around 38. Precip chance 0%.',
