@@ -1,30 +1,28 @@
-Expires:202611151930;;678003
-FPUS52 KILM 150625
+Expires:202611152330;;678003
+FPUS52 KILM 151021
 ZFPILM
 
 Zone Forecast Product
 National Weather Service Wilmington NC
-125 AM EST Sun Nov 15 2026
+521 AM EST Sun Nov 15 2026
 
-NCZ106-151930-
+NCZ106-152330-
 Coastal Pender-
 Including the city of Surf City
-125 AM EST Sun Nov 15 2026
+521 AM EST Sun Nov 15 2026
 
 ...FROST ADVISORY IN EFFECT UNTIL 9 AM EST THIS MORNING...
 
-.REST OF TONIGHT...Clear. Near steady temperature in the upper
-30s. Northwest winds 5 to 10 mph.
-.SUNDAY...Patchy frost in the morning. Sunny. Highs in the mid
-50s. Northwest winds 5 to 10 mph.
-.SUNDAY NIGHT...Clear. Lows in the upper 30s. North winds 5 to
-10 mph.
+.TODAY...Patchy to areas of frost early this morning. Sunny.
+Highs in the mid 50s. Northwest winds 5 to 10 mph.
+.TONIGHT...Clear. Lows in the upper 30s. North winds 5 to 10 mph.
 .MONDAY...Sunny. Highs in the mid 50s. North winds 5 to 10 mph
 with gusts up to 20 mph.
 .MONDAY NIGHT...Clear. Lows in the upper 30s. North winds 5 to
 10 mph.
-.TUESDAY AND TUESDAY NIGHT...Clear. Highs in the lower 60s. Lows
-around 40.
+.TUESDAY...Sunny. Highs in the lower 60s. Northeast winds 5 to
+10 mph.
+.TUESDAY NIGHT...Clear. Lows around 40.
 .WEDNESDAY THROUGH THURSDAY...Clear. Highs in the upper 60s. Lows
 in the lower 40s.
 .THURSDAY NIGHT THROUGH SATURDAY...Mostly clear. Lows in the mid
@@ -32,24 +30,22 @@ in the lower 40s.
 
 $$
 
-NCZ105-151930-
+NCZ105-152330-
 Inland Pender-
 Including the city of Burgaw
-125 AM EST Sun Nov 15 2026
+521 AM EST Sun Nov 15 2026
 
 ...FREEZE WARNING IN EFFECT UNTIL 9 AM EST THIS MORNING...
 
-.REST OF TONIGHT...Clear. Areas of frost. Lows in the upper 20s.
-Northwest winds around 5 mph.
-.SUNDAY...Areas of frost in the morning. Sunny. Highs in the
-upper 50s. Northwest winds around 5 mph.
-.SUNDAY NIGHT...Clear. Lows in the mid 30s. North winds around
-5 mph.
+.TODAY...Widespread frost this morning. Sunny. Highs in the upper
+50s. Northwest winds around 5 mph.
+.TONIGHT...Clear. Lows in the mid 30s. North winds around 5 mph.
 .MONDAY...Sunny. Highs in the upper 50s. North winds 5 to 10 mph.
 .MONDAY NIGHT...Clear. Lows in the lower 30s. North winds around
 5 mph.
-.TUESDAY AND TUESDAY NIGHT...Clear. Highs in the lower 60s. Lows
-in the mid 30s.
+.TUESDAY...Sunny. Highs in the lower 60s. North winds around
+5 mph.
+.TUESDAY NIGHT...Clear. Lows in the mid 30s.
 .WEDNESDAY THROUGH THURSDAY...Clear. Highs around 70. Lows in the
 mid 30s.
 .THURSDAY NIGHT THROUGH SATURDAY...Mostly clear. Lows around 40.
@@ -57,26 +53,24 @@ Highs in the lower 70s.
 
 $$
 
-NCZ108-151930-
+NCZ108-152330-
 Coastal New Hanover-
 Including the cities of Masonboro, Myrtle Grove, Ogden,
 Carolina Beach, and Seagate
-125 AM EST Sun Nov 15 2026
+521 AM EST Sun Nov 15 2026
 
 ...FROST ADVISORY IN EFFECT UNTIL 9 AM EST THIS MORNING...
 
-.REST OF TONIGHT...Clear. Near steady temperature in the lower
-40s. Northwest winds 5 to 10 mph.
-.SUNDAY...Sunny. Highs in the upper 50s. Northwest winds 5 to
-10 mph.
-.SUNDAY NIGHT...Clear. Lows in the lower 40s. North winds 5 to
-10 mph.
+.TODAY...Patchy to areas of frost early. Sunny. Highs in the
+upper 50s. Northwest winds 5 to 10 mph.
+.TONIGHT...Clear. Lows in the lower 40s. North winds 5 to 10 mph.
 .MONDAY...Sunny. Highs in the upper 50s. North winds 10 to
 15 mph.
 .MONDAY NIGHT...Clear. Lows in the lower 40s. North winds 5 to
 10 mph.
-.TUESDAY AND TUESDAY NIGHT...Clear. Highs in the lower 60s. Lows
-in the lower 40s.
+.TUESDAY...Sunny. Highs in the lower 60s. Northeast winds 10 to
+15 mph.
+.TUESDAY NIGHT...Clear. Lows in the lower 40s.
 .WEDNESDAY THROUGH THURSDAY...Clear. Highs in the upper 60s. Lows
 in the mid 40s.
 .THURSDAY NIGHT THROUGH SATURDAY...Mostly clear. Lows in the
@@ -84,24 +78,22 @@ upper 40s. Highs around 70.
 
 $$
 
-NCZ107-151930-
+NCZ107-152330-
 Inland New Hanover-
 Including the city of Wilmington
-125 AM EST Sun Nov 15 2026
+521 AM EST Sun Nov 15 2026
 
 ...FROST ADVISORY IN EFFECT UNTIL 9 AM EST THIS MORNING...
 
-.REST OF TONIGHT...Clear. Patchy frost. Lows in the lower 30s.
-Northwest winds around 5 mph.
-.SUNDAY...Areas of frost in the morning. Sunny. Highs in the
-upper 50s. Northwest winds 5 to 10 mph.
-.SUNDAY NIGHT...Clear. Lows in the mid 30s. North winds around
-5 mph.
+.TODAY...Patchy frost this morning. Sunny. Highs in the upper
+50s. Northwest winds 5 to 10 mph.
+.TONIGHT...Clear. Lows in the mid 30s. North winds around 5 mph.
 .MONDAY...Sunny. Highs in the upper 50s. North winds 5 to 10 mph.
 .MONDAY NIGHT...Clear. Lows in the mid 30s. North winds around
 5 mph.
-.TUESDAY AND TUESDAY NIGHT...Clear. Highs in the lower 60s. Lows
-in the upper 30s.
+.TUESDAY...Sunny. Highs in the lower 60s. Northeast winds 5 to
+10 mph.
+.TUESDAY NIGHT...Clear. Lows in the upper 30s.
 .WEDNESDAY THROUGH THURSDAY...Clear. Highs around 70. Lows around
 40.
 .THURSDAY NIGHT THROUGH SATURDAY...Mostly clear. Lows in the
@@ -109,25 +101,24 @@ lower 40s. Highs in the lower 70s.
 
 $$
 
-NCZ110-151930-
+NCZ110-152330-
 Coastal Brunswick-
 Including the cities of Oak Island, Long Beach, Southport,
 and Sunset Beach
-125 AM EST Sun Nov 15 2026
+521 AM EST Sun Nov 15 2026
 
 ...FROST ADVISORY IN EFFECT UNTIL 9 AM EST THIS MORNING...
 
-.REST OF TONIGHT...Clear. Near steady temperature around 40.
-North winds 5 to 10 mph.
-.SUNDAY...Sunny. Highs in the upper 50s. North winds 5 to 10 mph.
-.SUNDAY NIGHT...Clear. Lows in the upper 30s. North winds 5 to
-10 mph.
+.TODAY...Patchy to areas of frost this morning. Sunny. Highs in
+the upper 50s. North winds 5 to 10 mph.
+.TONIGHT...Clear. Lows in the upper 30s. North winds 5 to 10 mph.
 .MONDAY...Sunny. Highs in the upper 50s. North winds 10 to
 15 mph.
 .MONDAY NIGHT...Clear. Lows in the upper 30s. Northeast winds
 5 to 10 mph.
-.TUESDAY AND TUESDAY NIGHT...Clear. Highs in the lower 60s. Lows
-in the lower 40s.
+.TUESDAY...Sunny. Highs in the lower 60s. Northeast winds 10 to
+15 mph.
+.TUESDAY NIGHT...Clear. Lows in the lower 40s.
 .WEDNESDAY AND WEDNESDAY NIGHT...Clear. Highs in the upper 60s.
 Lows in the mid 40s.
 .THURSDAY THROUGH SATURDAY...Mostly clear. Highs around 70. Lows
@@ -135,25 +126,23 @@ in the upper 40s.
 
 $$
 
-NCZ109-151930-
+NCZ109-152330-
 Inland Brunswick-
 Including the cities of Boiling Spring Lakes, Leland,
 and Shallotte
-125 AM EST Sun Nov 15 2026
+521 AM EST Sun Nov 15 2026
 
 ...FREEZE WARNING IN EFFECT UNTIL 9 AM EST THIS MORNING...
 
-.REST OF TONIGHT...Clear. Areas of frost. Lows around 30.
-Northwest winds around 5 mph.
-.SUNDAY...Areas of frost in the morning. Sunny. Highs in the
-upper 50s. Northwest winds 5 to 10 mph.
-.SUNDAY NIGHT...Clear. Lows in the mid 30s. North winds around
-5 mph.
+.TODAY...Widespread frost this morning. Sunny. Highs in the upper
+50s. Northwest winds 5 to 10 mph.
+.TONIGHT...Clear. Lows in the mid 30s. North winds around 5 mph.
 .MONDAY...Sunny. Highs in the upper 50s. North winds 5 to 10 mph.
 .MONDAY NIGHT...Clear. Lows in the mid 30s. Northeast winds
 around 5 mph.
-.TUESDAY AND TUESDAY NIGHT...Clear. Highs in the lower 60s. Lows
-in the upper 30s.
+.TUESDAY...Sunny. Highs in the lower 60s. Northeast winds 5 to
+10 mph.
+.TUESDAY NIGHT...Clear. Lows in the upper 30s.
 .WEDNESDAY AND WEDNESDAY NIGHT...Clear. Highs in the upper 60s.
 Lows around 40.
 .THURSDAY THROUGH SATURDAY...Mostly clear. Highs in the lower
@@ -161,24 +150,23 @@ Lows around 40.
 
 $$
 
-NCZ096-151930-
+NCZ096-152330-
 Bladen-
 Including the cities of Elizabethtown and Bladenboro
-125 AM EST Sun Nov 15 2026
+521 AM EST Sun Nov 15 2026
 
 ...FREEZE WARNING IN EFFECT UNTIL 9 AM EST THIS MORNING...
 
-.REST OF TONIGHT...Clear. Areas of frost. Lows in the lower 30s.
-Northwest winds around 5 mph.
-.SUNDAY...Areas of frost in the morning. Sunny. Highs in the
-upper 50s. Northwest winds around 5 mph.
-.SUNDAY NIGHT...Clear. Lows in the mid 30s. Light and variable
-winds, becoming north around 5 mph after midnight.
+.TODAY...Widespread frost this morning. Sunny. Highs in the upper
+50s. Northwest winds around 5 mph.
+.TONIGHT...Clear. Lows in the mid 30s. Light and variable winds,
+becoming north around 5 mph after midnight.
 .MONDAY...Sunny. Highs in the upper 50s. North winds 5 to 10 mph.
 .MONDAY NIGHT...Clear. Lows in the mid 30s. Northeast winds
 around 5 mph.
-.TUESDAY AND TUESDAY NIGHT...Clear. Highs in the lower 60s. Lows
-in the mid 30s.
+.TUESDAY...Sunny. Highs in the lower 60s. Northeast winds around
+5 mph.
+.TUESDAY NIGHT...Clear. Lows in the mid 30s.
 .WEDNESDAY AND WEDNESDAY NIGHT...Clear. Highs in the upper 60s.
 Lows in the mid 30s.
 .THURSDAY THROUGH SATURDAY...Mostly clear. Highs in the lower
@@ -186,25 +174,24 @@ Lows in the mid 30s.
 
 $$
 
-NCZ099-151930-
+NCZ099-152330-
 Columbus-
 Including the cities of Whiteville, Tabor City, Chadbourn,
 and Lake Waccamaw
-125 AM EST Sun Nov 15 2026
+521 AM EST Sun Nov 15 2026
 
 ...FREEZE WARNING IN EFFECT UNTIL 9 AM EST THIS MORNING...
 
-.REST OF TONIGHT...Clear. Areas of frost. Near steady temperature
-in the mid 30s. Light and variable winds.
-.SUNDAY...Areas of frost in the morning. Sunny. Highs in the
-upper 50s. Northwest winds around 5 mph.
-.SUNDAY NIGHT...Clear. Lows in the mid 30s. Light and variable
-winds, becoming north around 5 mph after midnight.
+.TODAY...Widespread frost this morning. Sunny. Highs in the upper
+50s. Northwest winds around 5 mph.
+.TONIGHT...Clear. Lows in the mid 30s. Light and variable winds,
+becoming north around 5 mph after midnight.
 .MONDAY...Sunny. Highs in the upper 50s. North winds 5 to 10 mph.
 .MONDAY NIGHT...Clear. Lows in the mid 30s. Northeast winds
 around 5 mph.
-.TUESDAY AND TUESDAY NIGHT...Clear. Highs in the lower 60s. Lows
-in the mid 30s.
+.TUESDAY...Sunny. Highs in the lower 60s. Northeast winds around
+5 mph.
+.TUESDAY NIGHT...Clear. Lows in the mid 30s.
 .WEDNESDAY AND WEDNESDAY NIGHT...Clear. Highs in the upper 60s.
 Lows in the mid 30s.
 .THURSDAY THROUGH SATURDAY...Mostly clear. Highs in the lower
@@ -212,25 +199,23 @@ Lows in the mid 30s.
 
 $$
 
-NCZ087-151930-
+NCZ087-152330-
 Robeson-
 Including the city of Lumberton
-125 AM EST Sun Nov 15 2026
+521 AM EST Sun Nov 15 2026
 
 ...FREEZE WARNING IN EFFECT UNTIL 9 AM EST THIS MORNING...
 
-.REST OF TONIGHT...Clear. Areas of frost. Near steady temperature
-in the mid 30s. Northwest winds around 5 mph.
-.SUNDAY...Areas of frost in the morning. Sunny. Highs in the
-upper 50s. Northwest winds 5 to 10 mph.
-.SUNDAY NIGHT...Clear. Lows in the mid 30s. North winds around
-5 mph.
+.TODAY...Widespread frost this morning. Sunny. Highs in the upper
+50s. Northwest winds 5 to 10 mph.
+.TONIGHT...Clear. Lows in the mid 30s. North winds around 5 mph.
 .MONDAY...Sunny. Highs in the upper 50s. Northeast winds 5 to
 10 mph.
 .MONDAY NIGHT...Clear. Lows in the mid 30s. Northeast winds
 around 5 mph.
-.TUESDAY AND TUESDAY NIGHT...Clear. Highs in the lower 60s. Lows
-in the mid 30s.
+.TUESDAY...Sunny. Highs in the lower 60s. Northeast winds 5 to
+10 mph.
+.TUESDAY NIGHT...Clear. Lows in the mid 30s.
 .WEDNESDAY THROUGH THURSDAY...Clear. Highs in the upper 60s. Lows
 in the mid 30s.
 .THURSDAY NIGHT THROUGH SATURDAY...Mostly clear. Lows in the
@@ -238,51 +223,47 @@ upper 30s. Highs in the lower 70s.
 
 $$
 
-SCZ054-151930-
+SCZ054-152330-
 Coastal Horry-
 Including the cities of Myrtle Beach, Socastee,
 North Myrtle Beach, Garden City, and Little River
-125 AM EST Sun Nov 15 2026
+521 AM EST Sun Nov 15 2026
 
 ...FROST ADVISORY IN EFFECT UNTIL 9 AM EST THIS MORNING...
 
-.REST OF TONIGHT...Clear. Patchy frost. Near steady temperature
-in the upper 30s. North winds around 5 mph.
-.SUNDAY...Patchy frost in the morning. Sunny. Highs in the upper
+.TODAY...Areas of frost this morning. Sunny. Highs in the upper
 50s. North winds 5 to 10 mph.
-.SUNDAY NIGHT...Clear. Lows in the upper 30s. North winds 5 to
-10 mph.
+.TONIGHT...Clear. Lows in the upper 30s. North winds 5 to 10 mph.
 .MONDAY...Sunny. Highs in the upper 50s. Northeast winds 5 to
 10 mph.
 .MONDAY NIGHT...Clear. Lows in the upper 30s. Northeast winds
 5 to 10 mph.
-.TUESDAY AND TUESDAY NIGHT...Clear. Highs in the lower 60s. Lows
-in the lower 40s.
+.TUESDAY...Sunny. Highs in the lower 60s. Northeast winds 5 to
+10 mph.
+.TUESDAY NIGHT...Clear. Lows in the lower 40s.
 .WEDNESDAY...Sunny. Highs in the upper 60s.
 .WEDNESDAY NIGHT THROUGH SATURDAY...Mostly clear. Lows in the mid
 40s. Highs in the lower 70s.
 
 $$
 
-SCZ058-151930-
+SCZ058-152330-
 Central Horry-
 Including the cities of Conway, Longs, and Bucksport
-125 AM EST Sun Nov 15 2026
+521 AM EST Sun Nov 15 2026
 
 ...FREEZE WARNING IN EFFECT UNTIL 9 AM EST THIS MORNING...
 
-.REST OF TONIGHT...Clear. Areas of frost. Near steady temperature
-in the mid 30s. Northwest winds around 5 mph.
-.SUNDAY...Areas of frost in the morning. Sunny. Highs in the
-upper 50s. North winds 5 to 10 mph.
-.SUNDAY NIGHT...Clear. Lows in the mid 30s. North winds around
-5 mph.
+.TODAY...Widespread frost this morning. Sunny. Highs in the upper
+50s. North winds 5 to 10 mph.
+.TONIGHT...Clear. Lows in the mid 30s. North winds around 5 mph.
 .MONDAY...Sunny. Highs in the upper 50s. Northeast winds 5 to
 10 mph.
 .MONDAY NIGHT...Clear. Lows in the mid 30s. Northeast winds
 around 5 mph.
-.TUESDAY AND TUESDAY NIGHT...Clear. Highs in the lower 60s. Lows
-in the upper 30s.
+.TUESDAY...Sunny. Highs in the lower 60s. Northeast winds 5 to
+10 mph.
+.TUESDAY NIGHT...Clear. Lows in the upper 30s.
 .WEDNESDAY AND WEDNESDAY NIGHT...Clear. Highs in the upper 60s.
 Lows in the upper 30s.
 .THURSDAY THROUGH SATURDAY...Mostly clear. Highs in the mid 70s.
@@ -290,25 +271,24 @@ Lows in the lower 40s.
 
 $$
 
-SCZ059-151930-
+SCZ059-152330-
 Northern Horry-
 Including the cities of Loris, Green Sea, and Aynor
-125 AM EST Sun Nov 15 2026
+521 AM EST Sun Nov 15 2026
 
 ...FREEZE WARNING IN EFFECT UNTIL 9 AM EST THIS MORNING...
 
-.REST OF TONIGHT...Clear. Areas of frost. Near steady temperature
-in the mid 30s. Light and variable winds.
-.SUNDAY...Areas of frost in the morning. Sunny. Highs in the
-upper 50s. Northwest winds around 5 mph.
-.SUNDAY NIGHT...Clear. Lows in the mid 30s. Light and variable
-winds, becoming north around 5 mph after midnight.
+.TODAY...Widespread frost this morning. Sunny. Highs in the upper
+50s. Northwest winds around 5 mph.
+.TONIGHT...Clear. Lows in the mid 30s. Light and variable winds,
+becoming north around 5 mph after midnight.
 .MONDAY...Sunny. Highs in the upper 50s. Northeast winds 5 to
 10 mph.
 .MONDAY NIGHT...Clear. Lows in the lower 30s. Northeast winds
 around 5 mph.
-.TUESDAY AND TUESDAY NIGHT...Clear. Highs in the lower 60s. Lows
-in the mid 30s.
+.TUESDAY...Sunny. Highs in the lower 60s. Northeast winds around
+5 mph.
+.TUESDAY NIGHT...Clear. Lows in the mid 30s.
 .WEDNESDAY AND WEDNESDAY NIGHT...Clear. Highs in the upper 60s.
 Lows in the mid 30s.
 .THURSDAY THROUGH SATURDAY...Mostly clear. Highs in the lower
@@ -316,24 +296,22 @@ Lows in the mid 30s.
 
 $$
 
-SCZ056-151930-
+SCZ056-152330-
 Coastal Georgetown-
 Including the cities of Georgetown and Murrells Inlet
-125 AM EST Sun Nov 15 2026
+521 AM EST Sun Nov 15 2026
 
 ...FROST ADVISORY IN EFFECT UNTIL 9 AM EST THIS MORNING...
 
-.REST OF TONIGHT...Clear. Patchy frost. Near steady temperature
-around 40. North winds around 5 mph.
-.SUNDAY...Patchy frost in the morning. Sunny. Highs in the upper
+.TODAY...Areas of frost this morning. Sunny. Highs in the upper
 50s. North winds 5 to 10 mph.
-.SUNDAY NIGHT...Clear. Lows in the upper 30s. North winds 5 to
-10 mph.
+.TONIGHT...Clear. Lows in the upper 30s. North winds 5 to 10 mph.
 .MONDAY...Sunny. Highs in the upper 50s. Northeast winds 10 to
 15 mph.
 .MONDAY NIGHT...Mostly clear. Lows in the lower 40s. Northeast
 winds 5 to 10 mph.
-.TUESDAY...Sunny. Highs in the lower 60s.
+.TUESDAY...Sunny. Highs in the lower 60s. Northeast winds 10 to
+15 mph.
 .TUESDAY NIGHT...Mostly clear. Lows in the lower 40s.
 .WEDNESDAY...Sunny. Highs in the upper 60s.
 .WEDNESDAY NIGHT THROUGH FRIDAY...Mostly clear. Lows in the mid
@@ -344,25 +322,23 @@ mostly clear. Lows in the upper 40s.
 
 $$
 
-SCZ055-151930-
+SCZ055-152330-
 Inland Georgetown-
 Including the city of Andrews
-125 AM EST Sun Nov 15 2026
+521 AM EST Sun Nov 15 2026
 
 ...FREEZE WARNING IN EFFECT UNTIL 9 AM EST THIS MORNING...
 
-.REST OF TONIGHT...Clear. Patchy frost. Near steady temperature
-in the mid 30s. North winds around 5 mph.
-.SUNDAY...Areas of frost in the morning. Sunny. Highs in the
-upper 50s. North winds around 5 mph.
-.SUNDAY NIGHT...Clear. Lows in the mid 30s. North winds around
-5 mph.
+.TODAY...Widespread frost this morning. Sunny. Highs in the upper
+50s. North winds around 5 mph.
+.TONIGHT...Clear. Lows in the mid 30s. North winds around 5 mph.
 .MONDAY...Sunny. Highs in the upper 50s. Northeast winds 5 to
 10 mph.
 .MONDAY NIGHT...Clear. Lows in the upper 30s. Northeast winds
 around 5 mph.
-.TUESDAY AND TUESDAY NIGHT...Clear. Highs in the lower 60s. Lows
-in the upper 30s.
+.TUESDAY...Sunny. Highs in the lower 60s. Northeast winds 5 to
+10 mph.
+.TUESDAY NIGHT...Clear. Lows in the upper 30s.
 .WEDNESDAY AND WEDNESDAY NIGHT...Clear. Highs around 70. Lows
 around 40.
 .THURSDAY THROUGH SATURDAY...Mostly clear. Highs in the mid 70s.
@@ -370,25 +346,23 @@ Lows in the lower 40s.
 
 $$
 
-SCZ024-151930-
+SCZ024-152330-
 Dillon-
 Including the city of Dillon
-125 AM EST Sun Nov 15 2026
+521 AM EST Sun Nov 15 2026
 
 ...FREEZE WARNING IN EFFECT UNTIL 9 AM EST THIS MORNING...
 
-.REST OF TONIGHT...Clear. Areas of frost. Near steady temperature
-in the lower 30s. Northwest winds around 5 mph.
-.SUNDAY...Areas of frost in the morning. Sunny. Highs in the
-upper 50s. Northwest winds 5 to 10 mph.
-.SUNDAY NIGHT...Clear. Lows in the mid 30s. North winds around
-5 mph.
+.TODAY...Widespread frost this morning. Sunny. Highs in the upper
+50s. Northwest winds 5 to 10 mph.
+.TONIGHT...Clear. Lows in the mid 30s. North winds around 5 mph.
 .MONDAY...Sunny. Highs in the upper 50s. Northeast winds 5 to
 10 mph.
 .MONDAY NIGHT...Clear. Lows in the lower 30s. Northeast winds
 around 5 mph.
-.TUESDAY AND TUESDAY NIGHT...Clear. Highs in the lower 60s. Lows
-in the mid 30s.
+.TUESDAY...Sunny. Highs in the lower 60s. Northeast winds 5 to
+10 mph.
+.TUESDAY NIGHT...Clear. Lows in the mid 30s.
 .WEDNESDAY THROUGH THURSDAY...Clear. Highs around 70. Lows in the
 mid 30s.
 .THURSDAY NIGHT THROUGH SATURDAY...Mostly clear. Lows in the
@@ -396,25 +370,23 @@ upper 30s. Highs in the lower 70s.
 
 $$
 
-SCZ033-151930-
+SCZ033-152330-
 Marion-
 Including the cities of Marion and Mullins
-125 AM EST Sun Nov 15 2026
+521 AM EST Sun Nov 15 2026
 
 ...FREEZE WARNING IN EFFECT UNTIL 9 AM EST THIS MORNING...
 
-.REST OF TONIGHT...Clear. Areas of frost. Lows in the lower 30s.
-Northwest winds around 5 mph.
-.SUNDAY...Areas of frost in the morning. Sunny. Highs in the
-upper 50s. Northwest winds around 5 mph.
-.SUNDAY NIGHT...Clear. Lows in the mid 30s. North winds around
-5 mph.
+.TODAY...Widespread frost this morning. Sunny. Highs in the upper
+50s. Northwest winds around 5 mph.
+.TONIGHT...Clear. Lows in the mid 30s. North winds around 5 mph.
 .MONDAY...Sunny. Highs in the upper 50s. Northeast winds 5 to
 10 mph.
 .MONDAY NIGHT...Clear. Lows in the lower 30s. Northeast winds
 around 5 mph.
-.TUESDAY AND TUESDAY NIGHT...Clear. Highs in the lower 60s. Lows
-in the mid 30s.
+.TUESDAY...Sunny. Highs in the lower 60s. Northeast winds around
+5 mph.
+.TUESDAY NIGHT...Clear. Lows in the mid 30s.
 .WEDNESDAY AND WEDNESDAY NIGHT...Clear. Highs in the upper 60s.
 Lows in the mid 30s.
 .THURSDAY THROUGH SATURDAY...Mostly clear. Highs in the lower
@@ -422,25 +394,24 @@ Lows in the mid 30s.
 
 $$
 
-SCZ032-151930-
+SCZ032-152330-
 Florence-
 Including the city of Florence
-125 AM EST Sun Nov 15 2026
+521 AM EST Sun Nov 15 2026
 
 ...FREEZE WARNING IN EFFECT UNTIL 9 AM EST THIS MORNING...
 
-.REST OF TONIGHT...Clear. Areas of frost. Lows in the lower 30s.
-North winds around 5 mph.
-.SUNDAY...Areas of frost in the morning. Sunny. Highs in the
-upper 50s. North winds around 5 mph.
-.SUNDAY NIGHT...Clear. Lows in the lower 30s. North winds around
+.TODAY...Widespread frost this morning. Sunny. Highs in the upper
+50s. North winds around 5 mph.
+.TONIGHT...Clear. Lows in the lower 30s. North winds around
 5 mph.
 .MONDAY...Sunny. Highs in the upper 50s. Northeast winds 5 to
 10 mph.
 .MONDAY NIGHT...Clear. Lows in the lower 30s. Northeast winds
 around 5 mph.
-.TUESDAY AND TUESDAY NIGHT...Clear. Highs in the lower 60s. Lows
-in the mid 30s.
+.TUESDAY...Sunny. Highs in the lower 60s. Northeast winds around
+5 mph.
+.TUESDAY NIGHT...Clear. Lows in the mid 30s.
 .WEDNESDAY AND WEDNESDAY NIGHT...Clear. Highs in the upper 60s.
 Lows in the mid 30s.
 .THURSDAY THROUGH SATURDAY...Mostly clear. Highs in the mid 70s.
@@ -448,25 +419,24 @@ Lows in the upper 30s.
 
 $$
 
-SCZ039-151930-
+SCZ039-152330-
 Williamsburg-
 Including the city of Kingstree
-125 AM EST Sun Nov 15 2026
+521 AM EST Sun Nov 15 2026
 
 ...FREEZE WARNING IN EFFECT UNTIL 9 AM EST THIS MORNING...
 
-.REST OF TONIGHT...Clear. Areas of frost. Near steady temperature
-in the mid 30s. Light and variable winds.
-.SUNDAY...Areas of frost in the morning. Sunny. Highs in the
-upper 50s. North winds around 5 mph.
-.SUNDAY NIGHT...Clear. Lows in the lower 30s. Light and variable
+.TODAY...Widespread frost this morning. Sunny. Highs in the upper
+50s. North winds around 5 mph.
+.TONIGHT...Clear. Lows in the lower 30s. Light and variable
 winds.
 .MONDAY...Sunny. Highs in the upper 50s. Northeast winds around
 5 mph.
 .MONDAY NIGHT...Clear. Lows in the lower 30s. Northeast winds
 around 5 mph.
-.TUESDAY AND TUESDAY NIGHT...Clear. Highs in the lower 60s. Lows
-in the mid 30s.
+.TUESDAY...Sunny. Highs in the lower 60s. Northeast winds around
+5 mph.
+.TUESDAY NIGHT...Clear. Lows in the mid 30s.
 .WEDNESDAY AND WEDNESDAY NIGHT...Clear. Highs around 70. Lows in
 the mid 30s.
 .THURSDAY AND THURSDAY NIGHT...Mostly clear. Highs in the mid
@@ -477,25 +447,23 @@ in the mid 70s.
 
 $$
 
-SCZ017-151930-
+SCZ017-152330-
 Marlboro-
 Including the cities of Bennettsville and McColl
-125 AM EST Sun Nov 15 2026
+521 AM EST Sun Nov 15 2026
 
 ...FREEZE WARNING IN EFFECT UNTIL 9 AM EST THIS MORNING...
 
-.REST OF TONIGHT...Clear. Areas of frost. Near steady temperature
-in the lower 30s. Northwest winds around 5 mph.
-.SUNDAY...Areas of frost in the morning. Sunny. Highs in the
-upper 50s. Northwest winds 5 to 10 mph.
-.SUNDAY NIGHT...Clear. Lows in the mid 30s. North winds around
-5 mph.
+.TODAY...Widespread frost this morning. Sunny. Highs in the upper
+50s. Northwest winds 5 to 10 mph.
+.TONIGHT...Clear. Lows in the mid 30s. North winds around 5 mph.
 .MONDAY...Sunny. Highs in the upper 50s. Northeast winds 5 to
 10 mph.
 .MONDAY NIGHT...Clear. Lows in the lower 30s. Northeast winds
 around 5 mph.
-.TUESDAY AND TUESDAY NIGHT...Clear. Highs in the lower 60s. Lows
-in the mid 30s.
+.TUESDAY...Sunny. Highs in the lower 60s. Northeast winds around
+5 mph.
+.TUESDAY NIGHT...Clear. Lows in the mid 30s.
 .WEDNESDAY AND WEDNESDAY NIGHT...Clear. Highs in the upper 60s.
 Lows in the mid 30s.
 .THURSDAY THROUGH SATURDAY...Mostly clear. Highs in the lower
@@ -503,26 +471,24 @@ Lows in the mid 30s.
 
 $$
 
-SCZ023-151930-
+SCZ023-152330-
 Darlington-
 Including the cities of Hartsville, Darlington,
 and North Hartsville
-125 AM EST Sun Nov 15 2026
+521 AM EST Sun Nov 15 2026
 
 ...FREEZE WARNING IN EFFECT UNTIL 9 AM EST THIS MORNING...
 
-.REST OF TONIGHT...Clear. Areas of frost. Near steady temperature
-in the mid 30s. North winds around 5 mph.
-.SUNDAY...Areas of frost in the morning. Sunny. Highs in the
-upper 50s. North winds 5 to 10 mph.
-.SUNDAY NIGHT...Clear. Lows in the mid 30s. North winds around
-5 mph.
+.TODAY...Widespread frost this morning. Sunny. Highs in the upper
+50s. North winds 5 to 10 mph.
+.TONIGHT...Clear. Lows in the mid 30s. North winds around 5 mph.
 .MONDAY...Sunny. Highs in the upper 50s. Northeast winds 5 to
 10 mph.
 .MONDAY NIGHT...Clear. Lows in the lower 30s. Northeast winds
 around 5 mph.
-.TUESDAY AND TUESDAY NIGHT...Clear. Highs in the lower 60s. Lows
-in the mid 30s.
+.TUESDAY...Sunny. Highs in the lower 60s. Northeast winds around
+5 mph.
+.TUESDAY NIGHT...Clear. Lows in the mid 30s.
 .WEDNESDAY AND WEDNESDAY NIGHT...Clear. Highs in the upper 60s.
 Lows in the mid 30s.
 .THURSDAY THROUGH SATURDAY...Mostly clear. Highs in the lower
