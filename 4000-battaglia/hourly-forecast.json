@@ -1,0 +1,141 @@
+{
+  "station": "KNCCAROL120",
+  "location": "CALABASH-FARM AT BRUNSWICK",
+  "generatedAt": "2026-11-15T02:33:42-05:00",
+  "updateTime": "2026-11-15T07:00:22+00:00",
+  "source": "NWS hourly ILM 68,59",
+  "hours": [
+    {
+      "hourLabel": "2 AM",
+      "tempF": 38,
+      "shortForecast": "Clear",
+      "windDir": "NW",
+      "windSpeedMph": 2,
+      "pop": 0,
+      "isDaytime": false,
+      "iconCode": "skc",
+      "iconUrl": "https://forecast.weather.gov/images/wtf/small/nskc.png"
+    },
+    {
+      "hourLabel": "3 AM",
+      "tempF": 37,
+      "shortForecast": "Patchy Frost",
+      "windDir": "N",
+      "windSpeedMph": 2,
+      "pop": 0,
+      "isDaytime": false,
+      "iconCode": "skc",
+      "iconUrl": "https://forecast.weather.gov/images/wtf/small/nskc.png"
+    },
+    {
+      "hourLabel": "4 AM",
+      "tempF": 36,
+      "shortForecast": "Patchy Frost",
+      "windDir": "N",
+      "windSpeedMph": 2,
+      "pop": 0,
+      "isDaytime": false,
+      "iconCode": "skc",
+      "iconUrl": "https://forecast.weather.gov/images/wtf/small/nskc.png"
+    },
+    {
+      "hourLabel": "5 AM",
+      "tempF": 36,
+      "shortForecast": "Patchy Frost",
+      "windDir": "N",
+      "windSpeedMph": 2,
+      "pop": 0,
+      "isDaytime": false,
+      "iconCode": "skc",
+      "iconUrl": "https://forecast.weather.gov/images/wtf/small/nskc.png"
+    },
+    {
+      "hourLabel": "6 AM",
+      "tempF": 35,
+      "shortForecast": "Areas Of Frost",
+      "windDir": "NW",
+      "windSpeedMph": 2,
+      "pop": 0,
+      "isDaytime": true,
+      "iconCode": "skc",
+      "iconUrl": "https://forecast.weather.gov/images/wtf/small/skc.png"
+    },
+    {
+      "hourLabel": "7 AM",
+      "tempF": 35,
+      "shortForecast": "Areas Of Frost",
+      "windDir": "NW",
+      "windSpeedMph": 2,
+      "pop": 0,
+      "isDaytime": true,
+      "iconCode": "skc",
+      "iconUrl": "https://forecast.weather.gov/images/wtf/small/skc.png"
+    },
+    {
+      "hourLabel": "8 AM",
+      "tempF": 40,
+      "shortForecast": "Sunny",
+      "windDir": "N",
+      "windSpeedMph": 3,
+      "pop": 0,
+      "isDaytime": true,
+      "iconCode": "skc",
+      "iconUrl": "https://forecast.weather.gov/images/wtf/small/skc.png"
+    },
+    {
+      "hourLabel": "9 AM",
+      "tempF": 46,
+      "shortForecast": "Sunny",
+      "windDir": "N",
+      "windSpeedMph": 5,
+      "pop": 0,
+      "isDaytime": true,
+      "iconCode": "skc",
+      "iconUrl": "https://forecast.weather.gov/images/wtf/small/skc.png"
+    },
+    {
+      "hourLabel": "10 AM",
+      "tempF": 51,
+      "shortForecast": "Sunny",
+      "windDir": "N",
+      "windSpeedMph": 6,
+      "pop": 0,
+      "isDaytime": true,
+      "iconCode": "skc",
+      "iconUrl": "https://forecast.weather.gov/images/wtf/small/skc.png"
+    },
+    {
+      "hourLabel": "11 AM",
+      "tempF": 54,
+      "shortForecast": "Sunny",
+      "windDir": "N",
+      "windSpeedMph": 7,
+      "pop": 0,
+      "isDaytime": true,
+      "iconCode": "skc",
+      "iconUrl": "https://forecast.weather.gov/images/wtf/small/skc.png"
+    },
+    {
+      "hourLabel": "12 PM",
+      "tempF": 56,
+      "shortForecast": "Sunny",
+      "windDir": "NW",
+      "windSpeedMph": 7,
+      "pop": 0,
+      "isDaytime": true,
+      "iconCode": "skc",
+      "iconUrl": "https://forecast.weather.gov/images/wtf/small/skc.png"
+    },
+    {
+      "hourLabel": "1 PM",
+      "tempF": 58,
+      "shortForecast": "Sunny",
+      "windDir": "NW",
+      "windSpeedMph": 7,
+      "pop": 0,
+      "isDaytime": true,
+      "iconCode": "skc",
+      "iconUrl": "https://forecast.weather.gov/images/wtf/small/skc.png"
+    }
+  ]
+}
