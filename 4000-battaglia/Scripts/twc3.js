@@ -9670,8 +9670,10 @@ var PopulateDailyHistory = function (WeatherParameters)
         DrawText(context, "Star4000", "24pt", "#68bde4", 320, 162, "CALABASH-FARM AT BRUNSWICK", 2, "center");
 
         // Two-column fields, exactly the picture's fields and order.
-        // Canvas screens show bare numbers (no degree symbol — Star4000
-        // has none); labels carry the meaning. Whole numbers except
+        // Temps and dewpoint carry the degree symbol, as in the picture
+        // ("84°") — Star4000 DOES have the glyph: measured live
+        // 2026-11-15, "84°" is 45.6px vs "84" 30.4px at 24pt (the P26
+        // claim that it has none was wrong). Whole numbers except
         // pressure/rain (2 decimals), per Troy's rules. 0 wind reads Calm;
         // 0 gust reads None (his standing rules); a gust over 0 shows its
         // direction from the same WU history row that held the peak gust.
@@ -9681,16 +9683,16 @@ var PopulateDailyHistory = function (WeatherParameters)
             DailyHistory.peakGustDir + " " + DailyHistory.peakGustMph + " mph";
         var _rowsL = [
             // [label, value, y] — left column, values right-aligned at x=300
-            ["HIGH TEMP", DailyHistory.highF.toString(), 196],
-            ["AVG TEMP", DailyHistory.avgTempF.toString(), 226],
+            ["HIGH TEMP", DailyHistory.highF + "°", 196],
+            ["AVG TEMP", DailyHistory.avgTempF + "°", 226],
             ["HUMIDITY", DailyHistory.humidityLow + "-" + DailyHistory.humidityHigh + "%", 256],
             ["PEAK GUST", _gust, 286],
             ["RAIN TODAY", DailyHistory.rainIn.toFixed(2) + " in", 316]
         ];
         var _rowsR = [
             // [label, value, y] — right column, values right-aligned at x=588
-            ["LOW TEMP", DailyHistory.lowF.toString(), 196],
-            ["HIGH DEWPOINT", DailyHistory.dewHigh.toString(), 226],
+            ["LOW TEMP", DailyHistory.lowF + "°", 196],
+            ["HIGH DEWPOINT", DailyHistory.dewHigh + "°", 226],
             ["PEAK WIND", _wind, 256],
             ["PRESSURE", DailyHistory.pressureMin.toFixed(2) + "-" + DailyHistory.pressureMax.toFixed(2), 286]
         ];

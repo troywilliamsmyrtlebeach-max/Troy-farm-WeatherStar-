@@ -100,6 +100,13 @@ var _canvasIds = [
     "canvasAlmanac",
     "canvasAlmanacTides",
     "canvasOutlook",
+    // TROY-FARM P27 (2026-11-15): canvasDailyHistory was missing from this
+    // list — FullScreenResize() sizes ONLY the canvases listed here, so in
+    // fullscreen every other screen filled the display while Daily History
+    // kept its intrinsic 640x480 size and Troy had to re-tap fullscreen
+    // for that screen every time it came up. It sits here in cycle order,
+    // between Outlook and MarineForecast, like the canvas order in twc3.html.
+    "canvasDailyHistory",
     "canvasMarineForecast",
     "canvasAirQuality",
     "canvasLocalRadar",
