@@ -9592,30 +9592,37 @@ var PopulateDailyHistory = function (WeatherParameters)
         DrawText(context, "Star4000", "24pt", "#FFFF00", 320, 125, DailyHistory.dateLabel, 2, "center");
         DrawText(context, "Star4000", "19pt", "#FFFFFF", 320, 155, "KNCCAROL120 - CALABASH-FARM AT BRUNSWICK", 2, "center");
 
-        // Two-column rows. Canvas screens show bare numbers (no degree
-        // symbol — Star4000 has none); labels carry the meaning. Whole
-        // numbers except pressure/rain (2 decimals), per Troy's rules.
-        // 0 wind reads Calm; 0 gust reads None (his standing rules).
+        // Single-column label/value rows, values right-aligned at x=580.
+        // Canvas screens show bare numbers (no degree symbol — Star4000
+        // has none); labels carry the meaning. Whole numbers except
+        // pressure/rain (2 decimals), per Troy's rules. 0 wind reads Calm;
+        // 0 gust reads None (his standing rules).
+        // P26 FIX (live screenshot 2026-11-15): the first two-column layout
+        // collided — Star4000 24pt runs ~15.2px/char, not ~11px, so "35
+        // (12 AM)" (152px) overran the right labels and "30.00 / 29.99"
+        // (197.6px) ran off the right edge. Measured live widths: widest
+        // value "63 (2 PM) / 35 (11 PM)" ~334px, widest label "Peak Wind /
+        // Gust" ~243px — every row below fits with >=18px to spare.
         var _wind = (DailyHistory.peakWindMph === 0) ? "Calm" : DailyHistory.peakWindMph + " MPH";
         var _gust = (DailyHistory.peakGustMph === 0) ? "None" : DailyHistory.peakGustMph + " MPH";
         var _rows = [
-            // [leftLabel, leftValue, rightLabel, rightValue, y]
-            ["High", DailyHistory.highF + " (" + DailyHistory.highTime + ")", "Peak Wind", _wind, 200],
-            ["Low", DailyHistory.lowF + " (" + DailyHistory.lowTime + ")", "Peak Gust", _gust, 240],
-            ["Humidity", DailyHistory.humidityHigh + "% / " + DailyHistory.humidityLow + "%", "Pressure", DailyHistory.pressureMax.toFixed(2) + " / " + DailyHistory.pressureMin.toFixed(2), 280],
-            ["Dew Point", DailyHistory.dewHigh + " / " + DailyHistory.dewLow, "Rain Today", DailyHistory.rainIn.toFixed(2) + " in", 320]
+            // [label, value, y]
+            ["High / Low", DailyHistory.highF + " (" + DailyHistory.highTime + ") / " + DailyHistory.lowF + " (" + DailyHistory.lowTime + ")", 188],
+            ["Humidity", DailyHistory.humidityHigh + "% / " + DailyHistory.humidityLow + "%", 216],
+            ["Dew Point", DailyHistory.dewHigh + " / " + DailyHistory.dewLow, 244],
+            ["Peak Wind / Gust", _wind + " / " + _gust, 272],
+            ["Pressure", DailyHistory.pressureMax.toFixed(2) + " / " + DailyHistory.pressureMin.toFixed(2), 300],
+            ["Rain Today", DailyHistory.rainIn.toFixed(2) + " in", 328]
         ];
         for (var i = 0; i < _rows.length; i++)
         {
             var _r = _rows[i];
-            DrawText(context, "Star4000", "24pt", "#FFFFFF", 60, _r[4], _r[0], 2);
-            DrawText(context, "Star4000", "24pt", "#FFFFFF", 185, _r[4], _r[1], 2);
-            DrawText(context, "Star4000", "24pt", "#FFFFFF", 335, _r[4], _r[2], 2);
-            DrawText(context, "Star4000", "24pt", "#FFFFFF", 470, _r[4], _r[3], 2);
+            DrawText(context, "Star4000", "24pt", "#FFFFFF", 60, _r[2], _r[0], 2);
+            DrawText(context, "Star4000", "24pt", "#FFFFFF", 580, _r[2], _r[1], 2, "end");
         }
 
-        DrawText(context, "Star4000", "24pt", "#FFFFFF", 320, 368, "Sunrise " + DailyHistory.sunrise + "    Sunset " + DailyHistory.sunset, 2, "center");
-        DrawText(context, "Star4000", "19pt", "#FFFFFF", 320, 398, "AS OF " + DailyHistory.asOfLabel, 2, "center");
+        DrawText(context, "Star4000", "24pt", "#FFFFFF", 320, 366, "Sunrise " + DailyHistory.sunrise + "    Sunset " + DailyHistory.sunset, 2, "center");
+        DrawText(context, "Star4000", "19pt", "#FFFFFF", 320, 394, "AS OF " + DailyHistory.asOfLabel, 2, "center");
 
         WeatherParameters.Progress.DailyHistory = LoadStatuses.Loaded;
 
