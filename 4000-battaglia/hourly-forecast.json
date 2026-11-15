@@ -1,24 +1,13 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-15T05:47:22-05:00",
-  "updateTime": "2026-11-15T10:10:41+00:00",
+  "generatedAt": "2026-11-15T06:02:32-05:00",
+  "updateTime": "2026-11-15T10:00:31+00:00",
   "source": "NWS hourly ILM 68,59",
   "hours": [
     {
-      "hourLabel": "5 AM",
-      "tempF": 34,
-      "shortForecast": "Areas Of Frost",
-      "windDir": "N",
-      "windSpeedMph": 2,
-      "pop": 0,
-      "isDaytime": false,
-      "iconCode": "skc",
-      "iconUrl": "https://forecast.weather.gov/images/wtf/small/nskc.png"
-    },
-    {
       "hourLabel": "6 AM",
-      "tempF": 34,
+      "tempF": 35,
       "shortForecast": "Areas Of Frost",
       "windDir": "NW",
       "windSpeedMph": 2,
@@ -29,7 +18,7 @@
     },
     {
       "hourLabel": "7 AM",
-      "tempF": 33,
+      "tempF": 35,
       "shortForecast": "Areas Of Frost",
       "windDir": "NW",
       "windSpeedMph": 2,
@@ -40,7 +29,7 @@
     },
     {
       "hourLabel": "8 AM",
-      "tempF": 38,
+      "tempF": 40,
       "shortForecast": "Sunny",
       "windDir": "N",
       "windSpeedMph": 3,
@@ -51,7 +40,7 @@
     },
     {
       "hourLabel": "9 AM",
-      "tempF": 44,
+      "tempF": 46,
       "shortForecast": "Sunny",
       "windDir": "N",
       "windSpeedMph": 5,
@@ -132,6 +121,17 @@
       "shortForecast": "Sunny",
       "windDir": "N",
       "windSpeedMph": 6,
+      "pop": 0,
+      "isDaytime": true,
+      "iconCode": "skc",
+      "iconUrl": "https://forecast.weather.gov/images/wtf/small/skc.png"
+    },
+    {
+      "hourLabel": "5 PM",
+      "tempF": 54,
+      "shortForecast": "Sunny",
+      "windDir": "N",
+      "windSpeedMph": 5,
       "pop": 0,
       "isDaytime": true,
       "iconCode": "skc",
