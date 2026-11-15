@@ -1,0 +1,23 @@
+{
+  "station": "KNCCAROL120",
+  "date": "2026-11-15",
+  "dateLabel": "SUNDAY, NOVEMBER 15, 2026",
+  "highF": 35,
+  "highTime": "12 AM",
+  "lowF": 35,
+  "lowTime": "12 AM",
+  "humidityHigh": 99,
+  "humidityLow": 99,
+  "dewHigh": 35,
+  "dewLow": 33,
+  "peakWindMph": 0,
+  "peakGustMph": 0,
+  "pressureMax": 30.00,
+  "pressureMin": 29.99,
+  "rainIn": 0.00,
+  "sunrise": "6:47 AM",
+  "sunset": "5:10 PM",
+  "asOf": "2026-11-15T00:22:16-05:00",
+  "asOfLabel": "12:22 AM",
+  "source": "WU history KNCCAROL120"
+}

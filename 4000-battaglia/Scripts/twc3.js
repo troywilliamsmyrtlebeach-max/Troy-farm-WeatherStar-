@@ -102,6 +102,7 @@ var divMoonDate4;
 var canvasAlmanac;
 var canvasAlmanacTides;
 var canvasOutlook;
+var canvasDailyHistory;
 var canvasMarineForecast;
 var canvasAirQuality;
 
@@ -303,8 +304,9 @@ var CanvasTypes = {
     AlmanacTides: 12,
     AirQuality: 13,
     Outlook: 14,
-    LocalRadar: 15,
-    Hazards: 16,
+    DailyHistory: 15,
+    LocalRadar: 16,
+    Hazards: 17,
 };
 var _FirstCanvasType = CanvasTypes.Progress;
 var _LastCanvasType = CanvasTypes.Hazards;
@@ -3656,6 +3658,7 @@ setTimeout(() =>
         canvasAlmanac = $("#canvasAlmanac");
         canvasAlmanacTides = $("#canvasAlmanacTides");
         canvasOutlook = $("#canvasOutlook");
+        canvasDailyHistory = $("#canvasDailyHistory");
         canvasMarineForecast = $("#canvasMarineForecast");
         canvasAirQuality = $("#canvasAirQuality");
 
@@ -3706,6 +3709,7 @@ setTimeout(() =>
         WeatherCanvases.push(canvasAlmanac);
         WeatherCanvases.push(canvasAlmanacTides);
         WeatherCanvases.push(canvasOutlook);
+        WeatherCanvases.push(canvasDailyHistory);
         WeatherCanvases.push(canvasMarineForecast);
         WeatherCanvases.push(canvasAirQuality);
         WeatherCanvases.push(canvasLocalForecast);
@@ -3834,7 +3838,7 @@ setTimeout(() =>
                     // overwrites Failed with Loaded.
                     window.setTimeout(function ()
                     {
-                        var _p19Names = ["CurrentConditions", "WordedForecast", "FourDayForecast", "TravelForecast", "NearbyConditions", "CurrentRegionalMap", "TomorrowsRegionalMap", "Almanac", "DopplerRadar", "Hazards"];
+                        var _p19Names = ["CurrentConditions", "WordedForecast", "FourDayForecast", "TravelForecast", "NearbyConditions", "CurrentRegionalMap", "TomorrowsRegionalMap", "Almanac", "DailyHistory", "DopplerRadar", "Hazards"];
                         $(_p19Names).each(function ()
                         {
                             if (_WeatherParameters.Progress[this] == LoadStatuses.Loading)
@@ -4379,6 +4383,13 @@ var Navigate = function (Offset)
             }
             canvasOutlook.scrollIntoView();
             break;
+        case CanvasTypes.DailyHistory:
+            if (_WeatherParameters.Progress.DailyHistory != LoadStatuses.Loaded)
+            {
+                if (Offset) { Navigate(Offset); } return;
+            }
+            canvasDailyHistory.scrollIntoView();
+            break;
         case CanvasTypes.LocalRadar:
             if (_WeatherParameters.Progress.DopplerRadar != LoadStatuses.Loaded)
             {
@@ -4553,6 +4564,10 @@ var _PlayMsOffsets = {
     Outlook_End: 0,
     Outlook_Length: 10000,
     Outlook_Loaded: false,
+    DailyHistory_Start: 0,
+    DailyHistory_End: 0,
+    DailyHistory_Length: 10000,
+    DailyHistory_Loaded: false,
     LocalRadar_Start: 0,
     LocalRadar_End: 0,
     LocalRadar_Length: 15000,
@@ -4741,8 +4756,20 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
     }
     _PlayMsOffsets.Outlook_End = _PlayMsOffsets.Outlook_Start + _PlayMsOffsets.Outlook_Length;
 
+    //DailyHistory
+    _PlayMsOffsets.DailyHistory_Start = _PlayMsOffsets.Outlook_End;
+    if (Progress.DailyHistory == LoadStatuses.Loaded && _WeatherParameters.DailyHistory)
+    {
+        _PlayMsOffsets.DailyHistory_Length = 10000;
+    }
+    else
+    {
+        _PlayMsOffsets.DailyHistory_Length = 0;
+    }
+    _PlayMsOffsets.DailyHistory_End = _PlayMsOffsets.DailyHistory_Start + _PlayMsOffsets.DailyHistory_Length;
+
     //LocalRadar
-    _PlayMsOffsets.LocalRadar_Start = _PlayMsOffsets.Outlook_End;
+    _PlayMsOffsets.LocalRadar_Start = _PlayMsOffsets.DailyHistory_End;
     if (Progress.DopplerRadar == LoadStatuses.Loaded)
     {
         _PlayMsOffsets.LocalRadar_Length = 15000;
@@ -4914,6 +4941,14 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
             }
             _PlayMsOffsets.Outlook_Loaded = true;
         }
+        if (Progress.DailyHistory == LoadStatuses.Loaded && _PlayMsOffsets.DailyHistory_Loaded == false && _WeatherParameters.DailyHistory)
+        {
+            if (_CurrentCanvasType > CanvasTypes.DailyHistory)
+            {
+                _PlayMs += _PlayMsOffsets.DailyHistory_Length;
+            }
+            _PlayMsOffsets.DailyHistory_Loaded = true;
+        }
         if (Progress.DopplerRadar == LoadStatuses.Loaded && _PlayMsOffsets.LocalRadar_Loaded == false)
         {
             //if (_PlayMs > _PlayMsOffsets.LocalRadar_End)
@@ -4985,6 +5020,9 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
                 break;
             case CanvasTypes.Outlook:
                 _PlayMs = _PlayMsOffsets.Outlook_Start;
+                break;
+            case CanvasTypes.DailyHistory:
+                _PlayMs = _PlayMsOffsets.DailyHistory_Start;
                 break;
             case CanvasTypes.LocalRadar:
                 _PlayMs = _PlayMsOffsets.LocalRadar_Start;
@@ -5126,6 +5164,11 @@ var UpdatePlayPosition = function ()
     else if (_PlayMs >= _PlayMsOffsets.Outlook_Start && _PlayMs < _PlayMsOffsets.Outlook_End)
     {
         _CurrentCanvasType = CanvasTypes.Outlook;
+        _CurrentPosition = _CurrentCanvasType;
+    }
+    else if (_PlayMs >= _PlayMsOffsets.DailyHistory_Start && _PlayMs < _PlayMsOffsets.DailyHistory_End)
+    {
+        _CurrentCanvasType = CanvasTypes.DailyHistory;
         _CurrentPosition = _CurrentCanvasType;
     }
     else if (_PlayMs >= _PlayMsOffsets.LocalRadar_Start && _PlayMs < _PlayMsOffsets.LocalRadar_End)
@@ -5301,7 +5344,7 @@ var canvasProgress_mousemove = function (e)
     if (e.offsetX >= (70 * RatioX) && e.offsetX <= (565 * RatioX))
     {
         //if (e.offsetY >= (105 * RatioY) && e.offsetY <= (350 * RatioY))
-        if (e.offsetY >= (100 * RatioY) && e.offsetY <= (385 * RatioY))
+        if (e.offsetY >= (100 * RatioY) && e.offsetY <= (397 * RatioY))
         {
             // Show hand cursor.
             canvasProgress.css("cursor", "pointer");
@@ -5317,7 +5360,7 @@ var canvasProgress_click = function (e)
 
     if (e.offsetX >= (70 * RatioX) && e.offsetX <= (565 * RatioX))
     {
-        if (e.offsetY >= (100 * RatioY) && e.offsetY < (129 * RatioY))
+        if (e.offsetY >= (100 * RatioY) && e.offsetY < (127 * RatioY))
         {
             if (_WeatherParameters.Progress.CurrentConditions == LoadStatuses.Loaded)
             {
@@ -5328,7 +5371,7 @@ var canvasProgress_click = function (e)
                 NavigateReset();
             }
         }
-        else if (e.offsetY >= (129 * RatioY) && e.offsetY < (158 * RatioY))
+        else if (e.offsetY >= (127 * RatioY) && e.offsetY < (154 * RatioY))
         {
             // Latest Observations
             // TROY-FARM P25 (item 2): navigate whenever the LO table
@@ -5342,7 +5385,7 @@ var canvasProgress_click = function (e)
                 NavigateReset();
             }
         }
-        else if (e.offsetY >= (158 * RatioY) && e.offsetY < (187 * RatioY))
+        else if (e.offsetY >= (154 * RatioY) && e.offsetY < (181 * RatioY))
         {
             // Travel Forecast
             if (_WeatherParameters.Progress.TravelForecast == LoadStatuses.Loaded)
@@ -5354,7 +5397,7 @@ var canvasProgress_click = function (e)
                 NavigateReset();
             }
         }
-        else if (e.offsetY >= (187 * RatioY) && e.offsetY < (216 * RatioY))
+        else if (e.offsetY >= (181 * RatioY) && e.offsetY < (208 * RatioY))
         {
             // Regional Forecast
             if (_WeatherParameters.Progress.TomorrowsRegionalMap == LoadStatuses.Loaded)
@@ -5365,7 +5408,7 @@ var canvasProgress_click = function (e)
                 NavigateReset();
             }
         }
-        else if (e.offsetY >= (216 * RatioY) && e.offsetY < (245 * RatioY))
+        else if (e.offsetY >= (208 * RatioY) && e.offsetY < (235 * RatioY))
         {
             if (_WeatherParameters.Progress.CurrentRegionalMap == LoadStatuses.Loaded)
             {
@@ -5376,7 +5419,7 @@ var canvasProgress_click = function (e)
                 NavigateReset();
             }
         }
-        else if (e.offsetY >= (245 * RatioY) && e.offsetY < (274 * RatioY))
+        else if (e.offsetY >= (235 * RatioY) && e.offsetY < (262 * RatioY))
         {
             // Local Forecast
             if (_WeatherParameters.Progress.WordedForecast == LoadStatuses.Loaded)
@@ -5388,7 +5431,7 @@ var canvasProgress_click = function (e)
                 NavigateReset();
             }
         }
-        else if (e.offsetY >= (274 * RatioY) && e.offsetY < (303 * RatioY))
+        else if (e.offsetY >= (262 * RatioY) && e.offsetY < (289 * RatioY))
         {
             // Extended Forecast
             if (_WeatherParameters.Progress.FourDayForecast == LoadStatuses.Loaded)
@@ -5399,7 +5442,7 @@ var canvasProgress_click = function (e)
                 NavigateReset();
             }
         }
-        else if (e.offsetY >= (303 * RatioY) && e.offsetY < (332 * RatioY))
+        else if (e.offsetY >= (289 * RatioY) && e.offsetY < (316 * RatioY))
         {
             // Almanac
             if (_WeatherParameters.Progress.Almanac == LoadStatuses.Loaded)
@@ -5410,7 +5453,18 @@ var canvasProgress_click = function (e)
                 NavigateReset();
             }
         }
-        else if (e.offsetY >= (332 * RatioY) && e.offsetY < (361 * RatioY))
+        else if (e.offsetY >= (316 * RatioY) && e.offsetY < (343 * RatioY))
+        {
+            // Daily History
+            if (_WeatherParameters.Progress.DailyHistory == LoadStatuses.Loaded)
+            {
+                _CurrentCanvasType = CanvasTypes.DailyHistory;
+                AssignPlayMsOffsets();
+                //window.location.hash = "#aDailyHistory";
+                NavigateReset();
+            }
+        }
+        else if (e.offsetY >= (343 * RatioY) && e.offsetY < (370 * RatioY))
         {
             // Local Radar
             if (_WeatherParameters.Progress.DopplerRadar == LoadStatuses.Loaded)
@@ -5422,7 +5476,7 @@ var canvasProgress_click = function (e)
                 NavigateReset();
             }
         }
-        else if (e.offsetY >= (361 * RatioY) && e.offsetY < (390 * RatioY))
+        else if (e.offsetY >= (370 * RatioY) && e.offsetY < (397 * RatioY))
         {
             // Hazards
             if (_WeatherParameters.Progress.Hazards == LoadStatuses.Loaded && Hazards.length > 0)
@@ -9394,6 +9448,7 @@ var _P23PopulateLocalAlmanac = function (WeatherParameters)
     }
     _P23LoadStagedMonthlyPrecip(WeatherParameters);
     _P23LoadStagedOutlook(WeatherParameters);
+    _P26LoadStagedDailyHistory(WeatherParameters);
 };
 
 var _P23LoadStagedMonthlyPrecip = function (WeatherParameters)
@@ -9442,6 +9497,136 @@ var _P23LoadStagedOutlook = function (WeatherParameters)
         },
         error: function () { /* Outlook screen stays skipped, as today */ }
     });
+};
+
+// TROY-FARM P26 (2026-11-15): Daily History screen — Troy asked for one
+// more screen on his Battaglia: "KNCCAROL120 CALABASH-FARM AT BRUNSWICK
+// WEATHER HISTORY FOR THE DAY". It reads daily-history.json, staged by
+// the 15-min Channel cron from the WU history API for KNCCAROL120 (see
+// stage_daily_history.py in the Battaglia goal): the day's high/low (+hour),
+// humidity high/low, dew high/low, peak wind/gust, pressure max/min, rain
+// today, sunrise/sunset — all from HIS station, whole numbers except
+// pressure/rain (2 decimals). The file's date must be TODAY (farm-local);
+// a file for any other day is ignored, so a stale file can never show
+// another day's history — the screen then stays Failed and is skipped in
+// the cycle, exactly like Outlook when outlook.json is absent.
+var _P26LoadStagedDailyHistory = function (WeatherParameters)
+{
+    $.ajaxCORS({
+        type: "GET",
+        url: "daily-history.json",
+        dataType: "json",
+        crossDomain: true,
+        cache: false,
+        success: function (json)
+        {
+            if (!_P26ValidateDailyHistory(json))
+            {
+                console.warn("P26: daily-history.json invalid or not today; Daily History screen skipped.");
+                WeatherParameters.Progress.DailyHistory = LoadStatuses.Failed;
+                return;
+            }
+            WeatherParameters.DailyHistory = json;
+            PopulateDailyHistory(WeatherParameters);
+        },
+        error: function ()
+        {
+            WeatherParameters.Progress.DailyHistory = LoadStatuses.Failed;
+        }
+    });
+};
+
+var _P26ValidateDailyHistory = function (json)
+{
+    if (!json || json.station !== "KNCCAROL120") return false;
+    // Today, farm-local (the browser runs in America/New_York).
+    var _today = new Date();
+    var _yyyymmdd = _today.getFullYear() + "-" +
+        ("0" + (_today.getMonth() + 1)).slice(-2) + "-" +
+        ("0" + _today.getDate()).slice(-2);
+    if (json.date !== _yyyymmdd) return false;
+    var _nums = ["highF", "lowF", "humidityHigh", "humidityLow", "dewHigh",
+        "dewLow", "peakWindMph", "peakGustMph", "pressureMax", "pressureMin",
+        "rainIn"];
+    for (var i = 0; i < _nums.length; i++)
+    {
+        if (typeof json[_nums[i]] !== "number" || isNaN(json[_nums[i]])) return false;
+    }
+    var _strs = ["dateLabel", "asOfLabel", "highTime", "lowTime", "sunrise", "sunset"];
+    for (var j = 0; j < _strs.length; j++)
+    {
+        if (typeof json[_strs[j]] !== "string" || json[_strs[j]] === "") return false;
+    }
+    return true;
+};
+
+var PopulateDailyHistory = function (WeatherParameters)
+{
+    if (WeatherParameters == null || !WeatherParameters.DailyHistory)
+    {
+        return;
+    }
+
+    var DailyHistory = WeatherParameters.DailyHistory;
+
+    // Draw canvas
+    var canvas = canvasDailyHistory[0];
+    var context = canvas.getContext("2d", { willReadFrequently: true });
+
+    var BackGroundImage = new Image();
+    // TROY-FARM P23 pattern: proceed once on load, error, or an 8s
+    // timeout — a hung/missing background must not wedge the screen.
+    var _p26Drawn = false;
+    var _p26Draw = function ()
+    {
+        if (_p26Drawn) return;
+        _p26Drawn = true;
+        context.drawImage(BackGroundImage, 0, 0);
+        DrawHorizontalGradientSingle(context, 0, 30, 500, 90, _TopColor1, _TopColor2);
+        DrawTriangle(context, "rgb(28, 10, 87)", 500, 30, 450, 90, 500, 90);
+        DrawHorizontalGradientSingle(context, 0, 90, 52, 399, _SideColor1, _SideColor2);
+        DrawHorizontalGradientSingle(context, 584, 90, 640, 399, _SideColor1, _SideColor2);
+
+        DrawTitleText(context, "Almanac", "Daily History");
+
+        DrawText(context, "Star4000", "24pt", "#FFFF00", 320, 125, DailyHistory.dateLabel, 2, "center");
+        DrawText(context, "Star4000", "19pt", "#FFFFFF", 320, 155, "KNCCAROL120 - CALABASH-FARM AT BRUNSWICK", 2, "center");
+
+        // Two-column rows. Canvas screens show bare numbers (no degree
+        // symbol — Star4000 has none); labels carry the meaning. Whole
+        // numbers except pressure/rain (2 decimals), per Troy's rules.
+        // 0 wind reads Calm; 0 gust reads None (his standing rules).
+        var _wind = (DailyHistory.peakWindMph === 0) ? "Calm" : DailyHistory.peakWindMph + " MPH";
+        var _gust = (DailyHistory.peakGustMph === 0) ? "None" : DailyHistory.peakGustMph + " MPH";
+        var _rows = [
+            // [leftLabel, leftValue, rightLabel, rightValue, y]
+            ["High", DailyHistory.highF + " (" + DailyHistory.highTime + ")", "Peak Wind", _wind, 200],
+            ["Low", DailyHistory.lowF + " (" + DailyHistory.lowTime + ")", "Peak Gust", _gust, 240],
+            ["Humidity", DailyHistory.humidityHigh + "% / " + DailyHistory.humidityLow + "%", "Pressure", DailyHistory.pressureMax.toFixed(2) + " / " + DailyHistory.pressureMin.toFixed(2), 280],
+            ["Dew Point", DailyHistory.dewHigh + " / " + DailyHistory.dewLow, "Rain Today", DailyHistory.rainIn.toFixed(2) + " in", 320]
+        ];
+        for (var i = 0; i < _rows.length; i++)
+        {
+            var _r = _rows[i];
+            DrawText(context, "Star4000", "24pt", "#FFFFFF", 60, _r[4], _r[0], 2);
+            DrawText(context, "Star4000", "24pt", "#FFFFFF", 185, _r[4], _r[1], 2);
+            DrawText(context, "Star4000", "24pt", "#FFFFFF", 335, _r[4], _r[2], 2);
+            DrawText(context, "Star4000", "24pt", "#FFFFFF", 470, _r[4], _r[3], 2);
+        }
+
+        DrawText(context, "Star4000", "24pt", "#FFFFFF", 320, 368, "Sunrise " + DailyHistory.sunrise + "    Sunset " + DailyHistory.sunset, 2, "center");
+        DrawText(context, "Star4000", "19pt", "#FFFFFF", 320, 398, "AS OF " + DailyHistory.asOfLabel, 2, "center");
+
+        WeatherParameters.Progress.DailyHistory = LoadStatuses.Loaded;
+
+        UpdateWeatherCanvas(WeatherParameters, canvasDailyHistory);
+        // Late-load adjust: the slot only exists once this data lands.
+        AssignPlayMsOffsets(true);
+    };
+    BackGroundImage.onload = _p26Draw;
+    BackGroundImage.onerror = _p26Draw;
+    window.setTimeout(_p26Draw, 8000);
+    BackGroundImage.src = "https://battaglia.ddns.net/twc/images/BackGround3_1.png";
 };
 
 
@@ -13376,6 +13561,7 @@ var Progress = function (e)
     this.CurrentRegionalMap = LoadStatuses.Loading;
     this.TomorrowsRegionalMap = LoadStatuses.Loading;
     this.Almanac = LoadStatuses.Loading;
+    this.DailyHistory = LoadStatuses.Loading;
     this.DopplerRadar = LoadStatuses.Loading;
     this.Hazards = LoadStatuses.Loading;
 
@@ -13497,7 +13683,10 @@ var Progress = function (e)
             DrawText(context, "Star4000 Extended", "19pt", StatusColor, 565, OffsetY, StatusText, 2, "end");
             
             //OffsetY += 25;
-            OffsetY += 29;
+            // TROY-FARM P26: 27px spacing so the 11th row (Daily History)
+            // still ends at y=390, above the current-conditions strip
+            // that starts at y=405 (stock spacing was 25px).
+            OffsetY += 27;
         };
 
         __DrawText("Current Conditions", WeatherParameters.Progress.CurrentConditions);
@@ -13508,6 +13697,7 @@ var Progress = function (e)
         __DrawText("Local Forecast", WeatherParameters.Progress.WordedForecast);
         __DrawText("Extended Forecast", WeatherParameters.Progress.FourDayForecast);
         __DrawText("Almanac", WeatherParameters.Progress.Almanac);
+        __DrawText("Daily History", WeatherParameters.Progress.DailyHistory);
         __DrawText("Local Radar", WeatherParameters.Progress.DopplerRadar);
         __DrawText("Hazardous Weather", WeatherParameters.Progress.Hazards);
 
@@ -13812,6 +14002,11 @@ var UpdateWeatherCanvas = function (WeatherParameters, Canvas)
     }
 
     if (Canvas[0] == canvasOutlook[0])
+    {
+        // TROY-FARM: NOAA emblem stays on every screen.
+    }
+
+    if (Canvas[0] == canvasDailyHistory[0])
     {
         // TROY-FARM: NOAA emblem stays on every screen.
     }
@@ -15620,6 +15815,23 @@ var GetNarrationText = function ()
             Text += "Your 30 day outlook from mid " + _MonthLongNames[Outlook.From] + " to mid " + _MonthLongNames[Outlook.To] + ". ";
             Text += "Temperatures are expected to be " + GetOutlookDescription(Outlook.Temperature) + ". ";
             Text += "Precipitation is expected to be " + GetOutlookDescription(Outlook.Precipitation) + ". ";
+
+            break;
+
+        case CanvasTypes.DailyHistory:
+            var DailyHistory = _WeatherParameters.DailyHistory;
+
+            if (DailyHistory)
+            {
+                Text += "Weather history for today at Calabash Farm at Brunswick. ";
+                Text += "High " + DailyHistory.highF + " at " + DailyHistory.highTime + ", low " + DailyHistory.lowF + " at " + DailyHistory.lowTime + ". ";
+                Text += "Humidity " + DailyHistory.humidityHigh + " to " + DailyHistory.humidityLow + " percent. ";
+                Text += "Dew point " + DailyHistory.dewHigh + " to " + DailyHistory.dewLow + ". ";
+                Text += "Peak wind " + DailyHistory.peakWindMph + " miles per hour, peak gust " + DailyHistory.peakGustMph + " miles per hour. ";
+                Text += "Pressure " + DailyHistory.pressureMax.toString().replaceAll(".", " point ") + " to " + DailyHistory.pressureMin.toString().replaceAll(".", " point ") + ". ";
+                Text += "Rain today " + DailyHistory.rainIn.toString().replaceAll(".", " point ") + " inches. ";
+                Text += "Sunrise " + DailyHistory.sunrise + ", sunset " + DailyHistory.sunset + ". ";
+            }
 
             break;
 
