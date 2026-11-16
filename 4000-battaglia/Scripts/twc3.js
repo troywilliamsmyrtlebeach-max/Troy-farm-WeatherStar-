@@ -6085,17 +6085,21 @@ var WeatherCurrentConditions = function (WeatherDwmlParser, WeatherMetarsParser)
         this.StationName = this.StationName.split("/")[0];
     }
 
-    // TROY-FARM (2026-11-16, Troy's words): KCRE is North Myrtle Beach
-    // Airport on Latest Observations. The stock stations.js City for
-    // KCRE is the truncated "North Myrtle Bea" — override the display
-    // name here so every row built for KCRE (DWML or METAR-only) reads
-    // "North Myrtle Beach Airport". Scoped to the row label: the
-    // Regional map still reads City from stations.js, and
+    // TROY-FARM (2026-11-16, Troy's words, corrected ~00:59 EST):
+    // KCRE reads "North Myrtle Beach" on Latest Observations — the
+    // plain name, at the same 24pt size as every other row. The stock
+    // stations.js City for KCRE is the truncated "North Myrtle Bea" —
+    // override the display name here so every row built for KCRE (DWML
+    // or METAR-only) reads "North Myrtle Beach". Scoped to the row
+    // label: the Regional map still reads City from stations.js, and
     // ApplyFarmConditions overwrites the farm object's StationName, so
-    // neither the map nor Current Conditions is affected.
+    // neither the map nor Current Conditions is affected. "North Myrtle
+    // Beach" measures 205px at 24pt in Star4000 — it fits the name
+    // column (x 65 to the temperature column at ~295) with room to
+    // spare, so no shrink or truncation is needed for it.
     if (this.StationId === "KCRE")
     {
-        this.StationName = "North Myrtle Beach Airport";
+        this.StationName = "North Myrtle Beach";
     }
 
     ////this.DateTime = ConvertXmlDateToJsDate(CurrentObservations.time_layout[0].start_valid_time[0].value);
@@ -10616,7 +10620,7 @@ var _P24MetarOnlyRow = function (WeatherParameters, StationId)
     // The P18-hardened WeatherCurrentConditions constructor accepts a null
     // DWML parser: temperature/wind/sky come from the METAR, the station
     // name from _StationInfo (Conway-Horry Cty, Lumberton, Myrtle Beach,
-    // North Myrtle Beach Airport, Southport, Wilmington). Returns null when even the METAR
+    // North Myrtle Beach, Southport, Wilmington). Returns null when even the METAR
     // has no usable temperature, so the caller can splice the station
     // exactly as before.
     try
@@ -10904,7 +10908,7 @@ var PopulateRegionalObservations = function (WeatherParameters)
     // station (KNCCAROL120) at the top of Latest Observations, ahead of
     // Conway-Horry and the rest. The alphabetical sort above already
     // yields his order for the METAR rows (Conway-Horry Cty < Lumberton
-    // < Myrtle Beach < North Myrtle Beach Airport < Southport < Wilmington), so the farm
+    // < Myrtle Beach < North Myrtle Beach < Southport < Wilmington), so the farm
     // row is simply unshifted ahead of them. The farm row does not count
     // toward _MaximumRegionalStations (KNCCAROL120 is skipped during
     // collection), so the staged file carries 6 METAR stations and the
@@ -11001,18 +11005,15 @@ var PopulateRegionalObservations = function (WeatherParameters)
                     break;
             }
 
-            // TROY-FARM (2026-11-16): fit the full station name into the
-            // name column (x 65 to the temperature column at ~295) instead
-            // of the stock substr(0, 14) cut — "North Myrtle Beach
-            // Airport" (27 chars, ~297px at 24pt) would otherwise draw as
-            // "North Myrtle B". The font shrinks only when the name would
-            // overflow; short names measure under the limit and still draw
-            // at 24pt exactly as before.
+            // TROY-FARM (2026-11-16, corrected ~00:59 EST): every row
+            // label draws at the same 24pt — no shrink, no truncation.
+            // The longest label, "North Myrtle Beach", measures 205px
+            // at 24pt in Star4000 and fits the name column (x 65 to the
+            // temperature column at ~295); the stock substr(0, 14) cut
+            // is gone because it would have clipped it to
+            // "North Myrtle B".
             var _loName = WeatherCurrentCondition.StationName;
-            var _loNamePt = 24;
-            context.font = "24pt 'Star4000'";
-            if (context.measureText(_loName).width > 220) { _loNamePt = Math.max(12, Math.floor(24 * 220 / context.measureText(_loName).width)); }
-            DrawText(context, "Star4000", _loNamePt + "pt", "#FFFFFF", 65, y, _loName, 2);
+            DrawText(context, "Star4000", "24pt", "#FFFFFF", 65, y, _loName, 2);
             //DrawText(context, "Star4000", "24pt", "#FFFFFF", 295, y, Temperature, 2);
             DrawText(context, "Star4000", "24pt", "#FFFFFF", 345, y, WeatherCurrentCondition.ShortConditions.substr(0, 9), 2);
 
