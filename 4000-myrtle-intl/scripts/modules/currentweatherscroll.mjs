@@ -170,14 +170,20 @@ const screens = [
 		return `Barometric Pressure ${data.Pressure} ${letter}`;
 	},
 
-	// wind
+	// wind — Troy 2026-11-16 wind rule: gust below 16 mph -> show the
+	// HIGHER of sustained/gust, ONE number, NO gust wording. Gust 16+ ->
+	// sustained (lower) first, then "Gusts to <gust>". Both 0 -> Calm.
+	// Applied here in the frame so it covers BOTH the farm PWS path
+	// (pwsTickerData) and the model fallback (getCurrentWeather).
 	(data) => {
-		let text = data.WindSpeed > 0
-			? `Wind: ${data.WindDirection} ${data.WindSpeed} ${data.WindUnit}`
+		const gust = Math.round(data.WindGust || 0);
+		const speed = gust >= 16 ? Math.round(data.WindSpeed || 0) : Math.max(Math.round(data.WindSpeed || 0), gust);
+		let text = speed > 0
+			? `Wind: ${data.WindDirection} ${speed} ${data.WindUnit}`
 			: 'Wind: Calm';
 
-		if (data.WindGust > 0) {
-			text += `   Gusts to ${data.WindGust}`;
+		if (gust >= 16) {
+			text += `   Gusts to ${gust}`;
 		}
 		return text;
 	},
