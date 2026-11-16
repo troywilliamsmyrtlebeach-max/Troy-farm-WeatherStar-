@@ -6094,9 +6094,10 @@ var WeatherCurrentConditions = function (WeatherDwmlParser, WeatherMetarsParser)
     // label: the Regional map still reads City from stations.js, and
     // ApplyFarmConditions overwrites the farm object's StationName, so
     // neither the map nor Current Conditions is affected. "North Myrtle
-    // Beach" measures 205px at 24pt in Star4000 — it fits the name
-    // column (x 65 to the temperature column at ~295) with room to
-    // spare, so no shrink or truncation is needed for it.
+    // Beach" measures 273.7 canvas px at 24pt — wider than the 230px
+    // name column — so every Latest Observations label shares 19pt
+    // (216.6px for this name), one size for all rows, no per-row
+    // shrink and no truncation.
     if (this.StationId === "KCRE")
     {
         this.StationName = "North Myrtle Beach";
@@ -11005,15 +11006,18 @@ var PopulateRegionalObservations = function (WeatherParameters)
                     break;
             }
 
-            // TROY-FARM (2026-11-16, corrected ~00:59 EST): every row
-            // label draws at the same 24pt — no shrink, no truncation.
-            // The longest label, "North Myrtle Beach", measures 205px
-            // at 24pt in Star4000 and fits the name column (x 65 to the
-            // temperature column at ~295); the stock substr(0, 14) cut
-            // is gone because it would have clipped it to
-            // "North Myrtle B".
+            // TROY-FARM (2026-11-16, corrected ~00:59 EST, sizing fixed
+            // ~01:15 EST): every row label draws at the same 19pt in
+            // Star4000 — one size for all seven rows, no per-row shrink,
+            // no truncation, full "North Myrtle Beach". The name column
+            // runs x 65 to the temperature column at ~295 (230px), and
+            // canvas pixels are points x 4/3: "North Myrtle Beach"
+            // measures 273.7px at 24pt, so it cannot fit at 24pt — at
+            // 19pt it measures 216.6px and clears the temperature with
+            // ~13px to spare. (The earlier 205px figure was points, not
+            // canvas pixels.) Temperatures, conditions and wind stay 24pt.
             var _loName = WeatherCurrentCondition.StationName;
-            DrawText(context, "Star4000", "24pt", "#FFFFFF", 65, y, _loName, 2);
+            DrawText(context, "Star4000", "19pt", "#FFFFFF", 65, y, _loName, 2);
             //DrawText(context, "Star4000", "24pt", "#FFFFFF", 295, y, Temperature, 2);
             DrawText(context, "Star4000", "24pt", "#FFFFFF", 345, y, WeatherCurrentCondition.ShortConditions.substr(0, 9), 2);
 
