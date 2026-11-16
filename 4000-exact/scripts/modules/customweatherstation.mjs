@@ -82,9 +82,14 @@ class CustomWeatherStation extends WeatherDisplay {
 		const iconImage = getWeatherIconFromIconLink(customWeatherParameters.conditionText, this.weatherParameters.timeZone);
 
 		// Troy 2026-10-26: wind spaced out, e.g. "NE 5 MPH", not "NE5"
-		// Troy 2026-10-26 evening: 0 mph is CALM, never "N 0 MPH" — the
-		// gust row below still carries any gust, e.g. CALM + Gusts to 10.
-		const windSpeed = Math.round(ConversionHelpers.convertWindUnits(customWeatherParameters.windSpeed));
+		// Troy 2026-10-26 evening: 0 mph is CALM, never "N 0 MPH".
+		// Troy 2026-11-16 wind rule (supersedes the Oct 31 gust-row rule):
+		// gust below 16 mph -> show the HIGHER of sustained/gust, ONE
+		// number, NO gust wording anywhere. Gust 16+ -> sustained (lower)
+		// first, then "Gusts to <gust>". Both 0 -> CALM, no direction.
+		const sustMph = Math.round(ConversionHelpers.convertWindUnits(customWeatherParameters.windSpeed));
+		const gustMph = Math.round(ConversionHelpers.convertWindUnits(customWeatherParameters.windGust || 0));
+		const windSpeed = gustMph >= 16 ? sustMph : Math.max(sustMph, gustMph);
 		const windUnit = ConversionHelpers.getWindUnitText().toUpperCase();
 		// Troy Oct 31 19:48 (Myrtle main screen, now International too): wind speed ONLY, no MPH
 		const windText = windSpeed === 0 ? 'CALM' : `${customWeatherParameters.windDirection} ${windSpeed}`;
@@ -130,10 +135,12 @@ class CustomWeatherStation extends WeatherDisplay {
 			icon: { type: 'img', src: iconImage },
 		};
 
-		// Troy 2026-10-31: gusts MUST show on the farm main page, always, with unit — never a blank gust line when a gust exists.
-		const gustMph = Math.round(ConversionHelpers.convertWindUnits(customWeatherParameters.windGust || 0));
-		// Screenshot style: 'Gusts 9' — no 'to', no 'MPH'
-		if (gustMph > 0) fill['wind-gusts'] = `Gusts ${gustMph}`;
+		// Troy 2026-11-16 wind rule: the GUSTS row shows ONLY at gust 16+
+		// ("Gusts <gust>"); below 16 the gust is already folded into the
+		// main WIND number above, so the row stays empty. This supersedes
+		// the Oct 31 "gusts MUST show, always" rule.
+		// Screenshot style: 'Gusts 9' — no 'to', no 'MPH', 
+		if (gustMph >= 16) fill['wind-gusts'] = `Gusts ${gustMph}`;
 
 		const area = this.elem.querySelector('.main');
 
