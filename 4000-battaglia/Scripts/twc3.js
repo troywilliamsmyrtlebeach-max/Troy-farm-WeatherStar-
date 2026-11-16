@@ -14916,6 +14916,20 @@ var AudioOnTimeUpdate = function ()
 var PopulateMusicUrls = function ()
 {
     _MusicUrls = [];
+    // v=104 CHRISTMAS MUSIC (Troy 2026-11-15: Charlie Brown Christmas music on
+    // ALL pages during December. The Vince Guaraldi recording is copyrighted,
+    // so these are royalty-free instrumental Christmas jazz tracks in the same
+    // bouncy piano style — CC BY-NC-ND 3.0 via Jamendo/Archive.org, played
+    // unchanged. In December the playlist is the Christmas tracks only; in
+    // January the regular playlist returns automatically — no manual revert.)
+    if (new Date().getMonth() === 11)
+    {
+        _MusicUrls.push("https://archive.org/download/jamendo-384111/01-1708547-Nargo-Christmas%20Jazz.mp3");
+        _MusicUrls.push("https://archive.org/download/jamendo-589723/01-2223130-Bulbasound-Christmas%20Jazz%20Holiday.mp3");
+        _MusicUrls.push("https://archive.org/download/jamendo-616462/01-2281670-Bulbasound-Jazz%20Christmas%20Eve.mp3");
+        _MusicUrls.push("https://archive.org/download/jamendo-501749/01-1984171-ArtareaStudio-Jingle%20Bells%20_Instrumental%20Jazz_.mp3");
+        return;
+    }
     _MusicUrls.push("https://battaglia.ddns.net/twc/Audio/Andrew Korus - Hello There.mp3");
     _MusicUrls.push("https://battaglia.ddns.net/twc/Audio/Ficara - Stormy Weather.mp3");
     _MusicUrls.push("https://battaglia.ddns.net/twc/Audio/Incognito - Larc En Ciel De Miles.mp3");

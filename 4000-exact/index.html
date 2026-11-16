@@ -1147,6 +1147,45 @@ try {
 
   <script type="module">
       import Webamp from "https://unpkg.com/webamp@next";
+      /* v=13 CHRISTMAS MUSIC (Troy 2026-11-15 — same December-only set as the
+         TAP FOR SOUND block below; the Winamp bar is hidden in kiosk, this
+         keeps its playlist in step anyway. In January the regular 26 tracks
+         return automatically — no manual revert needed. */
+      const christmasTracksWebamp = [
+          {
+            metaData: {
+              artist: "Nargo",
+              title: "Christmas Jazz",
+            },
+            url: "https://archive.org/download/jamendo-384111/01-1708547-Nargo-Christmas%20Jazz.mp3",
+            duration: 154
+          },
+          {
+            metaData: {
+              artist: "Bulbasound",
+              title: "Christmas Jazz Holiday",
+            },
+            url: "https://archive.org/download/jamendo-589723/01-2223130-Bulbasound-Christmas%20Jazz%20Holiday.mp3",
+            duration: 162
+          },
+          {
+            metaData: {
+              artist: "Bulbasound",
+              title: "Jazz Christmas Eve",
+            },
+            url: "https://archive.org/download/jamendo-616462/01-2281670-Bulbasound-Jazz%20Christmas%20Eve.mp3",
+            duration: 148
+          },
+          {
+            metaData: {
+              artist: "ArtareaStudio",
+              title: "Jingle Bells (Instrumental Jazz)",
+            },
+            url: "https://archive.org/download/jamendo-501749/01-1984171-ArtareaStudio-Jingle%20Bells%20_Instrumental%20Jazz_.mp3",
+            duration: 156
+          },
+        ];
+
       const webamp = new Webamp({    
           windowLayout: {
             main: {
@@ -1169,7 +1208,7 @@ try {
               name: "Mac OSX v1.5 (Aqua)",
             },
         ],
-        initialTracks: [
+        initialTracks: (new Date().getMonth() === 11 ? christmasTracksWebamp : [
           {
             metaData: {
               artist: "Trammell Starks",
@@ -1378,7 +1417,7 @@ try {
             url: "https://archive.org/download/weatherscancompletecollection/13%20Care%20Free.mp3",
             duration: 202
           },
-        ],
+        ]),
       });
 
       // Expose it globally for setting.mjs
@@ -1466,6 +1505,16 @@ document.addEventListener('DOMContentLoaded', function(){
      starts it; it keeps playing across screens. Fair Weather is track 1
      of the 26, so it still comes around. */
   var tracks = [{"artist": "Trammell Starks", "title": "Fair Weather", "url": "../fair-weather.mp3"}, {"artist": "Trammell Starks", "title": "Lazy Days", "url": "https://ia802804.us.archive.org/26/items/weatherscancompletecollection/01%20Lazy%20Days.mp3"}, {"artist": "Trammell Starks", "title": "Beach Frolic", "url": "https://archive.org/download/weatherscancompletecollection/02%20Beach%20Frolic.mp3"}, {"artist": "Trammell Starks", "title": "Good Ole Days", "url": "https://ia802804.us.archive.org/26/items/weatherscancompletecollection/02%20Good%20Ole%20Days.mp3"}, {"artist": "Trammell Starks", "title": "Jumpin'", "url": "https://ia802804.us.archive.org/26/items/weatherscancompletecollection/03%20Jumpin_.mp3"}, {"artist": "Trammell Starks", "title": "Winter Tundra", "url": "https://archive.org/download/weatherscancompletecollection/03%20Winter%20Tundra.mp3"}, {"artist": "Trammell Starks", "title": "Life", "url": "https://archive.org/download/weatherscancompletecollection/04%20Life.mp3"}, {"artist": "Trammell Starks", "title": "Rainy Days", "url": "https://archive.org/download/weatherscancompletecollection/04%20Rainy%20Days.mp3"}, {"artist": "Trammell Starks", "title": "Easy Times", "url": "https://archive.org/download/weatherscancompletecollection/05%20Easy%20Times.mp3"}, {"artist": "Trammell Starks", "title": "Midnight Cruise", "url": "https://archive.org/download/weatherscancompletecollection/05%20Midnight%20Cruise.mp3"}, {"artist": "Trammell Starks", "title": "Evening", "url": "https://archive.org/download/weatherscancompletecollection/06%20Evening.mp3"}, {"artist": "Trammell Starks", "title": "Tropical Breeze", "url": "https://archive.org/download/weatherscancompletecollection/06%20Tropical%20Breeze.mp3"}, {"artist": "Trammell Starks", "title": "Going Home", "url": "https://archive.org/download/weatherscancompletecollection/07%20Going%20Home.mp3"}, {"artist": "Trammell Starks", "title": "Smooth Sailing", "url": "https://archive.org/download/weatherscancompletecollection/07%20Smooth%20Sailing.mp3"}, {"artist": "Trammell Starks", "title": "A New Day", "url": "https://archive.org/download/weatherscancompletecollection/08%20A%20New%20Day.mp3"}, {"artist": "Trammell Starks", "title": "Brighter Days", "url": "https://archive.org/download/weatherscancompletecollection/08%20Brighter%20Days.mp3"}, {"artist": "Trammell Starks", "title": "Reflections In Time", "url": "https://archive.org/download/weatherscancompletecollection/09%20Reflections%20In%20Time.mp3"}, {"artist": "Trammell Starks", "title": "The Setting Sun", "url": "https://archive.org/download/weatherscancompletecollection/09%20The%20Setting%20Sun.mp3"}, {"artist": "Trammell Starks", "title": "Do You Believe?", "url": "https://archive.org/download/weatherscancompletecollection/10%20Do%20You%20Believe.mp3"}, {"artist": "Trammell Starks", "title": "Memories Of The Past", "url": "https://archive.org/download/weatherscancompletecollection/10%20Memories%20Of%20The%20Past.mp3"}, {"artist": "Trammell Starks", "title": "Jamaican Jam", "url": "https://archive.org/download/weatherscancompletecollection/11%20Jamaican%20Jam.mp3"}, {"artist": "Trammell Starks", "title": "Late Nite Cafe", "url": "https://archive.org/download/weatherscancompletecollection/11%20Late%20Nite%20Cafe.mp3"}, {"artist": "Trammell Starks", "title": "Good Times", "url": "https://archive.org/download/weatherscancompletecollection/12%20Good%20Times.mp3"}, {"artist": "Trammell Starks", "title": "The End Of The Journey", "url": "https://archive.org/download/weatherscancompletecollection/12%20The%20End%20Of%20The%20Journey.mp3"}, {"artist": "Trammell Starks", "title": "A Little Jazz", "url": "https://archive.org/download/weatherscancompletecollection/13%20A%20Little%20Jazz.mp3"}, {"artist": "Trammell Starks", "title": "Care Free", "url": "https://archive.org/download/weatherscancompletecollection/13%20Care%20Free.mp3"}];
+  /* v=13 CHRISTMAS MUSIC (Troy 2026-11-15: Charlie Brown Christmas music on
+     ALL pages during December. The Vince Guaraldi recording is copyrighted,
+     so these are royalty-free instrumental Christmas jazz tracks in the same
+     bouncy piano style — CC BY-NC-ND 3.0 via Jamendo/Archive.org, played
+     unchanged, artist + title shown on the button. In December the playlist
+     is the Christmas tracks only; in January the regular 26-track shuffle
+     returns automatically — no manual revert needed. */
+  var christmasTracks = [{"artist": "Nargo", "title": "Christmas Jazz", "url": "https://archive.org/download/jamendo-384111/01-1708547-Nargo-Christmas%20Jazz.mp3"}, {"artist": "Bulbasound", "title": "Christmas Jazz Holiday", "url": "https://archive.org/download/jamendo-589723/01-2223130-Bulbasound-Christmas%20Jazz%20Holiday.mp3"}, {"artist": "Bulbasound", "title": "Jazz Christmas Eve", "url": "https://archive.org/download/jamendo-616462/01-2281670-Bulbasound-Jazz%20Christmas%20Eve.mp3"}, {"artist": "ArtareaStudio", "title": "Jingle Bells (Instrumental Jazz)", "url": "https://archive.org/download/jamendo-501749/01-1984171-ArtareaStudio-Jingle%20Bells%20_Instrumental%20Jazz_.mp3"}];
+  if (new Date().getMonth() === 11) { tracks = christmasTracks; }
+
   var order = tracks.map(function(_, i){ return i; });
   for (var s = order.length - 1; s > 0; s--) { var j = Math.floor(Math.random() * (s + 1)); var t = order[s]; order[s] = order[j]; order[j] = t; }
   var pos = 0;
