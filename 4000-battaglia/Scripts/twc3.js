@@ -14116,23 +14116,60 @@ var DrawNoaaImage = function (context)
 
 var DrawLogoImage = function (context)
 {
-    if (!_LogoImage)
+    // TROY-FARM EMBLEM (2026-11-16, Troy's words): the top emblem now
+    // reads TROY'S WEATHER CHANNEL, like the Channel and International
+    // emblems — compact royal-blue square, white rim, three lines of
+    // chunky white type. Drawn on canvas (no image asset) in exactly
+    // the box the old WEATHER STAR 4000+ logo image sat in (50,30,
+    // 85,67), so every screen keeps its layout. The NOAA emblem
+    // (top-right) is untouched. Font shrinks to fit the box on any
+    // system (plain-Arial fallback is wider than Arial Narrow).
+    var _ex = 50, _ey = 30, _ew = 85, _eh = 67, _er = 10;
+    var _lines = ["TROY'S", "WEATHER", "CHANNEL"];
+    context.save();
+    context.beginPath();
+    context.moveTo(_ex + _er, _ey);
+    context.lineTo(_ex + _ew - _er, _ey);
+    context.arcTo(_ex + _ew, _ey, _ex + _ew, _ey + _er, _er);
+    context.lineTo(_ex + _ew, _ey + _eh - _er);
+    context.arcTo(_ex + _ew, _ey + _eh, _ex + _ew - _er, _ey + _eh, _er);
+    context.lineTo(_ex + _er, _ey + _eh);
+    context.arcTo(_ex, _ey + _eh, _ex, _ey + _eh - _er, _er);
+    context.lineTo(_ex, _ey + _er);
+    context.arcTo(_ex, _ey, _ex + _er, _ey, _er);
+    context.closePath();
+    context.shadowColor = "rgba(0,0,0,0.55)";
+    context.shadowBlur = 6;
+    context.shadowOffsetX = 3;
+    context.shadowOffsetY = 4;
+    context.fillStyle = "#0d47c2";
+    context.fill();
+    context.shadowColor = "rgba(0,0,0,0)";
+    context.shadowBlur = 0;
+    context.shadowOffsetX = 0;
+    context.shadowOffsetY = 0;
+    context.lineWidth = 3;
+    context.strokeStyle = "#ffffff";
+    context.stroke();
+    var _fs = 16;
+    var _setFont = function (px) { context.font = "900 " + px + "px \"Arial Narrow\", Arial, sans-serif"; };
+    _setFont(_fs);
+    while (_fs > 10 && context.measureText("WEATHER").width > _ew - 14)
     {
-        _LogoImage = new Image();
-
-        _LogoImage.onload = function ()
-        {
-            //SmoothingEnabled(context, true);
-            context.drawImage(_LogoImage, 50, 30, 85, 67);
-        };
-        //LogoImage.src = "https://battaglia.ddns.net/twc/images/Logo1.png";
-        //_LogoImage.src = "https://battaglia.ddns.net/twc/images/Logo3.gif";
-        _LogoImage.src = "https://battaglia.ddns.net/twc/images/Logo3.png";
+        _fs -= 1;
+        _setFont(_fs);
     }
-    else
+    var _cx = _ex + _ew / 2;
+    var _lh = Math.round(_fs * 1.05);
+    var _cy = _ey + _eh / 2;
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    context.fillStyle = "#ffffff";
+    for (var _i = 0; _i < _lines.length; _i++)
     {
-        context.drawImage(_LogoImage, 50, 30, 85, 67);
+        context.fillText(_lines[_i], _cx, _cy + (_i - 1) * _lh);
     }
+    context.restore();
 };
 
 var DrawCurrentConditions = function (WeatherParameters, context)
