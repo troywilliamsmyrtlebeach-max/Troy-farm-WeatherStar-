@@ -54,10 +54,19 @@ class CurrentWeather extends WeatherDisplay {
 		const iconImage = getWeatherIconFromIconLink(condition, this.data.timeZone);
 		const pressureArrow = getPressureArrow(this.data);
 
+		// Troy 2026-11-16 wind rule: gust below 16 mph -> show the HIGHER
+		// of sustained/gust, ONE number, NO gust wording. Gust 16+ ->
+		// sustained (lower) first, then "Gusts to <gust>". Both 0 -> CALM.
+		// Gridpoint gust falls back to the farm payload gust when absent.
+		const farmGustMph = window.__latestPwsPayload ? Math.round(ConversionHelpers.convertWindUnits(window.__latestPwsPayload.windGust || 0)) : 0;
+		const cwSustMph = Math.round(this.data.WindSpeed || 0);
+		const cwGustMph = Math.round(this.data.WindGust || 0) || farmGustMph;
+		const cwWindMph = cwGustMph >= 16 ? cwSustMph : Math.max(cwSustMph, cwGustMph);
+		const cwWindText = cwWindMph === 0 ? 'CALM' : `${this.data.WindDirection} ${cwWindMph} ${this.data.WindUnit.toUpperCase()}`;
 		const fill = {
 			temp: this.data.Temperature + String.fromCharCode(176),
 			condition,
-			wind: `${this.data.WindDirection} ${this.data.WindSpeed} ${this.data.WindUnit.toUpperCase()}`,
+			wind: cwWindText,
 			location: this.data.city,
 			humidity: `${this.data.Humidity}%`,
 			dewpoint: this.data.DewPoint + String.fromCharCode(176),
@@ -69,10 +78,10 @@ class CurrentWeather extends WeatherDisplay {
 			icon: { type: 'img', src: iconImage },
 		};
 
-		// Troy 2026-10-31: generic Current Conditions main page must also show farm gusts, not only the PWS screen / ticker.
-		// Fall back to the farm payload gust when the gridpoint data carries no gust.
-		const farmGustMph = window.__latestPwsPayload ? Math.round(ConversionHelpers.convertWindUnits(window.__latestPwsPayload.windGust || 0)) : 0;
-		const gustText = this.data.WindGust ? `Gusts to ${this.data.WindGust}` : (farmGustMph > 0 ? `Gusts to ${farmGustMph} MPH` : null);
+		// Troy 2026-11-16 wind rule (supersedes the Oct 31 gust rule):
+		// the GUSTS row shows ONLY at gust 16+; below 16 the gust is
+		// already folded into the main WIND number above.
+		const gustText = cwGustMph >= 16 ? `Gusts to ${cwGustMph}` : null;
 		if (gustText) fill['wind-gusts'] = gustText;
 
 		const area = this.elem.querySelector('.main');
