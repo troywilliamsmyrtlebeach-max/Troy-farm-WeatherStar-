@@ -219,12 +219,35 @@ var ApplyFarmConditions = function (WeatherParameters)
     cc.Pressure = parseFloat(parseFloat(f.pressure) * 0.02953).toFixed(2);
     cc.PressureC = ConvertInchesToMillibars(cc.Pressure);
     cc.PressureDirection = f.pressureTrend === "rising" ? "R" : (f.pressureTrend === "falling" ? "F" : "S");
-    var mph = kmhToMph(f.windSpeed);
-    if (!mph) { cc.WindDirection = ""; cc.WindSpeed = "Calm"; }
-    else { cc.WindDirection = f.windDirection || ""; cc.WindSpeed = mph; }
-    cc.WindSpeedC = Math.round(parseFloat(f.windSpeed) * 10) / 10;
-    cc.WindGust = "";
-    cc.WindGustC = "";
+    // TROY-FARM wind rule (Troy 2026-11-16): gust below 16 mph ->
+    // show the HIGHER of sustained/gust, direction in front, ONE
+    // number, NO gust wording anywhere. Gust 16+ -> sustained (lower)
+    // first, then "Gusts to <gust>". Both 0 -> Calm, no direction.
+    // f.windSpeed / f.windGust are km/h; kmhToMph rounds to whole mph
+    // and the branch is decided on the rounded mph display values.
+    var sustMph = kmhToMph(f.windSpeed);
+    var gustMph = kmhToMph(f.windGust);
+    var sustKmh = Math.round(parseFloat(f.windSpeed || 0) * 10) / 10;
+    var gustKmh = Math.round(parseFloat(f.windGust || 0) * 10) / 10;
+    if (gustMph >= 16) {
+        cc.WindDirection = f.windDirection || "";
+        cc.WindSpeed = sustMph;
+        cc.WindSpeedC = sustKmh;
+        cc.WindGust = gustMph;
+        cc.WindGustC = gustKmh;
+    } else if (Math.max(sustMph, gustMph) > 0) {
+        cc.WindDirection = f.windDirection || "";
+        cc.WindSpeed = Math.max(sustMph, gustMph);
+        cc.WindSpeedC = Math.max(sustKmh, gustKmh);
+        cc.WindGust = "";
+        cc.WindGustC = "";
+    } else {
+        cc.WindDirection = "";
+        cc.WindSpeed = "Calm";
+        cc.WindSpeedC = 0;
+        cc.WindGust = "";
+        cc.WindGustC = "";
+    }
     cc.Visibility = Math.round(parseFloat(f.visibility) * 0.621371);
     cc.VisibilityC = Math.round(parseFloat(f.visibility) * 10) / 10;
     cc.Ceiling = "";
@@ -10841,9 +10864,10 @@ var _P23BuildFarmRow = function ()
     // TROY-FARM P23 (item 7): the Latest Observations farm row, built
     // from the live farm-data.json (the same source Current Conditions
     // uses) — NOT from a METAR. Whole numbers per Troy's display rules;
-    // wind uses the below-16 rule (higher of sustained/gust, no gust
-    // wording) — the Channel cron already stages farm-data.json that
-    // way (windGust 0.0), so windSpeed alone is the display wind.
+    // wind is ALWAYS the higher of sustained/gust, no gust wording
+    // (Troy 2026-11-16 wind rule — the LO farm row is one number only,
+    // even at gust 16+). farm-data.json carries both windSpeed and
+    // windGust in km/h, so take the max here in-page.
     // Plain object: the draw loop reads only StationName, Temperature,
     // TemperatureC, ShortConditions, WindDirection, WindSpeed and
     // WindSpeedC. The label is "CALABASH-FARM" (13 chars) — the full
@@ -10855,7 +10879,7 @@ var _P23BuildFarmRow = function ()
     var shortSky = sky;
     if (shortSky == "Partly Cloudy") shortSky = "P Cloudy";
     if (shortSky == "Mostly Cloudy") shortSky = "M Cloudy";
-    var wmph = kmhToMph(f.windSpeed);
+    var wmph = Math.max(kmhToMph(f.windSpeed), kmhToMph(f.windGust));
     return {
         StationId: "KNCCAROL120",
         StationName: "CALABASH-FARM",
@@ -10865,7 +10889,7 @@ var _P23BuildFarmRow = function ()
         Conditions: sky,
         WindDirection: (wmph > 0 && f.windDirection) ? f.windDirection : "",
         WindSpeed: (wmph > 0) ? wmph : 0,
-        WindSpeedC: Math.round(f.windSpeed || 0)
+        WindSpeedC: Math.round(Math.max(parseFloat(f.windSpeed || 0), parseFloat(f.windGust || 0)))
     };
 };
 
