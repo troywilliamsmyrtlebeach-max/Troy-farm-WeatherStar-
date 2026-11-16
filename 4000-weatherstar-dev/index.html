@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Troy's WeatherStar 4000 — CALABASH-FARM AT BRUNSWICK</title>
+<meta name="description" content="WeatherStar 4000 simulator reporting current and forecast weather conditions for CALABASH-FARM AT BRUNSWICK, station KNCCAROL120.">
+<!--
+  Troy's WeatherStar 4000 — CALABASH-FARM AT BRUNSWICK
+  Base: 4000.weatherstar.dev — Simulator by Mist Weather Media;
+  code/pictures almost completely by Joe Molinelli (WXSTAR4000,
+  github.com/joe-molinelli/wxstar4000). This is a from-spec rebuild:
+  the exact look of the original, only CALABASH-FARM AT BRUNSWICK
+  conditions swapped in for Raleigh, NC. No binaries, no external
+  files, no controls — the original has none. Auto-playing loop.
+  Farm data: ../4000-myrtle-intl/farm-data.json (live, Channel),
+  fallback farm-data.json + staged JSON files in this folder.
+-->
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; background:#000; overflow:hidden; }
+  body { font-family:'Courier New', Courier, 'Lucida Console', monospace; }
+  #stage {
+    position:absolute; left:50%; top:50%;
+    width:1327px; height:998px;
+    transform:translate(-50%,-50%);
+    transform-origin:center center;
+    background:#0000FF; color:#fff;
+    overflow:hidden;
+    -webkit-user-select:none; user-select:none;
+  }
+  #stage.grey { background:#5C5C5C; }
+  .screen { position:absolute; left:0; top:0; width:1327px; height:780px; }
+  .title {
+    text-align:center; font-weight:700;
+    font-size:50px; line-height:1.15;
+    color:#fff; text-shadow:3px 3px 0 #000;
+    padding:26px 30px 10px; letter-spacing:1px;
+    white-space:nowrap;
+  }
+  .title.two { font-size:46px; }
+  .body { padding:18px 90px 0; font-weight:700; text-shadow:3px 3px 0 #000; }
+  .cond-col { font-size:56px; line-height:1.28; letter-spacing:1px; }
+  .cond-col .row { white-space:nowrap; }
+  .cond-col .lbl { color:#fff; }
+  .ftext {
+    font-size:52px; line-height:1.35; letter-spacing:1px;
+    text-transform:uppercase; text-shadow:3px 3px 0 #000;
+    padding:30px 80px 0; font-weight:700;
+  }
+  table.data { width:100%; border-collapse:collapse; font-weight:700;
+    text-shadow:3px 3px 0 #000; font-size:54px; line-height:1.3; }
+  table.data td { padding:2px 8px; white-space:nowrap; }
+  table.data td.num { text-align:right; }
+  table.data td.ctr { text-align:center; }
+  .ext-row { font-size:54px; font-weight:700; text-shadow:3px 3px 0 #000;
+    padding:26px 90px 0; letter-spacing:1px; white-space:nowrap; }
+  .ext-row .lo { color:#fff; }
+  .travel-title {
+    position:absolute; left:0; top:0; width:1327px; height:780px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:56px; font-weight:700; text-shadow:3px 3px 0 #000;
+    text-align:center; letter-spacing:1px;
+  }
+  #travel-view { position:absolute; left:90px; top:60px; width:1147px; height:640px; overflow:hidden; }
+  #travel-view table.data { font-size:52px; }
+  #travel-inner { transition:transform 1.1s linear; }
+  .outlook { text-align:center; font-size:56px; font-weight:700;
+    text-shadow:3px 3px 0 #000; padding-top:220px; letter-spacing:1px; }
+  .loading { text-align:center; padding-top:300px; }
+  .loading .big { font-size:56px; font-weight:700; text-shadow:3px 3px 0 #000; letter-spacing:1px; }
+  .loading .credit { font-size:26px; font-weight:700; text-shadow:2px 2px 0 #000;
+    padding:40px 90px 0; line-height:1.5; letter-spacing:0.5px; }
+  .loading .farmline { font-size:30px; font-weight:700; text-shadow:2px 2px 0 #000;
+    padding-top:36px; letter-spacing:1px; }
+  #footer {
+    position:absolute; left:0; top:780px; width:1327px; height:218px;
+    border-top:3px solid #fff;
+  }
+  #footer .line1 { display:flex; justify-content:space-between;
+    padding:14px 40px 0; font-size:40px; font-weight:700; text-shadow:3px 3px 0 #000; }
+  #footer .line2 { text-align:center; padding:26px 30px 0;
+    font-size:42px; font-weight:700; text-shadow:3px 3px 0 #000;
+    white-space:nowrap; overflow:hidden; }
+  #footer .scroll { padding:26px 0 0; font-size:42px; font-weight:700;
+    text-shadow:3px 3px 0 #000; white-space:nowrap; overflow:hidden; }
+  #footer .scroll span { display:inline-block; padding-left:100%;
+    animation:scrollx 14s linear infinite; }
+  @keyframes scrollx { from { transform:translateX(0); } to { transform:translateX(-100%); } }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="screen" id="screen"></div>
+  <div id="footer">
+    <div class="line1"><span id="fdate"></span><span id="ftime"></span></div>
+    <div class="line2" id="fline2"></div>
+  </div>
+</div>
+<script>
+"use strict";
+/* ------------------------------------------------------------------ */
+/* Data — FALLBACK values baked in at build time (Nov 12, 2026 ~7 AM  */
+/* EST). The page fetches the staged JSON files + the live Channel    */
+/* farm-data.json on load and every 15 minutes; a failed fetch keeps  */
+/* these last good values and the cycle keeps moving (no-stall rule). */
+/* ------------------------------------------------------------------ */
+var FALLBACK = {
+  farm: { tempF: 56, feelsF: 56, dewF: 53, rh: 88, pressure: 29.50,
+          trend: "F", windDir: "W", windMph: 7, windGust: 0, rainToday: 0.00,
+          sky: "CLEAR", visib: 10, ceiling: "UNLIMITED", novPrecip: 0.02 },
+  hourly: [
+    { name: "CALABASH-FARM", tempF: 56, sky: "CLEAR", windDir: "W", windMph: 7, windGust: 0 },
+    { name: "CONWAY", tempF: 54, sky: "CLEAR", windDir: "SSW", windMph: 5 },
+    { name: "LUMBERTON", tempF: 48, sky: "M CLEAR", windDir: "Calm", windMph: 0 },
+    { name: "MYRTLE BEACH", tempF: 61, sky: "CLEAR", windDir: "W", windMph: 11 },
+    { name: "NORTH MYRTLE BEACH", tempF: 57, sky: "CLEAR", windDir: "W", windMph: 9 },
+    { name: "SOUTHPORT", tempF: 64, sky: "CLOUDY", windDir: "WSW", windMph: 15 },
+    { name: "WILMINGTON", tempF: 55, sky: "M CLOUDY", windDir: "SW", windMph: 8 }
+  ],
+  region: [
+    { name: "ATLANTA, GA", tempF: 54, sky: "M CLEAR", windDir: "WSW", windMph: 8 },
+    { name: "CHARLOTTE, NC", tempF: 54, sky: "CLOUDY", windDir: "W", windMph: 5 },
+    { name: "COLUMBIA, SC", tempF: 56, sky: "M CLOUDY", windDir: "WSW", windMph: 8 },
+    { name: "WILMINGTON, NC", tempF: 55, sky: "M CLOUDY", windDir: "SW", windMph: 8 },
+    { name: "CHARLESTON, SC", tempF: 55, sky: "CLEAR", windDir: "SW", windMph: 9 },
+    { name: "SAVANNAH, GA", tempF: 59, sky: "M CLEAR", windDir: "SW", windMph: 13 },
+    { name: "RALEIGH, NC", tempF: 54, sky: "M CLEAR", windDir: "S", windMph: 7 }
+  ],
+  forecast: {
+    TODAY: { name: "TODAY", text: "Sunny. Highs in the upper 70s. Southwest winds 10 to 15 mph with gusts up to 25 mph." },
+    TONIGHT: { name: "TONIGHT", text: "Clear. Lows in the upper 40s. West winds 5 to 10 mph." },
+    TOMORROW: { name: "TOMORROW", text: "Sunny. Highs in the mid 60s. West winds 5 to 10 mph." }
+  },
+  extended: [
+    { day: "THU", word: "Sunny", lo: 46, hi: 77 },
+    { day: "FRI", word: "Sunny", lo: 39, hi: 64 },
+    { day: "SAT", word: "Sunny", lo: 34, hi: 59 }
+  ],
+  forecastRegion: [
+    { name: "CONWAY", word: "CLOUDY", lo: 54, hi: 76 },
+    { name: "LUMBERTON", word: "CLOUDY", lo: 51, hi: 73 },
+    { name: "MYRTLE BEACH", word: "P CLOUDY", lo: 55, hi: 75 },
+    { name: "NORTH MYRTLE BEACH", word: "CLOUDY", lo: 55, hi: 75 },
+    { name: "SOUTHPORT", word: "M SUNNY", lo: 54, hi: 71 },
+    { name: "WILMINGTON", word: "CLOUDY", lo: 54, hi: 74 },
+    { name: "CALABASH", word: "CLOUDY", lo: 54, hi: 75 }
+  ],
+  travel: [
+    { name: "ATLANTA", word: "CLOUDY", hi: 63, lo: 48 },
+    { name: "BISMARCK", word: "CLOUDY", hi: 38, lo: 32 },
+    { name: "BOISE", word: "CLOUDY", hi: 69, lo: 36 },
+    { name: "BOSTON", word: "RAIN", hi: 53, lo: 42 },
+    { name: "BUFFALO", word: "RAIN", hi: 46, lo: 35 },
+    { name: "CHICAGO", word: "SNOW", hi: 44, lo: 34 },
+    { name: "CINCINNATI", word: "RAIN", hi: 54, lo: 41 },
+    { name: "DALLAS", word: "SUNNY", hi: 77, lo: 51 },
+    { name: "DENVER", word: "SUNNY", hi: 67, lo: 35 },
+    { name: "DETROIT", word: "RAIN", hi: 48, lo: 37 },
+    { name: "KANSAS CITY", word: "SUNNY", hi: 49, lo: 33 },
+    { name: "LOS ANGELES", word: "CLOUDY", hi: 79, lo: 60 },
+    { name: "MINNEAPOLIS", word: "CLOUDY", hi: 39, lo: 31 },
+    { name: "NASHVILLE", word: "CLOUDY", hi: 62, lo: 42 },
+    { name: "NEW ORLEANS", word: "CLOUDY", hi: 77, lo: 60 },
+    { name: "NEW YORK CITY", word: "RAIN", hi: 62, lo: 47 },
+    { name: "PHOENIX", word: "M SUNNY", hi: 85, lo: 57 },
+    { name: "PORTLAND", word: "CLOUDY", hi: 59, lo: 50 },
+    { name: "RALEIGH", word: "CLOUDY", hi: 70, lo: 48 },
+    { name: "RAPID CITY", word: "CLOUDY", hi: 54, lo: 36 },
+    { name: "SACRAMENTO", word: "FOG", hi: 72, lo: 41 },
+    { name: "SALT LAKE CITY", word: "CLOUDY", hi: 63, lo: 35 },
+    { name: "TAMPA", word: "CLOUDY", hi: 79, lo: 66 },
+    { name: "WASHINGTON DC", word: "RAIN", hi: 67, lo: 46 }
+  ]
+};
+var DATA = JSON.parse(JSON.stringify(FALLBACK));
+
+/* ---------------- conversions (whole numbers, round half-up) -------- */
+function rhu(x) { return Math.floor(x + 0.5); }
+function cToF(c) { return rhu(c * 9 / 5 + 32); }
+function kmhToMph(v) { return rhu(v * 0.621371); }
+function hpaToInhg(v) { return (v * 0.02953).toFixed(2); }
+var SKY_WORDS = { 0: "CLEAR", 1: "FAIR", 2: "P CLOUDY", 3: "M CLOUDY" };
+function skyWord(code) {
+  if (typeof code === "number") return SKY_WORDS[code] || "CLEAR";
+  return String(code || "CLEAR").toUpperCase();
+}
+function farmFromChannel(fd) {
+  // Channel farm-data.json is metric: temp/feels/dew in C, wind km/h,
+  // pressure hPa. windSpeed is the RAW sustained speed and windGust the
+  // RAW gust — the refresh cron does NOT stage a rule value. Troy's
+  // 2026-11-16 wind rule is applied here in-page: gust below 16 mph ->
+  // show the HIGHER of sustained/gust, ONE number, NO gust wording.
+  // Gust 16+ -> sustained (lower) first, then the gust. Both 0 -> CALM.
+  var trend = (fd.pressureTrend || "steady").toLowerCase();
+  var letter = trend === "falling" ? "F" : trend === "rising" ? "R" : "S";
+  var sustMph = kmhToMph(fd.windSpeed || 0);
+  var gustMph = kmhToMph(fd.windGust || 0);
+  var windMph = gustMph >= 16 ? sustMph : Math.max(sustMph, gustMph);
+  var windGust = gustMph >= 16 ? gustMph : 0;
+  return {
+    tempF: cToF(fd.temperature), feelsF: cToF(fd.feelsLike),
+    dewF: cToF(fd.dewPoint), rh: fd.humidity,
+    pressure: hpaToInhg(fd.pressure), trend: letter,
+    windDir: fd.windDirection || "Calm",
+    windMph: windMph, windGust: windGust,
+    rainToday: (fd.rainTodayIn || 0).toFixed(2),
+    sky: skyWord(fd.conditionText),
+    visib: fd.visibility != null ? rhu(fd.visibility * 0.621371) : 10,
+    ceiling: DATA.farm.ceiling, novPrecip: DATA.farm.novPrecip
+  };
+}
+function windText(row) {
+  // Farm row (Latest Hourly Observations): direction + number only, NO
+  // "MPH" (Troy 2026-11-16 wind rule). At gust 16+ the farm row shows
+  // sustained first, then "Gusts to <gust>". Regional rows keep the
+  // sustained-only " MPH" form. Both 0 -> CALM.
+  if (!row.windMph && !(row.windGust && row.windGust >= 16)) return "CALM";
+  if (row.name === "CALABASH-FARM") {
+    if (row.windGust && row.windGust >= 16) {
+      return row.windMph > 0 ? (row.windDir + " " + row.windMph + " Gusts to " + row.windGust) : ("Gusts to " + row.windGust);
+    }
+    return row.windDir + " " + row.windMph;
+  }
+  return row.windDir + " " + row.windMph + " MPH";
+}
+
+/* ---------------- live data fetch (keeps last good on failure) ------ */
+function fetchJSON(url) {
+  return fetch(url, { cache: "no-store" }).then(function (r) {
+    if (!r.ok) throw new Error(r.status);
+    return r.json();
+  });
+}
+function loadData() {
+  fetchJSON("../4000-myrtle-intl/farm-data.json")
+    .catch(function () { return fetchJSON("farm-data.json"); })
+    .then(function (fd) { DATA.farm = farmFromChannel(fd); renderCurrent(); })
+    .catch(function () { /* keep fallback */ });
+  fetchJSON("local-forecast.json").then(function (j) {
+    if (j.TODAY) DATA.forecast.TODAY = { name: "TODAY", text: j.TODAY.text };
+    if (j.TONIGHT) DATA.forecast.TONIGHT = { name: "TONIGHT", text: j.TONIGHT.text };
+    if (j.TOMORROW) DATA.forecast.TOMORROW = { name: "TOMORROW", text: j.TOMORROW.text };
+    if (j.extendedPeriods) {
+      var days = {}, order = [];
+      // NWS names the first periods "Overnight"/"Today"/"Tonight" depending
+      // on the hour: "Overnight" is the night just ended (its low is NOT
+      // today's LO — skip it); "Today"/"Tonight" both belong to today.
+      var todayKey = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"][new Date().getDay()];
+      j.extendedPeriods.forEach(function (p) {
+        var nm = p.name;
+        if (/^overnight$/i.test(nm)) return;
+        var key = /^(today|tonight)$/i.test(nm) ? todayKey
+          : nm.replace(" Night", "").toUpperCase().slice(0, 3);
+        if (!days[key]) { days[key] = { day: key, word: p.short, lo: null, hi: null }; order.push(key); }
+        if (p.isDaytime) { days[key].hi = p.temp; if (!days[key].word) days[key].word = p.short; }
+        else days[key].lo = p.temp;
+      });
+      var ext = order.map(function (k) { return days[k]; })
+        .filter(function (e) { return e.hi != null && e.lo != null; }).slice(0, 3);
+      if (ext.length === 3) DATA.extended = ext;
+    }
+  }).catch(function () {});
+  fetchJSON("regional-metars.json").then(function (j) {
+    if (j.hourly && j.hourly.length) DATA.hourly = [{ name: "CALABASH-FARM", tempF: DATA.farm.tempF, sky: DATA.farm.sky, windDir: DATA.farm.windDir, windMph: DATA.farm.windMph, windGust: DATA.farm.windGust }].concat(j.hourly);
+    if (j.region && j.region.length) DATA.region = j.region;
+    if (j.novemberPrecipIn != null) DATA.farm.novPrecip = j.novemberPrecipIn;
+  }).catch(function () {});
+  fetchJSON("travel-cities.json").then(function (j) {
+    if (j.cities && j.cities.length === 24) DATA.travel = j.cities;
+  }).catch(function () {});
+  fetchJSON("forecast-region.json").then(function (j) {
+    if (j.towns && j.towns.length) DATA.forecastRegion = j.towns;
+  }).catch(function () {});
+}
+
+/* ---------------- scaler (single scaler, like the Channel) ---------- */
+var stage = document.getElementById("stage");
+function fit() {
+  var s = Math.min(window.innerWidth / 1327, window.innerHeight / 998);
+  stage.style.transform = "translate(-50%,-50%) scale(" + s + ")";
+}
+window.addEventListener("resize", fit);
+fit();
+
+/* ---------------- clock + date (no leading zero on the hour) -------- */
+var DAYS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+var MONS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+function pad2(n) { return (n < 10 ? "0" : "") + n; }
+function tickClock() {
+  var d = new Date();
+  var h = d.getHours() % 12 || 12;
+  var ap = d.getHours() < 12 ? "AM" : "PM";
+  document.getElementById("ftime").textContent = h + ":" + pad2(d.getMinutes()) + ":" + pad2(d.getSeconds()) + " " + ap;
+  document.getElementById("fdate").textContent = DAYS[d.getDay()] + " " + MONS[d.getMonth()] + " " + d.getDate();
+}
+setInterval(tickClock, 1000);
+tickClock();
+
+/* ---------------- footer line 2 (rotates independently) ------------- */
+var fitems = 0, scrollTurn = 0;
+function footerItems() {
+  var f = DATA.farm;
+  return [
+    f.sky,
+    "TEMP: " + f.tempF + "\u00B0F   WND CHILL: " + f.feelsF + "\u00B0F",
+    "WIND: " + (f.windMph ? f.windDir + " " + f.windMph + " MPH" : "CALM"),
+    "HUMIDITY: " + f.rh + "%   DEWPOINT: " + f.dewF + "\u00B0F",
+    "VISIB: " + f.visib + " MI.   CEILING: " + f.ceiling,
+    "BAROMETRIC PRESSURE: " + f.pressure + " " + f.trend,
+    "NOVEMBER PRECIPITATION: " + Number(f.novPrecip).toFixed(2) + " IN",
+    "CONDITIONS AT CALABASH-FARM AT BRUNSWICK"
+  ];
+}
+var SCROLL_LINES = [
+  "CONDITIONS AT CALABASH-FARM AT BRUNSWICK \u2022 TROY'S WEATHER AT THE FARM \u2022 ",
+  "TROY'S WEATHER AT CALABASH-FARM AT BRUNSWICK \u2022 FARM CONDITIONS UPDATED EVERY 15 MINUTES \u2022 "
+];
+function tickFooter() {
+  var line2 = document.getElementById("fline2");
+  scrollTurn++;
+  if (scrollTurn % 4 === 0) {
+    var msg = SCROLL_LINES[(scrollTurn / 4 | 0) % SCROLL_LINES.length];
+    line2.className = "scroll";
+    line2.innerHTML = "<span>" + msg + msg + "</span>";
+  } else {
+    var items = footerItems();
+    line2.className = "line2";
+    line2.textContent = items[fitems % items.length];
+    fitems++;
+  }
+}
+setInterval(tickFooter, 4000);
+tickFooter();
+
+/* ---------------- screens ------------------------------------------- */
+var screenEl = document.getElementById("screen");
+function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+function titleHtml(t, two) {
+  return '<div class="title' + (two ? " two" : "") + '" data-fit="1">' + esc(t) + "</div>";
+}
+function fitTitles() {
+  var els = screenEl.querySelectorAll("[data-fit]");
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i], size = parseInt(getComputedStyle(el).fontSize, 10);
+    el.style.whiteSpace = "nowrap";
+    while (el.scrollWidth > 1267 && size > 24) { size -= 2; el.style.fontSize = size + "px"; }
+  }
+}
+function condRows() {
+  var f = DATA.farm;
+  return [
+    ["TEMP:", f.tempF + "\u00B0F"],
+    ["WND CHILL:", f.feelsF + "\u00B0F"],
+    ["WIND:", (f.windGust && f.windGust >= 16) ? (f.windMph > 0 ? f.windDir + " " + f.windMph + " MPH, Gusts to " + f.windGust + " MPH" : "Gusts to " + f.windGust + " MPH") : (f.windMph ? f.windDir + " " + f.windMph + " MPH" : "CALM")],
+    ["HUMID:", f.rh + "%"],
+    ["DEWPT:", f.dewF + "\u00B0F"],
+    ["CEILING:", f.ceiling],
+    ["VISIB:", f.visib + " MI."],
+    ["BAROMETRIC PRESSURE:", f.pressure + " " + f.trend],
+    ["NOVEMBER PRECIPITATION:", Number(f.novPrecip).toFixed(2) + " IN"],
+    ["SKY:", f.sky]
+  ];
+}
+function renderConditions() {
+  var rows = condRows().map(function (r) {
+    return '<div class="row">' + r[0] + " " + r[1] + "</div>";
+  }).join("");
+  screenEl.innerHTML = titleHtml("CONDITIONS AT CALABASH-FARM AT BRUNSWICK", true) +
+    '<div class="body"><div class="cond-col">' + rows + "</div></div>";
+  fitTitles();
+}
+function obsTable(rows, cols) {
+  var h = '<table class="data">';
+  rows.forEach(function (r) {
+    h += "<tr><td>" + esc(r.name) + "</td>";
+    if (cols.indexOf("temp") >= 0) h += '<td class="num">' + r.tempF + "</td>";
+    if (cols.indexOf("sky") >= 0) h += "<td>" + esc(r.sky) + "</td>";
+    if (cols.indexOf("wind") >= 0) h += "<td>" + esc(windText(r)) + "</td>";
+    h += "</tr>";
+  });
+  return h + "</table>";
+}
+function renderHourly() {
+  screenEl.innerHTML = titleHtml("LATEST HOURLY OBSERVATIONS") +
+    '<div class="body">' + obsTable(DATA.hourly, ["temp", "sky", "wind"]) + "</div>";
+  fitTitles();
+}
+function renderRegion() {
+  screenEl.innerHTML = titleHtml("CONDITIONS ACROSS THE REGION") +
+    '<div class="body">' + obsTable(DATA.region, ["sky", "temp", "wind"]) + "</div>";
+  fitTitles();
+}
+function renderForecast(which) {
+  var p = DATA.forecast[which];
+  screenEl.innerHTML = titleHtml("YOUR TWC FORECAST") +
+    '<div class="ftext">' + esc(p.name) + "..." + esc(p.text) + "</div>";
+  fitTitles();
+}
+function renderForecastRegion() {
+  var rows = DATA.forecastRegion.map(function (t) {
+    return "<tr><td>" + esc(t.name) + "</td><td>" + esc(t.word) + "</td>" +
+      '<td class="num">' + t.lo + "/" + t.hi + "</td></tr>";
+  }).join("");
+  screenEl.innerHTML = titleHtml("FORECAST ACROSS THE REGION") +
+    '<div class="body"><table class="data">' + rows + "</table></div>";
+  fitTitles();
+}
+function renderExtended() {
+  var h = titleHtml("EXTENDED FORECAST");
+  DATA.extended.forEach(function (e) {
+    h += '<div class="ext-row">' + esc(e.day) + " " + esc(e.word) +
+      ' &nbsp; LO <span class="lo">' + e.lo + "</span> &nbsp; HI " + e.hi + "</div>";
+  });
+  screenEl.innerHTML = h;
+  fitTitles();
+}
+function renderTravelTitle() {
+  stage.classList.add("grey");
+  screenEl.innerHTML = '<div class="travel-title">TRAVEL CITIES<br>FORECAST</div>';
+}
+var travelTimer = null, travelStep = 0;
+function renderTravel() {
+  stage.classList.remove("grey");
+  var rows = DATA.travel.map(function (c) {
+    return "<tr><td>" + esc(c.name) + "</td><td>" + esc(c.word) + "</td>" +
+      '<td class="num">' + c.hi + "/" + c.lo + "</td></tr>";
+  }).join("");
+  screenEl.innerHTML = titleHtml("TRAVEL CITIES FORECAST") +
+    '<div id="travel-view"><div id="travel-inner"><table class="data">' + rows + "</table></div></div>";
+  fitTitles();
+  var inner = document.getElementById("travel-inner");
+  var maxStep = Math.max(0, DATA.travel.length - 8);
+  travelStep = 0;
+  var firstRow = inner.querySelector("tr");
+  var rowH = firstRow ? firstRow.offsetHeight : 72;
+  if (travelTimer) clearInterval(travelTimer);
+  travelTimer = setInterval(function () {
+    travelStep = (travelStep + 1) % (maxStep + 1);
+    inner.style.transform = "translateY(" + (-travelStep * rowH) + "px)";
+  }, 1400);
+}
+function renderOutlook() {
+  screenEl.innerHTML = titleHtml("NAT'L WEATHER SERVICE OUTLOOK") +
+    '<div class="outlook">NOVEMBER<br><br>NO REPORT</div>';
+  fitTitles();
+}
+function renderGap() {
+  stage.classList.add("grey");
+  screenEl.innerHTML = "";
+}
+function renderLoading() {
+  screenEl.innerHTML =
+    '<div class="loading"><div class="big">LOADING DATA<br>PLEASE STAND BY</div>' +
+    '<div class="credit">SIMULATOR BY MIST WEATHER MEDIA. CODE/PICTURES ALMOST COMPLETELY BY JOE MOLINELLI, WITH HELP OF SOME OPEN SOURCE PROJECTS. GRAPHICAL VERSION COMING IN NEXT FEW MONTHS.</div>' +
+    '<div class="farmline">TROY\u2019S FARM VERSION \u2014 CONDITIONS AT CALABASH-FARM AT BRUNSWICK</div></div>';
+}
+function renderCurrent() {
+  if (currentScreen === renderConditions) renderConditions();
+}
+
+/* ---------------- cycle (typical order; ~110-150 s loop) ------------ */
+var SCREENS = [
+  [renderConditions, 12000],
+  [renderHourly, 12000],
+  [renderRegion, 12000],
+  [function () { renderForecast("TODAY"); }, 12000],
+  [function () { renderForecast("TONIGHT"); }, 12000],
+  [function () { renderForecast("TOMORROW"); }, 12000],
+  [renderForecastRegion, 12000],
+  [renderExtended, 12000],
+  [renderTravelTitle, 4000],
+  [renderTravel, 22000],
+  [renderOutlook, 10000],
+  [renderGap, 3000]
+];
+var currentScreen = null, screenIdx = 0;
+function showScreen(i) {
+  screenIdx = i % SCREENS.length;
+  var fn = SCREENS[screenIdx][0], dur = SCREENS[screenIdx][1];
+  currentScreen = fn;
+  stage.classList.remove("grey");
+  if (travelTimer) { clearInterval(travelTimer); travelTimer = null; }
+  fn();
+  setTimeout(function () { showScreen(screenIdx + 1); }, dur);
+}
+
+/* ---------------- boot ------------------------------------------------ */
+loadData();
+renderLoading();
+setTimeout(function () { showScreen(0); }, 3500);
+setInterval(loadData, 15 * 60 * 1000);
+</script>
+</body>
+</html>
