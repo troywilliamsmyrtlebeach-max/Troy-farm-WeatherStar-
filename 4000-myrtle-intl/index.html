@@ -29,7 +29,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=466" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=467" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -1697,13 +1697,13 @@ if (false) setInterval(function(){
 }, 1000);
 </script>
 <script>
-/* STANDALONE-GUSTS: if any visible wind-gusts line is empty, fill it from the farm payload, every second */
+/* STANDALONE-GUSTS (Troy 2026-11-16 wind rule): if any visible wind-gusts line is empty, fill it from the farm payload, every second — ONLY at gust 16+ mph. Below 16 the gust is already folded into the main WIND number, so the row stays empty. */
 setInterval(function(){
   try {
     var payload = window.__latestPwsPayload;
     if (!payload || !payload.windGust) return;
     var gustMph = Math.round(payload.windGust * 0.621371);
-    if (gustMph <= 0) return;
+    if (gustMph < 16) return;
     document.querySelectorAll('.wind-gusts').forEach(function(el){
       if (el.offsetParent !== null && !el.textContent.trim()) { el.textContent = 'Gusts to ' + gustMph + ' MPH'; }
     });
