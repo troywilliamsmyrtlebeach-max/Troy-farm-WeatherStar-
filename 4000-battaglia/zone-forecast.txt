@@ -1,18 +1,18 @@
-Expires:202611161215;;678003
-FPUS52 KILM 152308
+Expires:202611161445;;678003
+FPUS52 KILM 160139
 ZFPILM
 
 Zone Forecast Product
 National Weather Service Wilmington NC
-608 PM EST Sun Nov 15 2026
+839 PM EST Sun Nov 15 2026
 
-NCZ106-161215-
+NCZ106-161445-
 Coastal Pender-
 Including the city of Surf City
-608 PM EST Sun Nov 15 2026
+839 PM EST Sun Nov 15 2026
 
-.TONIGHT...Clear. Patchy frost after midnight. Lows in the mid
-30s. North winds 5 to 10 mph.
+.OVERNIGHT...Clear. Patchy frost. Lows in the mid 30s. North
+winds around 5 mph.
 .MONDAY...Sunny. Highs in the upper 50s. North winds 10 to
 15 mph.
 .MONDAY NIGHT...Clear. Lows in the upper 30s. North winds around
@@ -32,13 +32,13 @@ upper 40s. Highs in the lower 70s.
 
 $$
 
-NCZ105-161215-
+NCZ105-161445-
 Inland Pender-
 Including the city of Burgaw
-608 PM EST Sun Nov 15 2026
+839 PM EST Sun Nov 15 2026
 
-.TONIGHT...Clear. Lows in the upper 20s. North winds around 5 mph
-this evening, becoming light and variable.
+.OVERNIGHT...Clear. Lows in the upper 20s. Light and variable
+winds.
 .MONDAY...Sunny. Highs in the upper 50s. North winds 5 to 10 mph.
 .MONDAY NIGHT...Clear. Lows in the lower 30s. Northeast winds
 around 5 mph.
@@ -57,13 +57,14 @@ Highs in the lower 70s.
 
 $$
 
-NCZ108-161215-
+NCZ108-161445-
 Coastal New Hanover-
 Including the cities of Masonboro, Myrtle Grove, Ogden,
 Carolina Beach, and Seagate
-608 PM EST Sun Nov 15 2026
+839 PM EST Sun Nov 15 2026
 
-.TONIGHT...Clear. Lows in the upper 30s. North winds 5 to 10 mph.
+.OVERNIGHT...Clear. Lows in the upper 30s. North winds 5 to
+10 mph.
 .MONDAY...Sunny. Highs in the upper 50s. North winds 10 to
 15 mph.
 .MONDAY NIGHT...Clear. Lows in the lower 40s. North winds 5 to
@@ -83,13 +84,13 @@ lower 50s. Highs around 70.
 
 $$
 
-NCZ107-161215-
+NCZ107-161445-
 Inland New Hanover-
 Including the city of Wilmington
-608 PM EST Sun Nov 15 2026
+839 PM EST Sun Nov 15 2026
 
-.TONIGHT...Clear. Patchy frost after midnight. Lows in the mid
-30s. North winds around 5 mph.
+.OVERNIGHT...Clear. Patchy frost. Lows in the mid 30s. Light and
+variable winds, becoming north around 5 mph.
 .MONDAY...Patchy frost in the morning. Sunny. Highs around 60.
 North winds 5 to 10 mph.
 .MONDAY NIGHT...Clear. Lows in the mid 30s. North winds around
@@ -109,14 +110,14 @@ upper 40s. Highs in the lower 70s.
 
 $$
 
-NCZ110-161215-
+NCZ110-161445-
 Coastal Brunswick-
 Including the cities of Oak Island, Long Beach, Southport,
 and Sunset Beach
-608 PM EST Sun Nov 15 2026
+839 PM EST Sun Nov 15 2026
 
-.TONIGHT...Clear. Patchy frost after midnight. Lows in the mid
-30s. North winds 5 to 10 mph.
+.OVERNIGHT...Clear. Patchy frost. Lows in the mid 30s. North
+winds 5 to 10 mph.
 .MONDAY...Sunny. Highs around 60. North winds 10 to 15 mph.
 .MONDAY NIGHT...Clear. Lows around 40. Northeast winds 5 to
 10 mph.
@@ -134,13 +135,13 @@ lower 70s. Lows around 50.
 
 $$
 
-NCZ109-161215-
+NCZ109-161445-
 Inland Brunswick-
 Including the cities of Boiling Spring Lakes, Leland,
 and Shallotte
-608 PM EST Sun Nov 15 2026
+839 PM EST Sun Nov 15 2026
 
-.TONIGHT...Clear. Lows in the lower 30s. North winds around
+.OVERNIGHT...Clear. Lows in the lower 30s. North winds around
 5 mph.
 .MONDAY...Sunny. Highs around 60. North winds 5 to 10 mph.
 .MONDAY NIGHT...Clear. Lows in the mid 30s. Northeast winds
@@ -160,13 +161,13 @@ upper 40s. Highs in the lower 70s.
 
 $$
 
-NCZ096-161215-
+NCZ096-161445-
 Bladen-
 Including the cities of Elizabethtown and Bladenboro
-608 PM EST Sun Nov 15 2026
+839 PM EST Sun Nov 15 2026
 
-.TONIGHT...Clear. Lows in the lower 30s. North winds around 5 mph
-this evening, becoming light and variable.
+.OVERNIGHT...Clear. Lows in the lower 30s. Light and variable
+winds.
 .MONDAY...Sunny. Highs around 60. North winds 5 to 10 mph.
 .MONDAY NIGHT...Clear. Lows in the lower 30s. Northeast winds
 around 5 mph.
@@ -186,15 +187,15 @@ Highs in the lower 70s.
 
 $$
 
-NCZ099-161215-
+NCZ099-161445-
 Columbus-
 Including the cities of Whiteville, Tabor City, Chadbourn,
 and Lake Waccamaw
-608 PM EST Sun Nov 15 2026
+839 PM EST Sun Nov 15 2026
 
-.TONIGHT...Clear. Lows in the lower 30s. North winds around 5 mph
-this evening, becoming light and variable.
-.MONDAY...Sunny. Highs around 60. Northeast winds 5 to 10 mph.
+.OVERNIGHT...Clear. Lows in the lower 30s. Light and variable
+winds.
+.MONDAY...Sunny. Highs around 60. North winds 5 to 10 mph.
 .MONDAY NIGHT...Clear. Lows in the lower 30s. Northeast winds
 around 5 mph.
 .TUESDAY...Sunny. Highs in the mid 60s. Northeast winds around
@@ -213,13 +214,13 @@ Highs in the mid 70s.
 
 $$
 
-NCZ087-161215-
+NCZ087-161445-
 Robeson-
 Including the city of Lumberton
-608 PM EST Sun Nov 15 2026
+839 PM EST Sun Nov 15 2026
 
-.TONIGHT...Clear. Lows in the lower 30s. North winds around
-5 mph.
+.OVERNIGHT...Clear. Lows in the lower 30s. Light and variable
+winds, becoming north around 5 mph.
 .MONDAY...Sunny. Highs around 60. Northeast winds 5 to 10 mph.
 .MONDAY NIGHT...Clear. Lows in the lower 30s. Northeast winds
 around 5 mph.
@@ -239,14 +240,14 @@ Lows in the mid 40s.
 
 $$
 
-SCZ054-161215-
+SCZ054-161445-
 Coastal Horry-
 Including the cities of Myrtle Beach, Socastee,
 North Myrtle Beach, Garden City, and Little River
-608 PM EST Sun Nov 15 2026
+839 PM EST Sun Nov 15 2026
 
-.TONIGHT...Clear. Patchy frost after midnight. Lows in the mid
-30s. North winds around 5 mph.
+.OVERNIGHT...Clear. Patchy frost. Lows in the mid 30s. North
+winds around 5 mph.
 .MONDAY...Sunny. Highs in the lower 60s. Northeast winds 5 to
 10 mph.
 .MONDAY NIGHT...Clear. Lows in the upper 30s. Northeast winds
@@ -265,13 +266,13 @@ lower 70s. Lows in the upper 40s.
 
 $$
 
-SCZ058-161215-
+SCZ058-161445-
 Central Horry-
 Including the cities of Conway, Longs, and Bucksport
-608 PM EST Sun Nov 15 2026
+839 PM EST Sun Nov 15 2026
 
-.TONIGHT...Clear. Lows in the lower 30s. North winds around 5 mph
-this evening, becoming light and variable.
+.OVERNIGHT...Clear. Lows in the lower 30s. Light and variable
+winds.
 .MONDAY...Sunny. Highs in the lower 60s. Northeast winds 5 to
 10 mph.
 .MONDAY NIGHT...Clear. Lows in the mid 30s. Northeast winds
@@ -290,12 +291,12 @@ Highs in the lower 70s.
 
 $$
 
-SCZ059-161215-
+SCZ059-161445-
 Northern Horry-
 Including the cities of Loris, Green Sea, and Aynor
-608 PM EST Sun Nov 15 2026
+839 PM EST Sun Nov 15 2026
 
-.TONIGHT...Clear. Lows in the lower 30s. Light and variable
+.OVERNIGHT...Clear. Lows in the lower 30s. Light and variable
 winds.
 .MONDAY...Sunny. Highs in the lower 60s. Northeast winds 5 to
 10 mph.
@@ -317,13 +318,13 @@ Highs in the mid 70s.
 
 $$
 
-SCZ056-161215-
+SCZ056-161445-
 Coastal Georgetown-
 Including the cities of Georgetown and Murrells Inlet
-608 PM EST Sun Nov 15 2026
+839 PM EST Sun Nov 15 2026
 
-.TONIGHT...Clear. Patchy frost after midnight. Lows in the upper
-30s. North winds around 5 mph.
+.OVERNIGHT...Clear. Patchy frost. Lows in the upper 30s. North
+winds around 5 mph.
 .MONDAY...Sunny. Highs in the lower 60s. Northeast winds 10 to
 15 mph.
 .MONDAY NIGHT...Mostly clear. Lows in the lower 40s. Northeast
@@ -342,13 +343,13 @@ lower 70s. Lows in the lower 50s.
 
 $$
 
-SCZ055-161215-
+SCZ055-161445-
 Inland Georgetown-
 Including the city of Andrews
-608 PM EST Sun Nov 15 2026
+839 PM EST Sun Nov 15 2026
 
-.TONIGHT...Clear. Lows in the lower 30s. North winds around 5 mph
-this evening, becoming light and variable.
+.OVERNIGHT...Clear. Lows in the lower 30s. Light and variable
+winds.
 .MONDAY...Sunny. Highs in the lower 60s. Northeast winds 5 to
 10 mph.
 .MONDAY NIGHT...Clear. Lows in the mid 30s. Northeast winds
@@ -367,13 +368,13 @@ around 5 mph.
 
 $$
 
-SCZ024-161215-
+SCZ024-161445-
 Dillon-
 Including the city of Dillon
-608 PM EST Sun Nov 15 2026
+839 PM EST Sun Nov 15 2026
 
-.TONIGHT...Clear. Lows in the lower 30s. North winds around
-5 mph.
+.OVERNIGHT...Clear. Lows in the lower 30s. Light and variable
+winds, becoming north around 5 mph.
 .MONDAY...Sunny. Highs around 60. Northeast winds 5 to 10 mph.
 .MONDAY NIGHT...Clear. Lows in the lower 30s. Northeast winds
 around 5 mph.
@@ -393,13 +394,13 @@ Highs in the lower 70s.
 
 $$
 
-SCZ033-161215-
+SCZ033-161445-
 Marion-
 Including the cities of Marion and Mullins
-608 PM EST Sun Nov 15 2026
+839 PM EST Sun Nov 15 2026
 
-.TONIGHT...Clear. Lows in the lower 30s. North winds around 5 mph
-this evening, becoming light and variable.
+.OVERNIGHT...Clear. Lows in the lower 30s. Light and variable
+winds.
 .MONDAY...Sunny. Highs in the lower 60s. Northeast winds around
 5 mph.
 .MONDAY NIGHT...Clear. Lows in the lower 30s. Northeast winds
@@ -420,13 +421,13 @@ Highs in the mid 70s.
 
 $$
 
-SCZ032-161215-
+SCZ032-161445-
 Florence-
 Including the city of Florence
-608 PM EST Sun Nov 15 2026
+839 PM EST Sun Nov 15 2026
 
-.TONIGHT...Clear. Lows in the lower 30s. North winds around 5 mph
-this evening, becoming light and variable.
+.OVERNIGHT...Clear. Lows in the lower 30s. Light and variable
+winds.
 .MONDAY...Sunny. Highs in the lower 60s. Northeast winds 5 to
 10 mph.
 .MONDAY NIGHT...Clear. Lows in the lower 30s. Northeast winds
@@ -446,12 +447,12 @@ Highs in the mid 70s.
 
 $$
 
-SCZ039-161215-
+SCZ039-161445-
 Williamsburg-
 Including the city of Kingstree
-608 PM EST Sun Nov 15 2026
+839 PM EST Sun Nov 15 2026
 
-.TONIGHT...Clear. Lows in the lower 30s. Light and variable
+.OVERNIGHT...Clear. Lows in the lower 30s. Light and variable
 winds.
 .MONDAY...Sunny. Highs in the lower 60s. Northeast winds around
 5 mph.
@@ -472,13 +473,13 @@ Highs in the mid 70s.
 
 $$
 
-SCZ017-161215-
+SCZ017-161445-
 Marlboro-
 Including the cities of Bennettsville and McColl
-608 PM EST Sun Nov 15 2026
+839 PM EST Sun Nov 15 2026
 
-.TONIGHT...Clear. Lows in the lower 30s. North winds around
-5 mph.
+.OVERNIGHT...Clear. Lows in the lower 30s. Light and variable
+winds, becoming north around 5 mph.
 .MONDAY...Sunny. Highs around 60. Northeast winds 5 to 10 mph.
 .MONDAY NIGHT...Clear. Lows in the lower 30s. Northeast winds
 around 5 mph.
@@ -498,13 +499,13 @@ Lows in the lower 40s.
 
 $$
 
-SCZ023-161215-
+SCZ023-161445-
 Darlington-
 Including the cities of Hartsville, Darlington,
 and North Hartsville
-608 PM EST Sun Nov 15 2026
+839 PM EST Sun Nov 15 2026
 
-.TONIGHT...Clear. Lows in the lower 30s. North winds around
+.OVERNIGHT...Clear. Lows in the lower 30s. North winds around
 5 mph.
 .MONDAY...Sunny. Highs in the lower 60s. Northeast winds 5 to
 10 mph.
