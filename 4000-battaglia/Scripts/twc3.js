@@ -9888,7 +9888,7 @@ var _P28DrawHourlyPage = function (WeatherParameters, page)
         // turns redraw synchronously once loaded.
         if (_row.iconUrl)
         {
-            (function (_iconTop, _iconUrl, _iconPage)
+            (function (_iconUrl, _iconPage)
             {
                 var _img = _P28IconCache[_iconUrl];
                 if (!_img)
@@ -9897,19 +9897,26 @@ var _P28DrawHourlyPage = function (WeatherParameters, page)
                     _P28IconCache[_iconUrl] = _img;
                     _img.onload = function ()
                     {
-                        // Only paint if this page is still showing.
+                        // Repaint the WHOLE page, not just one slot:
+                        // several rows often share one icon URL (e.g. four
+                        // "scattered clouds" hours in a row). The other
+                        // rows were drawn while the image was still
+                        // loading, so a single-slot repaint would leave
+                        // them icon-less. Redrawing is idempotent — the
+                        // cached image is complete by now, so every row
+                        // draws synchronously and no new load starts.
                         if (_P28CurrentPage === _iconPage)
                         {
-                            context.drawImage(_img, 266, _iconTop, 48, 48);
+                            _P28DrawHourlyPage(WeatherParameters, _iconPage);
                         }
                     };
                     _img.src = _iconUrl;
                 }
                 if (_img.complete && _img.naturalWidth > 0)
                 {
-                    context.drawImage(_img, 266, _iconTop, 48, 48);
+                    context.drawImage(_img, 266, _top + 12, 48, 48);
                 }
-            })(_top + 12, _row.iconUrl, page);
+            })(_row.iconUrl, page);
         }
     }
 
