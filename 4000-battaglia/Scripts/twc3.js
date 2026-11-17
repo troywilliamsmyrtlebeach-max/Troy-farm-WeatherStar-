@@ -4497,7 +4497,7 @@ var _PlayMsOffsets = {
     LatestObservations_Loaded: false,
     HourlyForecast_Start: 0,
     HourlyForecast_End: 0,
-    HourlyForecast_Length: 10000,
+    HourlyForecast_Length: 36000,
     HourlyForecast_Loaded: false,
     RegionalForecast1_Start: 0,
     RegionalForecast1_End: 0,
@@ -4594,7 +4594,9 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
     _PlayMsOffsets.HourlyForecast_Start = _PlayMsOffsets.LatestObservations_End;
     if (Progress.HourlyForecast == LoadStatuses.Loaded)
     {
-        _PlayMsOffsets.HourlyForecast_Length = 10000;
+        // TROY-FARM P28 rebuild: 6 pages of 4 hourly rows, Channel pacing
+        // [9, 6, 6, 6, 6, 3]s = 36s per cycle.
+        _PlayMsOffsets.HourlyForecast_Length = 36000;
     }
     else
     {
@@ -5049,6 +5051,15 @@ var UpdatePlayPosition = function ()
     {
         _CurrentCanvasType = CanvasTypes.HourlyForecast;
         _CurrentPosition = _CurrentCanvasType;
+        SubMs = _PlayMs - _PlayMsOffsets.HourlyForecast_Start;
+
+        // TROY-FARM P28 rebuild (2026-11-17): Channel-form hourly pages —
+        // 24 rows in 6 pages of 4, pacing [9, 6, 6, 6, 6, 3]s like Channel.
+        var _p28Page = _P28PageForMs(SubMs);
+        if (_p28Page !== _P28CurrentPage)
+        {
+            _P28DrawHourlyPage(_WeatherParameters, _p28Page);
+        }
     }
     else if (_PlayMs >= _PlayMsOffsets.RegionalForecast1_Start && _PlayMs < _PlayMsOffsets.RegionalForecast1_End)
     {
@@ -9754,7 +9765,8 @@ var _P28LoadStagedHourlyForecast = function (WeatherParameters)
 var _P28ValidateHourlyForecast = function (json)
 {
     if (!json || json.station !== "KNCCAROL120") return false;
-    if (!json.hours || json.hours.length !== 12) return false;
+    // Channel/International hourly shows 24 rows in 6 pages of 4.
+    if (!json.hours || json.hours.length !== 24) return false;
     // The app ignores a file whose generatedAt is older than 2 hours
     // (the cron re-stages it every 15 min, so a stale file means the
     // staging broke — fail soft and skip the screen, never show old hours).
@@ -9765,7 +9777,11 @@ var _P28ValidateHourlyForecast = function (json)
     {
         var h = json.hours[i];
         if (typeof h.hourLabel !== "string" || h.hourLabel === "") return false;
+        if (typeof h.weekday !== "string" || h.weekday === "") return false;
         if (typeof h.tempF !== "number" || isNaN(h.tempF)) return false;
+        // feelsLikeF (NWS wind chill / heat index / air temp) is what
+        // the LIKE column shows — only when it differs from tempF.
+        if (typeof h.feelsLikeF !== "number" || isNaN(h.feelsLikeF)) return false;
         if (typeof h.shortForecast !== "string" || h.shortForecast === "") return false;
         if (typeof h.windSpeedMph !== "number" || isNaN(h.windSpeedMph)) return false;
         if (h.pop !== null && typeof h.pop !== "number") return false;
@@ -9781,18 +9797,131 @@ var _P28ValidateHourlyForecast = function (json)
     return true;
 };
 
+// TROY-FARM P28 rebuild (2026-11-17): the Hourly Forecast screen now
+// matches the Channel/International hourly screen — Troy's words
+// 2026-11-16: "I want my hourly forecast matching exactly 100% how it
+// looks on my channel and international emulators". 24 staged NWS hourly
+// rows, 4 tall rows per page, 6 auto-scrolling pages, columns hour /
+// sky icon / TEMP / LIKE / WIND, header labels TEMP / LIKE / WIND, title
+// "Hourly Forecast" large bold yellow. No rain-chance column and no SKY
+// text column (Channel shows neither; PoP lives only on the Hourly Graph
+// and in the narration). No NOAA emblem on this screen — the title is long
+// and the clock sits immediately right, same as the upstream app.
+// Page pacing copies Channel's hourly delays [9, 6, 6, 6, 6, 3]s = 36s.
+// LIKE is yellow, same as Channel's CSS (the upstream app's pale
+// lavender-blue LIKE is not Troy's Channel look).
+var _P28CurrentPage = -1;
+var _P28HourlyBg = null;
+var _P28IconCache = {};
+var _P28PageMs = [9000, 15000, 21000, 27000, 33000, 36000];
+
+var _P28PageForMs = function (subMs)
+{
+    for (var p = 0; p < 5; p++)
+    {
+        if (subMs < _P28PageMs[p]) return p;
+    }
+    return 5;
+};
+
+var _P28DrawHourlyPage = function (WeatherParameters, page)
+{
+    var HourlyForecast = WeatherParameters.HourlyForecast;
+    if (!HourlyForecast || !HourlyForecast.hours || HourlyForecast.hours.length !== 24) return;
+    var canvas = canvasHourlyForecast[0];
+    var context = canvas.getContext("2d", { willReadFrequently: true });
+    _P28CurrentPage = page;
+
+    context.drawImage(_P28HourlyBg, 0, 0);
+
+    // Orange/amber header band with the dark-blue diagonal accent, same
+    // as every other screen in this app.
+    DrawHorizontalGradientSingle(context, 0, 30, 500, 90, _TopColor1, _TopColor2);
+    DrawTriangle(context, "rgb(28, 10, 87)", 500, 30, 450, 90, 500, 90);
+
+    DrawTitleText(context, "Hourly", "Forecast");
+
+    // Channel hourly list: deep-blue gradient panel, dark purple/navy
+    // header band (#200057, 20px) with yellow Star4000 Small 24pt labels,
+    // rows Star4000 Large 24pt yellow, 72px tall. Columns (640px
+    // display): hour left x25, icon centered x290, TEMP left x355,
+    // LIKE left x425, WIND right edge x605.
+    var _listGrad = context.createLinearGradient(0, 96, 0, 404);
+    _listGrad.addColorStop(0, "#001040");
+    _listGrad.addColorStop(0.44, "#102080");
+    _listGrad.addColorStop(0.66, "#102080");
+    _listGrad.addColorStop(1, "#001040");
+    context.fillStyle = _listGrad;
+    context.fillRect(0, 96, 640, 308);
+    context.fillStyle = "#200057";
+    context.fillRect(0, 96, 640, 20);
+
+    DrawText(context, "Star4000 Small", "24pt", "#FFFF00", 355, 114, "TEMP", 3);
+    DrawText(context, "Star4000 Small", "24pt", "#FFFF00", 435, 114, "LIKE", 3);
+    DrawText(context, "Star4000 Small", "24pt", "#FFFF00", 535, 114, "WIND", 3);
+
+    for (var i = 0; i < 4; i++)
+    {
+        var _row = HourlyForecast.hours[page * 4 + i];
+        var _top = 116 + i * 72;
+        var _y = _top + 44;
+
+        // Hour: weekday short + hour, e.g. "Tue 8 PM" — Channel form.
+        DrawText(context, "Star4000 Large", "24pt", "#FFFF00", 25, _y, _row.weekday + " " + _row.hourLabel, 3);
+        // TEMP: bare number padded to 3, no degree symbol — Channel form.
+        DrawText(context, "Star4000 Large", "24pt", "#FFFF00", 355, _y, ("   " + _row.tempF).slice(-3), 3);
+        // LIKE (feels-like): only when it differs from temp — Channel form.
+        if (typeof _row.feelsLikeF === "number" && _row.feelsLikeF !== _row.tempF)
+        {
+            DrawText(context, "Star4000 Large", "24pt", "#FFFF00", 425, _y, ("   " + _row.feelsLikeF).slice(-3), 3);
+        }
+        // WIND: direction + speed, right-aligned; Calm with no direction
+        // when 0. NWS hourly carries no gust, so hourly rows show
+        // sustained wind only — same as Channel (Open-Meteo wind only).
+        // No MPH on this table — same as Latest Observations.
+        var _wind = (_row.windSpeedMph === 0) ? "Calm" : _row.windDir + " " + _row.windSpeedMph;
+        DrawText(context, "Star4000 Large", "24pt", "#FFFF00", 605, _y, _wind, 3, "end");
+
+        // Sky icon (best-effort, must never wedge the screen): the staged
+        // URL already carries the night 'n' prefix — moon at night, sun
+        // by day, per that hour's own day/night. Cached per URL so page
+        // turns redraw synchronously once loaded.
+        if (_row.iconUrl)
+        {
+            (function (_iconTop, _iconUrl, _iconPage)
+            {
+                var _img = _P28IconCache[_iconUrl];
+                if (!_img)
+                {
+                    _img = new Image();
+                    _P28IconCache[_iconUrl] = _img;
+                    _img.onload = function ()
+                    {
+                        // Only paint if this page is still showing.
+                        if (_P28CurrentPage === _iconPage)
+                        {
+                            context.drawImage(_img, 266, _iconTop, 48, 48);
+                        }
+                    };
+                    _img.src = _iconUrl;
+                }
+                if (_img.complete && _img.naturalWidth > 0)
+                {
+                    context.drawImage(_img, 266, _iconTop, 48, 48);
+                }
+            })(_top + 12, _row.iconUrl, page);
+        }
+    }
+
+    UpdateWeatherCanvas(WeatherParameters, canvasHourlyForecast);
+};
+
 var PopulateHourlyForecast = function (WeatherParameters)
 {
     if (WeatherParameters == null || !WeatherParameters.HourlyForecast)
     {
         return;
     }
-
-    var HourlyForecast = WeatherParameters.HourlyForecast;
-
-    // Draw canvas
-    var canvas = canvasHourlyForecast[0];
-    var context = canvas.getContext("2d", { willReadFrequently: true });
 
     var BackGroundImage = new Image();
     // TROY-FARM P23 pattern: proceed once on load, error, or an 8s
@@ -9802,74 +9931,12 @@ var PopulateHourlyForecast = function (WeatherParameters)
     {
         if (_p28Drawn) return;
         _p28Drawn = true;
-        context.drawImage(BackGroundImage, 0, 0);
-
-        DrawTitleText(context, "Hourly", "Forecast");
-
-        // Header row (12pt) + 12 hourly rows (19pt). First row baseline
-        // y=134, 23px spacing, last baseline y=387 — the ticker strip
-        // starts ~y405, so nothing crosses it. Columns: hour left x52,
-        // icon 26x26 at x120, temp right-aligned x205, sky word left
-        // x225, wind right-aligned x500, rain chance right-aligned x600.
-        // Wind reads direction + number only, no MPH — this is a forecast
-        // table like Latest Observations (main-screen GUSTS rows and the
-        // ticker keep MPH); 0 wind reads Calm, never a bare 0.
-        DrawText(context, "Star4000", "12pt", "#FFFFFF", 52, 112, "HOUR", 2);
-        DrawText(context, "Star4000", "12pt", "#FFFFFF", 205, 112, "TEMP", 2, "end");
-        DrawText(context, "Star4000", "12pt", "#FFFFFF", 225, 112, "SKY", 2);
-        DrawText(context, "Star4000", "12pt", "#FFFFFF", 500, 112, "WIND", 2, "end");
-        DrawText(context, "Star4000", "12pt", "#FFFFFF", 600, 112, "RAIN %", 2, "end");
-
-        for (var i = 0; i < HourlyForecast.hours.length; i++)
-        {
-            var _row = HourlyForecast.hours[i];
-            var _y = 134 + i * 23;
-
-            DrawText(context, "Star4000", "19pt", "#FFFFFF", 52, _y, _row.hourLabel, 2);
-            DrawText(context, "Star4000", "19pt", "#FFFFFF", 205, _y, _row.tempF + "\u00B0", 2, "end");
-
-            // Sky word: NWS shortForecast can be long ("Chance Rain
-            // Showers" = 20 chars). Shrink that row's font until it fits
-            // the x225→x440 column (min 14pt) — never truncate, never clip.
-            // DrawText sets context.font as size + " 'Star4000'", so the
-            // measure uses the same format.
-            var _skySize = 19;
-            context.font = "19pt 'Star4000'";
-            while (_skySize > 14 && context.measureText(_row.shortForecast).width > 215)
-            {
-                _skySize -= 1;
-                context.font = _skySize + "pt 'Star4000'";
-            }
-            DrawText(context, "Star4000", _skySize + "pt", "#FFFFFF", 225, _y, _row.shortForecast, 2);
-
-            var _wind = (_row.windSpeedMph === 0) ? "Calm" : _row.windDir + " " + _row.windSpeedMph;
-            DrawText(context, "Star4000", "19pt", "#FFFFFF", 500, _y, _wind, 2, "end");
-
-            var _pop = (_row.pop === null ? 0 : _row.pop) + "%";
-            DrawText(context, "Star4000", "19pt", "#FFFFFF", 600, _y, _pop, 2, "end");
-
-            // Sky icon (best-effort, must never wedge the screen): the
-            // staged URL already carries the night 'n' prefix — moon at
-            // night, sun by day. Each icon draws in as it arrives; the
-            // screen's Loaded state depends only on the JSON + row
-            // drawing, never on icon loads.
-            if (_row.iconUrl)
-            {
-                (function (_iconY, _iconUrl)
-                {
-                    var _img = new Image();
-                    _img.onload = function ()
-                    {
-                        context.drawImage(_img, 120, _iconY - 20, 26, 26);
-                    };
-                    _img.src = _iconUrl;
-                })(_y, _row.iconUrl);
-            }
-        }
+        _P28HourlyBg = BackGroundImage;
+        _P28CurrentPage = -1;
+        _P28DrawHourlyPage(WeatherParameters, 0);
 
         WeatherParameters.Progress.HourlyForecast = LoadStatuses.Loaded;
 
-        UpdateWeatherCanvas(WeatherParameters, canvasHourlyForecast);
         // Late-load adjust: the slot only exists once this data lands.
         AssignPlayMsOffsets(true);
     };
@@ -13921,7 +13988,11 @@ var UpdateWeatherCanvas = function (WeatherParameters, Canvas)
 
     if (Canvas[0] == canvasHourlyForecast[0])
     {
-        // TROY-FARM: NOAA emblem stays on every screen.
+        // TROY-FARM P28 rebuild (2026-11-17): no NOAA emblem on the Hourly
+        // Forecast screen — the title is long and the clock sits
+        // immediately right, same as the upstream Channel/International
+        // hourly screen. One-line change to re-enable: delete this line.
+        OkToDrawNoaaImage = false;
     }
 
     if (Canvas[0] == canvasRegionalForecast1[0])
@@ -16069,11 +16140,12 @@ var GetNarrationText = function ()
 
             if (HourlyForecast && HourlyForecast.hours)
             {
-                // TROY-FARM P28 (2026-11-15): Travel Cities Forecast is
-                // gone — Troy asked for his hourly forecast in its place.
-                // Read the 12 staged NWS hourly rows for the farm point.
+                // TROY-FARM P28 (2026-11-15, rebuilt 2026-11-17): Travel
+                // Cities Forecast is gone — Troy asked for his hourly
+                // forecast in its place. Read the first 12 of the 24
+                // staged NWS hourly rows (the next 12 hours).
                 Text += "Hourly forecast for Calabash Farm at Brunswick. ";
-                $(HourlyForecast.hours).each(function ()
+                $(HourlyForecast.hours.slice(0, 12)).each(function ()
                 {
                     var _p28Hour = this;
                     Text += _p28Hour.hourLabel + ", " + _p28Hour.tempF + " degrees, " + _p28Hour.shortForecast + ", ";
