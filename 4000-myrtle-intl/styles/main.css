@@ -5,7 +5,7 @@
 /* Radar: "Light" starts at x323, so the emblem sits between the title (ends x263) and "Light". */
 #radar-html .noaa-logo{left:272px}
 /* Hazards has no header (red alert screen, logo off like Battaglia): emblem floats at Battaglia's spot. */
-#hazards-html .noaa-logo{position:absolute;top:39px;left:356px}
+#hazards-html .noaa-logo{position:absolute;top:39px;left:356px;z-index:5}
 /* Farm row on Latest Observations — farm name yellow like every other farm-name display (Troy 2026-11-14). The row carries class "farm-row" from latestobservations.mjs. */
 .weather-display .latest-observations.main .observation-row.farm-row .location{color:#FAFA2C !important}
 /*# sourceMappingURL=main.css.map */
