@@ -37,8 +37,8 @@ class LocalForecast extends WeatherDisplay {
 
 		if (!conditions.length) {
 			this.screenTexts = [
-				// FRESH FORECAST 2026-11-17 ~11:05 AM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-17T16:05:06+00:00; forecast through Monday, verified this run). Written in the screenshot format (generator
+				// FRESH FORECAST 2026-11-17 ~11:58 AM EST (NWS ILM gridpoint 68,59 for the farm,
+				// generated 2026-11-17T16:58:17+00:00; forecast through Monday, verified this run). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
 				'TODAY... Mostly sunny. High near 66, with temperatures falling to around 60 in the afternoon. Northeast wind around 8 mph. Precip chance 0%.',
 				'TONIGHT... Partly cloudy, with a low around 42. Northeast wind around 7 mph. Precip chance 0%.',
