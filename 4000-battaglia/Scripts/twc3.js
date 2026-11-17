@@ -9900,7 +9900,12 @@ var _P28DrawHourly = function (WeatherParameters, subMs)
         // Sky icon (best-effort, must never wedge the screen): the staged
         // URL already carries the night 'n' prefix — moon at night, sun
         // by day, per that hour's own day/night. Cached per URL so
-        // redraws are synchronous once loaded. 70x70, centered x290.
+        // redraws are synchronous once loaded. 60x60, centered x290:
+        // on Troy's phone the 640-wide canvas scales 0.5909x, so 60px
+        // renders 35.5 CSS px — exactly Channel/International's icon
+        // size on their live kiosk links at 390px (35.45x33.09). The
+        // 70px size overshot it by ~17% (41.4 CSS px); corrected
+        // 2026-11-17 after measuring Troy's own links.
         if (_row.iconUrl)
         {
             (function (_iconUrl)
@@ -9927,7 +9932,7 @@ var _P28DrawHourly = function (WeatherParameters, subMs)
                 }
                 if (_img.complete && _img.naturalWidth > 0)
                 {
-                    context.drawImage(_img, 255, _top + 1, 70, 70);
+                    context.drawImage(_img, 260, _top + 6, 60, 60);
                 }
             })(_row.iconUrl);
         }
