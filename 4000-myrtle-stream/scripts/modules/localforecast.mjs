@@ -37,15 +37,14 @@ class LocalForecast extends WeatherDisplay {
 
 		if (!conditions.length) {
 			this.screenTexts = [
-				// FRESH FORECAST 2026-11-17 ~5:18 PM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-17T22:18:29+00:00; forecast through Monday, verified this run). Written in the screenshot format (generator
+				// FRESH FORECAST 2026-11-17 ~6:03 PM EST (NWS ILM gridpoint 68,59 for the farm,
+				// generated 2026-11-17T23:03:12+00:00; forecast through Tuesday, verified this run). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
-				'THIS AFTERNOON... Sunny. High near 66, with temperatures falling to around 59 in the afternoon. Northeast wind around 5 mph. Precip chance 0%.',
 				'TONIGHT... Mostly clear, with a low around 42. Northeast wind 2 to 7 mph. Precip chance 0%.',
 				'WEDNESDAY... Sunny. High near 71, with temperatures falling to around 65 in the afternoon. Northeast wind 6 to 12 mph. Precip chance 0%.',
 				'WEDNESDAY NIGHT... Mostly clear, with a low around 49. Northeast wind around 7 mph. Precip chance 0%.',
 				'THURSDAY... Mostly sunny, with a high near 73. Northeast wind 7 to 10 mph. Precip chance 1%.',
-				'THURSDAY NIGHT... Partly cloudy, with a low around 52. Precip chance 5%.',
+				'THURSDAY NIGHT... Partly cloudy, with a low around 52. Northeast wind around 7 mph. Precip chance 5%.',
 				'FRIDAY... Mostly sunny, with a high near 74. Precip chance 6%.',
 				'FRIDAY NIGHT... A slight chance of rain showers after 1am. Mostly cloudy, with a low around 56. Precip chance 15%.',
 				'SATURDAY... A chance of rain showers. Partly sunny, with a high near 72. Chance of precipitation is 40%. Precip chance 37%.',
@@ -54,6 +53,7 @@ class LocalForecast extends WeatherDisplay {
 				'SUNDAY NIGHT... A slight chance of rain showers before 7pm. Partly cloudy, with a low around 52. Precip chance 22%.',
 				'MONDAY... Sunny, with a high near 72. Precip chance 4%.',
 				'MONDAY NIGHT... Mostly clear, with a low around 44. Precip chance 2%.',
+				'TUESDAY... Sunny, with a high near 64. Precip chance 5%.',
 				];
 		} else {
 			this.screenTexts = conditions.map((condition) => condition.Text);
