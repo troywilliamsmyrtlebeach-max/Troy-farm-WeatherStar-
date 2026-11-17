@@ -29,7 +29,7 @@
   </script>
 
   
-  <link rel="stylesheet" type="text/css" href="styles/main.css?v=494" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css?v=496" />
   <script type="text/javascript" src="scripts/vendor/auto/jquery.js"></script>
   <script type="text/javascript" src="scripts/vendor/jquery.autocomplete.min.js"></script>
   <script type="text/javascript" src="scripts/vendor/auto/nosleep.js"></script>
@@ -273,8 +273,7 @@ html.farm-tv .weather-display .scroll .fixed .text-layer{top:50%!important;trans
 #local-forecast-html .fc-label{color:#FAFA2C !important}
 #local-forecast-html .fc-period{margin-bottom:10px !important}
 #local-forecast-html .fc-period:last-child{margin-bottom:0 !important}
-/* NOAA TAG (Troy 2026-11-10: "NOAA" beside the Local Forecast word at the top). Same yellow caps, same 24pt as the title; sits in the gap between the title and the clock. */
-#local-forecast-html .noaa-tag{position:absolute;left:150px;top:12px;color:#FAFA2C !important;font-family:"Star4000";font-size:24pt;text-shadow:3px 3px 0 #000 !important}
+/* NOAA emblem image (Troy 2026-11-16) — see styles/main.css; the yellow NOAA text tag is removed. */
 /* v=11 SUNSET-ORANGE EDGES (Troy 2026-11-08: the original WeatherStar 4000+ had
    sunset-orange edges around the screen — side strips + frame/body, all screens,
    all the time. Sampled from his screenshots 946_0_qa1h.jpg + 987_1_5ss8.png:
@@ -418,6 +417,7 @@ try {
         <div class="header">
 	
 		<div class="logo emblem">TROY'S<br>WEATHER<br>CHANNEL</div>
+		<img class="noaa-logo" src="data:image/gif;base64,R0lGODlhLAAqAAAAACH5BAUAAAEALAAAAAAsACoAhQCIu6pEqgBEd////xEREQB3uwAzZjNVuwAzd4iqzCKZzBGIu0SqzLvd7pm7zJnM7u7//wBmqgAiZhFViIjM3Xe73d3u/2a73d3d7u7u/6rM3aq7zCJmiABVd3fM3UR3qmaZu7vM3RGZzCJmmczu/zOZzIjM7gAiVd3u7lWIqszd7jNmmWaZqhGZu8zu7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb/wIBwSCwKDAaEQIBAGorQqNRoWFqvVuR0K61iv9gnl+sFm7PjafnMFkzSxXW7DRfK5+wJIX0CDwYJAgmAgoSDgVcGKQN7U38bdwMCkpSTlpVZKn+MjptflaB/k6JLBiibjI1FqKRWoJewkksbrKlQtbJLlYexlm61DQTCq7h3eLSoLhEHw0MDDbiQeIm1BQUAwqoAEQy4K9NWK6wAANfZQ+QF3bVK0wYhqAvX5Nl7B+TlFbUqxmaoCvPIMRt2D18BCrUS9EsE7w9AfPjOFTSIkBWLhUw+bJIHMSLBjuUu1Lp4ZsIfCOVA0ss2EWKBErUc3DHA4c+DgCrrtXRZABqqswwckjQR4OAPR5Uehe3sWECBC1YoHDjAgOqCAqRJ92A1uIDCKVx/GlBYgLWeva0GC0Qo8ADVWGs4QZoNsBQkXH2bKlhDK3BuALQFKljY1IDBXr4rzwlBXIIBwMOIEzdbHLkyxIGKKVu27JdI3c05OxMBzdfsZM+ksWLODKVgXNCrT0v5XNm0Ki600cZmzYVAy9f4yO7mnUYp0462idfReaB58+T16kyBDl16ceq3rcMxbT0IADs=" alt="NOAA">
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -427,7 +427,7 @@ try {
 			<div class="bottom" id="bottomTitle">
 				CALABASH-FARM AT BRUNSWICK
 			</div>
-					<div class="noaa-tag">NOAA</div>
+					
 </div>
 		
 				
@@ -462,11 +462,12 @@ try {
         <div class="header">
 	
 		<div class="logo emblem">TROY'S<br>WEATHER<br>CHANNEL</div>
+		<img class="noaa-logo" src="data:image/gif;base64,R0lGODlhLAAqAAAAACH5BAUAAAEALAAAAAAsACoAhQCIu6pEqgBEd////xEREQB3uwAzZjNVuwAzd4iqzCKZzBGIu0SqzLvd7pm7zJnM7u7//wBmqgAiZhFViIjM3Xe73d3u/2a73d3d7u7u/6rM3aq7zCJmiABVd3fM3UR3qmaZu7vM3RGZzCJmmczu/zOZzIjM7gAiVd3u7lWIqszd7jNmmWaZqhGZu8zu7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb/wIBwSCwKDAaEQIBAGorQqNRoWFqvVuR0K61iv9gnl+sFm7PjafnMFkzSxXW7DRfK5+wJIX0CDwYJAgmAgoSDgVcGKQN7U38bdwMCkpSTlpVZKn+MjptflaB/k6JLBiibjI1FqKRWoJewkksbrKlQtbJLlYexlm61DQTCq7h3eLSoLhEHw0MDDbiQeIm1BQUAwqoAEQy4K9NWK6wAANfZQ+QF3bVK0wYhqAvX5Nl7B+TlFbUqxmaoCvPIMRt2D18BCrUS9EsE7w9AfPjOFTSIkBWLhUw+bJIHMSLBjuUu1Lp4ZsIfCOVA0ss2EWKBErUc3DHA4c+DgCrrtXRZABqqswwckjQR4OAPR5Uehe3sWECBC1YoHDjAgOqCAqRJ92A1uIDCKVx/GlBYgLWeva0GC0Qo8ADVWGs4QZoNsBQkXH2bKlhDK3BuALQFKljY1IDBXr4rzwlBXIIBwMOIEzdbHLkyxIGKKVu27JdI3c05OxMBzdfsZM+ksWLODKVgXNCrT0v5XNm0Ki600cZmzYVAy9f4yO7mnUYp0462idfReaB58+T16kyBDl16ceq3rcMxbT0IADs=" alt="NOAA">
 	
 	
 			<div class="title single">
 				Hourly Forecast
-						<div class="noaa-tag">NOAA</div>
+						
 </div>
 			
 				
@@ -500,11 +501,12 @@ try {
         <div class="header">
 	
 		<div class="logo emblem">TROY'S<br>WEATHER<br>CHANNEL</div>
+		<img class="noaa-logo" src="data:image/gif;base64,R0lGODlhLAAqAAAAACH5BAUAAAEALAAAAAAsACoAhQCIu6pEqgBEd////xEREQB3uwAzZjNVuwAzd4iqzCKZzBGIu0SqzLvd7pm7zJnM7u7//wBmqgAiZhFViIjM3Xe73d3u/2a73d3d7u7u/6rM3aq7zCJmiABVd3fM3UR3qmaZu7vM3RGZzCJmmczu/zOZzIjM7gAiVd3u7lWIqszd7jNmmWaZqhGZu8zu7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb/wIBwSCwKDAaEQIBAGorQqNRoWFqvVuR0K61iv9gnl+sFm7PjafnMFkzSxXW7DRfK5+wJIX0CDwYJAgmAgoSDgVcGKQN7U38bdwMCkpSTlpVZKn+MjptflaB/k6JLBiibjI1FqKRWoJewkksbrKlQtbJLlYexlm61DQTCq7h3eLSoLhEHw0MDDbiQeIm1BQUAwqoAEQy4K9NWK6wAANfZQ+QF3bVK0wYhqAvX5Nl7B+TlFbUqxmaoCvPIMRt2D18BCrUS9EsE7w9AfPjOFTSIkBWLhUw+bJIHMSLBjuUu1Lp4ZsIfCOVA0ss2EWKBErUc3DHA4c+DgCrrtXRZABqqswwckjQR4OAPR5Uehe3sWECBC1YoHDjAgOqCAqRJ92A1uIDCKVx/GlBYgLWeva0GC0Qo8ADVWGs4QZoNsBQkXH2bKlhDK3BuALQFKljY1IDBXr4rzwlBXIIBwMOIEzdbHLkyxIGKKVu27JdI3c05OxMBzdfsZM+ksWLODKVgXNCrT0v5XNm0Ki600cZmzYVAy9f4yO7mnUYp0462idfReaB58+T16kyBDl16ceq3rcMxbT0IADs=" alt="NOAA">
 	
 	
 			<div class="title single">
 				Hourly Graph
-						<div class="noaa-tag">NOAA</div>
+						
 </div>
 			
 				
@@ -545,6 +547,7 @@ try {
         <div class="header">
 	
 		<div class="logo emblem">TROY'S<br>WEATHER<br>CHANNEL</div>
+		<img class="noaa-logo" src="data:image/gif;base64,R0lGODlhLAAqAAAAACH5BAUAAAEALAAAAAAsACoAhQCIu6pEqgBEd////xEREQB3uwAzZjNVuwAzd4iqzCKZzBGIu0SqzLvd7pm7zJnM7u7//wBmqgAiZhFViIjM3Xe73d3u/2a73d3d7u7u/6rM3aq7zCJmiABVd3fM3UR3qmaZu7vM3RGZzCJmmczu/zOZzIjM7gAiVd3u7lWIqszd7jNmmWaZqhGZu8zu7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb/wIBwSCwKDAaEQIBAGorQqNRoWFqvVuR0K61iv9gnl+sFm7PjafnMFkzSxXW7DRfK5+wJIX0CDwYJAgmAgoSDgVcGKQN7U38bdwMCkpSTlpVZKn+MjptflaB/k6JLBiibjI1FqKRWoJewkksbrKlQtbJLlYexlm61DQTCq7h3eLSoLhEHw0MDDbiQeIm1BQUAwqoAEQy4K9NWK6wAANfZQ+QF3bVK0wYhqAvX5Nl7B+TlFbUqxmaoCvPIMRt2D18BCrUS9EsE7w9AfPjOFTSIkBWLhUw+bJIHMSLBjuUu1Lp4ZsIfCOVA0ss2EWKBErUc3DHA4c+DgCrrtXRZABqqswwckjQR4OAPR5Uehe3sWECBC1YoHDjAgOqCAqRJ92A1uIDCKVx/GlBYgLWeva0GC0Qo8ADVWGs4QZoNsBQkXH2bKlhDK3BuALQFKljY1IDBXr4rzwlBXIIBwMOIEzdbHLkyxIGKKVu27JdI3c05OxMBzdfsZM+ksWLODKVgXNCrT0v5XNm0Ki600cZmzYVAy9f4yO7mnUYp0462idfReaB58+T16kyBDl16ceq3rcMxbT0IADs=" alt="NOAA">
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -554,7 +557,7 @@ try {
 			<div class="bottom" id="bottomTitle">
 				For 
 			</div>
-					<div class="noaa-tag">NOAA</div>
+					
 </div>
 		
 				
@@ -586,6 +589,7 @@ try {
         <div class="header">
 	
 		<div class="logo emblem">TROY'S<br>WEATHER<br>CHANNEL</div>
+		<img class="noaa-logo" src="data:image/gif;base64,R0lGODlhLAAqAAAAACH5BAUAAAEALAAAAAAsACoAhQCIu6pEqgBEd////xEREQB3uwAzZjNVuwAzd4iqzCKZzBGIu0SqzLvd7pm7zJnM7u7//wBmqgAiZhFViIjM3Xe73d3u/2a73d3d7u7u/6rM3aq7zCJmiABVd3fM3UR3qmaZu7vM3RGZzCJmmczu/zOZzIjM7gAiVd3u7lWIqszd7jNmmWaZqhGZu8zu7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb/wIBwSCwKDAaEQIBAGorQqNRoWFqvVuR0K61iv9gnl+sFm7PjafnMFkzSxXW7DRfK5+wJIX0CDwYJAgmAgoSDgVcGKQN7U38bdwMCkpSTlpVZKn+MjptflaB/k6JLBiibjI1FqKRWoJewkksbrKlQtbJLlYexlm61DQTCq7h3eLSoLhEHw0MDDbiQeIm1BQUAwqoAEQy4K9NWK6wAANfZQ+QF3bVK0wYhqAvX5Nl7B+TlFbUqxmaoCvPIMRt2D18BCrUS9EsE7w9AfPjOFTSIkBWLhUw+bJIHMSLBjuUu1Lp4ZsIfCOVA0ss2EWKBErUc3DHA4c+DgCrrtXRZABqqswwckjQR4OAPR5Uehe3sWECBC1YoHDjAgOqCAqRJ92A1uIDCKVx/GlBYgLWeva0GC0Qo8ADVWGs4QZoNsBQkXH2bKlhDK3BuALQFKljY1IDBXr4rzwlBXIIBwMOIEzdbHLkyxIGKKVu27JdI3c05OxMBzdfsZM+ksWLODKVgXNCrT0v5XNm0Ki600cZmzYVAy9f4yO7mnUYp0462idfReaB58+T16kyBDl16ceq3rcMxbT0IADs=" alt="NOAA">
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -595,7 +599,7 @@ try {
 			<div class="bottom" id="bottomTitle">
 				Conditions
 			</div>
-					<div class="noaa-tag">NOAA</div>
+					
 </div>
 		
 				
@@ -662,6 +666,7 @@ try {
         <div class="header">
 	
 		<div class="logo emblem">TROY'S<br>WEATHER<br>CHANNEL</div>
+		<img class="noaa-logo" src="data:image/gif;base64,R0lGODlhLAAqAAAAACH5BAUAAAEALAAAAAAsACoAhQCIu6pEqgBEd////xEREQB3uwAzZjNVuwAzd4iqzCKZzBGIu0SqzLvd7pm7zJnM7u7//wBmqgAiZhFViIjM3Xe73d3u/2a73d3d7u7u/6rM3aq7zCJmiABVd3fM3UR3qmaZu7vM3RGZzCJmmczu/zOZzIjM7gAiVd3u7lWIqszd7jNmmWaZqhGZu8zu7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb/wIBwSCwKDAaEQIBAGorQqNRoWFqvVuR0K61iv9gnl+sFm7PjafnMFkzSxXW7DRfK5+wJIX0CDwYJAgmAgoSDgVcGKQN7U38bdwMCkpSTlpVZKn+MjptflaB/k6JLBiibjI1FqKRWoJewkksbrKlQtbJLlYexlm61DQTCq7h3eLSoLhEHw0MDDbiQeIm1BQUAwqoAEQy4K9NWK6wAANfZQ+QF3bVK0wYhqAvX5Nl7B+TlFbUqxmaoCvPIMRt2D18BCrUS9EsE7w9AfPjOFTSIkBWLhUw+bJIHMSLBjuUu1Lp4ZsIfCOVA0ss2EWKBErUc3DHA4c+DgCrrtXRZABqqswwckjQR4OAPR5Uehe3sWECBC1YoHDjAgOqCAqRJ92A1uIDCKVx/GlBYgLWeva0GC0Qo8ADVWGs4QZoNsBQkXH2bKlhDK3BuALQFKljY1IDBXr4rzwlBXIIBwMOIEzdbHLkyxIGKKVu27JdI3c05OxMBzdfsZM+ksWLODKVgXNCrT0v5XNm0Ki600cZmzYVAy9f4yO7mnUYp0462idfReaB58+T16kyBDl16ceq3rcMxbT0IADs=" alt="NOAA">
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -671,7 +676,7 @@ try {
 			<div class="bottom" id="bottomTitle">
 				Forecast
 			</div>
-			<div class="noaa-tag">NOAA</div>
+			
 		</div>
 		
 				
@@ -699,6 +704,7 @@ try {
         <div class="header">
 	
 		<div class="logo emblem">TROY'S<br>WEATHER<br>CHANNEL</div>
+		<img class="noaa-logo" src="data:image/gif;base64,R0lGODlhLAAqAAAAACH5BAUAAAEALAAAAAAsACoAhQCIu6pEqgBEd////xEREQB3uwAzZjNVuwAzd4iqzCKZzBGIu0SqzLvd7pm7zJnM7u7//wBmqgAiZhFViIjM3Xe73d3u/2a73d3d7u7u/6rM3aq7zCJmiABVd3fM3UR3qmaZu7vM3RGZzCJmmczu/zOZzIjM7gAiVd3u7lWIqszd7jNmmWaZqhGZu8zu7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb/wIBwSCwKDAaEQIBAGorQqNRoWFqvVuR0K61iv9gnl+sFm7PjafnMFkzSxXW7DRfK5+wJIX0CDwYJAgmAgoSDgVcGKQN7U38bdwMCkpSTlpVZKn+MjptflaB/k6JLBiibjI1FqKRWoJewkksbrKlQtbJLlYexlm61DQTCq7h3eLSoLhEHw0MDDbiQeIm1BQUAwqoAEQy4K9NWK6wAANfZQ+QF3bVK0wYhqAvX5Nl7B+TlFbUqxmaoCvPIMRt2D18BCrUS9EsE7w9AfPjOFTSIkBWLhUw+bJIHMSLBjuUu1Lp4ZsIfCOVA0ss2EWKBErUc3DHA4c+DgCrrtXRZABqqswwckjQR4OAPR5Uehe3sWECBC1YoHDjAgOqCAqRJ92A1uIDCKVx/GlBYgLWeva0GC0Qo8ADVWGs4QZoNsBQkXH2bKlhDK3BuALQFKljY1IDBXr4rzwlBXIIBwMOIEzdbHLkyxIGKKVu27JdI3c05OxMBzdfsZM+ksWLODKVgXNCrT0v5XNm0Ki600cZmzYVAy9f4yO7mnUYp0462idfReaB58+T16kyBDl16ceq3rcMxbT0IADs=" alt="NOAA">
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -708,7 +714,7 @@ try {
 			<div class="bottom" id="bottomTitle">
 				Observations
 			</div>
-					<div class="noaa-tag">NOAA</div>
+					
 </div>
 		
 				
@@ -745,6 +751,7 @@ try {
         <div class="header">
 	
 		<div class="logo emblem">TROY'S<br>WEATHER<br>CHANNEL</div>
+		<img class="noaa-logo" src="data:image/gif;base64,R0lGODlhLAAqAAAAACH5BAUAAAEALAAAAAAsACoAhQCIu6pEqgBEd////xEREQB3uwAzZjNVuwAzd4iqzCKZzBGIu0SqzLvd7pm7zJnM7u7//wBmqgAiZhFViIjM3Xe73d3u/2a73d3d7u7u/6rM3aq7zCJmiABVd3fM3UR3qmaZu7vM3RGZzCJmmczu/zOZzIjM7gAiVd3u7lWIqszd7jNmmWaZqhGZu8zu7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb/wIBwSCwKDAaEQIBAGorQqNRoWFqvVuR0K61iv9gnl+sFm7PjafnMFkzSxXW7DRfK5+wJIX0CDwYJAgmAgoSDgVcGKQN7U38bdwMCkpSTlpVZKn+MjptflaB/k6JLBiibjI1FqKRWoJewkksbrKlQtbJLlYexlm61DQTCq7h3eLSoLhEHw0MDDbiQeIm1BQUAwqoAEQy4K9NWK6wAANfZQ+QF3bVK0wYhqAvX5Nl7B+TlFbUqxmaoCvPIMRt2D18BCrUS9EsE7w9AfPjOFTSIkBWLhUw+bJIHMSLBjuUu1Lp4ZsIfCOVA0ss2EWKBErUc3DHA4c+DgCrrtXRZABqqswwckjQR4OAPR5Uehe3sWECBC1YoHDjAgOqCAqRJ92A1uIDCKVx/GlBYgLWeva0GC0Qo8ADVWGs4QZoNsBQkXH2bKlhDK3BuALQFKljY1IDBXr4rzwlBXIIBwMOIEzdbHLkyxIGKKVu27JdI3c05OxMBzdfsZM+ksWLODKVgXNCrT0v5XNm0Ki600cZmzYVAy9f4yO7mnUYp0462idfReaB58+T16kyBDl16ceq3rcMxbT0IADs=" alt="NOAA">
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -754,7 +761,7 @@ try {
 			<div class="bottom" id="bottomTitle">
 				Observations
 			</div>
-					<div class="noaa-tag">NOAA</div>
+					
 </div>
 		
 				
@@ -785,11 +792,12 @@ try {
         <div class="header">
 	
 		<div class="logo emblem">TROY'S<br>WEATHER<br>CHANNEL</div>
+		<img class="noaa-logo" src="data:image/gif;base64,R0lGODlhLAAqAAAAACH5BAUAAAEALAAAAAAsACoAhQCIu6pEqgBEd////xEREQB3uwAzZjNVuwAzd4iqzCKZzBGIu0SqzLvd7pm7zJnM7u7//wBmqgAiZhFViIjM3Xe73d3u/2a73d3d7u7u/6rM3aq7zCJmiABVd3fM3UR3qmaZu7vM3RGZzCJmmczu/zOZzIjM7gAiVd3u7lWIqszd7jNmmWaZqhGZu8zu7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb/wIBwSCwKDAaEQIBAGorQqNRoWFqvVuR0K61iv9gnl+sFm7PjafnMFkzSxXW7DRfK5+wJIX0CDwYJAgmAgoSDgVcGKQN7U38bdwMCkpSTlpVZKn+MjptflaB/k6JLBiibjI1FqKRWoJewkksbrKlQtbJLlYexlm61DQTCq7h3eLSoLhEHw0MDDbiQeIm1BQUAwqoAEQy4K9NWK6wAANfZQ+QF3bVK0wYhqAvX5Nl7B+TlFbUqxmaoCvPIMRt2D18BCrUS9EsE7w9AfPjOFTSIkBWLhUw+bJIHMSLBjuUu1Lp4ZsIfCOVA0ss2EWKBErUc3DHA4c+DgCrrtXRZABqqswwckjQR4OAPR5Uehe3sWECBC1YoHDjAgOqCAqRJ92A1uIDCKVx/GlBYgLWeva0GC0Qo8ADVWGs4QZoNsBQkXH2bKlhDK3BuALQFKljY1IDBXr4rzwlBXIIBwMOIEzdbHLkyxIGKKVu27JdI3c05OxMBzdfsZM+ksWLODKVgXNCrT0v5XNm0Ki600cZmzYVAy9f4yO7mnUYp0462idfReaB58+T16kyBDl16ceq3rcMxbT0IADs=" alt="NOAA">
 	
 	
 			<div class="title single">
 				Almanac
-						<div class="noaa-tag">NOAA</div>
+						
 </div>
 			
 				
@@ -836,6 +844,7 @@ try {
         <div class="header">
 	
 		<div class="logo emblem">TROY'S<br>WEATHER<br>CHANNEL</div>
+		<img class="noaa-logo" src="data:image/gif;base64,R0lGODlhLAAqAAAAACH5BAUAAAEALAAAAAAsACoAhQCIu6pEqgBEd////xEREQB3uwAzZjNVuwAzd4iqzCKZzBGIu0SqzLvd7pm7zJnM7u7//wBmqgAiZhFViIjM3Xe73d3u/2a73d3d7u7u/6rM3aq7zCJmiABVd3fM3UR3qmaZu7vM3RGZzCJmmczu/zOZzIjM7gAiVd3u7lWIqszd7jNmmWaZqhGZu8zu7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb/wIBwSCwKDAaEQIBAGorQqNRoWFqvVuR0K61iv9gnl+sFm7PjafnMFkzSxXW7DRfK5+wJIX0CDwYJAgmAgoSDgVcGKQN7U38bdwMCkpSTlpVZKn+MjptflaB/k6JLBiibjI1FqKRWoJewkksbrKlQtbJLlYexlm61DQTCq7h3eLSoLhEHw0MDDbiQeIm1BQUAwqoAEQy4K9NWK6wAANfZQ+QF3bVK0wYhqAvX5Nl7B+TlFbUqxmaoCvPIMRt2D18BCrUS9EsE7w9AfPjOFTSIkBWLhUw+bJIHMSLBjuUu1Lp4ZsIfCOVA0ss2EWKBErUc3DHA4c+DgCrrtXRZABqqswwckjQR4OAPR5Uehe3sWECBC1YoHDjAgOqCAqRJ92A1uIDCKVx/GlBYgLWeva0GC0Qo8ADVWGs4QZoNsBQkXH2bKlhDK3BuALQFKljY1IDBXr4rzwlBXIIBwMOIEzdbHLkyxIGKKVu27JdI3c05OxMBzdfsZM+ksWLODKVgXNCrT0v5XNm0Ki600cZmzYVAy9f4yO7mnUYp0462idfReaB58+T16kyBDl16ceq3rcMxbT0IADs=" alt="NOAA">
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -845,7 +854,7 @@ try {
 			<div class="bottom" id="bottomTitle">
 				Forecast
 			</div>
-					<div class="noaa-tag">NOAA</div>
+					
 </div>
 		
 				
@@ -883,6 +892,7 @@ try {
       <div id="radar-html" class="weather-display">
         <div class="header">
 	<div class="logo emblem">TROY'S<br>WEATHER<br>CHANNEL</div>
+	<img class="noaa-logo" src="data:image/gif;base64,R0lGODlhLAAqAAAAACH5BAUAAAEALAAAAAAsACoAhQCIu6pEqgBEd////xEREQB3uwAzZjNVuwAzd4iqzCKZzBGIu0SqzLvd7pm7zJnM7u7//wBmqgAiZhFViIjM3Xe73d3u/2a73d3d7u7u/6rM3aq7zCJmiABVd3fM3UR3qmaZu7vM3RGZzCJmmczu/zOZzIjM7gAiVd3u7lWIqszd7jNmmWaZqhGZu8zu7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb/wIBwSCwKDAaEQIBAGorQqNRoWFqvVuR0K61iv9gnl+sFm7PjafnMFkzSxXW7DRfK5+wJIX0CDwYJAgmAgoSDgVcGKQN7U38bdwMCkpSTlpVZKn+MjptflaB/k6JLBiibjI1FqKRWoJewkksbrKlQtbJLlYexlm61DQTCq7h3eLSoLhEHw0MDDbiQeIm1BQUAwqoAEQy4K9NWK6wAANfZQ+QF3bVK0wYhqAvX5Nl7B+TlFbUqxmaoCvPIMRt2D18BCrUS9EsE7w9AfPjOFTSIkBWLhUw+bJIHMSLBjuUu1Lp4ZsIfCOVA0ss2EWKBErUc3DHA4c+DgCrrtXRZABqqswwckjQR4OAPR5Uehe3sWECBC1YoHDjAgOqCAqRJ92A1uIDCKVx/GlBYgLWeva0GC0Qo8ADVWGs4QZoNsBQkXH2bKlhDK3BuALQFKljY1IDBXr4rzwlBXIIBwMOIEzdbHLkyxIGKKVu27JdI3c05OxMBzdfsZM+ksWLODKVgXNCrT0v5XNm0Ki600cZmzYVAy9f4yO7mnUYp0462idfReaB58+T16kyBDl16ceq3rcMxbT0IADs=" alt="NOAA">
 	<div class="title dual">
 		<div class="top">
 			Current
@@ -890,7 +900,7 @@ try {
 		<div class="bottom">
 			Radar
 		</div>
-				<div class="noaa-tag">NOAA</div>
+				
 </div>
 	<div class="right">
 		<div class="precip">
@@ -933,6 +943,7 @@ try {
 </script>
       </div>
       <div id="hazards-html" class="weather-display">
+        <img class="noaa-logo" src="data:image/gif;base64,R0lGODlhLAAqAAAAACH5BAUAAAEALAAAAAAsACoAhQCIu6pEqgBEd////xEREQB3uwAzZjNVuwAzd4iqzCKZzBGIu0SqzLvd7pm7zJnM7u7//wBmqgAiZhFViIjM3Xe73d3u/2a73d3d7u7u/6rM3aq7zCJmiABVd3fM3UR3qmaZu7vM3RGZzCJmmczu/zOZzIjM7gAiVd3u7lWIqszd7jNmmWaZqhGZu8zu7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb/wIBwSCwKDAaEQIBAGorQqNRoWFqvVuR0K61iv9gnl+sFm7PjafnMFkzSxXW7DRfK5+wJIX0CDwYJAgmAgoSDgVcGKQN7U38bdwMCkpSTlpVZKn+MjptflaB/k6JLBiibjI1FqKRWoJewkksbrKlQtbJLlYexlm61DQTCq7h3eLSoLhEHw0MDDbiQeIm1BQUAwqoAEQy4K9NWK6wAANfZQ+QF3bVK0wYhqAvX5Nl7B+TlFbUqxmaoCvPIMRt2D18BCrUS9EsE7w9AfPjOFTSIkBWLhUw+bJIHMSLBjuUu1Lp4ZsIfCOVA0ss2EWKBErUc3DHA4c+DgCrrtXRZABqqswwckjQR4OAPR5Uehe3sWECBC1YoHDjAgOqCAqRJ92A1uIDCKVx/GlBYgLWeva0GC0Qo8ADVWGs4QZoNsBQkXH2bKlhDK3BuALQFKljY1IDBXr4rzwlBXIIBwMOIEzdbHLkyxIGKKVu27JdI3c05OxMBzdfsZM+ksWLODKVgXNCrT0v5XNm0Ki600cZmzYVAy9f4yO7mnUYp0462idfReaB58+T16kyBDl16ceq3rcMxbT0IADs=" alt="NOAA">
         	<div class="main has-scroll hazards no-header">
 		<div class="hazard-lines">
 			<div class="hazard template">
@@ -949,11 +960,12 @@ try {
         <div class="header">
 	
 		<div class="logo emblem">TROY'S<br>WEATHER<br>CHANNEL</div>
+		<img class="noaa-logo" src="data:image/gif;base64,R0lGODlhLAAqAAAAACH5BAUAAAEALAAAAAAsACoAhQCIu6pEqgBEd////xEREQB3uwAzZjNVuwAzd4iqzCKZzBGIu0SqzLvd7pm7zJnM7u7//wBmqgAiZhFViIjM3Xe73d3u/2a73d3d7u7u/6rM3aq7zCJmiABVd3fM3UR3qmaZu7vM3RGZzCJmmczu/zOZzIjM7gAiVd3u7lWIqszd7jNmmWaZqhGZu8zu7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb/wIBwSCwKDAaEQIBAGorQqNRoWFqvVuR0K61iv9gnl+sFm7PjafnMFkzSxXW7DRfK5+wJIX0CDwYJAgmAgoSDgVcGKQN7U38bdwMCkpSTlpVZKn+MjptflaB/k6JLBiibjI1FqKRWoJewkksbrKlQtbJLlYexlm61DQTCq7h3eLSoLhEHw0MDDbiQeIm1BQUAwqoAEQy4K9NWK6wAANfZQ+QF3bVK0wYhqAvX5Nl7B+TlFbUqxmaoCvPIMRt2D18BCrUS9EsE7w9AfPjOFTSIkBWLhUw+bJIHMSLBjuUu1Lp4ZsIfCOVA0ss2EWKBErUc3DHA4c+DgCrrtXRZABqqswwckjQR4OAPR5Uehe3sWECBC1YoHDjAgOqCAqRJ92A1uIDCKVx/GlBYgLWeva0GC0Qo8ADVWGs4QZoNsBQkXH2bKlhDK3BuALQFKljY1IDBXr4rzwlBXIIBwMOIEzdbHLkyxIGKKVu27JdI3c05OxMBzdfsZM+ksWLODKVgXNCrT0v5XNm0Ki600cZmzYVAy9f4yO7mnUYp0462idfReaB58+T16kyBDl16ceq3rcMxbT0IADs=" alt="NOAA">
 	
 	
 			<div class="title single">
 				Marine Forecast
-						<div class="noaa-tag">NOAA</div>
+						
 </div>
 			
 				
@@ -1003,6 +1015,7 @@ try {
         <div class="header">
 	
 		<div class="logo emblem">TROY'S<br>WEATHER<br>CHANNEL</div>
+		<img class="noaa-logo" src="data:image/gif;base64,R0lGODlhLAAqAAAAACH5BAUAAAEALAAAAAAsACoAhQCIu6pEqgBEd////xEREQB3uwAzZjNVuwAzd4iqzCKZzBGIu0SqzLvd7pm7zJnM7u7//wBmqgAiZhFViIjM3Xe73d3u/2a73d3d7u7u/6rM3aq7zCJmiABVd3fM3UR3qmaZu7vM3RGZzCJmmczu/zOZzIjM7gAiVd3u7lWIqszd7jNmmWaZqhGZu8zu7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb/wIBwSCwKDAaEQIBAGorQqNRoWFqvVuR0K61iv9gnl+sFm7PjafnMFkzSxXW7DRfK5+wJIX0CDwYJAgmAgoSDgVcGKQN7U38bdwMCkpSTlpVZKn+MjptflaB/k6JLBiibjI1FqKRWoJewkksbrKlQtbJLlYexlm61DQTCq7h3eLSoLhEHw0MDDbiQeIm1BQUAwqoAEQy4K9NWK6wAANfZQ+QF3bVK0wYhqAvX5Nl7B+TlFbUqxmaoCvPIMRt2D18BCrUS9EsE7w9AfPjOFTSIkBWLhUw+bJIHMSLBjuUu1Lp4ZsIfCOVA0ss2EWKBErUc3DHA4c+DgCrrtXRZABqqswwckjQR4OAPR5Uehe3sWECBC1YoHDjAgOqCAqRJ92A1uIDCKVx/GlBYgLWeva0GC0Qo8ADVWGs4QZoNsBQkXH2bKlhDK3BuALQFKljY1IDBXr4rzwlBXIIBwMOIEzdbHLkyxIGKKVu27JdI3c05OxMBzdfsZM+ksWLODKVgXNCrT0v5XNm0Ki600cZmzYVAy9f4yO7mnUYp0462idfReaB58+T16kyBDl16ceq3rcMxbT0IADs=" alt="NOAA">
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -1012,7 +1025,7 @@ try {
 			<div class="bottom" id="bottomTitle">
 				Today
 			</div>
-					<div class="noaa-tag">NOAA</div>
+					
 </div>
 		
 				
@@ -1063,6 +1076,7 @@ try {
         <div class="header">
 	
 		<div class="logo emblem">TROY'S<br>WEATHER<br>CHANNEL</div>
+		<img class="noaa-logo" src="data:image/gif;base64,R0lGODlhLAAqAAAAACH5BAUAAAEALAAAAAAsACoAhQCIu6pEqgBEd////xEREQB3uwAzZjNVuwAzd4iqzCKZzBGIu0SqzLvd7pm7zJnM7u7//wBmqgAiZhFViIjM3Xe73d3u/2a73d3d7u7u/6rM3aq7zCJmiABVd3fM3UR3qmaZu7vM3RGZzCJmmczu/zOZzIjM7gAiVd3u7lWIqszd7jNmmWaZqhGZu8zu7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb/wIBwSCwKDAaEQIBAGorQqNRoWFqvVuR0K61iv9gnl+sFm7PjafnMFkzSxXW7DRfK5+wJIX0CDwYJAgmAgoSDgVcGKQN7U38bdwMCkpSTlpVZKn+MjptflaB/k6JLBiibjI1FqKRWoJewkksbrKlQtbJLlYexlm61DQTCq7h3eLSoLhEHw0MDDbiQeIm1BQUAwqoAEQy4K9NWK6wAANfZQ+QF3bVK0wYhqAvX5Nl7B+TlFbUqxmaoCvPIMRt2D18BCrUS9EsE7w9AfPjOFTSIkBWLhUw+bJIHMSLBjuUu1Lp4ZsIfCOVA0ss2EWKBErUc3DHA4c+DgCrrtXRZABqqswwckjQR4OAPR5Uehe3sWECBC1YoHDjAgOqCAqRJ92A1uIDCKVx/GlBYgLWeva0GC0Qo8ADVWGs4QZoNsBQkXH2bKlhDK3BuALQFKljY1IDBXr4rzwlBXIIBwMOIEzdbHLkyxIGKKVu27JdI3c05OxMBzdfsZM+ksWLODKVgXNCrT0v5XNm0Ki600cZmzYVAy9f4yO7mnUYp0462idfReaB58+T16kyBDl16ceq3rcMxbT0IADs=" alt="NOAA">
 	
 	
 		<div class="title dual" id="dualTitle">
@@ -1072,7 +1086,7 @@ try {
 			<div class="bottom" id="bottomTitle">
 				Conditions
 			</div>
-					<div class="noaa-tag">NOAA</div>
+					
 </div>
 		
 				
