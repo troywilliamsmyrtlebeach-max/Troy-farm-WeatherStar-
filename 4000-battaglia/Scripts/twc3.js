@@ -5053,13 +5053,11 @@ var UpdatePlayPosition = function ()
         _CurrentPosition = _CurrentCanvasType;
         SubMs = _PlayMs - _PlayMsOffsets.HourlyForecast_Start;
 
-        // TROY-FARM P28 rebuild (2026-11-17): Channel-form hourly pages —
-        // 24 rows in 6 pages of 4, pacing [9, 6, 6, 6, 6, 3]s like Channel.
-        var _p28Page = _P28PageForMs(SubMs);
-        if (_p28Page !== _P28CurrentPage)
-        {
-            _P28DrawHourlyPage(_WeatherParameters, _p28Page);
-        }
+        // TROY-FARM hourly scroll (2026-11-17): the list scrolls
+        // continuously like Channel — redraw on every play tick (100ms)
+        // with the offset for this SubMs, so the rows crawl instead of
+        // jumping between pages. The draw is idempotent and cheap.
+        _P28DrawHourly(_WeatherParameters, SubMs);
     }
     else if (_PlayMs >= _PlayMsOffsets.RegionalForecast1_Start && _PlayMs < _PlayMsOffsets.RegionalForecast1_End)
     {
@@ -9732,10 +9730,10 @@ var PopulateDailyHistory = function (WeatherParameters)
 // "take off the travel cities forecast and have my hourly forecast in its
 // place." Reads hourly-forecast.json, staged fresh every 15 min by the
 // Channel cron from the NWS hourly forecast for the farm gridpoint
-// ILM 68,59 (see stage_hourly_forecast.py in the Battaglia goal): 12
+// ILM 68,59 (see stage_hourly_forecast.py in the Battaglia goal): 24
 // hourly rows — hour, temp, sky word, wind, precip chance — farm point
 // only, never town/airport data. Same slot as Travel Cities Forecast
-// (CanvasTypes 3), static 12-row table, no scroll.
+// (CanvasTypes 3). The list scrolls continuously (see _P28DrawHourly).
 var _P28LoadStagedHourlyForecast = function (WeatherParameters)
 {
     $.ajaxCORS({
@@ -9801,36 +9799,51 @@ var _P28ValidateHourlyForecast = function (json)
 // matches the Channel/International hourly screen — Troy's words
 // 2026-11-16: "I want my hourly forecast matching exactly 100% how it
 // looks on my channel and international emulators". 24 staged NWS hourly
-// rows, 4 tall rows per page, 6 auto-scrolling pages, columns hour /
-// sky icon / TEMP / LIKE / WIND, header labels TEMP / LIKE / WIND, title
-// "Hourly Forecast" large bold yellow. No rain-chance column and no SKY
-// text column (Channel shows neither; PoP lives only on the Hourly Graph
-// and in the narration). No NOAA emblem on this screen — the title is long
-// and the clock sits immediately right, same as the upstream app.
-// Page pacing copies Channel's hourly delays [9, 6, 6, 6, 6, 3]s = 36s.
+// rows, columns hour / sky icon / TEMP / LIKE / WIND, header labels
+// TEMP / LIKE / WIND, title "Hourly Forecast" large bold yellow. No
+// rain-chance column and no SKY text column (Channel shows neither; PoP
+// lives only on the Hourly Graph and in the narration). No NOAA emblem on
+// this screen — the title is long and the clock sits immediately right,
+// same as the upstream app.
+// TROY-FARM hourly scroll (2026-11-17): Troy's words — "I want it to
+// scroll and show the bigger weather Icons like on my page and the
+// international emulator". The list now scrolls CONTINUOUSLY like
+// Channel/International's HTML hourly list (hourly.mjs baseCountChange:
+// offset 1px per 20ms tick = 50px/s after a 3s hold), instead of jumping
+// between 6 pages of 4 rows. 24 rows x 72px + 10px top padding = 1738px
+// of content in the 288px window below the header band (y116-404); max
+// offset 1450px, reached ~32s into the 36s slot, then held. The slot
+// pacing still copies Channel's hourly delays [9, 6, 6, 6, 6, 3]s = 36s.
 // LIKE is yellow, same as Channel's CSS (the upstream app's pale
 // lavender-blue LIKE is not Troy's Channel look).
-var _P28CurrentPage = -1;
+// Icons are 70x70 (was 48x48): Channel's icons render 45x42 CSS px at
+// 390px; Battaglia's 48px icons rendered only 28px on Troy's phone
+// (the wrapper's width=660 viewport scales 660->390, factor 0.591), so
+// 70px canvas = 41px on screen, matching Channel's icon size. The
+// canvas play clock ticks every 100ms, so the scroll advances 5px per
+// tick (10fps) — a steady crawl, not page jumps; Channel's HTML scroll
+// is smoother (50fps), but the app has no finer clock to drive it with.
+var _P28LastSubMs = 0;
 var _P28HourlyBg = null;
 var _P28IconCache = {};
-var _P28PageMs = [9000, 15000, 21000, 27000, 33000, 36000];
+var _P28ScrollMaxOffset = 1450;
 
-var _P28PageForMs = function (subMs)
+var _P28ScrollOffsetForMs = function (subMs)
 {
-    for (var p = 0; p < 5; p++)
-    {
-        if (subMs < _P28PageMs[p]) return p;
-    }
-    return 5;
+    var _off = (subMs - 3000) * 0.05;
+    if (_off < 0) _off = 0;
+    if (_off > _P28ScrollMaxOffset) _off = _P28ScrollMaxOffset;
+    return _off;
 };
 
-var _P28DrawHourlyPage = function (WeatherParameters, page)
+var _P28DrawHourly = function (WeatherParameters, subMs)
 {
     var HourlyForecast = WeatherParameters.HourlyForecast;
     if (!HourlyForecast || !HourlyForecast.hours || HourlyForecast.hours.length !== 24) return;
     var canvas = canvasHourlyForecast[0];
     var context = canvas.getContext("2d", { willReadFrequently: true });
-    _P28CurrentPage = page;
+    _P28LastSubMs = subMs;
+    var _offset = _P28ScrollOffsetForMs(subMs);
 
     context.drawImage(_P28HourlyBg, 0, 0);
 
@@ -9853,17 +9866,19 @@ var _P28DrawHourlyPage = function (WeatherParameters, page)
     _listGrad.addColorStop(1, "#001040");
     context.fillStyle = _listGrad;
     context.fillRect(0, 96, 640, 308);
-    context.fillStyle = "#200057";
-    context.fillRect(0, 96, 640, 20);
 
-    DrawText(context, "Star4000 Small", "24pt", "#FFFF00", 355, 114, "TEMP", 3);
-    DrawText(context, "Star4000 Small", "24pt", "#FFFF00", 435, 114, "LIKE", 3);
-    DrawText(context, "Star4000 Small", "24pt", "#FFFF00", 535, 114, "WIND", 3);
-
-    for (var i = 0; i < 4; i++)
+    // Scrolling rows, clipped to the list window below the header band
+    // (y116-404) so they slide under it like Channel's sticky header.
+    // Rows fully outside the window are skipped.
+    context.save();
+    context.beginPath();
+    context.rect(0, 116, 640, 288);
+    context.clip();
+    for (var i = 0; i < 24; i++)
     {
-        var _row = HourlyForecast.hours[page * 4 + i];
-        var _top = 116 + i * 72;
+        var _row = HourlyForecast.hours[i];
+        var _top = 116 + 10 + i * 72 - _offset;
+        if (_top + 72 < 116 || _top > 404) continue;
         var _y = _top + 44;
 
         // Hour: weekday short + hour, e.g. "Tue 8 PM" — Channel form.
@@ -9884,11 +9899,11 @@ var _P28DrawHourlyPage = function (WeatherParameters, page)
 
         // Sky icon (best-effort, must never wedge the screen): the staged
         // URL already carries the night 'n' prefix — moon at night, sun
-        // by day, per that hour's own day/night. Cached per URL so page
-        // turns redraw synchronously once loaded.
+        // by day, per that hour's own day/night. Cached per URL so
+        // redraws are synchronous once loaded. 70x70, centered x290.
         if (_row.iconUrl)
         {
-            (function (_iconUrl, _iconPage)
+            (function (_iconUrl)
             {
                 var _img = _P28IconCache[_iconUrl];
                 if (!_img)
@@ -9897,7 +9912,8 @@ var _P28DrawHourlyPage = function (WeatherParameters, page)
                     _P28IconCache[_iconUrl] = _img;
                     _img.onload = function ()
                     {
-                        // Repaint the WHOLE page, not just one slot:
+                        // Repaint the WHOLE current view at the last
+                        // known scroll position, not just one slot:
                         // several rows often share one icon URL (e.g. four
                         // "scattered clouds" hours in a row). The other
                         // rows were drawn while the image was still
@@ -9905,20 +9921,26 @@ var _P28DrawHourlyPage = function (WeatherParameters, page)
                         // them icon-less. Redrawing is idempotent — the
                         // cached image is complete by now, so every row
                         // draws synchronously and no new load starts.
-                        if (_P28CurrentPage === _iconPage)
-                        {
-                            _P28DrawHourlyPage(WeatherParameters, _iconPage);
-                        }
+                        _P28DrawHourly(WeatherParameters, _P28LastSubMs);
                     };
                     _img.src = _iconUrl;
                 }
                 if (_img.complete && _img.naturalWidth > 0)
                 {
-                    context.drawImage(_img, 266, _top + 12, 48, 48);
+                    context.drawImage(_img, 255, _top + 1, 70, 70);
                 }
-            })(_row.iconUrl, page);
+            })(_row.iconUrl);
         }
     }
+    context.restore();
+
+    // Sticky header band + labels, drawn last so scrolling rows pass
+    // under it (Channel's column-headers are position:sticky).
+    context.fillStyle = "#200057";
+    context.fillRect(0, 96, 640, 20);
+    DrawText(context, "Star4000 Small", "24pt", "#FFFF00", 355, 114, "TEMP", 3);
+    DrawText(context, "Star4000 Small", "24pt", "#FFFF00", 435, 114, "LIKE", 3);
+    DrawText(context, "Star4000 Small", "24pt", "#FFFF00", 535, 114, "WIND", 3);
 
     UpdateWeatherCanvas(WeatherParameters, canvasHourlyForecast);
 };
@@ -9939,8 +9961,8 @@ var PopulateHourlyForecast = function (WeatherParameters)
         if (_p28Drawn) return;
         _p28Drawn = true;
         _P28HourlyBg = BackGroundImage;
-        _P28CurrentPage = -1;
-        _P28DrawHourlyPage(WeatherParameters, 0);
+        _P28LastSubMs = 0;
+        _P28DrawHourly(WeatherParameters, 0);
 
         WeatherParameters.Progress.HourlyForecast = LoadStatuses.Loaded;
 
