@@ -1,28 +1,27 @@
-Expires:202611181930;;678003
-FPUS52 KILM 180629
+Expires:202611190000;;678003
+FPUS52 KILM 181052
 ZFPILM
 
 Zone Forecast Product
 National Weather Service Wilmington NC
-129 AM EST Wed Nov 18 2026
+552 AM EST Wed Nov 18 2026
 
-NCZ106-181930-
+NCZ106-190000-
 Coastal Pender-
 Including the city of Surf City
-129 AM EST Wed Nov 18 2026
+552 AM EST Wed Nov 18 2026
 
-.REST OF TONIGHT...Clear. Near steady temperature in the mid 40s.
-Northeast winds 5 to 10 mph.
-.WEDNESDAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
+.TODAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
 10 mph with gusts up to 20 mph.
-.WEDNESDAY NIGHT...Mostly clear. Lows in the upper 40s. Northeast
-winds 5 to 10 mph.
+.TONIGHT...Mostly clear. Lows in the upper 40s. Northeast winds
+5 to 10 mph.
 .THURSDAY...Partly sunny in the morning, then becoming mostly
 cloudy. Highs around 70. Northeast winds 10 to 15 mph.
 .THURSDAY NIGHT...Mostly cloudy. Lows in the lower 50s. Northeast
 winds 5 to 10 mph.
-.FRIDAY AND FRIDAY NIGHT...Mostly cloudy. Highs in the lower 70s.
-Lows in the mid 50s.
+.FRIDAY...Partly sunny. Highs in the lower 70s. Northeast winds
+10 to 15 mph with gusts up to 25 mph.
+.FRIDAY NIGHT...Mostly cloudy. Lows in the mid 50s.
 .SATURDAY...Partly sunny. A chance of showers in the afternoon.
 Highs in the lower 70s. Chance of rain 40 percent.
 .SATURDAY NIGHT...Mostly cloudy. A chance of showers in the
@@ -38,24 +37,23 @@ the mid 40s.
 
 $$
 
-NCZ105-181930-
+NCZ105-190000-
 Inland Pender-
 Including the city of Burgaw
-129 AM EST Wed Nov 18 2026
+552 AM EST Wed Nov 18 2026
 
-.REST OF TONIGHT...Clear. Near steady temperature in the mid 30s.
-Northeast winds around 5 mph.
-.WEDNESDAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
+.TODAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
 10 mph.
-.WEDNESDAY NIGHT...Clear in the evening, then becoming partly
-cloudy. Lows in the lower 40s. Northeast winds around 5 mph.
+.TONIGHT...Clear in the evening, then becoming partly cloudy.
+Lows in the lower 40s. Northeast winds around 5 mph.
 .THURSDAY...Partly sunny in the morning, then becoming mostly
 cloudy. Highs in the lower 70s. Northeast winds 5 to 10 mph.
 .THURSDAY NIGHT...Mostly cloudy in the evening, then becoming
 partly cloudy. Lows in the upper 40s. Northeast winds around
 5 mph.
-.FRIDAY AND FRIDAY NIGHT...Mostly cloudy. Highs in the lower 70s.
-Lows in the lower 50s.
+.FRIDAY...Partly sunny. Highs in the lower 70s. Northeast winds
+5 to 10 mph.
+.FRIDAY NIGHT...Mostly cloudy. Lows in the lower 50s.
 .SATURDAY...Partly sunny. A chance of showers in the afternoon.
 Highs in the lower 70s. Chance of rain 40 percent.
 .SATURDAY NIGHT AND SUNDAY...Mostly cloudy. A 50 percent chance
@@ -67,24 +65,23 @@ Highs in the lower 60s.
 
 $$
 
-NCZ108-181930-
+NCZ108-190000-
 Coastal New Hanover-
 Including the cities of Masonboro, Myrtle Grove, Ogden,
 Carolina Beach, and Seagate
-129 AM EST Wed Nov 18 2026
+552 AM EST Wed Nov 18 2026
 
-.REST OF TONIGHT...Clear. Near steady temperature in the upper
-40s. Northeast winds 5 to 10 mph with gusts up to 20 mph.
-.WEDNESDAY...Sunny. Highs in the mid 60s. Northeast winds 10 to
+.TODAY...Sunny. Highs in the mid 60s. Northeast winds 10 to
 15 mph.
-.WEDNESDAY NIGHT...Clear in the evening, then becoming partly
-cloudy. Lows in the lower 50s. Northeast winds 10 to 15 mph.
+.TONIGHT...Clear in the evening, then becoming partly cloudy.
+Lows in the lower 50s. Northeast winds 10 to 15 mph.
 .THURSDAY...Mostly cloudy. Highs in the upper 60s. Northeast
 winds 10 to 15 mph.
 .THURSDAY NIGHT...Mostly cloudy. Lows in the upper 50s. Northeast
 winds 10 to 15 mph.
-.FRIDAY AND FRIDAY NIGHT...Mostly cloudy. Highs around 70. Lows
-in the upper 50s.
+.FRIDAY...Partly sunny. Highs around 70. Northeast winds 15 to
+20 mph.
+.FRIDAY NIGHT...Mostly cloudy. Lows in the upper 50s.
 .SATURDAY...Partly sunny with a 50 percent chance of showers.
 Highs in the lower 70s.
 .SATURDAY NIGHT...Mostly cloudy with a chance of showers. Lows in
@@ -99,23 +96,22 @@ the upper 40s.
 
 $$
 
-NCZ107-181930-
+NCZ107-190000-
 Inland New Hanover-
 Including the city of Wilmington
-129 AM EST Wed Nov 18 2026
+552 AM EST Wed Nov 18 2026
 
-.REST OF TONIGHT...Clear. Near steady temperature around 40.
-Northeast winds around 5 mph.
-.WEDNESDAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
+.TODAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
 10 mph.
-.WEDNESDAY NIGHT...Clear in the evening, then becoming partly
-cloudy. Lows in the upper 40s. Northeast winds around 5 mph.
+.TONIGHT...Clear in the evening, then becoming partly cloudy.
+Lows in the upper 40s. Northeast winds around 5 mph.
 .THURSDAY...Partly sunny in the morning, then becoming mostly
 cloudy. Highs in the lower 70s. Northeast winds 5 to 10 mph.
 .THURSDAY NIGHT...Mostly cloudy. Lows in the lower 50s. Northeast
 winds 5 to 10 mph.
-.FRIDAY AND FRIDAY NIGHT...Mostly cloudy. Highs in the lower 70s.
-Lows in the mid 50s.
+.FRIDAY...Partly sunny. Highs in the lower 70s. Northeast winds
+5 to 10 mph.
+.FRIDAY NIGHT...Mostly cloudy. Lows in the mid 50s.
 .SATURDAY...Partly sunny. A chance of showers in the afternoon.
 Highs in the lower 70s. Chance of rain 40 percent.
 .SATURDAY NIGHT AND SUNDAY...Mostly cloudy. A 50 percent chance
@@ -128,24 +124,23 @@ Lows in the mid 40s.
 
 $$
 
-NCZ110-181930-
+NCZ110-190000-
 Coastal Brunswick-
 Including the cities of Oak Island, Long Beach, Southport,
 and Sunset Beach
-129 AM EST Wed Nov 18 2026
+552 AM EST Wed Nov 18 2026
 
-.REST OF TONIGHT...Clear. Near steady temperature in the upper
-40s. Northeast winds 5 to 10 mph with gusts up to 20 mph.
-.WEDNESDAY...Sunny. Highs in the upper 60s. Northeast winds 10 to
+.TODAY...Sunny. Highs in the upper 60s. Northeast winds 10 to
 15 mph.
-.WEDNESDAY NIGHT...Clear in the evening, then becoming partly
-cloudy. Lows in the lower 50s. Northeast winds 10 to 15 mph.
+.TONIGHT...Clear in the evening, then becoming partly cloudy.
+Lows in the lower 50s. Northeast winds 10 to 15 mph.
 .THURSDAY...Mostly cloudy. Highs around 70. Northeast winds 10 to
 15 mph with gusts up to 25 mph.
 .THURSDAY NIGHT...Mostly cloudy. Lows in the mid 50s. Northeast
 winds 10 to 15 mph.
-.FRIDAY AND FRIDAY NIGHT...Mostly cloudy. Highs in the lower 70s.
-Lows in the upper 50s.
+.FRIDAY...Partly sunny. Highs in the lower 70s. Northeast winds
+10 to 15 mph with gusts up to 25 mph.
+.FRIDAY NIGHT...Mostly cloudy. Lows in the upper 50s.
 .SATURDAY...Partly sunny with a 50 percent chance of showers.
 Highs in the lower 70s.
 .SATURDAY NIGHT...Showers likely, mainly in the evening. Lows in
@@ -159,24 +154,23 @@ Highs in the lower 60s.
 
 $$
 
-NCZ109-181930-
+NCZ109-190000-
 Inland Brunswick-
 Including the cities of Boiling Spring Lakes, Leland,
 and Shallotte
-129 AM EST Wed Nov 18 2026
+552 AM EST Wed Nov 18 2026
 
-.REST OF TONIGHT...Clear. Near steady temperature in the upper
-30s. Northeast winds around 5 mph.
-.WEDNESDAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
+.TODAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
 10 mph.
-.WEDNESDAY NIGHT...Clear in the evening, then becoming partly
-cloudy. Lows in the upper 40s. Northeast winds around 5 mph.
+.TONIGHT...Clear in the evening, then becoming partly cloudy.
+Lows in the upper 40s. Northeast winds around 5 mph.
 .THURSDAY...Mostly cloudy. Highs in the lower 70s. Northeast
 winds 5 to 10 mph.
 .THURSDAY NIGHT...Mostly cloudy. Lows in the lower 50s. Northeast
 winds 5 to 10 mph.
-.FRIDAY AND FRIDAY NIGHT...Mostly cloudy. Highs in the lower 70s.
-Lows in the mid 50s.
+.FRIDAY...Partly sunny. Highs in the lower 70s. Northeast winds
+5 to 10 mph.
+.FRIDAY NIGHT...Mostly cloudy. Lows in the mid 50s.
 .SATURDAY...Partly sunny with a 40 percent chance of showers.
 Highs in the lower 70s.
 .SATURDAY NIGHT AND SUNDAY...Mostly cloudy. A 50 percent chance
@@ -188,23 +182,22 @@ Highs in the lower 70s.
 
 $$
 
-NCZ096-181930-
+NCZ096-190000-
 Bladen-
 Including the cities of Elizabethtown and Bladenboro
-129 AM EST Wed Nov 18 2026
+552 AM EST Wed Nov 18 2026
 
-.REST OF TONIGHT...Clear. Near steady temperature in the mid 30s.
-Northeast winds around 5 mph.
-.WEDNESDAY...Sunny. Highs in the upper 60s. Northeast winds
-around 5 mph.
-.WEDNESDAY NIGHT...Mostly clear. Lows around 40. Northeast winds
-around 5 mph.
+.TODAY...Sunny. Highs in the upper 60s. Northeast winds around
+5 mph.
+.TONIGHT...Mostly clear. Lows around 40. Northeast winds around
+5 mph.
 .THURSDAY...Partly sunny in the morning, then becoming mostly
 cloudy. Highs in the lower 70s. Northeast winds 5 to 10 mph.
 .THURSDAY NIGHT...Mostly cloudy in the evening, then becoming
 partly cloudy. Lows in the mid 40s. Northeast winds around 5 mph.
-.FRIDAY AND FRIDAY NIGHT...Mostly cloudy. Highs in the lower 70s.
-Lows around 50.
+.FRIDAY...Partly sunny. Highs in the lower 70s. Northeast winds
+5 to 10 mph.
+.FRIDAY NIGHT...Mostly cloudy. Lows around 50.
 .SATURDAY...Partly sunny. A chance of showers in the afternoon.
 Highs in the lower 70s. Chance of rain 40 percent.
 .SATURDAY NIGHT AND SUNDAY...Mostly cloudy. A 50 percent chance
@@ -217,24 +210,23 @@ Highs in the lower 60s.
 
 $$
 
-NCZ099-181930-
+NCZ099-190000-
 Columbus-
 Including the cities of Whiteville, Tabor City, Chadbourn,
 and Lake Waccamaw
-129 AM EST Wed Nov 18 2026
+552 AM EST Wed Nov 18 2026
 
-.REST OF TONIGHT...Clear. Near steady temperature in the upper
-30s. Northeast winds around 5 mph.
-.WEDNESDAY...Sunny. Highs in the upper 60s. Northeast winds
-around 5 mph.
-.WEDNESDAY NIGHT...Clear in the evening, then becoming partly
-cloudy. Lows in the mid 40s. Northeast winds around 5 mph.
+.TODAY...Sunny. Highs in the upper 60s. Northeast winds around
+5 mph.
+.TONIGHT...Clear in the evening, then becoming partly cloudy.
+Lows in the mid 40s. Northeast winds around 5 mph.
 .THURSDAY...Partly sunny in the morning, then becoming mostly
 cloudy. Highs in the lower 70s. Northeast winds 5 to 10 mph.
 .THURSDAY NIGHT...Mostly cloudy. Lows in the upper 40s. Northeast
 winds around 5 mph.
-.FRIDAY AND FRIDAY NIGHT...Mostly cloudy. Highs in the lower 70s.
-Lows in the lower 50s.
+.FRIDAY...Partly sunny. Highs in the lower 70s. Northeast winds
+5 to 10 mph.
+.FRIDAY NIGHT...Mostly cloudy. Lows in the lower 50s.
 .SATURDAY...Partly sunny. A chance of showers in the afternoon.
 Highs in the lower 70s. Chance of rain 40 percent.
 .SATURDAY NIGHT AND SUNDAY...Mostly cloudy. A 50 percent chance
@@ -247,23 +239,22 @@ mostly clear. Lows around 50.
 
 $$
 
-NCZ087-181930-
+NCZ087-190000-
 Robeson-
 Including the city of Lumberton
-129 AM EST Wed Nov 18 2026
+552 AM EST Wed Nov 18 2026
 
-.REST OF TONIGHT...Clear. Near steady temperature in the upper
-30s. Northeast winds around 5 mph.
-.WEDNESDAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
+.TODAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
 10 mph.
-.WEDNESDAY NIGHT...Mostly clear. Lows around 40. Northeast winds
-around 5 mph.
+.TONIGHT...Mostly clear. Lows around 40. Northeast winds around
+5 mph.
 .THURSDAY...Partly sunny in the morning, then becoming mostly
 cloudy. Highs in the upper 60s. Northeast winds 5 to 10 mph.
 .THURSDAY NIGHT...Mostly cloudy. Lows in the upper 40s. Northeast
 winds around 5 mph.
-.FRIDAY AND FRIDAY NIGHT...Mostly cloudy. Highs in the lower 70s.
-Lows around 50.
+.FRIDAY...Partly sunny. Highs in the lower 70s. Northeast winds
+5 to 10 mph.
+.FRIDAY NIGHT...Mostly cloudy. Lows around 50.
 .SATURDAY...Partly sunny. A chance of showers in the afternoon.
 Highs around 70. Chance of rain 40 percent.
 .SATURDAY NIGHT AND SUNDAY...Mostly cloudy. A 50 percent chance
@@ -275,25 +266,24 @@ Highs in the lower 60s.
 
 $$
 
-SCZ054-181930-
+SCZ054-190000-
 Coastal Horry-
 Including the cities of Myrtle Beach, Socastee,
 North Myrtle Beach, Garden City, and Little River
-129 AM EST Wed Nov 18 2026
+552 AM EST Wed Nov 18 2026
 
-.REST OF TONIGHT...Clear. Near steady temperature in the mid 40s.
-Northeast winds 5 to 10 mph with gusts up to 20 mph.
-.WEDNESDAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
+.TODAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
 10 mph with gusts up to 20 mph.
-.WEDNESDAY NIGHT...Mostly clear in the evening, then becoming
-partly cloudy. Lows around 50. Northeast winds 5 to 10 mph with
-gusts up to 20 mph.
+.TONIGHT...Mostly clear in the evening, then becoming partly
+cloudy. Lows around 50. Northeast winds 5 to 10 mph with gusts up
+to 20 mph.
 .THURSDAY...Mostly cloudy. Highs in the lower 70s. Northeast
 winds 10 to 15 mph.
 .THURSDAY NIGHT...Mostly cloudy. Lows in the mid 50s. Northeast
 winds 10 to 15 mph.
-.FRIDAY AND FRIDAY NIGHT...Mostly cloudy. Highs in the lower 70s.
-Lows in the mid 50s.
+.FRIDAY...Partly sunny. Highs in the lower 70s. Northeast winds
+10 to 15 mph with gusts up to 25 mph.
+.FRIDAY NIGHT...Mostly cloudy. Lows in the mid 50s.
 .SATURDAY...Partly sunny with a 40 percent chance of showers.
 Highs in the lower 70s.
 .SATURDAY NIGHT...Mostly cloudy with a 50 percent chance of
@@ -307,23 +297,21 @@ Highs in the lower 70s.
 
 $$
 
-SCZ058-181930-
+SCZ058-190000-
 Central Horry-
 Including the cities of Conway, Longs, and Bucksport
-129 AM EST Wed Nov 18 2026
+552 AM EST Wed Nov 18 2026
 
-.REST OF TONIGHT...Clear. Near steady temperature in the lower
-40s. Northeast winds around 5 mph.
-.WEDNESDAY...Sunny. Highs around 70. Northeast winds 5 to 10 mph.
-.WEDNESDAY NIGHT...Mostly clear in the evening, then becoming
-partly cloudy. Lows in the upper 40s. Northeast winds around
-5 mph.
+.TODAY...Sunny. Highs around 70. Northeast winds 5 to 10 mph.
+.TONIGHT...Mostly clear in the evening, then becoming partly
+cloudy. Lows in the upper 40s. Northeast winds around 5 mph.
 .THURSDAY...Mostly cloudy. Highs in the lower 70s. Northeast
 winds 5 to 10 mph.
 .THURSDAY NIGHT...Mostly cloudy. Lows in the lower 50s. Northeast
 winds 5 to 10 mph.
-.FRIDAY AND FRIDAY NIGHT...Mostly cloudy. Highs in the lower 70s.
-Lows in the mid 50s.
+.FRIDAY...Partly sunny. Highs in the lower 70s. Northeast winds
+5 to 10 mph.
+.FRIDAY NIGHT...Mostly cloudy. Lows in the mid 50s.
 .SATURDAY...Partly sunny with a 40 percent chance of showers.
 Highs in the lower 70s.
 .SATURDAY NIGHT...Mostly cloudy with a 50 percent chance of
@@ -336,23 +324,22 @@ the lower 70s.
 
 $$
 
-SCZ059-181930-
+SCZ059-190000-
 Northern Horry-
 Including the cities of Loris, Green Sea, and Aynor
-129 AM EST Wed Nov 18 2026
+552 AM EST Wed Nov 18 2026
 
-.REST OF TONIGHT...Clear. Near steady temperature in the upper
-30s. Northeast winds around 5 mph.
-.WEDNESDAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
+.TODAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
 10 mph.
-.WEDNESDAY NIGHT...Clear in the evening, then becoming partly
-cloudy. Lows in the mid 40s. Northeast winds around 5 mph.
+.TONIGHT...Clear in the evening, then becoming partly cloudy.
+Lows in the mid 40s. Northeast winds around 5 mph.
 .THURSDAY...Mostly cloudy. Highs in the lower 70s. Northeast
 winds 5 to 10 mph.
 .THURSDAY NIGHT...Mostly cloudy. Lows around 50. Northeast winds
 around 5 mph.
-.FRIDAY AND FRIDAY NIGHT...Mostly cloudy. Highs in the lower 70s.
-Lows in the lower 50s.
+.FRIDAY...Partly sunny. Highs in the lower 70s. Northeast winds
+5 to 10 mph.
+.FRIDAY NIGHT...Mostly cloudy. Lows in the lower 50s.
 .SATURDAY...Partly sunny. A chance of showers in the afternoon.
 Highs in the lower 70s. Chance of rain 40 percent.
 .SATURDAY NIGHT...Mostly cloudy with a 50 percent chance of
@@ -367,24 +354,23 @@ cloudy. Lows in the lower 40s.
 
 $$
 
-SCZ056-181930-
+SCZ056-190000-
 Coastal Georgetown-
 Including the cities of Georgetown and Murrells Inlet
-129 AM EST Wed Nov 18 2026
+552 AM EST Wed Nov 18 2026
 
-.REST OF TONIGHT...Partly cloudy. Near steady temperature in the
-upper 40s. Northeast winds 5 to 10 mph with gusts up to 20 mph.
-.WEDNESDAY...Sunny. Highs in the upper 60s. Northeast winds 10 to
+.TODAY...Sunny. Highs in the upper 60s. Northeast winds 10 to
 15 mph with gusts up to 25 mph.
-.WEDNESDAY NIGHT...Mostly clear in the evening, then becoming
-mostly cloudy. Lows in the mid 50s. Northeast winds 10 to 15 mph
-with gusts up to 25 mph.
+.TONIGHT...Mostly clear in the evening, then becoming mostly
+cloudy. Lows in the mid 50s. Northeast winds 10 to 15 mph with
+gusts up to 25 mph.
 .THURSDAY...Mostly cloudy. Highs around 70. Northeast winds 15 to
 20 mph.
 .THURSDAY NIGHT...Mostly cloudy. Lows in the upper 50s. Northeast
 winds 10 to 15 mph with gusts up to 25 mph.
 .FRIDAY...Partly sunny in the morning, then becoming mostly
-cloudy. Highs in the lower 70s.
+cloudy. Highs in the lower 70s. Northeast winds 15 to 20 mph with
+gusts up to 30 mph.
 .FRIDAY NIGHT...Mostly cloudy. A chance of showers after
 midnight. Lows in the upper 50s. Chance of rain 30 percent.
 .SATURDAY...Partly sunny with a 50 percent chance of showers.
@@ -398,24 +384,23 @@ the upper 50s. Chance of rain 50 percent.
 
 $$
 
-SCZ055-181930-
+SCZ055-190000-
 Inland Georgetown-
 Including the city of Andrews
-129 AM EST Wed Nov 18 2026
+552 AM EST Wed Nov 18 2026
 
-.REST OF TONIGHT...Mostly clear. Near steady temperature in the
-lower 40s. Northeast winds around 5 mph.
-.WEDNESDAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
+.TODAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
 10 mph.
-.WEDNESDAY NIGHT...Mostly clear in the evening, then becoming
-mostly cloudy. Lows around 50. Northeast winds around 5 mph.
-Gusts up to 20 mph in the evening.
+.TONIGHT...Mostly clear in the evening, then becoming mostly
+cloudy. Lows around 50. Northeast winds around 5 mph. Gusts up to
+20 mph in the evening.
 .THURSDAY...Mostly cloudy. Highs in the lower 70s. Northeast
 winds 5 to 10 mph with gusts up to 20 mph.
 .THURSDAY NIGHT...Mostly cloudy. Lows in the mid 50s. Northeast
 winds 5 to 10 mph.
 .FRIDAY...Partly sunny in the morning, then becoming mostly
-cloudy. Highs in the lower 70s.
+cloudy. Highs in the lower 70s. Northeast winds 5 to 10 mph with
+gusts up to 25 mph.
 .FRIDAY NIGHT...Mostly cloudy. A chance of showers after
 midnight. Lows in the mid 50s. Chance of rain 30 percent.
 .SATURDAY AND SATURDAY NIGHT...Mostly cloudy. A 50 percent chance
@@ -428,23 +413,22 @@ Highs in the lower 70s.
 
 $$
 
-SCZ024-181930-
+SCZ024-190000-
 Dillon-
 Including the city of Dillon
-129 AM EST Wed Nov 18 2026
+552 AM EST Wed Nov 18 2026
 
-.REST OF TONIGHT...Clear. Near steady temperature in the mid 30s.
-Northeast winds around 5 mph.
-.WEDNESDAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
+.TODAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
 10 mph.
-.WEDNESDAY NIGHT...Mostly clear. Lows in the lower 40s. Northeast
-winds around 5 mph.
+.TONIGHT...Mostly clear. Lows in the lower 40s. Northeast winds
+around 5 mph.
 .THURSDAY...Partly sunny in the morning, then becoming mostly
 cloudy. Highs in the upper 60s. Northeast winds 5 to 10 mph.
 .THURSDAY NIGHT...Mostly cloudy. Lows in the upper 40s. Northeast
 winds around 5 mph.
-.FRIDAY AND FRIDAY NIGHT...Mostly cloudy. Highs in the lower 70s.
-Lows around 50.
+.FRIDAY...Partly sunny. Highs in the lower 70s. Northeast winds
+5 to 10 mph.
+.FRIDAY NIGHT...Mostly cloudy. Lows around 50.
 .SATURDAY THROUGH SUNDAY...Mostly cloudy with a 40 percent chance
 of showers. Highs in the lower 70s. Lows in the lower 50s.
 .SUNDAY NIGHT AND MONDAY...Mostly clear. Lows in the upper 40s.
@@ -454,23 +438,22 @@ Highs in the lower 70s.
 
 $$
 
-SCZ033-181930-
+SCZ033-190000-
 Marion-
 Including the cities of Marion and Mullins
-129 AM EST Wed Nov 18 2026
+552 AM EST Wed Nov 18 2026
 
-.REST OF TONIGHT...Clear. Near steady temperature in the upper
-30s. Northeast winds around 5 mph.
-.WEDNESDAY...Sunny. Highs in the upper 60s. Northeast winds
-around 5 mph.
-.WEDNESDAY NIGHT...Clear in the evening, then becoming partly
-cloudy. Lows in the mid 40s. Northeast winds around 5 mph.
+.TODAY...Sunny. Highs in the upper 60s. Northeast winds around
+5 mph.
+.TONIGHT...Clear in the evening, then becoming partly cloudy.
+Lows in the mid 40s. Northeast winds around 5 mph.
 .THURSDAY...Mostly cloudy. Highs around 70. Northeast winds
 around 5 mph. Gusts up to 20 mph in the afternoon.
 .THURSDAY NIGHT...Mostly cloudy. Lows around 50. Northeast winds
 around 5 mph.
-.FRIDAY AND FRIDAY NIGHT...Mostly cloudy. Highs in the lower 70s.
-Lows in the lower 50s.
+.FRIDAY...Partly sunny. Highs in the lower 70s. Northeast winds
+5 to 10 mph.
+.FRIDAY NIGHT...Mostly cloudy. Lows in the lower 50s.
 .SATURDAY...Partly sunny. A chance of showers in the afternoon.
 Highs in the lower 70s. Chance of rain 40 percent.
 .SATURDAY NIGHT...Mostly cloudy with a 50 percent chance of
@@ -483,23 +466,22 @@ Highs in the lower 70s.
 
 $$
 
-SCZ032-181930-
+SCZ032-190000-
 Florence-
 Including the city of Florence
-129 AM EST Wed Nov 18 2026
+552 AM EST Wed Nov 18 2026
 
-.REST OF TONIGHT...Clear. Near steady temperature in the upper
-30s. Northeast winds around 5 mph.
-.WEDNESDAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
+.TODAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
 10 mph.
-.WEDNESDAY NIGHT...Clear in the evening, then becoming partly
-cloudy. Lows in the lower 40s. Northeast winds around 5 mph.
+.TONIGHT...Clear in the evening, then becoming partly cloudy.
+Lows in the lower 40s. Northeast winds around 5 mph.
 .THURSDAY...Partly sunny in the morning, then becoming mostly
 cloudy. Highs around 70. Northeast winds 5 to 10 mph.
 .THURSDAY NIGHT...Mostly cloudy. Lows in the upper 40s. Northeast
 winds around 5 mph.
-.FRIDAY AND FRIDAY NIGHT...Mostly cloudy. Highs in the lower 70s.
-Lows in the lower 50s.
+.FRIDAY...Partly sunny. Highs in the lower 70s. Northeast winds
+5 to 10 mph.
+.FRIDAY NIGHT...Mostly cloudy. Lows in the lower 50s.
 .SATURDAY...Partly sunny. A chance of showers in the afternoon.
 Highs in the lower 70s. Chance of rain 40 percent.
 .SATURDAY NIGHT...Mostly cloudy with a 50 percent chance of
@@ -512,23 +494,23 @@ Highs in the lower 70s.
 
 $$
 
-SCZ039-181930-
+SCZ039-190000-
 Williamsburg-
 Including the city of Kingstree
-129 AM EST Wed Nov 18 2026
+552 AM EST Wed Nov 18 2026
 
-.REST OF TONIGHT...Clear. Near steady temperature around 40.
-Northeast winds around 5 mph.
-.WEDNESDAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
+.TODAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
 10 mph.
-.WEDNESDAY NIGHT...Mostly clear in the evening, then becoming
-partly cloudy. Lows in the mid 40s. Northeast winds around 5 mph.
+.TONIGHT...Mostly clear in the evening, then becoming partly
+cloudy. Lows in the mid 40s. Northeast winds around 5 mph.
 .THURSDAY...Mostly cloudy. Highs in the lower 70s. Northeast
 winds 5 to 10 mph.
 .THURSDAY NIGHT...Mostly cloudy. Lows in the lower 50s. Northeast
 winds around 5 mph. Gusts up to 20 mph in the evening.
-.FRIDAY AND FRIDAY NIGHT...Mostly cloudy. Highs in the lower 70s.
-Lows in the lower 50s.
+.FRIDAY...Partly sunny in the morning, then becoming mostly
+cloudy. Highs in the lower 70s. Northeast winds 5 to 10 mph with
+gusts up to 20 mph.
+.FRIDAY NIGHT...Mostly cloudy. Lows in the lower 50s.
 .SATURDAY...Partly sunny. A chance of showers in the afternoon.
 Highs in the lower 70s. Chance of rain 40 percent.
 .SATURDAY NIGHT...Mostly cloudy with a 50 percent chance of
@@ -540,23 +522,22 @@ upper 40s. Highs in the lower 70s.
 
 $$
 
-SCZ017-181930-
+SCZ017-190000-
 Marlboro-
 Including the cities of Bennettsville and McColl
-129 AM EST Wed Nov 18 2026
+552 AM EST Wed Nov 18 2026
 
-.REST OF TONIGHT...Clear. Near steady temperature in the mid 30s.
-Northeast winds around 5 mph.
-.WEDNESDAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
+.TODAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
 10 mph.
-.WEDNESDAY NIGHT...Mostly clear. Lows around 40. Northeast winds
-around 5 mph.
+.TONIGHT...Mostly clear. Lows around 40. Northeast winds around
+5 mph.
 .THURSDAY...Partly sunny in the morning, then becoming mostly
 cloudy. Highs in the upper 60s. Northeast winds 5 to 10 mph.
 .THURSDAY NIGHT...Mostly cloudy in the evening, then becoming
 partly cloudy. Lows in the mid 40s. Northeast winds around 5 mph.
-.FRIDAY AND FRIDAY NIGHT...Mostly cloudy. Highs in the lower 70s.
-Lows in the upper 40s.
+.FRIDAY...Partly sunny. Highs in the lower 70s. Northeast winds
+5 to 10 mph.
+.FRIDAY NIGHT...Mostly cloudy. Lows in the upper 40s.
 .SATURDAY...Partly sunny. Highs in the upper 60s.
 .SATURDAY NIGHT AND SUNDAY...Mostly cloudy. A 40 percent chance
 of showers. Lows in the lower 50s. Highs in the lower 70s.
@@ -567,24 +548,23 @@ Highs in the lower 70s.
 
 $$
 
-SCZ023-181930-
+SCZ023-190000-
 Darlington-
 Including the cities of Hartsville, Darlington,
 and North Hartsville
-129 AM EST Wed Nov 18 2026
+552 AM EST Wed Nov 18 2026
 
-.REST OF TONIGHT...Clear. Near steady temperature in the upper
-30s. Northeast winds around 5 mph.
-.WEDNESDAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
+.TODAY...Sunny. Highs in the upper 60s. Northeast winds 5 to
 10 mph.
-.WEDNESDAY NIGHT...Mostly clear. Lows in the lower 40s. Northeast
-winds around 5 mph.
+.TONIGHT...Mostly clear. Lows in the lower 40s. Northeast winds
+around 5 mph.
 .THURSDAY...Partly sunny in the morning, then becoming mostly
 cloudy. Highs in the upper 60s. Northeast winds 5 to 10 mph.
 .THURSDAY NIGHT...Mostly cloudy. Lows in the upper 40s. Northeast
 winds around 5 mph.
-.FRIDAY AND FRIDAY NIGHT...Mostly cloudy. Highs in the lower 70s.
-Lows in the lower 50s.
+.FRIDAY...Partly sunny. Highs in the lower 70s. Northeast winds
+5 to 10 mph.
+.FRIDAY NIGHT...Mostly cloudy. Lows in the lower 50s.
 .SATURDAY...Partly sunny. Highs around 70.
 .SATURDAY NIGHT...Mostly cloudy with a 40 percent chance of
 showers. Lows in the lower 50s.
