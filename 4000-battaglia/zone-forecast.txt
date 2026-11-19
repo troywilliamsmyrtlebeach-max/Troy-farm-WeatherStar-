@@ -1,18 +1,19 @@
-Expires:202611200000;;684003
-FPUS52 KILM 191048
+Expires:202611200300;;684003
+FPUS52 KILM 191357
 ZFPILM
 
 Zone Forecast Product
 National Weather Service Wilmington NC
-548 AM EST Thu Nov 19 2026
+857 AM EST Thu Nov 19 2026
 
-NCZ106-200000-
+NCZ106-200300-
 Coastal Pender-
 Including the city of Surf City
-548 AM EST Thu Nov 19 2026
+857 AM EST Thu Nov 19 2026
 
-.TODAY...Mostly sunny this morning, then becoming mostly cloudy.
-Highs around 70. Northeast winds 10 to 15 mph.
+.REST OF TODAY...Mostly clear early this morning, then becoming
+mostly cloudy. Highs in the upper 60s. Northeast winds 5 to
+10 mph with gusts up to 20 mph.
 .TONIGHT...Mostly cloudy in the evening, then becoming partly
 cloudy. Lows in the lower 50s. Northeast winds 5 to 10 mph.
 .FRIDAY...Partly sunny. Highs in the lower 70s. Northeast winds
@@ -38,13 +39,14 @@ Highs in the lower 60s.
 
 $$
 
-NCZ105-200000-
+NCZ105-200300-
 Inland Pender-
 Including the city of Burgaw
-548 AM EST Thu Nov 19 2026
+857 AM EST Thu Nov 19 2026
 
-.TODAY...Mostly sunny this morning, then becoming mostly cloudy.
-Highs in the lower 70s. Northeast winds 5 to 10 mph.
+.REST OF TODAY...Mostly clear early this morning, then becoming
+mostly cloudy. Highs in the lower 70s. Northeast winds 5 to
+10 mph.
 .TONIGHT...Mostly cloudy. Lows in the upper 40s. Northeast winds
 around 5 mph.
 .FRIDAY...Partly sunny in the morning, then becoming mostly
@@ -71,15 +73,15 @@ Highs in the lower 60s.
 
 $$
 
-NCZ108-200000-
+NCZ108-200300-
 Coastal New Hanover-
 Including the cities of Masonboro, Myrtle Grove, Ogden,
 Carolina Beach, and Seagate
-548 AM EST Thu Nov 19 2026
+857 AM EST Thu Nov 19 2026
 
-.TODAY...Mostly sunny this morning, then becoming mostly cloudy.
-Highs in the upper 60s. Northeast winds 10 to 15 mph with gusts
-up to 25 mph.
+.REST OF TODAY...Mostly clear early this morning, then becoming
+mostly cloudy. Highs in the upper 60s. Northeast winds 10 to
+15 mph with gusts up to 25 mph.
 .TONIGHT...Mostly cloudy. Lows in the mid 50s. Northeast winds
 10 to 15 mph.
 .FRIDAY...Partly sunny in the morning, then becoming mostly
@@ -105,13 +107,14 @@ Breezy with highs in the lower 60s.
 
 $$
 
-NCZ107-200000-
+NCZ107-200300-
 Inland New Hanover-
 Including the city of Wilmington
-548 AM EST Thu Nov 19 2026
+857 AM EST Thu Nov 19 2026
 
-.TODAY...Mostly sunny this morning, then becoming mostly cloudy.
-Highs in the lower 70s. Northeast winds 5 to 10 mph.
+.REST OF TODAY...Mostly clear early this morning, then becoming
+mostly cloudy. Highs in the lower 70s. Northeast winds 5 to
+10 mph.
 .TONIGHT...Mostly cloudy. Lows in the lower 50s. Northeast winds
 around 5 mph.
 .FRIDAY...Partly sunny in the morning, then becoming mostly
@@ -137,17 +140,17 @@ Highs in the lower 60s.
 
 $$
 
-NCZ110-200000-
+NCZ110-200300-
 Coastal Brunswick-
 Including the cities of Oak Island, Long Beach, Southport,
 and Sunset Beach
-548 AM EST Thu Nov 19 2026
+857 AM EST Thu Nov 19 2026
 
-.TODAY...Mostly sunny this morning, then becoming mostly cloudy.
-Highs in the lower 70s. Northeast winds 10 to 15 mph with gusts
-up to 25 mph.
+.REST OF TODAY...Partly cloudy early this morning, then becoming
+mostly cloudy. Highs in the upper 60s. Northeast winds 10 to
+15 mph with gusts up to 25 mph.
 .TONIGHT...Mostly cloudy. Lows in the mid 50s. Northeast winds
-10 to 15 mph with gusts up to 25 mph.
+10 to 15 mph.
 .FRIDAY...Partly sunny in the morning, then becoming mostly
 cloudy. Highs in the lower 70s. Northeast winds 15 to 20 mph.
 .FRIDAY NIGHT...Mostly cloudy. Lows in the mid 50s. Northeast
@@ -172,14 +175,15 @@ Breezy with highs in the lower 60s.
 
 $$
 
-NCZ109-200000-
+NCZ109-200300-
 Inland Brunswick-
 Including the cities of Boiling Spring Lakes, Leland,
 and Shallotte
-548 AM EST Thu Nov 19 2026
+857 AM EST Thu Nov 19 2026
 
-.TODAY...Mostly sunny this morning, then becoming mostly cloudy.
-Highs in the lower 70s. Northeast winds 5 to 10 mph.
+.REST OF TODAY...Mostly clear early this morning, then becoming
+mostly cloudy. Highs in the lower 70s. Northeast winds 5 to
+10 mph.
 .TONIGHT...Mostly cloudy. Lows in the lower 50s. Northeast winds
 around 5 mph.
 .FRIDAY...Partly sunny in the morning, then becoming mostly
@@ -206,13 +210,14 @@ Highs in the lower 60s.
 
 $$
 
-NCZ096-200000-
+NCZ096-200300-
 Bladen-
 Including the cities of Elizabethtown and Bladenboro
-548 AM EST Thu Nov 19 2026
+857 AM EST Thu Nov 19 2026
 
-.TODAY...Mostly sunny this morning, then becoming mostly cloudy.
-Highs in the lower 70s. Northeast winds 5 to 10 mph.
+.REST OF TODAY...Mostly clear early this morning, then becoming
+mostly cloudy. Highs in the lower 70s. Northeast winds around
+5 mph.
 .TONIGHT...Mostly cloudy in the evening, then becoming partly
 cloudy. Lows in the mid 40s. Northeast winds around 5 mph.
 .FRIDAY...Partly sunny in the morning, then becoming mostly
@@ -238,14 +243,15 @@ showers. Highs in the upper 50s.
 
 $$
 
-NCZ099-200000-
+NCZ099-200300-
 Columbus-
 Including the cities of Whiteville, Tabor City, Chadbourn,
 and Lake Waccamaw
-548 AM EST Thu Nov 19 2026
+857 AM EST Thu Nov 19 2026
 
-.TODAY...Mostly sunny this morning, then becoming mostly cloudy.
-Highs in the lower 70s. Northeast winds 5 to 10 mph.
+.REST OF TODAY...Mostly clear early this morning, then becoming
+mostly cloudy. Highs in the lower 70s. Northeast winds around
+5 mph.
 .TONIGHT...Mostly cloudy. Lows in the upper 40s. Northeast winds
 around 5 mph.
 .FRIDAY...Partly sunny in the morning, then becoming mostly
@@ -270,13 +276,13 @@ Highs around 60.
 
 $$
 
-NCZ087-200000-
+NCZ087-200300-
 Robeson-
 Including the city of Lumberton
-548 AM EST Thu Nov 19 2026
+857 AM EST Thu Nov 19 2026
 
-.TODAY...Mostly sunny this morning, then becoming mostly cloudy.
-Highs in the lower 70s. Northeast winds 5 to 10 mph.
+.REST OF TODAY...Mostly clear early this morning, then becoming
+mostly cloudy. Highs around 70. Northeast winds 5 to 10 mph.
 .TONIGHT...Mostly cloudy in the evening, then becoming partly
 cloudy. Lows in the mid 40s. Northeast winds around 5 mph.
 .FRIDAY...Partly sunny in the morning, then becoming mostly
@@ -301,15 +307,14 @@ Highs in the mid 50s.
 
 $$
 
-SCZ054-200000-
+SCZ054-200300-
 Coastal Horry-
 Including the cities of Myrtle Beach, Socastee,
 North Myrtle Beach, Garden City, and Little River
-548 AM EST Thu Nov 19 2026
+857 AM EST Thu Nov 19 2026
 
-.TODAY...Partly sunny this morning, then becoming mostly cloudy.
-Highs in the lower 70s. Northeast winds 10 to 15 mph with gusts
-up to 25 mph.
+.REST OF TODAY...Mostly cloudy. Highs around 70. Northeast winds
+10 to 15 mph.
 .TONIGHT...Mostly cloudy. Lows in the mid 50s. Northeast winds
 5 to 10 mph with gusts up to 20 mph.
 .FRIDAY...Partly sunny in the morning, then becoming mostly
@@ -337,13 +342,14 @@ Highs in the lower 60s.
 
 $$
 
-SCZ058-200000-
+SCZ058-200300-
 Central Horry-
 Including the cities of Conway, Longs, and Bucksport
-548 AM EST Thu Nov 19 2026
+857 AM EST Thu Nov 19 2026
 
-.TODAY...Partly sunny this morning, then becoming mostly cloudy.
-Highs in the lower 70s. Northeast winds 5 to 10 mph.
+.REST OF TODAY...Partly cloudy early this morning, then becoming
+mostly cloudy. Highs in the lower 70s. Northeast winds 5 to
+10 mph.
 .TONIGHT...Mostly cloudy. Lows in the lower 50s. Northeast winds
 around 5 mph.
 .FRIDAY...Partly sunny in the morning, then becoming mostly
@@ -369,13 +375,14 @@ Highs in the lower 60s.
 
 $$
 
-SCZ059-200000-
+SCZ059-200300-
 Northern Horry-
 Including the cities of Loris, Green Sea, and Aynor
-548 AM EST Thu Nov 19 2026
+857 AM EST Thu Nov 19 2026
 
-.TODAY...Mostly sunny this morning, then becoming mostly cloudy.
-Highs in the lower 70s. Northeast winds 5 to 10 mph.
+.REST OF TODAY...Mostly clear early this morning, then becoming
+mostly cloudy. Highs in the lower 70s. Northeast winds 5 to
+10 mph.
 .TONIGHT...Mostly cloudy. Lows in the upper 40s. Northeast winds
 around 5 mph.
 .FRIDAY...Partly sunny in the morning, then becoming mostly
@@ -398,14 +405,13 @@ of showers. Lows in the upper 30s. Highs in the upper 50s.
 
 $$
 
-SCZ056-200000-
+SCZ056-200300-
 Coastal Georgetown-
 Including the cities of Georgetown and Murrells Inlet
-548 AM EST Thu Nov 19 2026
+857 AM EST Thu Nov 19 2026
 
-.TODAY...Partly sunny this morning, then becoming mostly cloudy.
-Highs around 70. Northeast winds 10 to 15 mph with gusts up to
-25 mph.
+.REST OF TODAY...Mostly cloudy. Highs in the upper 60s. Northeast
+winds 10 to 15 mph with gusts up to 25 mph.
 .TONIGHT...Mostly cloudy. Lows in the upper 50s. Northeast winds
 10 to 15 mph with gusts up to 25 mph.
 .FRIDAY...Partly sunny in the morning, then becoming mostly
@@ -432,16 +438,15 @@ Highs in the lower 60s.
 
 $$
 
-SCZ055-200000-
+SCZ055-200300-
 Inland Georgetown-
 Including the city of Andrews
-548 AM EST Thu Nov 19 2026
+857 AM EST Thu Nov 19 2026
 
-.TODAY...Partly sunny this morning, then becoming mostly cloudy.
-Highs in the lower 70s. Northeast winds 5 to 10 mph with gusts up
-to 20 mph.
+.REST OF TODAY...Mostly cloudy. Highs in the lower 70s. Northeast
+winds 5 to 10 mph with gusts up to 20 mph.
 .TONIGHT...Mostly cloudy. Lows in the mid 50s. Northeast winds
-5 to 10 mph.
+around 5 mph.
 .FRIDAY...Partly sunny in the morning, then becoming mostly
 cloudy. Highs in the mid 70s. Northeast winds 10 to 15 mph.
 .FRIDAY NIGHT...Mostly cloudy. Lows in the mid 50s. Northeast
@@ -464,13 +469,13 @@ Highs in the lower 60s.
 
 $$
 
-SCZ024-200000-
+SCZ024-200300-
 Dillon-
 Including the city of Dillon
-548 AM EST Thu Nov 19 2026
+857 AM EST Thu Nov 19 2026
 
-.TODAY...Mostly sunny this morning, then becoming mostly cloudy.
-Highs in the lower 70s. Northeast winds 5 to 10 mph.
+.REST OF TODAY...Mostly clear early this morning, then becoming
+mostly cloudy. Highs around 70. Northeast winds 5 to 10 mph.
 .TONIGHT...Mostly cloudy. Lows in the upper 40s. Northeast winds
 around 5 mph.
 .FRIDAY...Partly sunny in the morning, then becoming mostly
@@ -495,13 +500,14 @@ Highs in the upper 50s.
 
 $$
 
-SCZ033-200000-
+SCZ033-200300-
 Marion-
 Including the cities of Marion and Mullins
-548 AM EST Thu Nov 19 2026
+857 AM EST Thu Nov 19 2026
 
-.TODAY...Mostly sunny this morning, then becoming mostly cloudy.
-Highs in the lower 70s. Northeast winds 5 to 10 mph.
+.REST OF TODAY...Mostly clear early this morning, then becoming
+mostly cloudy. Highs in the lower 70s. Northeast winds 5 to
+10 mph.
 .TONIGHT...Mostly cloudy. Lows in the upper 40s. Northeast winds
 around 5 mph.
 .FRIDAY...Partly sunny in the morning, then becoming mostly
@@ -525,13 +531,14 @@ Highs in the upper 50s.
 
 $$
 
-SCZ032-200000-
+SCZ032-200300-
 Florence-
 Including the city of Florence
-548 AM EST Thu Nov 19 2026
+857 AM EST Thu Nov 19 2026
 
-.TODAY...Partly sunny this morning, then becoming mostly cloudy.
-Highs in the lower 70s. Northeast winds 5 to 10 mph.
+.REST OF TODAY...Partly cloudy early this morning, then becoming
+mostly cloudy. Highs in the lower 70s. Northeast winds 5 to
+10 mph.
 .TONIGHT...Mostly cloudy. Lows in the upper 40s. Northeast winds
 around 5 mph.
 .FRIDAY...Partly sunny in the morning, then becoming mostly
@@ -554,13 +561,13 @@ Highs in the upper 50s.
 
 $$
 
-SCZ039-200000-
+SCZ039-200300-
 Williamsburg-
 Including the city of Kingstree
-548 AM EST Thu Nov 19 2026
+857 AM EST Thu Nov 19 2026
 
-.TODAY...Partly sunny this morning, then becoming mostly cloudy.
-Highs in the lower 70s. Northeast winds 5 to 10 mph.
+.REST OF TODAY...Mostly cloudy. Highs in the lower 70s. Northeast
+winds 5 to 10 mph.
 .TONIGHT...Mostly cloudy. Lows in the lower 50s. Northeast winds
 around 5 mph.
 .FRIDAY...Partly sunny in the morning, then becoming mostly
@@ -584,13 +591,14 @@ Highs in the upper 50s.
 
 $$
 
-SCZ017-200000-
+SCZ017-200300-
 Marlboro-
 Including the cities of Bennettsville and McColl
-548 AM EST Thu Nov 19 2026
+857 AM EST Thu Nov 19 2026
 
-.TODAY...Mostly sunny this morning, then becoming mostly cloudy.
-Highs around 70. Northeast winds 5 to 10 mph.
+.REST OF TODAY...Mostly clear early this morning, then becoming
+mostly cloudy. Highs in the upper 60s. Northeast winds 5 to
+10 mph.
 .TONIGHT...Mostly cloudy in the evening, then becoming partly
 cloudy. Lows in the mid 40s. Northeast winds around 5 mph.
 .FRIDAY...Partly sunny in the morning, then becoming mostly
@@ -615,14 +623,14 @@ Highs in the mid 50s.
 
 $$
 
-SCZ023-200000-
+SCZ023-200300-
 Darlington-
 Including the cities of Hartsville, Darlington,
 and North Hartsville
-548 AM EST Thu Nov 19 2026
+857 AM EST Thu Nov 19 2026
 
-.TODAY...Partly sunny this morning, then becoming mostly cloudy.
-Highs in the lower 70s. Northeast winds 5 to 10 mph.
+.REST OF TODAY...Partly cloudy early this morning, then becoming
+mostly cloudy. Highs around 70. Northeast winds 5 to 10 mph.
 .TONIGHT...Mostly cloudy in the evening, then becoming partly
 cloudy. Lows in the upper 40s. Northeast winds around 5 mph.
 .FRIDAY...Partly sunny in the morning, then becoming mostly
