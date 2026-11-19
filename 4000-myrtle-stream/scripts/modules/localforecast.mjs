@@ -38,22 +38,22 @@ class LocalForecast extends WeatherDisplay {
 		if (!conditions.length) {
 			this.screenTexts = [
 				// FRESH FORECAST 2026-11-18 ~4:19 AM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-19T06:35:59+00:00; forecast through Wednesday, verified this run). Written in the screenshot format (generator
+				// generated 2026-11-19T11:37:31+00:00 forecast through Wednesday, verified this run). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
-				'OVERNIGHT... Partly cloudy, with a low around 47. Northeast wind around 5 mph. Precip chance 0%.',
-				'THURSDAY... Partly sunny, with a high near 73. Northeast wind 5 to 10 mph, with gusts as high as 16 mph. Precip chance 0%.',
-				'THURSDAY NIGHT... Mostly cloudy, with a low around 52. Northeast wind around 6 mph. Precip chance 1%.',
+				'TODAY... Partly sunny, with a high near 73. Northeast wind 5 to 10 mph, with gusts as high as 16 mph. Precip chance 0%.',
+				'TONIGHT... Mostly cloudy, with a low around 52. Northeast wind around 6 mph. Precip chance 1%.',
 				'FRIDAY... Partly sunny, with a high near 75. Northeast wind 7 to 12 mph, with gusts as high as 17 mph. Precip chance 1%.',
 				'FRIDAY NIGHT... Mostly cloudy, with a low around 53. Northeast wind 6 to 9 mph. Precip chance 4%.',
-				'SATURDAY... A slight chance of rain showers after 1pm. Partly sunny, with a high near 73. Chance of precipitation is 20%. New rainfall amounts less than a tenth of an inch possible. Precip chance 16%.',
-				'SATURDAY NIGHT... A chance of rain showers. Mostly cloudy, with a low around 56. Chance of precipitation is 50%. Precip chance 52%.',
+				'SATURDAY... A slight chance of rain showers after 1pm. Partly sunny, with a high near 73. Northeast wind 10 to 14 mph, with gusts as high as 23 mph. Chance of precipitation is 20%. New rainfall amounts less than a tenth of an inch possible. Precip chance 16%.',
+				'SATURDAY NIGHT... A chance of rain showers. Mostly cloudy, with a low around 56. Chance of precipitation is 50%. New rainfall amounts between a tenth and quarter of an inch possible. Precip chance 52%.',
 				'SUNDAY... A chance of rain showers. Partly sunny, with a high near 72. Chance of precipitation is 50%. Precip chance 52%.',
 				'SUNDAY NIGHT... A chance of rain showers before 1am. Partly cloudy, with a low around 50. Chance of precipitation is 30%. Precip chance 30%.',
 				'MONDAY... Sunny, with a high near 74. Precip chance 3%.',
 				'MONDAY NIGHT... Partly cloudy, with a low around 48. Precip chance 5%.',
 				'TUESDAY... A slight chance of rain showers after 1pm. Partly sunny, with a high near 64. Precip chance 16%.',
 				'TUESDAY NIGHT... A chance of rain showers. Mostly cloudy, with a low around 41. Chance of precipitation is 40%. Precip chance 37%.',
-				'WEDNESDAY... A chance of rain showers. Partly sunny, with a high near 62. Precip chance 45%.',
+				'WEDNESDAY... A chance of rain showers. Partly sunny, with a high near 62. Chance of precipitation is 50%. Precip chance 45%.',
+				'WEDNESDAY NIGHT... A chance of rain showers. Mostly cloudy, with a low around 44. Precip chance 45%.',
 				];
 		} else {
 			this.screenTexts = conditions.map((condition) => condition.Text);
