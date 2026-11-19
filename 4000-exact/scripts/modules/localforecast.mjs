@@ -39,22 +39,22 @@ class LocalForecast extends WeatherDisplay {
 		if (!conditions.length) {
 			this.screenTexts = [
 				// FRESH FORECAST 2026-11-18 ~4:19 AM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-19T14:32:47+00:00 forecast through Wednesday, verified this run). Written in the screenshot format (generator
+				// generated 2026-11-19T18:37:51+00:00 forecast through Wednesday, verified this run). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
-				'TODAY... Mostly cloudy, with a high near 72. Northeast wind 5 to 9 mph. Precip chance 0%.',
-				'TONIGHT... Mostly cloudy, with a low around 52. Northeast wind around 5 mph. Precip chance 1%.',
-				'FRIDAY... Partly sunny, with a high near 75. Northeast wind 5 to 12 mph, with gusts as high as 17 mph. Precip chance 1%.',
-				'FRIDAY NIGHT... Mostly cloudy, with a low around 53. Northeast wind 6 to 9 mph. Precip chance 4%.',
-				'SATURDAY... A slight chance of rain showers after 1pm. Partly sunny, with a high near 73. Northeast wind 10 to 14 mph, with gusts as high as 23 mph. Chance of precipitation is 20%. New rainfall amounts less than a tenth of an inch possible. Precip chance 16%.',
-				'SATURDAY NIGHT... A chance of rain showers. Mostly cloudy, with a low around 56. Chance of precipitation is 50%. New rainfall amounts between a tenth and quarter of an inch possible. Precip chance 52%.',
-				'SUNDAY... A chance of rain showers. Partly sunny, with a high near 72. Chance of precipitation is 50%. Precip chance 52%.',
-				'SUNDAY NIGHT... A chance of rain showers before 1am. Partly cloudy, with a low around 50. Chance of precipitation is 30%. Precip chance 30%.',
-				'MONDAY... Sunny, with a high near 74. Precip chance 3%.',
-				'MONDAY NIGHT... Partly cloudy, with a low around 48. Precip chance 5%.',
+				'THIS AFTERNOON... Cloudy. High near 73, with temperatures falling to around 66 in the afternoon. Northeast wind 6 to 9 mph. Precip chance 0%.',
+				'TONIGHT... Mostly cloudy, with a low around 52. Northeast wind around 5 mph. Precip chance 2%.',
+				'FRIDAY... Partly sunny, with a high near 74. Northeast wind 5 to 10 mph. Precip chance 1%.',
+				'FRIDAY NIGHT... Mostly cloudy, with a low around 54. Northeast wind 6 to 10 mph. Precip chance 0%.',
+				'SATURDAY... A chance of rain showers after 1pm. Mostly cloudy, with a high near 72. Northeast wind 10 to 14 mph, with gusts as high as 22 mph. Chance of precipitation is 40%. New rainfall amounts less than a tenth of an inch possible. Precip chance 39%.',
+				'SATURDAY NIGHT... Rain showers. Mostly cloudy, with a low around 58. Chance of precipitation is 80%. New rainfall amounts between a quarter and half of an inch possible. Precip chance 75%.',
+				'SUNDAY... Rain showers. Partly sunny, with a high near 72. Chance of precipitation is 80%. Precip chance 75%.',
+				'SUNDAY NIGHT... A slight chance of rain showers before 1am. Partly cloudy, with a low around 52. Precip chance 22%.',
+				'MONDAY... Sunny, with a high near 75. Precip chance 4%.',
+				'MONDAY NIGHT... Partly cloudy, with a low around 49. Precip chance 5%.',
 				'TUESDAY... A slight chance of rain showers after 1pm. Partly sunny, with a high near 64. Precip chance 16%.',
-				'TUESDAY NIGHT... A chance of rain showers. Mostly cloudy, with a low around 41. Chance of precipitation is 40%. Precip chance 37%.',
-				'WEDNESDAY... A chance of rain showers. Partly sunny, with a high near 62. Chance of precipitation is 50%. Precip chance 45%.',
-				'WEDNESDAY NIGHT... A chance of rain showers. Mostly cloudy, with a low around 44. Precip chance 45%.',
+				'TUESDAY NIGHT... A chance of rain showers. Mostly cloudy, with a low around 43. Chance of precipitation is 40%. Precip chance 38%.',
+				'WEDNESDAY... A chance of rain showers. Mostly cloudy, with a high near 63. Chance of precipitation is 50%. Precip chance 49%.',
+				'WEDNESDAY NIGHT... A chance of rain showers. Mostly cloudy, with a low around 45. Precip chance 49%.',
 				];
 		} else {
 			this.screenTexts = conditions.map((condition) => condition.Text);
