@@ -39,9 +39,9 @@ class LocalForecast extends WeatherDisplay {
 		if (!conditions.length) {
 			this.screenTexts = [
 				// FRESH FORECAST 2026-11-18 ~4:19 AM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-20T19:07:21+00:00 forecast through Wednesday, verified this run). Written in the screenshot format (generator
+				// generated 2026-11-20T22:38:34+00:00 forecast through Wednesday, verified this run). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
-				'THIS AFTERNOON... Mostly cloudy. High near 74, with temperatures falling to around 68 in the afternoon. Northeast wind around 9 mph, with gusts as high as 16 mph. Precip chance 5%.',
+				'THIS AFTERNOON... Mostly cloudy. High near 74, with temperatures falling to around 68 in the afternoon. Northeast wind around 8 mph. Precip chance 5%.',
 				'TONIGHT... Mostly cloudy, with a low around 57. Northeast wind 6 to 9 mph, with gusts as high as 17 mph. Precip chance 11%.',
 				'SATURDAY... Rain showers likely. Mostly cloudy, with a high near 72. Northeast wind 9 to 14 mph, with gusts as high as 24 mph. Chance of precipitation is 70%. New rainfall amounts between a tenth and quarter of an inch possible. Precip chance 66%.',
 				'SATURDAY NIGHT... Rain showers. Mostly cloudy, with a low around 61. Northeast wind 6 to 13 mph, with gusts as high as 23 mph. Chance of precipitation is 90%. New rainfall amounts between three quarters and one inch possible. Precip chance 88%.',
