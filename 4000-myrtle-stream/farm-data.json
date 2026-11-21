@@ -1,18 +1,18 @@
 {
   "conditionText": 3,
-  "dewPoint": 17.8,
-  "feelsLike": 20.5,
+  "dewPoint": 16.7,
+  "feelsLike": 20.3,
   "humidity": 82,
-  "lastUpdated": "2026-11-21T11:22:16-05:00",
+  "lastUpdated": "2026-11-21T11:42:40-05:00",
   "locationCity": "CALABASH-FARM AT BRUNSWICK",
-  "pressure": 1012.22,
-  "pressureTrend": "steady",
+  "pressure": 1011.88,
+  "pressureTrend": "falling",
   "rainTodayIn": 0.0,
-  "source": "WU-first via my own WU dashboard fetch this run. Six generations, IN ORDER: x4 obs Sat Nov 21 2026 16:17:43  (68.5F, feels 68.5F, dew 61.0F, P 29.89 inHg, RH 81, wind 2 mph, gust 9 mph, dir 90); r1 obs Sat Nov 21 2026 16:18:55  (68.9F, feels 68.9F, dew 63.0F, P 29.89 inHg, RH 81, wind 9 mph, gust 9 mph, dir 23); r2 obs Sat Nov 21 2026 16:19:57  (69.1F, feels 69.1F, dew 63.0F, P 29.89 inHg, RH 80, wind 2 mph, gust 9 mph, dir 45); r3 obs Sat Nov 21 2026 16:19:57  (69.1F, feels 69.1F, dew 63.0F, P 29.89 inHg, RH 80, wind 2 mph, gust 9 mph, dir 45); r4 obs Sat Nov 21 2026 16:22:03  (68.7F, feels 68.7F, dew 62.1F, P 29.89 inHg, RH 82, wind 2 mph, gust 9 mph, dir 90); r5 obs Sat Nov 21 2026 16:22:16  (68.9F, feels 68.9F, dew 64.0F, P 29.89 inHg, RH 82, wind 2 mph, gust 9 mph, dir 90). STAGED the FRESHEST generation, r5 Sat Nov 21 2026 16:22:16  = 11:22 AM EST 2026-11-21: temp 69F display (68.9F raw), feels 69F, dew 64F, pressure 29.89 inHg, RH 82, wind 2 mph, gust 9 mph, rain 0. Wind direction: WU freshest obs reports dir 90 (E) - a real vane reading, staged as-is. Cross-checked by OSO farm row (see run log) and RetroCast 1111n (normalized, obs 2026-11-21T16:12:14Z: temp 69F, feels 69F, dew 61F, RH 81, wind 2.0 mph, gust 9.0 mph, P 29.89 inHg, dir 113, sky Cloudy). Jr jr_data_20261121_1050.json (sky Mostly Cloudy, 68F, 0.02 in Nov precip). Staged metric-native schema farm-data.json carries (app converts C->F, km/h->mph, hPa->inHg): temp 20.5C = 69F (app display 69F, round-half-up), feels 20.5C = 69F (display 69F), dew 17.8C = 64F (display 64F), pressure 29.89 inHg = 1012.22 hPa, wind 3.2 km/h (2 mph) sustained, gust 14.5 km/h (9 mph). WunderMap station block fetched this run - icon cloudy, title Cloudy, station KNCCAROL120 confirmed - SKY Cloudy (conditionText 3); RetroCast 1111n sky Cloudy. KCRE latest - Cloudy and Windy, 20C, wind 50 deg 31.5 km/h, vis 16093.44 m (10.0 mi), obs 2026-11-21T16:00:00+00:00 - the airport's own sky word; farm sky Cloudy governs from the WunderMap station block. Visibility 10 mi. Alerts: NONE this run - api.weather.gov alerts active for the farm point returned 0 features. Pressure trend STEADY: previously staged 29.89 inHg (live HEAD run 913) -> now 29.89 inHg (XL mechanical rule). ",
-  "temperature": 20.5,
+  "source": "WU-first via my own WU dashboard fetch this run. Six generations, IN ORDER: x4 obs Sat Nov 21 2026 16:37:54  (69.4F, feels 69.4F, dew 63.0F, P 29.88 inHg, RH 80, wind 10 mph, gust 11 mph, dir 0); r1 obs Sat Nov 21 2026 16:37:54  (69.4F, feels 69.4F, dew 63.0F, P 29.88 inHg, RH 80, wind 10 mph, gust 11 mph, dir 0); r2 obs Sat Nov 21 2026 16:39:58  (68.9F, feels 68.9F, dew 63.0F, P 29.88 inHg, RH 81, wind 2 mph, gust 11 mph, dir 158); r3 obs Sat Nov 21 2026 16:40:21  (68.9F, feels 68.9F, dew 63.0F, P 29.88 inHg, RH 81, wind 2 mph, gust 11 mph, dir 113); r4 obs Sat Nov 21 2026 16:41:02  (68.7F, feels 68.7F, dew 62.0F, P 29.88 inHg, RH 82, wind 2 mph, gust 11 mph, dir 203); r5 obs Sat Nov 21 2026 16:42:40  (68.5F, feels 68.5F, dew 62.0F, P 29.88 inHg, RH 82, wind 3 mph, gust 11 mph, dir 203). STAGED the FRESHEST generation, r5 Sat Nov 21 2026 16:42:40  = 11:42 AM EST 2026-11-21: temp 69F display (68.5F raw), feels 69F, dew 62F, pressure 29.88 inHg, RH 82, wind 3 mph, gust 11 mph, rain 0. Wind direction: WU freshest obs reports dir 203 (SSW) - a real vane reading, staged as-is. Cross-checked by OSO farm row (see run log) and RetroCast 1141n (normalized, obs 2026-11-21T16:42:40Z: temp 69F, feels 69F, dew 62F, RH 82, wind 3.0 mph, gust 11.0 mph, P 29.88 inHg, dir 203, sky Cloudy). Jr jr_data_20261121_1050.json (sky Mostly Cloudy, 68F, 0.02 in Nov precip). Staged metric-native schema farm-data.json carries (app converts C->F, km/h->mph, hPa->inHg): temp 20.3C = 69F (app display 69F, round-half-up), feels 20.3C = 69F (display 69F), dew 16.7C = 62F (display 62F), pressure 29.88 inHg = 1011.88 hPa, wind 4.8 km/h (3 mph) sustained, gust 17.7 km/h (11 mph). WunderMap station block fetched this run - icon cloudy, title Cloudy, station KNCCAROL120 confirmed - SKY Cloudy (conditionText 3); RetroCast 1141n sky Cloudy. KCRE latest - Cloudy, 20C, wind 40 deg 27.792 km/h, vis 16093.44 m (10.0 mi), obs 2026-11-21T16:10:00+00:00 - the airport's own sky word; farm sky Cloudy governs from the WunderMap station block. Visibility 10 mi. Alerts: NONE this run - api.weather.gov alerts active for the farm point returned 0 features. Pressure trend FALLING: previously staged 29.89 inHg (live HEAD run 914) -> now 29.88 inHg (XL mechanical rule). ",
+  "temperature": 20.3,
   "uvIndex": null,
   "visibility": 16.09,
-  "windDirection": "E",
-  "windGust": 14.5,
-  "windSpeed": 3.2
+  "windDirection": "SSW",
+  "windGust": 17.7,
+  "windSpeed": 4.8
 }
