@@ -38,9 +38,9 @@ class LocalForecast extends WeatherDisplay {
 		if (!conditions.length) {
 			this.screenTexts = [
 				// FRESH FORECAST 2026-11-18 ~4:19 AM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-20T23:23:22+00:00 forecast through Wednesday, verified this run). Written in the screenshot format (generator
+				// generated 2026-11-21T05:37:38+00:00 forecast through Wednesday, verified this run). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
-				'TONIGHT... Mostly cloudy, with a low around 58. Northeast wind around 9 mph. Precip chance 11%.',
+				'OVERNIGHT... Mostly cloudy, with a low around 58. Northeast wind around 9 mph. Precip chance 11%.',
 				'SATURDAY... Rain showers likely. Mostly cloudy, with a high near 72. Northeast wind 9 to 14 mph, with gusts as high as 24 mph. Chance of precipitation is 70%. New rainfall amounts between a tenth and quarter of an inch possible. Precip chance 66%.',
 				'SATURDAY NIGHT... Rain showers. Mostly cloudy, with a low around 61. Northeast wind 6 to 13 mph, with gusts as high as 23 mph. Chance of precipitation is 90%. New rainfall amounts between three quarters and one inch possible. Precip chance 88%.',
 				'SUNDAY... A chance of rain showers. Partly sunny, with a high near 72. Northwest wind around 7 mph. Chance of precipitation is 30%. New rainfall amounts between a tenth and quarter of an inch possible. Precip chance 30%.',
