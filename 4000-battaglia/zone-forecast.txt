@@ -1,34 +1,35 @@
-Expires:202611220745;;684003
-FPUS52 KILM 211839
+Expires:202611221130;;684003
+FPUS52 KILM 212230
 ZFPILM
 
 Zone Forecast Product
 National Weather Service Wilmington NC
-139 PM EST Sat Nov 21 2026
+530 PM EST Sat Nov 21 2026
 
-NCZ106-220745-
+NCZ106-221130-
 Coastal Pender-
 Including the city of Surf City
-139 PM EST Sat Nov 21 2026
+530 PM EST Sat Nov 21 2026
 
 ...HIGH SURF ADVISORY IN EFFECT UNTIL 4 AM EST SUNDAY...
 
-.THIS AFTERNOON...Mostly cloudy with a 40 percent chance of
-showers. Near steady temperature in the mid 60s. East winds 15 to
-20 mph with gusts up to 30 mph.
-.TONIGHT...Showers. Near steady temperature in the lower 60s.
-Northeast winds 10 to 15 mph with gusts up to 30 mph. Chance of
-rain near 100 percent.
-.SUNDAY...Mostly cloudy. Showers, mainly in the morning. Highs
-around 70. Northeast winds 5 to 10 mph. Chance of rain
-80 percent.
+.TONIGHT...Showers likely. Near steady temperature in the mid
+60s. Northeast winds 10 to 15 mph with gusts up to 25 mph. Chance
+of rain 70 percent.
+.SUNDAY...Mostly cloudy. Showers likely, mainly in the morning.
+Highs around 70. Northeast winds 5 to 10 mph. Chance of rain
+70 percent.
 .SUNDAY NIGHT...Mostly cloudy with a chance of showers in the
-evening, then partly cloudy after midnight. Lows in the upper
-50s. Northwest winds around 5 mph. Chance of rain 30 percent.
+evening, then partly cloudy after midnight. Patchy fog. Lows in
+the upper 50s. Northwest winds around 5 mph. Chance of rain
+30 percent.
 .MONDAY...Mostly sunny. Highs in the lower 70s. Northwest winds
 around 5 mph, becoming west in the afternoon.
-.MONDAY NIGHT AND TUESDAY...Mostly cloudy. Lows in the lower 50s.
-Highs in the lower 60s.
+.MONDAY NIGHT...Partly cloudy in the evening, then becoming
+mostly cloudy. Lows in the lower 50s. Northwest winds around
+5 mph, becoming north with gusts up to 20 mph after midnight.
+.TUESDAY...Mostly cloudy in the morning, then becoming partly
+sunny. Highs in the lower 60s.
 .TUESDAY NIGHT...Mostly cloudy. Lows in the mid 40s.
 .WEDNESDAY...Showers likely. Breezy with highs in the mid 60s.
 Chance of rain 70 percent.
@@ -39,31 +40,35 @@ morning, then partly sunny in the afternoon. Highs in the mid
 60s. Chance of rain 30 percent.
 .THURSDAY NIGHT...Mostly cloudy in the evening, then becoming
 partly cloudy. Lows in the mid 40s.
-.FRIDAY...Mostly sunny. Highs in the lower 60s.
+.FRIDAY AND FRIDAY NIGHT...Partly cloudy. Highs in the lower 60s.
+Lows in the mid 40s.
+.SATURDAY...Mostly sunny. A chance of showers in the afternoon.
+Highs in the mid 60s. Chance of rain 30 percent.
 
 $$
 
-NCZ105-220745-
+NCZ105-221130-
 Inland Pender-
 Including the city of Burgaw
-139 PM EST Sat Nov 21 2026
+530 PM EST Sat Nov 21 2026
 
-.THIS AFTERNOON...Mostly cloudy with a 40 percent chance of
-showers. Near steady temperature in the mid 60s. East winds
-around 10 mph with gusts up to 20 mph.
-.TONIGHT...Showers. Near steady temperature in the lower 60s.
-Northeast winds 5 to 10 mph with gusts up to 20 mph. Chance of
-rain near 100 percent.
-.SUNDAY...Mostly cloudy. Showers, mainly in the morning. Highs in
-the lower 70s. North winds around 5 mph. Chance of rain
-80 percent.
+.TONIGHT...Mostly cloudy. A chance of showers this evening, then
+showers likely after midnight. Near steady temperature in the mid
+60s. Northeast winds 5 to 10 mph. Chance of rain 70 percent.
+.SUNDAY...Mostly cloudy. Showers likely, mainly in the morning.
+Highs in the lower 70s. Northeast winds around 5 mph. Chance of
+rain 70 percent.
 .SUNDAY NIGHT...Mostly cloudy with a chance of showers in the
-evening, then partly cloudy after midnight. Lows in the mid 50s.
-Northwest winds around 5 mph. Chance of rain 40 percent.
-.MONDAY...Mostly sunny. Highs in the mid 70s. Northwest winds
-around 5 mph.
-.MONDAY NIGHT AND TUESDAY...Mostly cloudy. Lows in the lower 50s.
-Highs in the lower 60s.
+evening, then partly cloudy after midnight. Patchy fog. Lows in
+the mid 50s. Northwest winds around 5 mph. Chance of rain
+40 percent.
+.MONDAY...Patchy fog in the morning. Mostly sunny. Highs in the
+mid 70s. Northwest winds around 5 mph.
+.MONDAY NIGHT...Partly cloudy in the evening, then becoming
+mostly cloudy. Lows in the lower 50s. Light and variable winds,
+becoming north 5 to 10 mph after midnight.
+.TUESDAY...Mostly cloudy in the morning, then becoming partly
+sunny. Highs in the lower 60s.
 .TUESDAY NIGHT...Mostly cloudy. Lows in the lower 40s.
 .WEDNESDAY AND WEDNESDAY NIGHT...Showers likely. Highs in the
 lower 60s. Lows in the lower 50s. Chance of rain 70 percent.
@@ -72,35 +77,36 @@ morning, then partly sunny in the afternoon. Highs in the mid
 60s. Chance of rain 40 percent.
 .THURSDAY NIGHT...Mostly cloudy in the evening, then becoming
 partly cloudy. Lows in the lower 40s.
-.FRIDAY...Mostly sunny. Highs in the mid 60s.
+.FRIDAY THROUGH SATURDAY...Partly cloudy. Highs in the mid 60s.
+Lows around 40.
 
 $$
 
-NCZ108-220745-
+NCZ108-221130-
 Coastal New Hanover-
 Including the cities of Masonboro, Myrtle Grove, Ogden,
 Carolina Beach, and Seagate
-139 PM EST Sat Nov 21 2026
+530 PM EST Sat Nov 21 2026
 
 ...HIGH SURF ADVISORY IN EFFECT UNTIL 4 AM EST SUNDAY...
 
-.THIS AFTERNOON...Cloudy with a 50 percent chance of showers.
-Near steady temperature in the lower 60s. Northeast winds 15 to
-20 mph.
-.TONIGHT...Showers. Near steady temperature in the mid 60s.
-Northeast winds 10 to 15 mph with gusts up to 30 mph. Chance of
-rain near 100 percent.
-.SUNDAY...Mostly cloudy. Showers with a slight chance of
-thunderstorms in the morning, then a chance of showers in the
-afternoon. Highs around 70. Northeast winds 5 to 10 mph. Chance
+.TONIGHT...Showers likely with a slight chance of thunderstorms
+this evening, then showers after midnight. Near steady
+temperature in the mid 60s. Northeast winds 15 to 20 mph. Chance
 of rain 80 percent.
+.SUNDAY...Mostly cloudy. Showers likely, mainly in the morning.
+Highs around 70. Northeast winds 10 to 15 mph. Chance of rain
+70 percent.
 .SUNDAY NIGHT...Mostly cloudy with a chance of showers in the
-evening, then partly cloudy after midnight. Lows in the upper
-50s. Northwest winds around 5 mph. Chance of rain 30 percent.
+evening, then partly cloudy after midnight. Patchy fog. Lows in
+the upper 50s. Northwest winds around 5 mph. Chance of rain
+30 percent.
 .MONDAY...Mostly sunny. Highs in the lower 70s. Northwest winds
 around 5 mph, becoming west around 5 mph in the afternoon.
-.MONDAY NIGHT AND TUESDAY...Mostly cloudy. Lows in the mid 50s.
-Highs in the lower 60s.
+.MONDAY NIGHT...Partly cloudy in the evening, then becoming
+mostly cloudy. Lows in the mid 50s. West winds around 5 mph,
+increasing to north 10 to 15 mph after midnight.
+.TUESDAY...Mostly cloudy. Highs in the lower 60s.
 .TUESDAY NIGHT...Mostly cloudy. A chance of showers after
 midnight. Breezy with lows in the upper 40s. Chance of rain
 30 percent.
@@ -110,31 +116,35 @@ Chance of rain 70 percent.
 with lows in the mid 50s. Chance of rain 70 percent.
 .THANKSGIVING DAY AND THURSDAY NIGHT...Mostly cloudy. Highs in
 the mid 60s. Lows in the upper 40s.
-.FRIDAY...Mostly sunny. Highs in the lower 60s.
+.FRIDAY AND FRIDAY NIGHT...Partly cloudy. Highs in the lower 60s.
+Lows in the upper 40s.
+.SATURDAY...Mostly sunny. A chance of showers in the afternoon.
+Highs in the mid 60s. Chance of rain 30 percent.
 
 $$
 
-NCZ107-220745-
+NCZ107-221130-
 Inland New Hanover-
 Including the city of Wilmington
-139 PM EST Sat Nov 21 2026
+530 PM EST Sat Nov 21 2026
 
-.THIS AFTERNOON...Cloudy with a 50 percent chance of showers.
-Near steady temperature in the mid 60s. Northeast winds 10 to
-15 mph with gusts up to 25 mph.
-.TONIGHT...Showers. Near steady temperature in the mid 60s.
-Northeast winds 5 to 10 mph with gusts up to 20 mph. Chance of
-rain near 100 percent.
-.SUNDAY...Mostly cloudy. Showers, mainly in the morning. Highs in
-the lower 70s. Northeast winds around 5 mph. Chance of rain
-80 percent.
+.TONIGHT...A chance of showers this evening, then showers after
+midnight. Near steady temperature in the mid 60s. Northeast winds
+5 to 10 mph. Chance of rain 80 percent.
+.SUNDAY...Mostly cloudy. Showers likely, mainly in the morning.
+Highs in the lower 70s. Northeast winds 5 to 10 mph. Chance of
+rain 70 percent.
 .SUNDAY NIGHT...Mostly cloudy with a chance of showers in the
-evening, then partly cloudy after midnight. Lows in the upper
-50s. Northwest winds around 5 mph. Chance of rain 40 percent.
+evening, then partly cloudy after midnight. Patchy fog. Lows in
+the upper 50s. Northwest winds around 5 mph. Chance of rain
+40 percent.
 .MONDAY...Mostly sunny. Highs in the mid 70s. Northwest winds
 around 5 mph.
-.MONDAY NIGHT AND TUESDAY...Mostly cloudy. Lows in the lower 50s.
-Highs in the mid 60s.
+.MONDAY NIGHT...Partly cloudy in the evening, then becoming
+mostly cloudy. Lows in the lower 50s. Light and variable winds,
+becoming north 5 to 10 mph after midnight.
+.TUESDAY...Mostly cloudy in the morning, then becoming partly
+sunny. Highs in the mid 60s.
 .TUESDAY NIGHT...Mostly cloudy. Lows in the lower 40s.
 .WEDNESDAY...Showers likely. Highs in the mid 60s. Chance of rain
 70 percent.
@@ -145,34 +155,34 @@ morning, then partly sunny in the afternoon. Highs in the mid
 60s. Chance of rain 50 percent.
 .THURSDAY NIGHT...Mostly cloudy in the evening, then becoming
 partly cloudy. Lows in the mid 40s.
-.FRIDAY...Mostly sunny. Highs in the mid 60s.
+.FRIDAY THROUGH SATURDAY...Partly cloudy. Highs in the mid 60s.
+Lows in the lower 40s.
 
 $$
 
-NCZ110-220745-
+NCZ110-221130-
 Coastal Brunswick-
 Including the cities of Oak Island, Long Beach, Southport,
 and Sunset Beach
-139 PM EST Sat Nov 21 2026
+530 PM EST Sat Nov 21 2026
 
-.THIS AFTERNOON...Showers likely. Near steady temperature in the
-mid 60s. Northeast winds 10 to 15 mph with gusts up to 25 mph.
-Chance of rain 70 percent.
-.TONIGHT...A slight chance of thunderstorms in the evening.
-Showers. Near steady temperature in the mid 60s. Northeast winds
-10 to 15 mph with gusts up to 25 mph. Chance of rain near
-100 percent.
-.SUNDAY...Mostly cloudy with a slight chance of thunderstorms.
-Showers, mainly in the morning. Highs around 70. Northeast winds
-5 to 10 mph, becoming north in the afternoon. Chance of rain
-80 percent.
+.TONIGHT...A slight chance of thunderstorms. Showers. Near steady
+temperature in the mid 60s. Northeast winds 10 to 15 mph with
+gusts up to 25 mph. Chance of rain 90 percent.
+.SUNDAY...Mostly cloudy. Showers likely, mainly in the morning.
+Highs around 70. Northeast winds 5 to 10 mph, becoming north in
+the afternoon. Chance of rain 70 percent.
 .SUNDAY NIGHT...Mostly cloudy with a chance of showers in the
-evening, then partly cloudy after midnight. Lows in the upper
-50s. West winds around 5 mph. Chance of rain 30 percent.
-.MONDAY...Mostly sunny. Highs in the lower 70s. Northwest winds
-around 5 mph.
-.MONDAY NIGHT AND TUESDAY...Mostly cloudy. Lows in the mid 50s.
-Highs in the mid 60s.
+evening, then partly cloudy after midnight. Patchy fog. Lows in
+the upper 50s. West winds around 5 mph. Chance of rain
+30 percent.
+.MONDAY...Patchy fog in the morning. Mostly sunny. Highs in the
+lower 70s. Northwest winds around 5 mph.
+.MONDAY NIGHT...Partly cloudy in the evening, then becoming
+mostly cloudy. Lows in the mid 50s. West winds around 5 mph,
+becoming north with gusts up to 20 mph after midnight.
+.TUESDAY...Mostly cloudy in the morning, then becoming partly
+sunny. Highs in the mid 60s.
 .TUESDAY NIGHT...Mostly cloudy. A chance of showers after
 midnight. Breezy with lows in the mid 40s. Chance of rain
 30 percent.
@@ -182,34 +192,36 @@ Chance of rain 70 percent.
 with lows in the lower 50s. Chance of rain 70 percent.
 .THANKSGIVING DAY AND THURSDAY NIGHT...Mostly cloudy. Highs in
 the mid 60s. Lows in the mid 40s.
-.FRIDAY...Mostly sunny. Highs in the mid 60s.
+.FRIDAY AND FRIDAY NIGHT...Partly cloudy. Highs in the mid 60s.
+Lows in the mid 40s.
+.SATURDAY...Mostly sunny. A chance of showers in the afternoon.
+Highs in the mid 60s. Chance of rain 30 percent.
 
 $$
 
-NCZ109-220745-
+NCZ109-221130-
 Inland Brunswick-
 Including the cities of Boiling Spring Lakes, Leland,
 and Shallotte
-139 PM EST Sat Nov 21 2026
+530 PM EST Sat Nov 21 2026
 
-.THIS AFTERNOON...Cloudy with a 50 percent chance of showers.
-Near steady temperature in the mid 60s. Northeast winds 10 to
-15 mph.
-.TONIGHT...Showers likely with a slight chance of thunderstorms
-in the evening, then showers after midnight. Near steady
-temperature in the mid 60s. Northeast winds 5 to 10 mph with
-gusts up to 20 mph. Chance of rain near 100 percent.
-.SUNDAY...Mostly cloudy. Showers with a slight chance of
-thunderstorms in the morning, then a chance of showers in the
-afternoon. Highs in the lower 70s. North winds around 5 mph.
-Chance of rain 80 percent.
+.TONIGHT...A slight chance of thunderstorms. Showers. Near steady
+temperature in the mid 60s. Northeast winds 5 to 10 mph. Chance
+of rain 90 percent.
+.SUNDAY...Mostly cloudy. Showers likely, mainly in the morning.
+Highs in the lower 70s. Northeast winds around 5 mph, becoming
+north in the afternoon. Chance of rain 70 percent.
 .SUNDAY NIGHT...Mostly cloudy with a chance of showers in the
-evening, then partly cloudy after midnight. Lows in the upper
-50s. Northwest winds around 5 mph. Chance of rain 40 percent.
-.MONDAY...Partly sunny. Highs in the mid 70s. Northwest winds
-around 5 mph.
-.MONDAY NIGHT AND TUESDAY...Mostly cloudy. Lows in the lower 50s.
-Highs in the mid 60s.
+evening, then partly cloudy after midnight. Patchy fog. Lows in
+the upper 50s. Northwest winds around 5 mph. Chance of rain
+40 percent.
+.MONDAY...Patchy fog in the morning. Partly sunny. Highs in the
+mid 70s. Northwest winds around 5 mph.
+.MONDAY NIGHT...Partly cloudy in the evening, then becoming
+mostly cloudy. Lows in the lower 50s. Light and variable winds,
+becoming north 5 to 10 mph after midnight.
+.TUESDAY...Mostly cloudy in the morning, then becoming partly
+sunny. Highs in the mid 60s.
 .TUESDAY NIGHT...Mostly cloudy. Lows in the mid 40s.
 .WEDNESDAY...Showers likely. Highs in the lower 60s. Chance of
 rain 70 percent.
@@ -217,31 +229,35 @@ rain 70 percent.
 the lower 50s. Chance of rain 70 percent.
 .THANKSGIVING DAY AND THURSDAY NIGHT...Mostly cloudy. Highs in
 the mid 60s. Lows in the mid 40s.
-.FRIDAY...Mostly sunny. Highs in the mid 60s.
+.FRIDAY AND FRIDAY NIGHT...Partly cloudy. Highs in the mid 60s.
+Lows in the lower 40s.
+.SATURDAY...Mostly sunny. A chance of showers in the afternoon.
+Highs in the mid 60s. Chance of rain 30 percent.
 
 $$
 
-NCZ096-220745-
+NCZ096-221130-
 Bladen-
 Including the cities of Elizabethtown and Bladenboro
-139 PM EST Sat Nov 21 2026
+530 PM EST Sat Nov 21 2026
 
-.THIS AFTERNOON...Mostly cloudy with a 40 percent chance of
-showers. Near steady temperature in the mid 60s. Northeast winds
-5 to 10 mph with gusts up to 20 mph.
-.TONIGHT...Showers likely. Near steady temperature in the lower
-60s. Northeast winds 5 to 10 mph with gusts up to 20 mph. Chance
-of rain 70 percent.
-.SUNDAY...Mostly cloudy with a 50 percent chance of showers.
-Highs in the lower 70s. North winds around 5 mph.
+.TONIGHT...Mostly cloudy. A chance of showers this evening, then
+showers likely after midnight. Lows in the lower 60s. Northeast
+winds 5 to 10 mph. Chance of rain 70 percent.
+.SUNDAY...Mostly cloudy. Showers likely, mainly in the morning.
+Highs in the lower 70s. North winds around 5 mph. Chance of rain
+70 percent.
 .SUNDAY NIGHT...Mostly cloudy with a chance of showers in the
-evening, then partly cloudy after midnight. Lows in the mid 50s.
-North winds around 5 mph in the evening, becoming light and
-variable. Chance of rain 40 percent.
-.MONDAY...Mostly sunny. Highs in the mid 70s. Northwest winds
-around 5 mph.
-.MONDAY NIGHT AND TUESDAY...Mostly cloudy. Lows in the lower 50s.
-Highs in the lower 60s.
+evening, then partly cloudy after midnight. Patchy fog. Lows in
+the mid 50s. North winds around 5 mph in the evening, becoming
+light and variable. Chance of rain 40 percent.
+.MONDAY...Patchy fog in the morning. Mostly sunny. Highs in the
+mid 70s. Northwest winds around 5 mph.
+.MONDAY NIGHT...Partly cloudy in the evening, then becoming
+mostly cloudy. Lows in the lower 50s. West winds around 5 mph,
+becoming north after midnight.
+.TUESDAY...Mostly cloudy in the morning, then becoming partly
+sunny. Highs in the lower 60s.
 .TUESDAY NIGHT...Partly cloudy in the evening, then becoming
 mostly cloudy. Lows around 40.
 .WEDNESDAY AND WEDNESDAY NIGHT...Showers likely. Highs around 60.
@@ -251,32 +267,34 @@ morning, then partly sunny in the afternoon. Highs in the mid
 60s. Chance of rain 30 percent.
 .THURSDAY NIGHT...Mostly cloudy in the evening, then becoming
 partly cloudy. Lows in the lower 40s.
-.FRIDAY...Mostly sunny. Highs in the mid 60s.
+.FRIDAY THROUGH SATURDAY...Partly cloudy. Highs in the mid 60s.
+Lows in the upper 30s.
 
 $$
 
-NCZ099-220745-
+NCZ099-221130-
 Columbus-
 Including the cities of Whiteville, Tabor City, Chadbourn,
 and Lake Waccamaw
-139 PM EST Sat Nov 21 2026
+530 PM EST Sat Nov 21 2026
 
-.THIS AFTERNOON...Mostly cloudy with a 50 percent chance of
-showers. Near steady temperature in the mid 60s. Northeast winds
-5 to 10 mph with gusts up to 20 mph.
-.TONIGHT...A slight chance of thunderstorms in the evening.
-Showers likely. Near steady temperature in the lower 60s.
-Northeast winds 5 to 10 mph. Chance of rain 70 percent.
+.TONIGHT...Showers likely this evening, then showers with a
+slight chance of thunderstorms after midnight. Near steady
+temperature in the lower 60s. Northeast winds 5 to 10 mph. Chance
+of rain 90 percent.
 .SUNDAY...Mostly cloudy with a 50 percent chance of showers.
 Highs in the lower 70s. North winds around 5 mph.
 .SUNDAY NIGHT...Mostly cloudy with a chance of showers in the
-evening, then partly cloudy after midnight. Lows in the mid 50s.
-Northwest winds around 5 mph in the evening, becoming light and
-variable. Chance of rain 40 percent.
+evening, then partly cloudy after midnight. Patchy fog. Lows in
+the mid 50s. Northwest winds around 5 mph in the evening,
+becoming light and variable. Chance of rain 40 percent.
 .MONDAY...Partly sunny. Highs in the mid 70s. Northwest winds
 around 5 mph.
-.MONDAY NIGHT AND TUESDAY...Mostly cloudy. Lows in the lower 50s.
-Highs in the mid 60s.
+.MONDAY NIGHT...Partly cloudy in the evening, then becoming
+mostly cloudy. Lows in the lower 50s. South winds around 5 mph,
+becoming north after midnight.
+.TUESDAY...Mostly cloudy in the morning, then becoming partly
+sunny. Highs in the mid 60s.
 .TUESDAY NIGHT...Mostly cloudy. Lows in the lower 40s.
 .WEDNESDAY AND WEDNESDAY NIGHT...Showers likely. Highs in the
 lower 60s. Lows in the upper 40s. Chance of rain 70 percent.
@@ -285,30 +303,34 @@ morning, then partly sunny in the afternoon. Highs in the mid
 60s. Chance of rain 50 percent.
 .THURSDAY NIGHT...Mostly cloudy in the evening, then becoming
 partly cloudy. Lows in the lower 40s.
-.FRIDAY...Mostly sunny. Highs in the mid 60s.
+.FRIDAY THROUGH SATURDAY...Partly cloudy. Highs in the mid 60s.
+Lows in the lower 40s.
 
 $$
 
-NCZ087-220745-
+NCZ087-221130-
 Robeson-
 Including the city of Lumberton
-139 PM EST Sat Nov 21 2026
+530 PM EST Sat Nov 21 2026
 
-.THIS AFTERNOON...Mostly cloudy with a 50 percent chance of
-showers. Near steady temperature in the mid 60s. Northeast winds
-10 to 15 mph.
-.TONIGHT...Showers likely with a slight chance of thunderstorms.
-Near steady temperature in the lower 60s. Northeast winds around
-10 mph with gusts up to 20 mph. Chance of rain 70 percent.
-.SUNDAY...Mostly cloudy with a 50 percent chance of showers.
-Highs around 70. North winds 5 to 10 mph.
+.TONIGHT...Showers likely. A slight chance of thunderstorms after
+midnight. Near steady temperature in the lower 60s. Northeast
+winds 5 to 10 mph with gusts up to 20 mph. Chance of rain
+70 percent.
+.SUNDAY...Mostly cloudy. Showers likely, mainly in the morning.
+Highs around 70. North winds 5 to 10 mph. Chance of rain
+60 percent.
 .SUNDAY NIGHT...Mostly cloudy with a chance of showers in the
-evening, then partly cloudy after midnight. Lows in the mid 50s.
-Northwest winds around 5 mph. Chance of rain 30 percent.
-.MONDAY...Mostly sunny. Highs in the mid 70s. Northwest winds
-around 5 mph.
-.MONDAY NIGHT AND TUESDAY...Mostly cloudy. Lows in the lower 50s.
-Highs in the lower 60s.
+evening, then partly cloudy after midnight. Patchy fog. Lows in
+the mid 50s. Northwest winds around 5 mph. Chance of rain
+30 percent.
+.MONDAY...Patchy fog in the morning. Mostly sunny. Highs in the
+mid 70s. Northwest winds around 5 mph.
+.MONDAY NIGHT...Partly cloudy in the evening, then becoming
+mostly cloudy. Lows in the lower 50s. Northwest winds around
+5 mph, increasing to north 10 to 15 mph after midnight.
+.TUESDAY...Mostly cloudy in the morning, then becoming partly
+sunny. Highs in the lower 60s.
 .TUESDAY NIGHT...Partly cloudy in the evening, then becoming
 mostly cloudy. Lows around 40.
 .WEDNESDAY AND WEDNESDAY NIGHT...Showers likely. Highs in the
@@ -318,35 +340,32 @@ morning, then partly sunny in the afternoon. Highs in the lower
 60s. Chance of rain 40 percent.
 .THURSDAY NIGHT...Mostly cloudy in the evening, then becoming
 partly cloudy. Lows in the lower 40s.
-.FRIDAY...Mostly sunny. Highs in the lower 60s.
+.FRIDAY THROUGH SATURDAY...Partly cloudy. Highs in the lower 60s.
+Lows in the upper 30s.
 
 $$
 
-SCZ054-220745-
+SCZ054-221130-
 Coastal Horry-
 Including the cities of Myrtle Beach, Socastee,
 North Myrtle Beach, Garden City, and Little River
-139 PM EST Sat Nov 21 2026
+530 PM EST Sat Nov 21 2026
 
-...HIGH SURF ADVISORY IN EFFECT UNTIL 4 AM EST SUNDAY...
-
-.THIS AFTERNOON...Showers with a slight chance of thunderstorms.
-Near steady temperature in the lower 60s. Northeast winds 10 to
-15 mph with gusts up to 25 mph. Chance of rain 90 percent.
-.TONIGHT...Showers with a chance of thunderstorms in the evening,
-then showers likely with a slight chance of thunderstorms after
-midnight. Near steady temperature in the mid 60s. Northeast winds
-10 to 15 mph with gusts up to 25 mph. Chance of rain 90 percent.
-.SUNDAY...Mostly cloudy with a chance of showers with a slight
-chance of thunderstorms. Highs in the lower 70s. Northeast winds
-5 to 10 mph. Chance of rain 50 percent.
+.TONIGHT...Showers with a slight chance of thunderstorms. Near
+steady temperature in the mid 60s. Northeast winds 10 to 15 mph
+with gusts up to 25 mph. Chance of rain 90 percent.
+.SUNDAY...Mostly cloudy with a 50 percent chance of showers.
+Highs in the lower 70s. Northeast winds 5 to 10 mph.
 .SUNDAY NIGHT...Partly cloudy. A slight chance of showers in the
-evening. Lows in the upper 50s. Northwest winds around 5 mph.
-Chance of rain 20 percent.
+evening. Patchy fog. Lows in the upper 50s. Northwest winds
+around 5 mph. Chance of rain 20 percent.
 .MONDAY...Mostly sunny. Highs in the lower 70s. Northwest winds
 around 5 mph, becoming west in the afternoon.
-.MONDAY NIGHT AND TUESDAY...Mostly cloudy. Lows in the mid 50s.
-Highs in the mid 60s.
+.MONDAY NIGHT...Partly cloudy in the evening, then becoming
+mostly cloudy. Lows in the mid 50s. West winds around 5 mph,
+becoming north after midnight.
+.TUESDAY...Mostly cloudy in the morning, then becoming partly
+sunny. Highs in the mid 60s.
 .TUESDAY NIGHT...Mostly cloudy. A chance of showers after
 midnight. Lows in the lower 40s. Chance of rain 30 percent.
 .WEDNESDAY...Showers likely. Breezy with highs in the lower 60s.
@@ -355,97 +374,94 @@ Chance of rain 70 percent.
 with lows in the lower 50s. Chance of rain 70 percent.
 .THANKSGIVING DAY AND THURSDAY NIGHT...Mostly cloudy. Highs in
 the mid 60s. Lows in the mid 40s.
-.FRIDAY...Mostly sunny. Highs in the mid 60s.
+.FRIDAY AND FRIDAY NIGHT...Partly cloudy. Highs in the mid 60s.
+Lows in the mid 40s.
+.SATURDAY...Mostly sunny. A chance of showers in the afternoon.
+Highs in the mid 60s. Chance of rain 30 percent.
 
 $$
 
-SCZ058-220745-
+SCZ058-221130-
 Central Horry-
 Including the cities of Conway, Longs, and Bucksport
-139 PM EST Sat Nov 21 2026
+530 PM EST Sat Nov 21 2026
 
-.THIS AFTERNOON...Showers likely with a slight chance of
-thunderstorms. Near steady temperature in the mid 60s. Northeast
-winds 10 to 15 mph. Chance of rain 70 percent.
-.TONIGHT...Showers with a chance of thunderstorms in the evening,
-then showers likely with a slight chance of thunderstorms after
-midnight. Near steady temperature in the lower 60s. Northeast
-winds 5 to 10 mph with gusts up to 20 mph. Chance of rain
-90 percent.
-.SUNDAY...Mostly cloudy with a chance of showers with a slight
-chance of thunderstorms. Highs in the lower 70s. North winds
-around 5 mph. Chance of rain 50 percent.
+.TONIGHT...A slight chance of thunderstorms. Showers. Near steady
+temperature in the lower 60s. Northeast winds 5 to 10 mph. Chance
+of rain 90 percent.
+.SUNDAY...Mostly cloudy with a 50 percent chance of showers.
+Highs in the lower 70s. North winds around 5 mph.
 .SUNDAY NIGHT...Partly cloudy. A chance of showers in the
-evening. Lows in the mid 50s. Northwest winds around 5 mph in the
-evening, becoming light and variable. Chance of rain 30 percent.
-.MONDAY...Partly sunny. Highs in the mid 70s. Northwest winds
-around 5 mph.
-.MONDAY NIGHT AND TUESDAY...Mostly cloudy. Lows in the lower 50s.
-Highs in the mid 60s.
+evening. Patchy fog. Lows in the mid 50s. Northwest winds around
+5 mph in the evening, becoming light and variable. Chance of rain
+30 percent.
+.MONDAY...Patchy fog in the morning. Partly sunny. Highs in the
+mid 70s. Northwest winds around 5 mph.
+.MONDAY NIGHT...Mostly cloudy. Lows in the lower 50s. Light and
+variable winds, becoming north around 5 mph after midnight.
+.TUESDAY...Mostly cloudy in the morning, then becoming partly
+sunny. Highs in the mid 60s.
 .TUESDAY NIGHT...Mostly cloudy. Lows in the lower 40s.
 .WEDNESDAY AND WEDNESDAY NIGHT...Showers likely. Highs in the
 lower 60s. Lows in the upper 40s. Chance of rain 70 percent.
 .THANKSGIVING DAY AND THURSDAY NIGHT...Mostly cloudy. Highs in
 the mid 60s. Lows in the lower 40s.
-.FRIDAY...Mostly sunny. Highs in the mid 60s.
+.FRIDAY AND FRIDAY NIGHT...Partly cloudy. Highs in the mid 60s.
+Lows in the lower 40s.
+.SATURDAY...Mostly sunny. A chance of showers in the afternoon.
+Highs in the mid 60s. Chance of rain 30 percent.
 
 $$
 
-SCZ059-220745-
+SCZ059-221130-
 Northern Horry-
 Including the cities of Loris, Green Sea, and Aynor
-139 PM EST Sat Nov 21 2026
+530 PM EST Sat Nov 21 2026
 
-.THIS AFTERNOON...Showers likely. Near steady temperature in the
-mid 60s. Northeast winds 5 to 10 mph with gusts up to 20 mph.
-Chance of rain 70 percent.
-.TONIGHT...A slight chance of thunderstorms. Showers. Near steady
-temperature in the lower 60s. Northeast winds 5 to 10 mph. Chance
-of rain 90 percent.
-.SUNDAY...A slight chance of thunderstorms in the morning. Mostly
-cloudy with a chance of showers. Highs in the lower 70s. North
-winds around 5 mph. Chance of rain 50 percent.
+.TONIGHT...Showers with a slight chance of thunderstorms. Near
+steady temperature in the lower 60s. Northeast winds 5 to 10 mph.
+Chance of rain 90 percent.
+.SUNDAY...Mostly cloudy with a 50 percent chance of showers.
+Highs in the lower 70s. North winds around 5 mph.
 .SUNDAY NIGHT...Partly cloudy. A chance of showers in the
-evening. Lows in the mid 50s. Northwest winds around 5 mph in the
-evening, becoming light and variable. Chance of rain 30 percent.
-.MONDAY...Mostly sunny. Highs in the mid 70s. Northwest winds
-around 5 mph.
-.MONDAY NIGHT AND TUESDAY...Mostly cloudy. Lows in the lower 50s.
-Highs in the mid 60s.
+evening. Patchy fog. Lows in the mid 50s. Northwest winds around
+5 mph in the evening, becoming light and variable. Chance of rain
+30 percent.
+.MONDAY...Patchy fog in the morning. Mostly sunny. Highs in the
+mid 70s. Northwest winds around 5 mph.
+.MONDAY NIGHT...Mostly cloudy. Lows in the lower 50s. Light and
+variable winds, becoming north 5 to 10 mph after midnight.
+.TUESDAY...Mostly cloudy. Highs in the mid 60s.
 .TUESDAY NIGHT...Mostly cloudy. Lows in the lower 40s.
 .WEDNESDAY AND WEDNESDAY NIGHT...Showers likely. Highs in the
 lower 60s. Lows in the upper 40s. Chance of rain 70 percent.
 .THANKSGIVING DAY...Mostly cloudy in the morning, then becoming
 partly sunny. Highs in the mid 60s.
-.THURSDAY NIGHT AND FRIDAY...Partly cloudy. Lows in the lower
-40s. Highs in the mid 60s.
+.THURSDAY NIGHT THROUGH SATURDAY...Partly cloudy. Lows in the
+lower 40s. Highs in the mid 60s.
 
 $$
 
-SCZ056-220745-
+SCZ056-221130-
 Coastal Georgetown-
 Including the cities of Georgetown and Murrells Inlet
-139 PM EST Sat Nov 21 2026
+530 PM EST Sat Nov 21 2026
 
-...HIGH SURF ADVISORY IN EFFECT UNTIL 4 AM EST SUNDAY...
-
-.THIS AFTERNOON...Showers with a chance of thunderstorms. Near
-steady temperature in the lower 60s. Northeast winds 15 to 20 mph
-with gusts up to 30 mph. Chance of rain 90 percent.
 .TONIGHT...A chance of thunderstorms. Showers. Near steady
-temperature in the lower 60s. Northeast winds 10 to 15 mph with
-gusts up to 30 mph. Chance of rain 90 percent.
+temperature in the mid 60s. Northeast winds 10 to 15 mph. Gusts
+up to 30 mph this evening. Chance of rain 90 percent.
 .SUNDAY...Mostly cloudy in the morning, then becoming partly
-sunny. A chance of showers. A chance of thunderstorms, mainly in
-the morning. Highs in the upper 60s. North winds 5 to 10 mph.
-Chance of rain 50 percent.
+sunny. A 50 percent chance of showers. Highs in the upper 60s.
+Northeast winds 5 to 10 mph.
 .SUNDAY NIGHT...Partly cloudy. A slight chance of showers in the
-evening. Lows in the mid 50s. West winds around 5 mph. Chance of
-rain 20 percent.
-.MONDAY...Mostly sunny. Highs in the lower 70s. Northwest winds
-around 5 mph.
-.MONDAY NIGHT AND TUESDAY...Mostly cloudy. Lows in the mid 50s.
-Highs in the mid 60s.
+evening. Patchy fog. Lows in the mid 50s. West winds around
+5 mph. Chance of rain 20 percent.
+.MONDAY...Patchy fog in the morning. Mostly sunny. Highs in the
+lower 70s. Northwest winds around 5 mph.
+.MONDAY NIGHT...Partly cloudy in the evening, then becoming
+mostly cloudy. Lows in the mid 50s. Light and variable winds,
+becoming north 5 to 10 mph after midnight.
+.TUESDAY...Mostly cloudy. Highs in the mid 60s.
 .TUESDAY NIGHT...Mostly cloudy. A chance of showers after
 midnight. Lows in the mid 40s. Chance of rain 40 percent.
 .WEDNESDAY...Showers likely. Breezy with highs in the lower 60s.
@@ -454,63 +470,67 @@ Chance of rain 70 percent.
 with lows in the upper 40s. Chance of rain 70 percent.
 .THANKSGIVING DAY AND THURSDAY NIGHT...Mostly cloudy. Highs in
 the mid 60s. Lows in the mid 40s.
-.FRIDAY...Mostly sunny. Highs in the lower 60s.
+.FRIDAY AND FRIDAY NIGHT...Partly cloudy. Highs in the lower 60s.
+Lows in the mid 40s.
+.SATURDAY...Mostly sunny. A chance of showers in the afternoon.
+Highs in the mid 60s. Chance of rain 30 percent.
 
 $$
 
-SCZ055-220745-
+SCZ055-221130-
 Inland Georgetown-
 Including the city of Andrews
-139 PM EST Sat Nov 21 2026
+530 PM EST Sat Nov 21 2026
 
-.THIS AFTERNOON...Showers with a slight chance of thunderstorms.
-Near steady temperature in the lower 60s. Northeast winds 10 to
-15 mph. Chance of rain 90 percent.
 .TONIGHT...A chance of thunderstorms. Showers. Near steady
-temperature in the lower 60s. Northeast winds 5 to 10 mph with
-gusts up to 25 mph. Chance of rain 90 percent.
-.SUNDAY...Mostly cloudy with a chance of showers. A chance of
-thunderstorms, mainly in the morning. Highs around 70. North
-winds around 5 mph. Chance of rain 50 percent.
+temperature in the lower 60s. Northeast winds 5 to 10 mph. Gusts
+up to 25 mph this evening. Chance of rain 90 percent.
+.SUNDAY...Mostly cloudy with a 40 percent chance of showers.
+Highs around 70. North winds around 5 mph.
 .SUNDAY NIGHT...Partly cloudy. A slight chance of showers in the
-evening. Lows in the mid 50s. Northwest winds around 5 mph in the
-evening, becoming light and variable. Chance of rain 20 percent.
-.MONDAY...Mostly sunny. Highs in the mid 70s. Northwest winds
-around 5 mph.
-.MONDAY NIGHT AND TUESDAY...Mostly cloudy. Lows in the mid 50s.
-Highs in the upper 60s.
+evening. Patchy fog. Lows in the mid 50s. Northwest winds around
+5 mph in the evening, becoming light and variable. Chance of rain
+20 percent.
+.MONDAY...Patchy fog in the morning. Mostly sunny. Highs in the
+mid 70s. Northwest winds around 5 mph.
+.MONDAY NIGHT...Mostly cloudy. Lows in the mid 50s. Light and
+variable winds, becoming north around 5 mph after midnight.
+.TUESDAY...Mostly cloudy in the morning, then becoming partly
+sunny. Highs in the upper 60s.
 .TUESDAY NIGHT...Mostly cloudy. A chance of showers after
 midnight. Lows in the lower 40s. Chance of rain 30 percent.
 .WEDNESDAY AND WEDNESDAY NIGHT...Showers likely. Highs in the
 lower 60s. Lows in the upper 40s. Chance of rain 70 percent.
 .THANKSGIVING DAY AND THURSDAY NIGHT...Mostly cloudy. Highs in
 the mid 60s. Lows in the lower 40s.
-.FRIDAY...Mostly sunny. Highs in the mid 60s.
+.FRIDAY AND FRIDAY NIGHT...Partly cloudy. Highs in the mid 60s.
+Lows in the lower 40s.
+.SATURDAY...Mostly sunny. A chance of showers in the afternoon.
+Highs in the mid 60s. Chance of rain 30 percent.
 
 $$
 
-SCZ024-220745-
+SCZ024-221130-
 Dillon-
 Including the city of Dillon
-139 PM EST Sat Nov 21 2026
+530 PM EST Sat Nov 21 2026
 
-.THIS AFTERNOON...Mostly cloudy with a 50 percent chance of
-showers. Near steady temperature in the mid 60s. Northeast winds
-10 to 15 mph.
-.TONIGHT...A slight chance of thunderstorms. Showers. Near steady
+.TONIGHT...Showers this evening, then showers likely with a
+slight chance of thunderstorms after midnight. Near steady
 temperature in the lower 60s. Northeast winds 5 to 10 mph with
 gusts up to 20 mph. Chance of rain 80 percent.
-.SUNDAY...A slight chance of thunderstorms in the morning. Mostly
-cloudy with a chance of showers. Highs around 70. North winds
-5 to 10 mph. Chance of rain 50 percent.
+.SUNDAY...Mostly cloudy with a 50 percent chance of showers.
+Highs around 70. North winds 5 to 10 mph.
 .SUNDAY NIGHT...Mostly cloudy with a chance of showers in the
-evening, then partly cloudy after midnight. Lows in the mid 50s.
-Northwest winds around 5 mph in the evening, becoming light and
-variable. Chance of rain 30 percent.
-.MONDAY...Mostly sunny. Highs in the mid 70s. Northwest winds
-around 5 mph.
-.MONDAY NIGHT AND TUESDAY...Mostly cloudy. Lows in the lower 50s.
-Highs in the lower 60s.
+evening, then partly cloudy after midnight. Patchy fog. Lows in
+the mid 50s. Northwest winds around 5 mph in the evening,
+becoming light and variable. Chance of rain 30 percent.
+.MONDAY...Patchy fog in the morning. Mostly sunny. Highs in the
+mid 70s. Northwest winds around 5 mph.
+.MONDAY NIGHT...Partly cloudy in the evening, then becoming
+mostly cloudy. Lows in the lower 50s. North winds 5 to 10 mph.
+.TUESDAY...Mostly cloudy in the morning, then becoming partly
+sunny. Highs in the lower 60s.
 .TUESDAY NIGHT...Mostly cloudy. Lows around 40.
 .WEDNESDAY AND WEDNESDAY NIGHT...Showers likely. Highs in the
 upper 50s. Lows in the upper 40s. Chance of rain 70 percent.
@@ -520,30 +540,33 @@ morning, then partly sunny in the afternoon. Highs in the lower
 .THURSDAY NIGHT...Mostly cloudy in the evening, then becoming
 partly cloudy. Lows in the lower 40s.
 .FRIDAY...Partly sunny. Highs in the lower 60s.
+.FRIDAY NIGHT AND SATURDAY...Partly cloudy. Lows in the upper
+30s. Highs in the mid 60s.
 
 $$
 
-SCZ033-220745-
+SCZ033-221130-
 Marion-
 Including the cities of Marion and Mullins
-139 PM EST Sat Nov 21 2026
+530 PM EST Sat Nov 21 2026
 
-.THIS AFTERNOON...Showers likely. Near steady temperature in the
-lower 60s. Northeast winds 5 to 10 mph with gusts up to 20 mph.
-Chance of rain 70 percent.
-.TONIGHT...A chance of thunderstorms. Showers. Near steady
-temperature in the lower 60s. Northeast winds 5 to 10 mph with
-gusts up to 20 mph. Chance of rain 90 percent.
-.SUNDAY...Mostly cloudy with a chance of showers with a slight
-chance of thunderstorms. Highs in the lower 70s. North winds
-around 5 mph. Chance of rain 50 percent.
+.TONIGHT...A slight chance of thunderstorms. Showers. Near steady
+temperature in the lower 60s. Northeast winds 5 to 10 mph. Chance
+of rain 90 percent.
+.SUNDAY...Mostly cloudy with a 50 percent chance of showers.
+Highs in the lower 70s. North winds around 5 mph.
 .SUNDAY NIGHT...Partly cloudy. A chance of showers in the
-evening. Lows in the mid 50s. Northwest winds around 5 mph in the
-evening, becoming light and variable. Chance of rain 30 percent.
-.MONDAY...Mostly sunny. Highs in the mid 70s. Light and variable
-winds, becoming northwest around 5 mph in the afternoon.
-.MONDAY NIGHT AND TUESDAY...Mostly cloudy. Lows in the lower 50s.
-Highs in the mid 60s.
+evening. Patchy fog. Lows in the mid 50s. Northwest winds around
+5 mph in the evening, becoming light and variable. Chance of rain
+30 percent.
+.MONDAY...Patchy fog in the morning. Mostly sunny. Highs in the
+mid 70s. Light and variable winds, becoming northwest around
+5 mph in the afternoon.
+.MONDAY NIGHT...Partly cloudy in the evening, then becoming
+mostly cloudy. Lows in the lower 50s. East winds around 5 mph,
+becoming north after midnight.
+.TUESDAY...Mostly cloudy in the morning, then becoming partly
+sunny. Highs in the mid 60s.
 .TUESDAY NIGHT...Mostly cloudy. Lows around 40.
 .WEDNESDAY AND WEDNESDAY NIGHT...Showers likely. Highs around 60.
 Lows in the upper 40s. Chance of rain 70 percent.
@@ -552,30 +575,32 @@ partly sunny. Highs in the mid 60s.
 .THURSDAY NIGHT...Mostly cloudy in the evening, then becoming
 partly cloudy. Lows in the lower 40s.
 .FRIDAY...Partly sunny. Highs in the mid 60s.
+.FRIDAY NIGHT AND SATURDAY...Partly cloudy. Lows around 40. Highs
+in the mid 60s.
 
 $$
 
-SCZ032-220745-
+SCZ032-221130-
 Florence-
 Including the city of Florence
-139 PM EST Sat Nov 21 2026
+530 PM EST Sat Nov 21 2026
 
-.THIS AFTERNOON...Showers likely. Near steady temperature in the
-lower 60s. Northeast winds around 10 mph with gusts up to 20 mph.
-Chance of rain 70 percent.
 .TONIGHT...A slight chance of thunderstorms. Showers. Near steady
-temperature in the lower 60s. Northeast winds 5 to 10 mph with
-gusts up to 20 mph. Chance of rain 90 percent.
-.SUNDAY...Mostly cloudy with a chance of showers with a slight
-chance of thunderstorms. Highs around 70. North winds around
-5 mph. Chance of rain 50 percent.
+temperature in the lower 60s. Northeast winds 5 to 10 mph. Chance
+of rain 90 percent.
+.SUNDAY...Mostly cloudy with a 50 percent chance of showers.
+Highs around 70. North winds 5 to 10 mph.
 .SUNDAY NIGHT...Partly cloudy. A chance of showers in the
-evening. Lows in the mid 50s. Northwest winds around 5 mph in the
-evening, becoming light and variable. Chance of rain 30 percent.
-.MONDAY...Mostly sunny. Highs in the mid 70s. Northwest winds
-around 5 mph.
-.MONDAY NIGHT AND TUESDAY...Mostly cloudy. Lows in the lower 50s.
-Highs in the mid 60s.
+evening. Patchy fog. Lows in the mid 50s. Northwest winds around
+5 mph in the evening, becoming light and variable. Chance of rain
+30 percent.
+.MONDAY...Patchy fog in the morning. Mostly sunny. Highs in the
+mid 70s. Northwest winds around 5 mph.
+.MONDAY NIGHT...Partly cloudy in the evening, then becoming
+mostly cloudy. Lows in the lower 50s. East winds around 5 mph,
+becoming north after midnight.
+.TUESDAY...Mostly cloudy in the morning, then becoming partly
+sunny. Highs in the mid 60s.
 .TUESDAY NIGHT...Mostly cloudy. Lows in the upper 30s.
 .WEDNESDAY AND WEDNESDAY NIGHT...Showers likely. Highs in the
 upper 50s. Lows in the mid 40s. Chance of rain 70 percent.
@@ -583,62 +608,66 @@ upper 50s. Lows in the mid 40s. Chance of rain 70 percent.
 partly sunny. Highs in the mid 60s.
 .THURSDAY NIGHT...Partly cloudy. Lows in the lower 40s.
 .FRIDAY...Partly sunny. Highs in the mid 60s.
+.FRIDAY NIGHT...Partly cloudy. Lows in the upper 30s.
+.SATURDAY...Mostly sunny with a 30 percent chance of showers.
+Highs in the mid 60s.
 
 $$
 
-SCZ039-220745-
+SCZ039-221130-
 Williamsburg-
 Including the city of Kingstree
-139 PM EST Sat Nov 21 2026
+530 PM EST Sat Nov 21 2026
 
-.THIS AFTERNOON...Showers with a slight chance of thunderstorms.
-Near steady temperature in the lower 60s. Northeast winds 5 to
-10 mph with gusts up to 20 mph. Chance of rain 90 percent.
-.TONIGHT...A chance of thunderstorms. Showers. Near steady
+.TONIGHT...A slight chance of thunderstorms. Showers. Near steady
 temperature in the lower 60s. Northeast winds 5 to 10 mph. Chance
 of rain 90 percent.
-.SUNDAY...Mostly cloudy with a chance of showers. A chance of
-thunderstorms, mainly in the morning. Highs in the upper 60s.
-North winds around 5 mph. Chance of rain 40 percent.
+.SUNDAY...Mostly cloudy with a 40 percent chance of showers.
+Highs in the upper 60s. North winds around 5 mph.
 .SUNDAY NIGHT...Partly cloudy. A slight chance of showers in the
-evening. Lows in the mid 50s. Light and variable winds. Chance of
-rain 20 percent.
-.MONDAY...Mostly sunny. Highs in the mid 70s. Light and variable
-winds, becoming northwest around 5 mph in the afternoon.
-.MONDAY NIGHT AND TUESDAY...Mostly cloudy. Lows in the lower 50s.
-Highs in the mid 60s.
+evening. Patchy fog. Lows in the mid 50s. Light and variable
+winds. Chance of rain 20 percent.
+.MONDAY...Patchy fog in the morning. Mostly sunny. Highs in the
+mid 70s. Light and variable winds, becoming northwest around
+5 mph in the afternoon.
+.MONDAY NIGHT...Mostly cloudy. Lows in the lower 50s. Light and
+variable winds, becoming north around 5 mph after midnight.
+.TUESDAY...Mostly cloudy in the morning, then becoming partly
+sunny. Highs in the mid 60s.
 .TUESDAY NIGHT...Mostly cloudy. Lows around 40.
 .WEDNESDAY AND WEDNESDAY NIGHT...Showers likely. Highs around 60.
 Lows in the mid 40s. Chance of rain 70 percent.
 .THANKSGIVING DAY...Mostly cloudy in the morning, then becoming
 partly sunny. Highs in the mid 60s.
-.THURSDAY NIGHT AND FRIDAY...Partly cloudy. Lows in the lower
-40s. Highs in the mid 60s.
+.THURSDAY NIGHT THROUGH FRIDAY NIGHT...Partly cloudy. Lows in the
+lower 40s. Highs in the mid 60s.
+.SATURDAY...Mostly sunny. A chance of showers in the morning.
+Highs in the mid 60s. Chance of rain 30 percent.
 
 $$
 
-SCZ017-220745-
+SCZ017-221130-
 Marlboro-
 Including the cities of Bennettsville and McColl
-139 PM EST Sat Nov 21 2026
+530 PM EST Sat Nov 21 2026
 
-.THIS AFTERNOON...Mostly cloudy with a 50 percent chance of
-showers. Near steady temperature in the lower 60s. Northeast
-winds 10 to 15 mph.
-.TONIGHT...A slight chance of thunderstorms. Showers. Near steady
-temperature around 60. Northeast winds 5 to 10 mph with gusts up
-to 20 mph. Chance of rain 80 percent.
-.SUNDAY...A slight chance of thunderstorms in the morning. Mostly
-cloudy with a chance of showers. Highs in the upper 60s. North
-winds 5 to 10 mph. Chance of rain 50 percent.
+.TONIGHT...Showers likely this evening, then showers with a
+slight chance of thunderstorms after midnight. Near steady
+temperature around 60. Northeast winds around 10 mph with gusts
+up to 20 mph. Chance of rain 80 percent.
+.SUNDAY...Mostly cloudy. Showers likely, mainly in the morning.
+Highs in the upper 60s. North winds 5 to 10 mph. Chance of rain
+60 percent.
 .SUNDAY NIGHT...Mostly cloudy with a slight chance of showers in
-the evening, then partly cloudy after midnight. Lows in the lower
-50s. North winds around 5 mph in the evening, becoming light and
-variable. Chance of rain 20 percent.
-.MONDAY...Mostly sunny. Highs in the mid 70s. Northwest winds
-around 5 mph.
-.MONDAY NIGHT AND TUESDAY...Mostly cloudy. Lows around 50. Highs
-in the lower 60s.
+the evening, then partly cloudy after midnight. Patchy fog. Lows
+in the lower 50s. North winds around 5 mph in the evening,
+becoming light and variable. Chance of rain 20 percent.
+.MONDAY...Patchy fog in the morning. Mostly sunny. Highs in the
+mid 70s. Northwest winds around 5 mph.
+.MONDAY NIGHT...Mostly cloudy. Lows around 50. North winds 5 to
+10 mph.
+.TUESDAY...Mostly cloudy in the morning, then becoming partly
+sunny. Highs in the lower 60s.
 .TUESDAY NIGHT...Partly cloudy in the evening, then becoming
 mostly cloudy. Lows in the upper 30s.
 .WEDNESDAY AND WEDNESDAY NIGHT...Showers likely. Highs in the mid
@@ -647,41 +676,41 @@ mostly cloudy. Lows in the upper 30s.
 morning, then partly sunny in the afternoon. Highs in the lower
 60s. Chance of rain 40 percent.
 .THURSDAY NIGHT...Mostly cloudy. Lows around 40.
-.FRIDAY...Mostly sunny. Highs in the lower 60s.
+.FRIDAY THROUGH SATURDAY...Partly cloudy. Highs in the lower 60s.
+Lows in the upper 30s.
 
 $$
 
-SCZ023-220745-
+SCZ023-221130-
 Darlington-
 Including the cities of Hartsville, Darlington,
 and North Hartsville
-139 PM EST Sat Nov 21 2026
+530 PM EST Sat Nov 21 2026
 
-.THIS AFTERNOON...Showers likely. Near steady temperature in the
-lower 60s. Northeast winds around 10 mph with gusts up to 20 mph.
-Chance of rain 70 percent.
-.TONIGHT...Showers with a slight chance of thunderstorms in the
-evening, then showers likely with a chance of thunderstorms after
-midnight. Near steady temperature in the lower 60s. Northeast
-winds 5 to 10 mph with gusts up to 20 mph. Chance of rain
-90 percent.
-.SUNDAY...Mostly cloudy with a chance of showers. A chance of
-thunderstorms, mainly in the morning. Highs in the upper 60s.
-North winds 5 to 10 mph. Chance of rain 50 percent.
+.TONIGHT...Showers. A slight chance of thunderstorms after
+midnight. Near steady temperature around 60. Northeast winds
+around 10 mph. Chance of rain 80 percent.
+.SUNDAY...Mostly cloudy with a 50 percent chance of showers.
+Highs in the upper 60s. North winds 5 to 10 mph.
 .SUNDAY NIGHT...Partly cloudy. A slight chance of showers in the
-evening. Lows in the mid 50s. North winds around 5 mph in the
-evening, becoming light and variable. Chance of rain 20 percent.
-.MONDAY...Mostly sunny. Highs in the mid 70s. Northwest winds
-around 5 mph.
-.MONDAY NIGHT AND TUESDAY...Mostly cloudy. Lows in the lower 50s.
-Highs in the lower 60s.
+evening. Patchy fog. Lows in the mid 50s. North winds around
+5 mph in the evening, becoming light and variable. Chance of rain
+20 percent.
+.MONDAY...Patchy fog in the morning. Mostly sunny. Highs in the
+mid 70s. Northwest winds around 5 mph.
+.MONDAY NIGHT...Mostly cloudy. Lows in the lower 50s. North winds
+5 to 10 mph.
+.TUESDAY...Mostly cloudy in the morning, then becoming partly
+sunny. Highs in the lower 60s.
 .TUESDAY NIGHT...Mostly cloudy. Lows around 40.
 .WEDNESDAY AND WEDNESDAY NIGHT...Showers likely. Highs in the
 upper 50s. Lows in the mid 40s. Chance of rain 70 percent.
 .THANKSGIVING DAY...Mostly cloudy in the morning, then becoming
 partly sunny. Highs in the lower 60s.
-.THURSDAY NIGHT AND FRIDAY...Partly cloudy. Lows in the lower
-40s. Highs in the lower 60s.
+.THURSDAY NIGHT THROUGH FRIDAY NIGHT...Partly cloudy. Lows in the
+lower 40s. Highs in the lower 60s.
+.SATURDAY...Partly sunny with a 30 percent chance of showers.
+Highs in the lower 60s.
 
 $$
 
