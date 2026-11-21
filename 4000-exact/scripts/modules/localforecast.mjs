@@ -39,10 +39,10 @@ class LocalForecast extends WeatherDisplay {
 		if (!conditions.length) {
 			this.screenTexts = [
 				// FRESH FORECAST 2026-11-18 ~4:19 AM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-21T11:37:43+00:00 forecast through Wednesday, verified this run). Written in the screenshot format (generator
+				// generated 2026-11-21T13:52:29+00:00 forecast through Wednesday, verified this run). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
-				'TODAY... Rain showers likely after 9am. Cloudy, with a high near 71. Northeast wind 9 to 14 mph, with gusts as high as 25 mph. Chance of precipitation is 70%. New rainfall amounts between a tenth and quarter of an inch possible. Precip chance 72%.',
-				'TONIGHT... Rain showers before 7pm, then showers and thunderstorms. Cloudy, with a low around 60. Northeast wind 6 to 13 mph, with gusts as high as 20 mph. Chance of precipitation is 90%. New rainfall amounts between three quarters and one inch possible. Precip chance 93%.',
+				'TODAY... Rain showers likely after 9am. Cloudy, with a high near 71. Northeast wind 9 to 13 mph, with gusts as high as 21 mph. Chance of precipitation is 70%. New rainfall amounts between a tenth and quarter of an inch possible. Precip chance 72%.',
+				'TONIGHT... Rain showers before 7pm, then showers and thunderstorms. Cloudy, with a low around 60. Northeast wind 6 to 9 mph, with gusts as high as 17 mph. Chance of precipitation is 90%. New rainfall amounts between three quarters and one inch possible. Precip chance 93%.',
 				'SUNDAY... A chance of showers and thunderstorms before 11am, then a slight chance of showers and thunderstorms between 1pm and 5pm, then a chance of showers and thunderstorms. Mostly cloudy, with a high near 73. West wind 2 to 7 mph. Chance of precipitation is 40%. New rainfall amounts between a quarter and half of an inch possible. Precip chance 43%.',
 				'SUNDAY NIGHT... A slight chance of showers and thunderstorms before 7pm. Partly cloudy, with a low around 56. West wind around 2 mph. Chance of precipitation is 20%. Precip chance 20%.',
 				'MONDAY... Mostly sunny, with a high near 75. Northwest wind 1 to 5 mph. Precip chance 3%.',
