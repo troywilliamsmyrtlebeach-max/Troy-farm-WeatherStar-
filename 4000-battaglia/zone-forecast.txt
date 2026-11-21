@@ -1,26 +1,26 @@
-Expires:202611220045;;684003
-FPUS52 KILM 211133
+Expires:202611220315;;684003
+FPUS52 KILM 211412
 ZFPILM
 
 Zone Forecast Product
 National Weather Service Wilmington NC
-633 AM EST Sat Nov 21 2026
+912 AM EST Sat Nov 21 2026
 
-NCZ106-220045-
+NCZ106-220315-
 Coastal Pender-
 Including the city of Surf City
-633 AM EST Sat Nov 21 2026
+912 AM EST Sat Nov 21 2026
 
 ...HIGH SURF ADVISORY IN EFFECT FROM 1 PM THIS AFTERNOON TO 4 AM
 EST SUNDAY...
 
-.TODAY...Cloudy. A slight chance of showers this morning, then a
-chance of showers this afternoon. Highs around 70. Northeast
-winds 15 to 20 mph with gusts up to 30 mph. Chance of rain
-40 percent.
-.TONIGHT...Showers with a slight chance of thunderstorms. Near
-steady temperature in the lower 60s. East winds 15 to 20 mph with
-gusts up to 30 mph. Chance of rain 90 percent.
+.REST OF TODAY...Cloudy. A slight chance of showers late this
+morning, then a chance of showers this afternoon. Highs in the
+lower 70s. Northeast winds 15 to 20 mph with gusts up to 30 mph.
+Chance of rain 40 percent.
+.TONIGHT...Showers with a slight chance of thunderstorms. Lows
+around 60. East winds 10 to 15 mph with gusts up to 25 mph.
+Chance of rain 90 percent.
 .SUNDAY...Mostly cloudy with showers likely in the morning, then
 partly sunny in the afternoon. Highs in the lower 70s. Southeast
 winds 5 to 10 mph, becoming southwest in the afternoon. Chance of
@@ -43,18 +43,17 @@ morning. Highs in the mid 60s. Chance of rain 50 percent.
 
 $$
 
-NCZ105-220045-
+NCZ105-220315-
 Inland Pender-
 Including the city of Burgaw
-633 AM EST Sat Nov 21 2026
+912 AM EST Sat Nov 21 2026
 
-.TODAY...Cloudy. A chance of showers this afternoon. Highs in the
-lower 70s. Northeast winds 5 to 10 mph with gusts up to 25 mph.
-Chance of rain 50 percent.
+.REST OF TODAY...Cloudy. A chance of showers this afternoon.
+Highs in the lower 70s. Northeast winds around 10 mph with gusts
+up to 25 mph. Chance of rain 50 percent.
 .TONIGHT...Showers. A slight chance of thunderstorms after
-midnight. Near steady temperature in the lower 60s. Northeast
-winds 5 to 10 mph with gusts up to 20 mph. Chance of rain
-90 percent.
+midnight. Lows around 60. Northeast winds 5 to 10 mph with gusts
+up to 20 mph. Chance of rain 90 percent.
 .SUNDAY...Mostly cloudy with showers likely in the morning, then
 partly sunny with a slight chance of showers and thunderstorms in
 the afternoon. Highs in the lower 70s. East winds around 5 mph,
@@ -77,20 +76,21 @@ morning. Highs in the mid 60s. Chance of rain 50 percent.
 
 $$
 
-NCZ108-220045-
+NCZ108-220315-
 Coastal New Hanover-
 Including the cities of Masonboro, Myrtle Grove, Ogden,
 Carolina Beach, and Seagate
-633 AM EST Sat Nov 21 2026
+912 AM EST Sat Nov 21 2026
 
 ...HIGH SURF ADVISORY IN EFFECT FROM 1 PM THIS AFTERNOON TO 4 AM
 EST SUNDAY...
 
-.TODAY...Cloudy with a 50 percent chance of showers. Highs in the
-upper 60s. Northeast winds 15 to 20 mph with gusts up to 30 mph.
+.REST OF TODAY...Cloudy with a 50 percent chance of showers. Near
+steady temperature in the upper 60s. Northeast winds 15 to 20 mph
+with gusts up to 30 mph.
 .TONIGHT...Showers with a slight chance of thunderstorms. Near
-steady temperature in the mid 60s. East winds 15 to 20 mph.
-Chance of rain 90 percent.
+steady temperature in the mid 60s. East winds 10 to 15 mph with
+gusts up to 25 mph. Chance of rain 90 percent.
 .SUNDAY...Mostly cloudy with showers likely with a slight chance
 of thunderstorms in the morning, then partly sunny in the
 afternoon. Highs in the lower 70s. Southeast winds 5 to 10 mph,
@@ -115,18 +115,18 @@ morning. Highs in the mid 60s. Chance of rain 50 percent.
 
 $$
 
-NCZ107-220045-
+NCZ107-220315-
 Inland New Hanover-
 Including the city of Wilmington
-633 AM EST Sat Nov 21 2026
+912 AM EST Sat Nov 21 2026
 
-.TODAY...Cloudy. A slight chance of showers this morning, then a
-chance of showers this afternoon. Highs in the lower 70s.
-Northeast winds 10 to 15 mph with gusts up to 30 mph. Chance of
-rain 50 percent.
+.REST OF TODAY...Cloudy. A slight chance of showers late this
+morning, then a chance of showers this afternoon. Highs in the
+lower 70s. Northeast winds 10 to 15 mph with gusts up to 25 mph.
+Chance of rain 50 percent.
 .TONIGHT...Showers with a slight chance of thunderstorms. Near
-steady temperature in the lower 60s. Northeast winds 10 to 15 mph
-with gusts up to 25 mph. Chance of rain 90 percent.
+steady temperature in the mid 60s. Northeast winds 5 to 10 mph
+with gusts up to 20 mph. Chance of rain 90 percent.
 .SUNDAY...Mostly cloudy in the morning, then becoming partly
 sunny. A slight chance of thunderstorms. Showers likely, mainly
 in the morning. Highs in the lower 70s. Southeast winds 5 to
@@ -149,18 +149,19 @@ morning. Highs in the mid 60s. Chance of rain 50 percent.
 
 $$
 
-NCZ110-220045-
+NCZ110-220315-
 Coastal Brunswick-
 Including the cities of Oak Island, Long Beach, Southport,
 and Sunset Beach
-633 AM EST Sat Nov 21 2026
+912 AM EST Sat Nov 21 2026
 
-.TODAY...Cloudy. A chance of showers this morning, then showers
-likely this afternoon. Highs around 70. Northeast winds 15 to
-20 mph with gusts up to 30 mph. Chance of rain 70 percent.
+.REST OF TODAY...Cloudy. A chance of showers late this morning,
+then showers likely this afternoon. Highs around 70. Northeast
+winds 15 to 20 mph with gusts up to 30 mph. Chance of rain
+70 percent.
 .TONIGHT...Showers with a slight chance of thunderstorms. Near
-steady temperature in the mid 60s. East winds 15 to 20 mph.
-Chance of rain 90 percent.
+steady temperature in the mid 60s. East winds 10 to 15 mph with
+gusts up to 25 mph. Chance of rain 90 percent.
 .SUNDAY...Mostly cloudy in the morning, then becoming partly
 sunny. A slight chance of thunderstorms. A chance of showers,
 mainly in the morning. Highs in the lower 70s. Southwest winds
@@ -185,14 +186,15 @@ with lows in the upper 40s. Chance of rain 70 percent.
 
 $$
 
-NCZ109-220045-
+NCZ109-220315-
 Inland Brunswick-
 Including the cities of Boiling Spring Lakes, Leland,
 and Shallotte
-633 AM EST Sat Nov 21 2026
+912 AM EST Sat Nov 21 2026
 
-.TODAY...Cloudy with a 50 percent chance of showers. Highs in the
-lower 70s. Northeast winds 10 to 15 mph with gusts up to 25 mph.
+.REST OF TODAY...Cloudy with a 50 percent chance of showers.
+Highs in the lower 70s. Northeast winds 10 to 15 mph with gusts
+up to 25 mph.
 .TONIGHT...Showers with a slight chance of thunderstorms. Near
 steady temperature in the mid 60s. Northeast winds 5 to 10 mph.
 Chance of rain 90 percent.
@@ -216,17 +218,17 @@ lower 60s. Lows in the upper 40s. Chance of rain 70 percent.
 
 $$
 
-NCZ096-220045-
+NCZ096-220315-
 Bladen-
 Including the cities of Elizabethtown and Bladenboro
-633 AM EST Sat Nov 21 2026
+912 AM EST Sat Nov 21 2026
 
-.TODAY...Cloudy. A chance of showers this afternoon. Highs in the
-upper 60s. Northeast winds 5 to 10 mph with gusts up to 25 mph.
-Chance of rain 50 percent.
+.REST OF TODAY...Cloudy. A chance of showers this afternoon.
+Highs around 70. Northeast winds 5 to 10 mph with gusts up to
+20 mph. Chance of rain 50 percent.
 .TONIGHT...Showers. A slight chance of thunderstorms after
-midnight. Near steady temperature around 60. Northeast winds 5 to
-10 mph. Chance of rain 90 percent.
+midnight. Lows in the upper 50s. Northeast winds 5 to 10 mph.
+Chance of rain 90 percent.
 .SUNDAY...Cloudy in the morning, then becoming partly sunny. A
 chance of showers with a slight chance of thunderstorms. Highs in
 the lower 70s. Northeast winds around 5 mph, becoming west around
@@ -250,18 +252,19 @@ Highs in the lower 60s.
 
 $$
 
-NCZ099-220045-
+NCZ099-220315-
 Columbus-
 Including the cities of Whiteville, Tabor City, Chadbourn,
 and Lake Waccamaw
-633 AM EST Sat Nov 21 2026
+912 AM EST Sat Nov 21 2026
 
-.TODAY...Cloudy. A chance of showers this afternoon. Highs around
-70. Northeast winds 5 to 10 mph with gusts up to 25 mph. Chance
+.REST OF TODAY...Cloudy. A slight chance of showers late this
+morning, then a chance of showers this afternoon. Highs around
+70. Northeast winds 5 to 10 mph with gusts up to 20 mph. Chance
 of rain 50 percent.
-.TONIGHT...Showers with a slight chance of thunderstorms. Near
-steady temperature in the lower 60s. Northeast winds 5 to 10 mph.
-Chance of rain near 100 percent.
+.TONIGHT...Showers with a slight chance of thunderstorms. Lows in
+the upper 50s. Northeast winds 5 to 10 mph. Chance of rain near
+100 percent.
 .SUNDAY...Mostly cloudy in the morning, then becoming partly
 sunny. A chance of showers with a slight chance of thunderstorms.
 Highs in the lower 70s. North winds around 5 mph, becoming west
@@ -283,17 +286,17 @@ lower 60s. Lows in the mid 40s. Chance of rain 70 percent.
 
 $$
 
-NCZ087-220045-
+NCZ087-220315-
 Robeson-
 Including the city of Lumberton
-633 AM EST Sat Nov 21 2026
+912 AM EST Sat Nov 21 2026
 
-.TODAY...Cloudy. A chance of showers this afternoon. Highs in the
-upper 60s. Northeast winds 10 to 15 mph with gusts up to 30 mph.
-Chance of rain 50 percent.
+.REST OF TODAY...Cloudy. A chance of showers this afternoon.
+Highs in the upper 60s. Northeast winds 10 to 15 mph with gusts
+up to 25 mph. Chance of rain 50 percent.
 .TONIGHT...Showers. A slight chance of thunderstorms after
-midnight. Near steady temperature around 60. Northeast winds
-10 to 15 mph with gusts up to 25 mph. Chance of rain 90 percent.
+midnight. Lows in the upper 50s. Northeast winds 10 to 15 mph.
+Chance of rain 90 percent.
 .SUNDAY...Mostly cloudy with a slight chance of thunderstorms.
 Showers likely, mainly in the morning. Highs in the lower 70s.
 North winds 5 to 10 mph, becoming northwest in the afternoon.
@@ -316,20 +319,21 @@ morning. Highs in the lower 60s. Chance of rain 50 percent.
 
 $$
 
-SCZ054-220045-
+SCZ054-220315-
 Coastal Horry-
 Including the cities of Myrtle Beach, Socastee,
 North Myrtle Beach, Garden City, and Little River
-633 AM EST Sat Nov 21 2026
+912 AM EST Sat Nov 21 2026
 
 ...HIGH SURF ADVISORY IN EFFECT UNTIL 4 AM EST SUNDAY...
 
-.TODAY...A chance of showers this morning, then showers this
-afternoon. Highs in the upper 60s. Northeast winds 15 to 20 mph
-with gusts up to 35 mph. Chance of rain near 100 percent.
-.TONIGHT...A slight chance of thunderstorms. Showers. Near steady
-temperature in the lower 60s. Northeast winds 15 to 20 mph.
-Chance of rain near 100 percent.
+.REST OF TODAY...A chance of showers late this morning, then
+showers this afternoon. Highs in the upper 60s. Northeast winds
+15 to 20 mph with gusts up to 30 mph. Chance of rain near
+100 percent.
+.TONIGHT...A slight chance of thunderstorms. Showers. Lows around
+60. Northeast winds 10 to 15 mph with gusts up to 25 mph. Chance
+of rain near 100 percent.
 .SUNDAY...Patchy fog in the morning. Partly sunny with a chance
 of showers with a slight chance of thunderstorms. Highs in the
 lower 70s. North winds 5 to 10 mph, becoming west in the
@@ -352,18 +356,17 @@ in the lower 60s.
 
 $$
 
-SCZ058-220045-
+SCZ058-220315-
 Central Horry-
 Including the cities of Conway, Longs, and Bucksport
-633 AM EST Sat Nov 21 2026
+912 AM EST Sat Nov 21 2026
 
-.TODAY...A chance of showers this morning, then showers this
-afternoon. Highs in the upper 60s. Northeast winds 10 to 15 mph
-with gusts up to 30 mph. Chance of rain near 100 percent.
+.REST OF TODAY...A chance of showers late this morning, then
+showers this afternoon. Highs around 70. Northeast winds around
+10 mph with gusts up to 25 mph. Chance of rain near 100 percent.
 .TONIGHT...A slight chance of thunderstorms. Showers. Lows in the
-upper 50s. Northeast winds 10 to 15 mph with gusts up to 25 mph,
-diminishing to around 5 mph after midnight. Chance of rain near
-100 percent.
+upper 50s. Northeast winds 5 to 10 mph. Gusts up to 25 mph in the
+evening. Chance of rain near 100 percent.
 .SUNDAY...Mostly cloudy in the morning, then becoming partly
 sunny. Patchy fog in the morning. A chance of showers with a
 slight chance of thunderstorms. Highs in the lower 70s. North
@@ -387,18 +390,18 @@ showers. Lows in the mid 40s.
 
 $$
 
-SCZ059-220045-
+SCZ059-220315-
 Northern Horry-
 Including the cities of Loris, Green Sea, and Aynor
-633 AM EST Sat Nov 21 2026
+912 AM EST Sat Nov 21 2026
 
-.TODAY...Cloudy. A chance of showers this morning, then showers
-this afternoon. Highs in the upper 60s. Northeast winds 10 to
-15 mph with gusts up to 25 mph. Chance of rain 80 percent.
+.REST OF TODAY...Cloudy. A chance of showers late this morning,
+then showers this afternoon. Highs in the upper 60s. Northeast
+winds 5 to 10 mph with gusts up to 20 mph. Chance of rain
+80 percent.
 .TONIGHT...Showers with a slight chance of thunderstorms. Near
 steady temperature in the lower 60s. Northeast winds 5 to 10 mph.
-Gusts up to 25 mph in the evening. Chance of rain near
-100 percent.
+Chance of rain near 100 percent.
 .SUNDAY...Mostly cloudy in the morning, then becoming partly
 sunny. Patchy fog in the morning. A chance of showers with a
 slight chance of thunderstorms. Highs in the lower 70s. North
@@ -423,21 +426,20 @@ Highs in the lower 60s.
 
 $$
 
-SCZ056-220045-
+SCZ056-220315-
 Coastal Georgetown-
 Including the cities of Georgetown and Murrells Inlet
-633 AM EST Sat Nov 21 2026
+912 AM EST Sat Nov 21 2026
 
 ...HIGH SURF ADVISORY IN EFFECT UNTIL 4 AM EST SUNDAY...
 
-.TODAY...A chance of showers this morning, then showers with a
-slight chance of thunderstorms this afternoon. Highs in the upper
-60s. Northeast winds 15 to 20 mph with gusts up to 35 mph. Chance
-of rain near 100 percent.
+.REST OF TODAY...A chance of showers late this morning, then
+showers with a slight chance of thunderstorms this afternoon.
+Highs in the upper 60s. Northeast winds 15 to 20 mph with gusts
+up to 30 mph. Chance of rain near 100 percent.
 .TONIGHT...A slight chance of thunderstorms. Showers. Near steady
-temperature in the lower 60s. Northeast winds 15 to 20 mph with
-gusts up to 30 mph, diminishing to 5 to 10 mph with gusts up to
-20 mph after midnight. Chance of rain near 100 percent.
+temperature in the lower 60s. Northeast winds 10 to 15 mph. Gusts
+up to 30 mph in the evening. Chance of rain near 100 percent.
 .SUNDAY...Partly sunny. Patchy fog in the morning. A chance of
 showers, mainly in the morning. Highs in the lower 70s. West
 winds 5 to 10 mph. Chance of rain 40 percent.
@@ -459,19 +461,18 @@ showers. Breezy with lows in the mid 40s.
 
 $$
 
-SCZ055-220045-
+SCZ055-220315-
 Inland Georgetown-
 Including the city of Andrews
-633 AM EST Sat Nov 21 2026
+912 AM EST Sat Nov 21 2026
 
-.TODAY...A chance of showers this morning, then showers with a
-slight chance of thunderstorms this afternoon. Highs in the upper
-60s. Northeast winds 10 to 15 mph with gusts up to 30 mph. Chance
-of rain near 100 percent.
+.REST OF TODAY...A chance of showers late this morning, then
+showers with a slight chance of thunderstorms this afternoon.
+Highs in the upper 60s. Northeast winds 10 to 15 mph with gusts
+up to 25 mph. Chance of rain near 100 percent.
 .TONIGHT...A slight chance of thunderstorms. Showers. Near steady
-temperature in the lower 60s. Northeast winds 10 to 15 mph with
-gusts up to 25 mph, diminishing to around 5 mph after midnight.
-Chance of rain near 100 percent.
+temperature in the lower 60s. Northeast winds 5 to 10 mph. Gusts
+up to 25 mph in the evening. Chance of rain near 100 percent.
 .SUNDAY...Partly sunny. Patchy fog in the morning. A chance of
 showers in the morning, then a slight chance of showers and
 thunderstorms in the afternoon. Highs in the lower 70s. North
@@ -495,18 +496,18 @@ showers. Lows in the mid 40s.
 
 $$
 
-SCZ024-220045-
+SCZ024-220315-
 Dillon-
 Including the city of Dillon
-633 AM EST Sat Nov 21 2026
+912 AM EST Sat Nov 21 2026
 
-.TODAY...Cloudy. A slight chance of showers this morning, then a
-chance of showers this afternoon. Highs in the upper 60s.
-Northeast winds 10 to 15 mph with gusts up to 25 mph. Chance of
-rain 50 percent.
-.TONIGHT...Showers with a slight chance of thunderstorms. Near
-steady temperature around 60. Northeast winds 10 to 15 mph with
-gusts up to 25 mph. Chance of rain 90 percent.
+.REST OF TODAY...Cloudy. A slight chance of showers late this
+morning, then a chance of showers this afternoon. Highs in the
+upper 60s. Northeast winds 10 to 15 mph with gusts up to 25 mph.
+Chance of rain 50 percent.
+.TONIGHT...Showers with a slight chance of thunderstorms. Lows in
+the upper 50s. Northeast winds 5 to 10 mph with gusts up to
+20 mph. Chance of rain 90 percent.
 .SUNDAY...Mostly cloudy. Showers likely in the morning, then a
 chance of showers with a slight chance of thunderstorms in the
 afternoon. Highs in the lower 70s. North winds 5 to 10 mph,
@@ -532,19 +533,18 @@ Highs in the lower 60s.
 
 $$
 
-SCZ033-220045-
+SCZ033-220315-
 Marion-
 Including the cities of Marion and Mullins
-633 AM EST Sat Nov 21 2026
+912 AM EST Sat Nov 21 2026
 
-.TODAY...Cloudy. A slight chance of showers this morning, then
-showers likely this afternoon. Highs in the upper 60s. Northeast
-winds 5 to 10 mph with gusts up to 25 mph. Chance of rain
-70 percent.
-.TONIGHT...Showers with a slight chance of thunderstorms. Near
-steady temperature in the lower 60s. Northeast winds 5 to 10 mph.
-Gusts up to 25 mph in the evening. Chance of rain near
-100 percent.
+.REST OF TODAY...Cloudy. A slight chance of showers late this
+morning, then showers likely this afternoon. Highs in the upper
+60s. Northeast winds around 10 mph with gusts up to 20 mph.
+Chance of rain 70 percent.
+.TONIGHT...Showers with a slight chance of thunderstorms. Lows in
+the upper 50s. Northeast winds 5 to 10 mph. Gusts up to 25 mph in
+the evening. Chance of rain near 100 percent.
 .SUNDAY...Mostly cloudy in the morning, then becoming partly
 sunny. Patchy fog in the morning. A chance of showers. A slight
 chance of thunderstorms in the afternoon. Highs in the lower 70s.
@@ -570,17 +570,17 @@ Highs in the lower 60s.
 
 $$
 
-SCZ032-220045-
+SCZ032-220315-
 Florence-
 Including the city of Florence
-633 AM EST Sat Nov 21 2026
+912 AM EST Sat Nov 21 2026
 
-.TODAY...Cloudy. A chance of showers this morning, then showers
-likely this afternoon. Highs in the mid 60s. Northeast winds
-10 to 15 mph with gusts up to 25 mph. Chance of rain 70 percent.
-.TONIGHT...A slight chance of thunderstorms. Showers. Near steady
-temperature around 60. Northeast winds 10 to 15 mph. Chance of
-rain near 100 percent.
+.REST OF TODAY...Cloudy. A chance of showers late this morning,
+then showers likely this afternoon. Highs in the upper 60s.
+Northeast winds 10 to 15 mph. Chance of rain 70 percent.
+.TONIGHT...A slight chance of thunderstorms. Showers. Lows in the
+upper 50s. Northeast winds 5 to 10 mph. Chance of rain near
+100 percent.
 .SUNDAY...Mostly cloudy in the morning, then becoming partly
 sunny. Patchy fog in the morning. A chance of showers. A slight
 chance of thunderstorms in the afternoon. Highs in the lower 70s.
@@ -607,18 +607,18 @@ Highs in the lower 60s.
 
 $$
 
-SCZ039-220045-
+SCZ039-220315-
 Williamsburg-
 Including the city of Kingstree
-633 AM EST Sat Nov 21 2026
+912 AM EST Sat Nov 21 2026
 
-.TODAY...A chance of showers this morning, then showers with a
-slight chance of thunderstorms this afternoon. Highs in the upper
-60s. Northeast winds 5 to 10 mph with gusts up to 25 mph. Chance
-of rain near 100 percent.
+.REST OF TODAY...A chance of showers late this morning, then
+showers with a slight chance of thunderstorms this afternoon.
+Highs in the upper 60s. Northeast winds 5 to 10 mph with gusts up
+to 25 mph. Chance of rain near 100 percent.
 .TONIGHT...A slight chance of thunderstorms. Showers. Near steady
-temperature in the lower 60s. Northeast winds 5 to 10 mph. Gusts
-up to 25 mph in the evening. Chance of rain near 100 percent.
+temperature in the lower 60s. Northeast winds 5 to 10 mph. Chance
+of rain near 100 percent.
 .SUNDAY...Patchy fog in the morning. Partly sunny with a chance
 of showers. A slight chance of thunderstorms in the afternoon.
 Highs in the lower 70s. North winds around 5 mph, becoming
@@ -644,18 +644,17 @@ Highs in the mid 60s.
 
 $$
 
-SCZ017-220045-
+SCZ017-220315-
 Marlboro-
 Including the cities of Bennettsville and McColl
-633 AM EST Sat Nov 21 2026
+912 AM EST Sat Nov 21 2026
 
-.TODAY...Cloudy. A slight chance of showers this morning, then a
-chance of showers this afternoon. Highs in the mid 60s. Northeast
-winds 10 to 15 mph with gusts up to 25 mph. Chance of rain
-50 percent.
-.TONIGHT...Showers likely. Near steady temperature in the upper
-50s. Northeast winds 10 to 15 mph with gusts up to 25 mph. Chance
-of rain 70 percent.
+.REST OF TODAY...Cloudy. A slight chance of showers late this
+morning, then a chance of showers this afternoon. Highs in the
+upper 60s. Northeast winds 10 to 15 mph with gusts up to 25 mph.
+Chance of rain 50 percent.
+.TONIGHT...Showers likely. Lows in the mid 50s. Northeast winds
+10 to 15 mph. Chance of rain 70 percent.
 .SUNDAY...Mostly cloudy with a chance of showers. A slight chance
 of thunderstorms in the afternoon. Highs in the upper 60s. North
 winds 5 to 10 mph. Chance of rain 50 percent.
@@ -678,18 +677,17 @@ Highs in the lower 60s.
 
 $$
 
-SCZ023-220045-
+SCZ023-220315-
 Darlington-
 Including the cities of Hartsville, Darlington,
 and North Hartsville
-633 AM EST Sat Nov 21 2026
+912 AM EST Sat Nov 21 2026
 
-.TODAY...Cloudy. A slight chance of showers this morning, then
-showers likely this afternoon. Highs in the mid 60s. Northeast
-winds 10 to 15 mph with gusts up to 30 mph. Chance of rain
-70 percent.
+.REST OF TODAY...Cloudy. A slight chance of showers late this
+morning, then showers likely this afternoon. Highs in the upper
+60s. Northeast winds 10 to 15 mph. Chance of rain 70 percent.
 .TONIGHT...Showers. Near steady temperature in the upper 50s.
-Northeast winds 10 to 15 mph. Chance of rain 80 percent.
+Northeast winds 5 to 10 mph. Chance of rain 80 percent.
 .SUNDAY...Mostly cloudy in the morning, then becoming partly
 sunny. Patchy fog in the morning. A chance of showers. A slight
 chance of thunderstorms in the afternoon. Highs around 70. North
@@ -711,5 +709,7 @@ morning. Highs in the lower 60s. Chance of rain 50 percent.
 30s. Highs in the lower 60s.
 
 $$
+
+IGB
 
 
