@@ -208,7 +208,7 @@ var ApplyFarmConditions = function (WeatherParameters)
     var ct = parseInt(f.conditionText, 10);
     if (ct === 1) word = "Fair";
     else if (ct === 2) word = "Partly Cloudy";
-    else if (ct === 3) word = "Mostly Cloudy";
+    else if (ct === 3) word = "Cloudy";
     else if (ct === 4) word = "Variably Cloudy";
     else if (ct === 61) word = "Light Rain";
     else if (ct === 63) word = "Rain";
@@ -10963,7 +10963,7 @@ var _P23FarmSkyWord = function (f)
     var code = f.conditionText;
     if (code == 1) return "Fair";
     if (code == 2) return "Partly Cloudy";
-    if (code == 3) return "Mostly Cloudy";
+    if (code == 3) return "Cloudy";
     if (code == 4) return "Variably Cloudy";
     if (code == 61) return "Light Rain";
     if (code == 63) return "Rain";
