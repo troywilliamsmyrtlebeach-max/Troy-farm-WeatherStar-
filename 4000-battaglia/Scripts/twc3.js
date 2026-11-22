@@ -10995,6 +10995,7 @@ var _P23BuildFarmRow = function ()
     if (shortSky == "Partly Cloudy") shortSky = "P Cloudy";
     if (shortSky == "Mostly Cloudy") shortSky = "M Cloudy";
     if (shortSky == "Light Rain") shortSky = "L RAIN";
+    if (shortSky == "Heavy Rain") shortSky = "H RAIN";
     var wmph = Math.max(kmhToMph(f.windSpeed), kmhToMph(f.windGust));
     return {
         StationId: "KNCCAROL120",
