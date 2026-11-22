@@ -1,25 +1,10 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-21T18:54:52-05:00",
+  "generatedAt": "2026-11-21T19:09:09-05:00",
   "updateTime": "2026-11-21T22:23:55+00:00",
   "source": "NWS hourly ILM 68,59",
   "hours": [
-    {
-      "hourLabel": "6 PM",
-      "weekday": "Sat",
-      "tempF": 64,
-      "feelsLikeF": 64,
-      "dewpointF": 63,
-      "relativeHumidity": 95,
-      "shortForecast": "Chance Rain Showers",
-      "windDir": "NE",
-      "windSpeedMph": 8,
-      "pop": 50,
-      "isDaytime": false,
-      "iconCode": "rain_showers",
-      "iconUrl": "https://forecast.weather.gov/images/wtf/small/nrain.png"
-    },
     {
       "hourLabel": "7 PM",
       "weekday": "Sat",
@@ -364,6 +349,21 @@
       "isDaytime": true,
       "iconCode": "rain_showers",
       "iconUrl": "https://forecast.weather.gov/images/wtf/small/rain.png"
+    },
+    {
+      "hourLabel": "6 PM",
+      "weekday": "Sun",
+      "tempF": 66,
+      "feelsLikeF": 66,
+      "dewpointF": 66,
+      "relativeHumidity": 98,
+      "shortForecast": "Chance Rain Showers",
+      "windDir": "NW",
+      "windSpeedMph": 3,
+      "pop": 27,
+      "isDaytime": false,
+      "iconCode": "rain_showers",
+      "iconUrl": "https://forecast.weather.gov/images/wtf/small/nrain.png"
     }
   ]
 }
