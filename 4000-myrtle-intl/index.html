@@ -933,13 +933,16 @@ try {
 <script>
 /* RETROCAST-FOOTER-ROTATE (Troy Oct 31 23:55, live RetroCast check):
    the live RetroCast footer band ROTATES messages — a conditions line
-   (with speaker icon at right) and an October precipitation line — so
+   (with speaker icon at right) and a monthly precipitation line — so
    this footer rotates the same way, every 8 seconds. The precipitation
-   figure is the screenshot's 4.8 IN. (Carolina Shores figure, pending a
-   verified farm October total — see report). The conditions line uses
-   Troy's farm label, the farm analog of the live "CONDITIONS AT
-   CAROLINA SHORES" line. */
-(function(){var msgs=[{t:'<span style="color:#FAFA2C">CONDITIONS AT CALABASH-FARM AT BRUNSWICK</span>',s:true},{t:'OCTOBER PRECIPITATION: 4.8 IN.',s:false}];var i=0;var el=document.getElementById('radar-footer-text');var sp=document.querySelector('#radar-html .radar-footer-speaker');if(!el)return;setInterval(function(){i=(i+1)%msgs.length;el.innerHTML=msgs[i].t;if(sp)sp.style.visibility=msgs[i].s?'visible':'hidden';},8000);})();
+   figure now reads the staged monthly-precip.json (refreshed every 15
+   min by the Channel cron), so it always shows the current month's farm
+   total — the old hardcoded "OCTOBER PRECIPITATION: 4.8 IN." (a
+   Carolina Shores screenshot figure) is retired. Fallback text is the
+   current November total (0.80 IN. as of Nov 22 01:15 AM) if the fetch
+   fails. The conditions line uses Troy's farm label, the farm analog
+   of the live "CONDITIONS AT CAROLINA SHORES" line. */
+(function(){var msgs=[{t:'<span style="color:#FAFA2C">CONDITIONS AT CALABASH-FARM AT BRUNSWICK</span>',s:true},{t:'NOVEMBER PRECIPITATION: 0.80 IN.',s:false}];function loadMonthly(){fetch('../4000-battaglia/monthly-precip.json?v='+Date.now()).then(function(r){return r.json();}).then(function(d){if(d&&d.month&&typeof d.precipIn==='number'){msgs[1].t=d.month.toUpperCase()+' PRECIPITATION: '+d.precipIn.toFixed(2)+' IN.';}}).catch(function(){});}loadMonthly();setInterval(loadMonthly,60000);var i=0;var el=document.getElementById('radar-footer-text');var sp=document.querySelector('#radar-html .radar-footer-speaker');if(!el)return;setInterval(function(){i=(i+1)%msgs.length;el.innerHTML=msgs[i].t;if(sp)sp.style.visibility=msgs[i].s?'visible':'hidden';},8000);})();
 </script>
       </div>
       <div id="hazards-html" class="weather-display">
