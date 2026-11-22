@@ -934,15 +934,19 @@ try {
 /* RETROCAST-FOOTER-ROTATE (Troy Oct 31 23:55, live RetroCast check):
    the live RetroCast footer band ROTATES messages — a conditions line
    (with speaker icon at right) and a monthly precipitation line — so
-   this footer rotates the same way, every 8 seconds. The precipitation
-   figure now reads the staged monthly-precip.json (refreshed every 15
-   min by the Channel cron), so it always shows the current month's farm
-   total — the old hardcoded "OCTOBER PRECIPITATION: 4.8 IN." (a
-   Carolina Shores screenshot figure) is retired. Fallback text is the
-   current November total (0.80 IN. as of Nov 22 01:15 AM) if the fetch
-   fails. The conditions line uses Troy's farm label, the farm analog
-   of the live "CONDITIONS AT CAROLINA SHORES" line. */
-(function(){var msgs=[{t:'<span style="color:#FAFA2C">CONDITIONS AT CALABASH-FARM AT BRUNSWICK</span>',s:true},{t:'NOVEMBER PRECIPITATION: 0.80 IN.',s:false}];function loadMonthly(){fetch('../4000-battaglia/monthly-precip.json?v='+Date.now()).then(function(r){return r.json();}).then(function(d){if(d&&d.month&&typeof d.precipIn==='number'){msgs[1].t=d.month.toUpperCase()+' PRECIPITATION: '+d.precipIn.toFixed(2)+' IN.';}}).catch(function(){});}loadMonthly();setInterval(loadMonthly,60000);var i=0;var el=document.getElementById('radar-footer-text');var sp=document.querySelector('#radar-html .radar-footer-speaker');if(!el)return;setInterval(function(){i=(i+1)%msgs.length;el.innerHTML=msgs[i].t;if(sp)sp.style.visibility=msgs[i].s?'visible':'hidden';},8000);})();
+   this footer rotates the same way. Nov 22 01:20 AM (Troy's ask): the
+   footer is now a full conditions ticker — it reads the live
+   farm-data.json (the same file the app renders, metric-native: the
+   footer converts C->F, km/h->mph, hPa->inHg, km->mi like the app does)
+   and cycles the whole current conditions every 2 seconds,
+   ticker-style: sky + temp/feels, humidity/dew point, pressure +
+   trend, wind (higher-of below 16, gusts wording at 16+), visibility/
+   ceiling, rainfall today, then the monthly precipitation (which reads
+   the staged monthly-precip.json, refreshed every 15 min). The old
+   hardcoded "OCTOBER PRECIPITATION: 4.8 IN." (a Carolina Shores
+   screenshot figure) is retired. Fallback text is the label + the
+   current November total if the fetches fail. */
+(function(){var msgs=[{t:'<span style="color:#FAFA2C">CONDITIONS AT CALABASH-FARM AT BRUNSWICK</span>',s:true},{t:'NOVEMBER PRECIPITATION: 0.80 IN.',s:false}];var SKY={0:'SUNNY',1:'FAIR',2:'PARTLY CLOUDY',3:'CLOUDY',61:'LIGHT RAIN',63:'RAIN',65:'HEAVY RAIN',71:'LIGHT SNOW',73:'SNOW',75:'HEAVY SNOW',95:'THUNDERSTORM'};function f(c){return Math.round(c*9/5+32);}function mph(k){return Math.round(k*0.621371);}function visStr(km){var mi=km*0.621371;return mi<=2.5?mi.toFixed(2):String(Math.round(mi));}function build(d,m){var sky=SKY[d.conditionText]||'CLOUDY';var temp=f(d.temperature),feels=f(d.feelsLike),dew=f(d.dewPoint);var pres=(d.pressure*0.0295299830714).toFixed(2);var trend=(d.pressureTrend||'steady').toUpperCase();var ws=mph(d.windSpeed),wg=mph(d.windGust||0),dir=(d.windDirection||'').trim();var wind;if(ws===0&&wg===0){wind='WIND CALM';}else if(wg>=16){wind='WIND '+(dir?dir+' ':'')+ws+' MPH GUSTS TO '+wg+' MPH';}else{wind='WIND '+(dir?dir+' ':'')+Math.max(ws,wg)+' MPH';}var ceil=(d.ceiling==null)?'CEILING UNLIMITED':'CEILING '+Math.round(d.ceiling)+' FT';var rain=(d.rainTodayIn!=null)?d.rainTodayIn.toFixed(2):'0.00';var monthly=(m&&m.month&&typeof m.precipIn==='number')?m.month.toUpperCase()+' PRECIPITATION: '+m.precipIn.toFixed(2)+' IN.':'NOVEMBER PRECIPITATION: 0.80 IN.';msgs=[{t:'<span style="color:#FAFA2C">CONDITIONS AT CALABASH-FARM AT BRUNSWICK</span>',s:true},{t:sky+' '+temp+'°F FEELS LIKE '+feels+'°F',s:false},{t:'HUMIDITY '+d.humidity+'% DEW POINT '+dew+'°F',s:false},{t:'PRESSURE '+pres+' IN. '+trend,s:false},{t:wind,s:false},{t:'VISIBILITY '+visStr(d.visibility)+' MI '+ceil,s:false},{t:'RAINFALL TODAY '+rain+' IN.',s:false},{t:monthly,s:false}];}function load(){Promise.all([fetch('farm-data.json?v='+Date.now()).then(function(r){return r.json();}).catch(function(){return null;}),fetch('../4000-battaglia/monthly-precip.json?v='+Date.now()).then(function(r){return r.json();}).catch(function(){return null;})]).then(function(res){if(res[0]){build(res[0],res[1]);}else if(res[1]&&res[1].month&&typeof res[1].precipIn==='number'){msgs[1].t=res[1].month.toUpperCase()+' PRECIPITATION: '+res[1].precipIn.toFixed(2)+' IN.';}});}load();setInterval(load,60000);var i=0;var el=document.getElementById('radar-footer-text');var sp=document.querySelector('#radar-html .radar-footer-speaker');if(!el)return;setInterval(function(){i=(i+1)%msgs.length;el.innerHTML=msgs[i].t;if(sp)sp.style.visibility=msgs[i].s?'visible':'hidden';},2000);})();
 </script>
       </div>
       <div id="hazards-html" class="weather-display">
