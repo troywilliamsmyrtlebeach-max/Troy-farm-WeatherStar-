@@ -58,6 +58,7 @@ var GetWeatherIconFromSummary = function (WeatherParameters, WeatherSummary, Ove
         case "Mostly Sunny":
         case "Mostly Clear":
         case "Partly Cloudy":
+        case "Variably Cloudy":
         case "Fair":
         case "Decreasing Clouds":
         case "Clearing":

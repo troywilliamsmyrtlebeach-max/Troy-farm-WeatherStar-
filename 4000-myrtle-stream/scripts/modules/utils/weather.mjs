@@ -94,6 +94,8 @@ const getGeocoding = async (name) => {
 const weatherConditions = [
 	{ codes: [0], text: ['Clear'] },
 	{ codes: [1, 2, 3], text: ['Fair', 'Partly cloudy', 'Cloudy'] },
+	// Troy 2026-11-22: his literal words "variably cloudy" — new code 4, partly-cloudy icon family.
+	{ codes: [4], text: ['Variably Cloudy'] },
 	{ codes: [45, 48], text: ['Fog', 'Depositing rime fog'] },
 	{ codes: [51, 53, 55], text: ['Light Drizzle', 'Moderate Drizzle', 'Dense Drizzle'] },
 	{ codes: [56, 57], text: ['Light Freezing Drizzle', 'Dense Freezing Drizzle'] },

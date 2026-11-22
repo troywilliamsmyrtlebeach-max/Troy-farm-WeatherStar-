@@ -209,6 +209,7 @@ var ApplyFarmConditions = function (WeatherParameters)
     if (ct === 1) word = "Fair";
     else if (ct === 2) word = "Partly Cloudy";
     else if (ct === 3) word = "Mostly Cloudy";
+    else if (ct === 4) word = "Variably Cloudy";
     else if (ct === 61) word = "Light Rain";
     else if (ct === 63) word = "Rain";
     else if (ct === 65) word = "Heavy Rain";
@@ -10963,6 +10964,7 @@ var _P23FarmSkyWord = function (f)
     if (code == 1) return "Fair";
     if (code == 2) return "Partly Cloudy";
     if (code == 3) return "Mostly Cloudy";
+    if (code == 4) return "Variably Cloudy";
     if (code == 61) return "Light Rain";
     if (code == 63) return "Rain";
     if (code == 65) return "Heavy Rain";
@@ -10994,6 +10996,7 @@ var _P23BuildFarmRow = function ()
     var shortSky = sky;
     if (shortSky == "Partly Cloudy") shortSky = "P Cloudy";
     if (shortSky == "Mostly Cloudy") shortSky = "M Cloudy";
+    if (shortSky == "Variably Cloudy") shortSky = "V Cloudy";
     if (shortSky == "Light Rain") shortSky = "L RAIN";
     if (shortSky == "Heavy Rain") shortSky = "H RAIN";
     var wmph = Math.max(kmhToMph(f.windSpeed), kmhToMph(f.windGust));

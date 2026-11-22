@@ -354,6 +354,13 @@ const getWeatherIconFromIconLink = (text, timeZone, extendedForecast) => {
 		case 'partly-cloudy-night':
 			return addPath('CC_PartlyCloudy0.gif');
 
+		case 4:
+		case 'variably-cloudy':
+			return addPath(nightIcon ? 'CC_PartlyCloudy0.gif' : 'CC_PartlyCloudy1.gif');
+
+		case 'variably-cloudy-night':
+			return addPath('CC_PartlyCloudy0.gif');
+
 		case 3:
 		case 'overcast':
 			return addPath(nightIcon ? 'CC_MostlyCloudy0.gif' : 'Cloudy.gif');
