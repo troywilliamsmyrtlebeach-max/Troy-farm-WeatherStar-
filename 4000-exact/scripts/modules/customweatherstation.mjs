@@ -127,7 +127,7 @@ class CustomWeatherStation extends WeatherDisplay {
 			humidity: `${Math.round(customWeatherParameters.humidity)}%`,
 			dewpoint: ConversionHelpers.convertTemperatureUnits(customWeatherParameters.dewPoint) + String.fromCharCode(176),
 			visibility: `${Math.min(10, ConversionHelpers.convertDistanceUnits(customWeatherParameters.visibility))} ${ConversionHelpers.getDistanceUnitText()}`,
-			ceiling: 'Unlimited',
+			ceiling: (customWeatherParameters.ceiling != null ? `${Number(customWeatherParameters.ceiling).toLocaleString('en-US')} ft.` : 'Unlimited'),
 			pressure: `${pressureInHg.toFixed(2)}${pressureArrow}`,
 			'feels-like': (customWeatherParameters.feelsLike !== undefined && customWeatherParameters.feelsLike !== null
 				? ConversionHelpers.convertTemperatureUnits(customWeatherParameters.feelsLike)

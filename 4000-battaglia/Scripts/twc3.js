@@ -257,7 +257,7 @@ var ApplyFarmConditions = function (WeatherParameters)
     }
     cc.Visibility = Math.round(parseFloat(f.visibility) * 0.621371);
     cc.VisibilityC = Math.round(parseFloat(f.visibility) * 10) / 10;
-    cc.Ceiling = "";
+    cc.Ceiling = (f.ceiling != null && f.ceiling !== "" ? parseInt(f.ceiling, 10) : "");
     cc.CeilingC = "";
     cc.HeatIndex = tempF;
     cc.HeatIndexC = cc.TemperatureC;
@@ -10994,6 +10994,7 @@ var _P23BuildFarmRow = function ()
     var shortSky = sky;
     if (shortSky == "Partly Cloudy") shortSky = "P Cloudy";
     if (shortSky == "Mostly Cloudy") shortSky = "M Cloudy";
+    if (shortSky == "Light Rain") shortSky = "L RAIN";
     var wmph = Math.max(kmhToMph(f.windSpeed), kmhToMph(f.windGust));
     return {
         StationId: "KNCCAROL120",

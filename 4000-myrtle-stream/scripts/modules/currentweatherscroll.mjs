@@ -81,8 +81,8 @@ const pwsTickerData = () => {
 		WindUnit: ConversionHelpers.getWindUnitText(),
 		Visibility: Math.min(10, ConversionHelpers.convertDistanceUnits(cw.visibility)),
 		VisibilityUnit: ConversionHelpers.getDistanceUnitText(),
-		Ceiling: 0,
-		CeilingUnit: ConversionHelpers.getDistanceUnitText(),
+		Ceiling: (cw.ceiling ?? 0),
+		CeilingUnit: (cw.ceiling != null ? 'ft.' : ConversionHelpers.getDistanceUnitText()),
 	};
 };
 
