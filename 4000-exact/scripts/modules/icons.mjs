@@ -382,12 +382,14 @@ const getWeatherIconFromIconLink = (text, timeZone, extendedForecast) => {
 
 		case 61:
 		case 'slight-rain':
+		case 'light-rain':
 			return addPath('CC_Showers.gif');
 
 		case 63:
 		case 65:
 		case 'moderate-rain':
 		case 'heavy-rain':
+		case 'rain':
 			return addPath('CC_Rain.gif');
 
 		case 66:

@@ -97,7 +97,8 @@ const weatherConditions = [
 	{ codes: [45, 48], text: ['Fog', 'Depositing rime fog'] },
 	{ codes: [51, 53, 55], text: ['Light Drizzle', 'Moderate Drizzle', 'Dense Drizzle'] },
 	{ codes: [56, 57], text: ['Light Freezing Drizzle', 'Dense Freezing Drizzle'] },
-	{ codes: [61, 63, 65], text: ['Slight Rain', 'Moderate Rain', 'Heavy Rain'] },
+	// Troy 2026-11-21: his exact precipitation words - Light Rain / Rain / Heavy Rain.
+	{ codes: [61, 63, 65], text: ['Light Rain', 'Rain', 'Heavy Rain'] },
 	{ codes: [66, 67], text: ['Light Freezing Rain', 'Heavy Freezing Rain'] },
 	{ codes: [71, 73, 75], text: ['Slight Snow fall', 'Moderate Snow fall', 'Heavy Snow fall'] },
 	{ codes: [77], text: ['Snow grains'] },

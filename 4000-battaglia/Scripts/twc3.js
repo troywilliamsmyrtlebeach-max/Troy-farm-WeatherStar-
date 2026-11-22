@@ -209,6 +209,13 @@ var ApplyFarmConditions = function (WeatherParameters)
     if (ct === 1) word = "Fair";
     else if (ct === 2) word = "Partly Cloudy";
     else if (ct === 3) word = "Mostly Cloudy";
+    else if (ct === 61) word = "Light Rain";
+    else if (ct === 63) word = "Rain";
+    else if (ct === 65) word = "Heavy Rain";
+    else if (ct === 71) word = "Light Snow";
+    else if (ct === 73) word = "Snow";
+    else if (ct === 75) word = "Heavy Snow";
+    else if (ct === 95 || ct === 99) word = "Thunderstorm";
     else word = isDay ? "Sunny" : "Clear";
     cc.StationName = _FarmStationName;
     cc.Temperature = tempF;
@@ -10956,6 +10963,13 @@ var _P23FarmSkyWord = function (f)
     if (code == 1) return "Fair";
     if (code == 2) return "Partly Cloudy";
     if (code == 3) return "Mostly Cloudy";
+    if (code == 61) return "Light Rain";
+    if (code == 63) return "Rain";
+    if (code == 65) return "Heavy Rain";
+    if (code == 71) return "Light Snow";
+    if (code == 73) return "Snow";
+    if (code == 75) return "Heavy Snow";
+    if (code == 95 || code == 99) return "Thunderstorm";
     var hour = 12;
     try { hour = parseInt(new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", hour: "numeric", hour12: false }).format(new Date()), 10); } catch (e) { }
     return (hour >= 6 && hour < 18) ? "Sunny" : "Clear";

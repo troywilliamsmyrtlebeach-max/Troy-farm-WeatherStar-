@@ -93,7 +93,8 @@ class LatestObservations extends WeatherDisplay {
 			const farm = (typeof window !== 'undefined' && window.__latestPwsPayload) ? window.__latestPwsPayload : null;
 			if (farm && farm.temperature !== undefined && farm.temperature !== null) {
 				const dirDeg = { N: 0, NNE: 22.5, NE: 45, ENE: 67.5, E: 90, ESE: 112.5, SE: 135, SSE: 157.5, S: 180, SSW: 202.5, SW: 225, WSW: 247.5, W: 270, WNW: 292.5, NW: 315, NNW: 337.5 }[farm.windDirection] ?? 0;
-				const farmSky = (farm.conditionText === 3) ? 'Cloudy' : (farm.conditionText === 0) ? getConditionText(0, farmTimeZone) : (farm.conditionText === 1) ? 'Fair' : (farm.conditionText === 2) ? 'Partly Cloudy' : (farm.conditionText === 45 || farm.conditionText === 48) ? 'Fog' : 'Fair';
+				// Troy 2026-11-21: graded precipitation words (Light Rain / Rain / Heavy Rain, snow, thunderstorm) - same map as Current Conditions.
+				const farmSky = (farm.conditionText === 3) ? 'Cloudy' : (farm.conditionText === 0) ? getConditionText(0, farmTimeZone) : (farm.conditionText === 1) ? 'Fair' : (farm.conditionText === 2) ? 'Partly Cloudy' : (farm.conditionText === 45 || farm.conditionText === 48) ? 'Fog' : (farm.conditionText === 61) ? 'Light Rain' : (farm.conditionText === 63) ? 'Rain' : (farm.conditionText === 65) ? 'Heavy Rain' : (farm.conditionText === 71) ? 'Light Snow' : (farm.conditionText === 73) ? 'Snow' : (farm.conditionText === 75) ? 'Heavy Snow' : (farm.conditionText === 95 || farm.conditionText === 99) ? 'Thunderstorm' : 'Fair';
 				actualConditions.unshift({
 					temperature: { value: farm.temperature },
 					// Troy Oct 31 19:36: farm Latest Observations wind = HIGHEST wind speed (sustained vs gust) — e.g. sustained 2, gust 8 -> show 8, not 2.
