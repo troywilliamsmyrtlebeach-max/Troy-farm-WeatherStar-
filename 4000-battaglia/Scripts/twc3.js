@@ -365,6 +365,19 @@ var _NextAudioUrl = null;
 var _NextAudioLoading = false;
 var _AudioGain = null;
 var _AudioRefreshIntervalId = null;
+// TROY-FARM ?v=121 (narration test): pre-generated Dan-style narration mp3.
+// One file, played once per cycle at the Local Forecast screen; the music
+// pauses while it reads and resumes when it ends. The Narration button
+// (and the stored TwcNarrationPlay pref) turns it on/off; it is ON by
+// default for this test so one tap starts music + narration together.
+// This is a STYLE test -- the voice is a TTS voice in the classic deep
+// warm style, not a clone of Dan Chandler's actual voice.
+var _NarrMp3 = null;
+var _NarrMp3Enabled = true;
+var _NarrMp3PlayedThisCycle = false;
+var _NarrMp3Playing = false;
+var _NarrMp3Unlocked = false;
+var _NarrMp3WasMusicPlaying = false;
 
 var _IsBeepPlaying = false;
 var _BeepRefreshIntervalId = null;
@@ -5073,6 +5086,13 @@ var UpdatePlayPosition = function ()
         _PlayMs = _PlayMs - _PlayMsOffsets.End;
     }
 
+    // TROY-FARM ?v=121 (narration test): a wrap starts a new cycle, so the
+    // narration may play again at the next Local Forecast screen.
+    if (_PlayMs < PrevPlayMs)
+    {
+        _NarrMp3PlayedThisCycle = false;
+    }
+
     if (_PlayMs >= _PlayMsOffsets.CurrentWeather_Start && _PlayMs < _PlayMsOffsets.CurrentWeather_End)
     {
         _CurrentCanvasType = CanvasTypes.CurrentWeather;
@@ -5118,6 +5138,13 @@ var UpdatePlayPosition = function ()
 
         _UpdateLocalForecastIndex = Math.floor(SubMs / 8000);
         _CurrentPosition += _UpdateLocalForecastIndex / 10;
+
+        // TROY-FARM ?v=121 (narration test): play the narration mp3 once
+        // per cycle, at the Local Forecast screen.
+        if (_NarrMp3Enabled && !_NarrMp3PlayedThisCycle && !_NarrMp3Playing && _NarrMp3Unlocked)
+        {
+            _NarrMp3Start();
+        }
 
         if (_IsSpeaking == true)
         {
@@ -14996,6 +15023,10 @@ var RefreshSegments = function ()
 var _P23AudioUnlockInstalled = false;
 var _P23AudioUnlock = function ()
 {
+    // TROY-FARM ?v=121 (narration test): any tap inside the emulator is
+    // the user gesture that lets the narration mp3 play (same tap as music).
+    _NarrMp3Unlocked = true;
+    _NarrMp3Init();
     // TROY-FARM P23 (item 6): the first tap INSIDE the emulator gives
     // this frame sticky user activation, which is what an AudioContext
     // needs to run. (A tap on the parent page's volume button cannot
@@ -15626,65 +15657,112 @@ var VolumeAudio = function(vol)
     return volume;
 }
 
+// TROY-FARM ?v=121 (narration test): the narration is a pre-generated mp3
+// (Audio/narration-test.mp3, Dan-style TTS voice), not the device speech
+// synthesis the original code used. It plays once per cycle at the Local
+// Forecast screen; the music pauses while it reads and resumes after.
+// The Narration button still toggles it on/off (persisted as before).
+// SpeakUtterance/GetNarrationText below are kept intact but unused by
+// this test path.
+var _NarrMp3Init = function ()
+{
+    if (_NarrMp3 != null)
+    {
+        return;
+    }
+    try
+    {
+        _NarrMp3 = new Audio("Audio/narration-test.mp3");
+        _NarrMp3.preload = "auto";
+        _NarrMp3.addEventListener("ended", function ()
+        {
+            _NarrMp3Playing = false;
+            if (_NarrMp3WasMusicPlaying)
+            {
+                PlayAudio();
+            }
+            _NarrMp3WasMusicPlaying = false;
+        });
+        _NarrMp3.addEventListener("error", function ()
+        {
+            console.log("Narration mp3 failed to load; music resumes.");
+            _NarrMp3Playing = false;
+            if (_NarrMp3WasMusicPlaying)
+            {
+                PlayAudio();
+            }
+            _NarrMp3WasMusicPlaying = false;
+        });
+    }
+    catch (e)
+    {
+        console.log("Narration mp3 unavailable: " + e);
+        _NarrMp3 = null;
+    }
+};
+
+var _NarrMp3Start = function ()
+{
+    if (_NarrMp3 == null || _NarrMp3Playing)
+    {
+        return;
+    }
+    _NarrMp3PlayedThisCycle = true;
+    _NarrMp3WasMusicPlaying = _IsAudioPlaying;
+    if (_NarrMp3WasMusicPlaying)
+    {
+        PauseAudio();
+    }
+    _NarrMp3Playing = true;
+    _NarrMp3.currentTime = 0;
+    var _playPromise = _NarrMp3.play();
+    if (_playPromise && _playPromise.catch)
+    {
+        _playPromise.catch(function (e)
+        {
+            console.log("Narration mp3 play blocked: " + e);
+            _NarrMp3Playing = false;
+            if (_NarrMp3WasMusicPlaying)
+            {
+                PlayAudio();
+            }
+            _NarrMp3WasMusicPlaying = false;
+        });
+    }
+};
+
+var _NarrMp3Stop = function ()
+{
+    if (_NarrMp3 != null && _NarrMp3Playing)
+    {
+        _NarrMp3.pause();
+    }
+    _NarrMp3Playing = false;
+    if (_NarrMp3WasMusicPlaying)
+    {
+        PlayAudio();
+    }
+    _NarrMp3WasMusicPlaying = false;
+};
+
 var NarrationPlayToggle = function ()
 {
     _IsNarrationPlaying = !(_IsNarrationPlaying);
+    _NarrMp3Enabled = _IsNarrationPlaying;
 
     if (_IsNarrationPlaying == true)
     {
-        if (!window.speechSynthesis)
+        // Armed: the cycle driver starts the mp3 at the next Local Forecast
+        // screen (or right away if that screen is showing now).
+        if (_CurrentCanvasType == CanvasTypes.LocalForecast && !_NarrMp3PlayedThisCycle && !_NarrMp3Playing && _NarrMp3Unlocked)
         {
-            _IsNarrationPlaying = false;
-            return;
+            _NarrMp3Start();
         }
-
-        if (_OperatingSystem == OperatingSystems.iOS)
-        {
-            _IsNarrationPlaying = false;
-            return;
-        }
-
-        _NarrationPlayIntervalId = window.setIntervalWorker(function ()
-        {
-            //if (_WeatherParameters.Progress.GetTotalPercentage() != 100)
-            //{
-            //    return;
-            //}
-
-            window.clearIntervalWorker(_NarrationPlayIntervalId);
-            _NarrationPlayIntervalId = null;
-
-            _Utterance = new SpeechSynthesisUtterance();
-
-            _Utterance.lang = "en-US";
-            _Utterance.volume = 1.0;
-            _Utterance.rate = 0.9;
-            _Utterance.pitch = 1.0;
-            //_Utterance.text = GetNarrationText();
-
-            //SelectVoice(_Utterance);
-            //_Utterance.onend = function ()
-            //{
-            //    console.log("Narration Finished.");
-            //};
-
-            //window.speechSynthesis.speak(_Utterance);
-            SpeakUtterance();
-
-        }, 100);
     }
     else
     {
-        if (_NarrationPlayIntervalId)
-        {
-            window.clearIntervalWorker(_NarrationPlayIntervalId);
-            _NarrationPlayIntervalId = null;
-        }
-        if (window.speechSynthesis.speaking == true)
-        {
-            window.speechSynthesis.cancel();
-        }
-        _IsSpeaking = false;
+        _NarrMp3Stop();
+        _NarrMp3PlayedThisCycle = false;
     }
 
     if (_CallBack) _CallBack({ Status: "ISNARRATIONPLAYING", Value: _IsNarrationPlaying });

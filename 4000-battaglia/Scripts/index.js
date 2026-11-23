@@ -1524,8 +1524,11 @@ $(function ()
         _IsAudioPlaying = true;
     }
 
+    // TROY-FARM ?v=121 (narration test): narration defaults ON, mirroring
+    // the music default above -- one tap starts music + narration together.
+    // Tapping the Narration button off stores "false" and it stays off.
     var TwcNarrationPlay = localStorage.getItem("TwcNarrationPlay");
-    if (TwcNarrationPlay == "true")
+    if (!TwcNarrationPlay || TwcNarrationPlay == "true")
     {
         _IsNarrationPlaying = true;
     }
