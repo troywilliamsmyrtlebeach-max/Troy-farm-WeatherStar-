@@ -39,9 +39,9 @@ class LocalForecast extends WeatherDisplay {
 		if (!conditions.length) {
 			this.screenTexts = [
 				// FRESH FORECAST 2026-11-18 ~4:19 AM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-22T23:10:53+00:00 forecast through Wednesday, verified this run). Written in the screenshot format (generator
+				// generated 2026-11-23T00:09:42+00:00 forecast through Wednesday, verified this run). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
-				'TONIGHT... A slight chance of rain showers before 7pm, then patchy fog. Mostly cloudy, with a low around 58. Northwest wind around 2 mph. Chance of precipitation is 20%. New rainfall amounts less than a tenth of an inch possible. Precip chance 18%.',
+				'TONIGHT... Patchy fog after 9pm. Mostly cloudy, with a low around 58. Northwest wind around 1 mph. Precip chance 13%.',
 				'MONDAY... Patchy fog before 9am. Partly sunny, with a high near 73. Northwest wind around 3 mph. Precip chance 6%.',
 				'MONDAY NIGHT... Mostly cloudy, with a low around 53. North wind 0 to 9 mph. Precip chance 13%.',
 				'TUESDAY... Mostly sunny, with a high near 63. Northeast wind around 13 mph, with gusts as high as 21 mph. Precip chance 0%.',
