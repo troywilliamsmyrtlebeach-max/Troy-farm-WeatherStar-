@@ -38,15 +38,14 @@ class LocalForecast extends WeatherDisplay {
 		if (!conditions.length) {
 			this.screenTexts = [
 				// FRESH FORECAST 2026-11-18 ~4:19 AM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-23T06:57:13+00:00 forecast through Wednesday, verified this run). Written in the screenshot format (generator
+				// generated 2026-11-23T11:23:21+00:00 forecast through Wednesday, verified this run). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
-				'OVERNIGHT... Patchy fog and a slight chance of rain. Mostly cloudy, with a low around 59. North wind around 1 mph. Chance of precipitation is 20%. Precip chance 24%.',
-				'MONDAY... Patchy fog and a slight chance of rain before 9am. Mostly cloudy, with a high near 72. Northwest wind around 2 mph. Chance of precipitation is 20%. Precip chance 19%.',
-				'MONDAY NIGHT... Mostly cloudy, with a low around 52. Northwest wind 0 to 8 mph. Precip chance 12%.',
-				'TUESDAY... Partly sunny, with a high near 63. North wind 9 to 13 mph, with gusts as high as 21 mph. Precip chance 5%.',
+				'TODAY... Patchy fog before noon. Mostly cloudy, with a high near 71. Northwest wind around 2 mph. Precip chance 10%.',
+				'TONIGHT... Mostly cloudy, with a low around 52. Northwest wind 0 to 8 mph. Precip chance 12%.',
+				'TUESDAY... Partly sunny. High near 63, with temperatures falling to around 57 in the afternoon. North wind 9 to 13 mph, with gusts as high as 21 mph. Precip chance 5%.',
 				'TUESDAY NIGHT... Mostly cloudy, with a low around 42. Northeast wind 9 to 13 mph, with gusts as high as 20 mph. Precip chance 9%.',
-				'WEDNESDAY... Rain showers after 7am. Cloudy, with a high near 67. Chance of precipitation is 90%. New rainfall amounts between three quarters and one inch possible. Precip chance 90%.',
-				'WEDNESDAY NIGHT... Rain showers before 7pm, then showers and thunderstorms. Cloudy, with a low around 55. Chance of precipitation is 100%. Precip chance 98%.',
+				'WEDNESDAY... Rain showers after 7am. Cloudy, with a high near 67. Northeast wind 14 to 17 mph, with gusts as high as 29 mph. Chance of precipitation is 90%. New rainfall amounts between three quarters and one inch possible. Precip chance 90%.',
+				'WEDNESDAY NIGHT... Rain showers before 7pm, then showers and thunderstorms. Cloudy, with a low around 55. Chance of precipitation is 100%. New rainfall amounts between 2 and 3 inches possible. Precip chance 98%.',
 				'THANKSGIVING DAY... Showers and thunderstorms before 1pm. Partly sunny, with a high near 71. Chance of precipitation is 90%. Precip chance 87%.',
 				'THURSDAY NIGHT... Partly cloudy, with a low around 44. Precip chance 13%.',
 				'FRIDAY... Mostly sunny, with a high near 62. Precip chance 1%.',
@@ -54,6 +53,7 @@ class LocalForecast extends WeatherDisplay {
 				'SATURDAY... Partly sunny, with a high near 64. Precip chance 4%.',
 				'SATURDAY NIGHT... Partly cloudy, with a low around 40. Precip chance 4%.',
 				'SUNDAY... Mostly sunny, with a high near 66. Precip chance 4%.',
+				'SUNDAY NIGHT... Partly cloudy, with a low around 43. Precip chance 7%.',
 				];
 		} else {
 			this.screenTexts = conditions.map((condition) => condition.Text);
