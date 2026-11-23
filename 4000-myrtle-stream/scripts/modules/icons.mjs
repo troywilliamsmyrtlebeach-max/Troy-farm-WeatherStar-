@@ -142,9 +142,9 @@ const getWeatherRegionalIconFromIconLink = (text, isDay) => {
 
 		case 3:
 		case 'overcast':
-			return addPath('Partly-Cloudy.gif');
+			return addPath('Cloudy.gif');
 		case 'overcast-night':
-			return addPath('Mostly-Clear.gif');
+			return addPath('Cloudy.gif');
 
 		case 45:
 		case 48:
@@ -330,9 +330,9 @@ const getWeatherIconFromIconLink = (text, timeZone, extendedForecast) => {
 			return addPath('CC_MostlyCloudy0.gif');
 
 		case 'cloudy':
-			return addPath(nightIcon ? 'CC_MostlyCloudy0.gif' : 'Cloudy.gif');
+			return addPath('Cloudy.gif');
 		case 'cloudy-night':
-			return addPath('CC_MostlyCloudy0.gif');
+			return addPath('Cloudy.gif');
 
 		case 'partly-clear':
 			return addPath('CC_PartlyCloudy1.gif');
@@ -363,7 +363,7 @@ const getWeatherIconFromIconLink = (text, timeZone, extendedForecast) => {
 
 		case 3:
 		case 'overcast':
-			return addPath(nightIcon ? 'CC_MostlyCloudy0.gif' : 'Cloudy.gif');
+			return addPath('Cloudy.gif');
 
 		case 45:
 		case 48:
