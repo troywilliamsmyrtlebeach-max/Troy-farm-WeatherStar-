@@ -365,17 +365,26 @@ var _NextAudioUrl = null;
 var _NextAudioLoading = false;
 var _AudioGain = null;
 var _AudioRefreshIntervalId = null;
-// TROY-FARM ?v=121 (narration test): pre-generated Dan-style narration mp3.
-// One file, played once per cycle at the Local Forecast screen; the music
-// pauses while it reads and resumes when it ends. The Narration button
-// (and the stored TwcNarrationPlay pref) turns it on/off; it is ON by
-// default for this test so one tap starts music + narration together.
+// TROY-FARM ?v=122 (narration test): pre-generated Dan-style narration
+// segments, one mp3 per screen, played in Troy's exact order: conditions
+// on the Current Conditions screen, local forecast on the Local Forecast
+// screen, extended forecast on the Extended Forecast screen, radar line
+// on the Local Radar screen. The music pauses while a segment reads and
+// resumes when it ends. The Narration button (and the stored
+// TwcNarrationPlay pref) turns it on/off; it is ON by default for this
+// test so one tap starts music + narration together.
 // This is a STYLE test -- the voice is a TTS voice in the classic deep
 // warm style, not a clone of Dan Chandler's actual voice.
-var _NarrMp3 = null;
+var _NarrSegFiles = {
+    conditions: "Audio/narration-conditions.mp3",
+    local: "Audio/narration-local.mp3",
+    extended: "Audio/narration-extended.mp3",
+    radar: "Audio/narration-radar.mp3"
+};
+var _NarrSegs = {};
 var _NarrMp3Enabled = true;
-var _NarrMp3PlayedThisCycle = false;
-var _NarrMp3Playing = false;
+var _NarrSegPlayedThisCycle = { conditions: false, local: false, extended: false, radar: false };
+var _NarrSegPlaying = null;
 var _NarrMp3Unlocked = false;
 var _NarrMp3WasMusicPlaying = false;
 
@@ -5086,17 +5095,24 @@ var UpdatePlayPosition = function ()
         _PlayMs = _PlayMs - _PlayMsOffsets.End;
     }
 
-    // TROY-FARM ?v=121 (narration test): a wrap starts a new cycle, so the
-    // narration may play again at the next Local Forecast screen.
+    // TROY-FARM ?v=122 (narration test): a wrap starts a new cycle, so each
+    // narration segment may play again on its own screen.
     if (_PlayMs < PrevPlayMs)
     {
-        _NarrMp3PlayedThisCycle = false;
+        _NarrSegPlayedThisCycle = { conditions: false, local: false, extended: false, radar: false };
     }
 
     if (_PlayMs >= _PlayMsOffsets.CurrentWeather_Start && _PlayMs < _PlayMsOffsets.CurrentWeather_End)
     {
         _CurrentCanvasType = CanvasTypes.CurrentWeather;
         _CurrentPosition = _CurrentCanvasType;
+
+        // TROY-FARM ?v=122 (narration test): conditions segment plays once
+        // per cycle on this screen, first in Troy's order.
+        if (_NarrMp3Enabled && !_NarrSegPlayedThisCycle.conditions && _NarrSegPlaying == null && _NarrMp3Unlocked)
+        {
+            _NarrSegStart("conditions");
+        }
     }
     else if (_PlayMs >= _PlayMsOffsets.LatestObservations_Start && _PlayMs < _PlayMsOffsets.LatestObservations_End)
     {
@@ -5139,11 +5155,11 @@ var UpdatePlayPosition = function ()
         _UpdateLocalForecastIndex = Math.floor(SubMs / 8000);
         _CurrentPosition += _UpdateLocalForecastIndex / 10;
 
-        // TROY-FARM ?v=121 (narration test): play the narration mp3 once
-        // per cycle, at the Local Forecast screen.
-        if (_NarrMp3Enabled && !_NarrMp3PlayedThisCycle && !_NarrMp3Playing && _NarrMp3Unlocked)
+        // TROY-FARM ?v=122 (narration test): local-forecast segment plays
+        // once per cycle on this screen, second in Troy's order.
+        if (_NarrMp3Enabled && !_NarrSegPlayedThisCycle.local && _NarrSegPlaying == null && _NarrMp3Unlocked)
         {
-            _NarrMp3Start();
+            _NarrSegStart("local");
         }
 
         if (_IsSpeaking == true)
@@ -5172,6 +5188,13 @@ var UpdatePlayPosition = function ()
     {
         _CurrentCanvasType = CanvasTypes.ExtendedForecast1;
         _CurrentPosition = _CurrentCanvasType;
+
+        // TROY-FARM ?v=122 (narration test): extended-forecast segment plays
+        // once per cycle on this screen, third in Troy's order.
+        if (_NarrMp3Enabled && !_NarrSegPlayedThisCycle.extended && _NarrSegPlaying == null && _NarrMp3Unlocked)
+        {
+            _NarrSegStart("extended");
+        }
     }
     else if (_PlayMs >= _PlayMsOffsets.ExtendedForecast2_Start && _PlayMs < _PlayMsOffsets.ExtendedForecast2_End)
     {
@@ -5202,6 +5225,14 @@ var UpdatePlayPosition = function ()
     {
         _CurrentCanvasType = CanvasTypes.LocalRadar;
         _CurrentPosition = _CurrentCanvasType;
+
+        // TROY-FARM ?v=122 (narration test): radar line plays once per
+        // cycle on this screen, last in Troy's order.
+        if (_NarrMp3Enabled && !_NarrSegPlayedThisCycle.radar && _NarrSegPlaying == null && _NarrMp3Unlocked)
+        {
+            _NarrSegStart("radar");
+        }
+
         SubMs = _PlayMs - _PlayMsOffsets.LocalRadar_Start;
 
         SubMs = SubMs % 4500;
@@ -15023,10 +15054,10 @@ var RefreshSegments = function ()
 var _P23AudioUnlockInstalled = false;
 var _P23AudioUnlock = function ()
 {
-    // TROY-FARM ?v=121 (narration test): any tap inside the emulator is
-    // the user gesture that lets the narration mp3 play (same tap as music).
+    // TROY-FARM ?v=122 (narration test): any tap inside the emulator is
+    // the user gesture that lets the narration segments play (same tap as music).
     _NarrMp3Unlocked = true;
-    _NarrMp3Init();
+    _NarrSegInit();
     // TROY-FARM P23 (item 6): the first tap INSIDE the emulator gives
     // this frame sticky user activation, which is what an AudioContext
     // needs to run. (A tap on the parent page's volume button cannot
@@ -15657,92 +15688,132 @@ var VolumeAudio = function(vol)
     return volume;
 }
 
-// TROY-FARM ?v=121 (narration test): the narration is a pre-generated mp3
-// (Audio/narration-test.mp3, Dan-style TTS voice), not the device speech
-// synthesis the original code used. It plays once per cycle at the Local
-// Forecast screen; the music pauses while it reads and resumes after.
-// The Narration button still toggles it on/off (persisted as before).
-// SpeakUtterance/GetNarrationText below are kept intact but unused by
-// this test path.
-var _NarrMp3Init = function ()
+// TROY-FARM ?v=122 (narration test): the narration is four pre-generated
+// mp3 segments (Audio/narration-*.mp3, Dan-style TTS voice), not the device
+// speech synthesis the original code used. Each segment plays once per
+// cycle on its own screen, in Troy's order: conditions, local forecast,
+// extended forecast, radar. The music pauses while a segment reads and
+// resumes after. The Narration button still toggles it on/off (persisted
+// as before). SpeakUtterance/GetNarrationText below are kept intact but
+// unused by this test path.
+var _NarrSegInit = function ()
 {
-    if (_NarrMp3 != null)
+    var _names = ["conditions", "local", "extended", "radar"];
+    for (var _i = 0; _i < _names.length; _i++)
     {
-        return;
-    }
-    try
-    {
-        _NarrMp3 = new Audio("Audio/narration-test.mp3");
-        _NarrMp3.preload = "auto";
-        _NarrMp3.addEventListener("ended", function ()
+        var _name = _names[_i];
+        if (_NarrSegs[_name])
         {
-            _NarrMp3Playing = false;
-            if (_NarrMp3WasMusicPlaying)
-            {
-                PlayAudio();
-            }
-            _NarrMp3WasMusicPlaying = false;
-        });
-        _NarrMp3.addEventListener("error", function ()
+            continue;
+        }
+        try
         {
-            console.log("Narration mp3 failed to load; music resumes.");
-            _NarrMp3Playing = false;
-            if (_NarrMp3WasMusicPlaying)
+            var _audio = new Audio(_NarrSegFiles[_name]);
+            _audio.preload = "auto";
+            _audio.addEventListener("ended", (function (_segName)
             {
-                PlayAudio();
-            }
-            _NarrMp3WasMusicPlaying = false;
-        });
-    }
-    catch (e)
-    {
-        console.log("Narration mp3 unavailable: " + e);
-        _NarrMp3 = null;
+                return function ()
+                {
+                    _NarrSegEnded(_segName);
+                };
+            })(_name));
+            _audio.addEventListener("error", (function (_segName)
+            {
+                return function ()
+                {
+                    console.log("Narration segment failed to load: " + _segName + "; music resumes.");
+                    _NarrSegEnded(_segName);
+                };
+            })(_name));
+            _NarrSegs[_name] = _audio;
+        }
+        catch (e)
+        {
+            console.log("Narration segment unavailable: " + _name + ": " + e);
+        }
     }
 };
 
-var _NarrMp3Start = function ()
+var _NarrSegEnded = function (_segName)
 {
-    if (_NarrMp3 == null || _NarrMp3Playing)
+    if (_NarrSegPlaying === _segName)
     {
-        return;
+        _NarrSegPlaying = null;
     }
-    _NarrMp3PlayedThisCycle = true;
-    _NarrMp3WasMusicPlaying = _IsAudioPlaying;
-    if (_NarrMp3WasMusicPlaying)
-    {
-        PauseAudio();
-    }
-    _NarrMp3Playing = true;
-    _NarrMp3.currentTime = 0;
-    var _playPromise = _NarrMp3.play();
-    if (_playPromise && _playPromise.catch)
-    {
-        _playPromise.catch(function (e)
-        {
-            console.log("Narration mp3 play blocked: " + e);
-            _NarrMp3Playing = false;
-            if (_NarrMp3WasMusicPlaying)
-            {
-                PlayAudio();
-            }
-            _NarrMp3WasMusicPlaying = false;
-        });
-    }
-};
-
-var _NarrMp3Stop = function ()
-{
-    if (_NarrMp3 != null && _NarrMp3Playing)
-    {
-        _NarrMp3.pause();
-    }
-    _NarrMp3Playing = false;
     if (_NarrMp3WasMusicPlaying)
     {
         PlayAudio();
     }
     _NarrMp3WasMusicPlaying = false;
+};
+
+var _NarrSegStart = function (_segName)
+{
+    var _audio = _NarrSegs[_segName];
+    if (_audio == null || _NarrSegPlaying != null)
+    {
+        return;
+    }
+    _NarrSegPlayedThisCycle[_segName] = true;
+    _NarrMp3WasMusicPlaying = _IsAudioPlaying;
+    if (_NarrMp3WasMusicPlaying)
+    {
+        PauseAudio();
+    }
+    _NarrSegPlaying = _segName;
+    _audio.currentTime = 0;
+    var _playPromise = _audio.play();
+    if (_playPromise && _playPromise.catch)
+    {
+        _playPromise.catch(function (e)
+        {
+            console.log("Narration segment play blocked: " + _segName + ": " + e);
+            _NarrSegEnded(_segName);
+        });
+    }
+};
+
+var _NarrSegStopAll = function ()
+{
+    var _names = ["conditions", "local", "extended", "radar"];
+    for (var _i = 0; _i < _names.length; _i++)
+    {
+        var _audio = _NarrSegs[_names[_i]];
+        if (_audio != null && _NarrSegPlaying === _names[_i])
+        {
+            _audio.pause();
+        }
+    }
+    _NarrSegPlaying = null;
+    if (_NarrMp3WasMusicPlaying)
+    {
+        PlayAudio();
+    }
+    _NarrMp3WasMusicPlaying = false;
+};
+
+var _NarrSegStartForCurrentScreen = function ()
+{
+    if (!_NarrMp3Enabled || _NarrSegPlaying != null || !_NarrMp3Unlocked)
+    {
+        return;
+    }
+    if (_CurrentCanvasType == CanvasTypes.CurrentWeather && !_NarrSegPlayedThisCycle.conditions)
+    {
+        _NarrSegStart("conditions");
+    }
+    else if (_CurrentCanvasType == CanvasTypes.LocalForecast && !_NarrSegPlayedThisCycle.local)
+    {
+        _NarrSegStart("local");
+    }
+    else if (_CurrentCanvasType == CanvasTypes.ExtendedForecast1 && !_NarrSegPlayedThisCycle.extended)
+    {
+        _NarrSegStart("extended");
+    }
+    else if (_CurrentCanvasType == CanvasTypes.LocalRadar && !_NarrSegPlayedThisCycle.radar)
+    {
+        _NarrSegStart("radar");
+    }
 };
 
 var NarrationPlayToggle = function ()
@@ -15752,17 +15823,14 @@ var NarrationPlayToggle = function ()
 
     if (_IsNarrationPlaying == true)
     {
-        // Armed: the cycle driver starts the mp3 at the next Local Forecast
-        // screen (or right away if that screen is showing now).
-        if (_CurrentCanvasType == CanvasTypes.LocalForecast && !_NarrMp3PlayedThisCycle && !_NarrMp3Playing && _NarrMp3Unlocked)
-        {
-            _NarrMp3Start();
-        }
+        // Armed: the cycle driver starts each segment at its own screen
+        // (or right away if that screen is showing now).
+        _NarrSegStartForCurrentScreen();
     }
     else
     {
-        _NarrMp3Stop();
-        _NarrMp3PlayedThisCycle = false;
+        _NarrSegStopAll();
+        _NarrSegPlayedThisCycle = { conditions: false, local: false, extended: false, radar: false };
     }
 
     if (_CallBack) _CallBack({ Status: "ISNARRATIONPLAYING", Value: _IsNarrationPlaying });
