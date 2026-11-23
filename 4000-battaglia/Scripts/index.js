@@ -75,8 +75,6 @@ var _AutoRefreshCountMs = 0;
 var _IsAudioPlaying = false;
 var _IsBeepPlaying = false;
 
-var _IsNarrationPlaying = false;
-
 var _FullScreenOverride = false;
 
 var _WeatherParameters = null;
@@ -630,11 +628,6 @@ var LoadTwcData = function (Url, AutoRefresh)
                     iframeTwc[0].contentWindow.AudioPlayToggle();
                 }
 
-                if (_IsNarrationPlaying == true)
-                {
-                    iframeTwc[0].contentWindow.NarrationPlayToggle();
-                }
-
                 $(iframeTwc[0].contentWindow.document).on("mousemove", document_mousemove);
                 $(iframeTwc[0].contentWindow.document).on("mousedown", document_mousemove);
                 $(iframeTwc[0].contentWindow.document).on("keydown", document_keydown);
@@ -824,26 +817,6 @@ var TwcCallBack = function (e)
             }
             break;
 
-        case "ISNARRATIONPLAYING":
-            console.log("Narration Play Toggled");
-            _IsNarrationPlaying = e.Value;
-            localStorage.setItem("TwcNarrationPlay", _IsNarrationPlaying);
-
-            if (_IsNarrationPlaying == true)
-            {
-                $("img[src='https://battaglia.ddns.net/twc/images/nav/ic_no_hearing_white_24dp_1x.png']").attr("title", "Turn off Narration");
-                $("img[src='https://battaglia.ddns.net/twc/images/nav/ic_no_hearing_white_24dp_1x.png']").attr("src", "https://battaglia.ddns.net/twc/images/nav/ic_hearing_white_24dp_1x.png");
-                $("img[src='https://battaglia.ddns.net/twc/images/nav/ic_no_hearing_white_24dp_2x.png']").attr("title", "Turn off Narration");
-                $("img[src='https://battaglia.ddns.net/twc/images/nav/ic_no_hearing_white_24dp_2x.png']").attr("src", "https://battaglia.ddns.net/twc/images/nav/ic_hearing_white_24dp_2x.png");
-            }
-            else
-            {
-                $("img[src='https://battaglia.ddns.net/twc/images/nav/ic_hearing_white_24dp_1x.png']").attr("title", "Turn on Narration");
-                $("img[src='https://battaglia.ddns.net/twc/images/nav/ic_hearing_white_24dp_1x.png']").attr("src", "https://battaglia.ddns.net/twc/images/nav/ic_no_hearing_white_24dp_1x.png");
-                $("img[src='https://battaglia.ddns.net/twc/images/nav/ic_hearing_white_24dp_2x.png']").attr("title", "Turn on Narration");
-                $("img[src='https://battaglia.ddns.net/twc/images/nav/ic_hearing_white_24dp_2x.png']").attr("src", "https://battaglia.ddns.net/twc/images/nav/ic_no_hearing_white_24dp_2x.png");
-            }
-            break;
     }
 };
 
@@ -1025,11 +998,6 @@ var document_keydown = function (e)
                 return false;
                 break;
 
-            case 78: // N
-                btnNarrationPlay_click();
-                return false;
-                break;
-
             case 70: // F
                 btnFullScreen_click();
                 return false;
@@ -1142,14 +1110,6 @@ var btnAudioPlay_click = function ()
     return false;
 };
 
-var btnNarrationPlay_click = function ()
-{
-    iframeTwc[0].contentWindow.NarrationPlayToggle();
-    UpdateFullScreenNavigate();
-
-    return false;
-};
-
 $(function ()
 {
     _WindowHeight = $(window).height();
@@ -1221,8 +1181,6 @@ $(function ()
     $(".NavigatePlay").on("click", btnNavigatePlay_click);
 
     $(".ToggleVolume").on("click", btnAudioPlay_click);
-
-    $(".ToggleNarration").on("click", btnNarrationPlay_click);
 
     $(btnGetGps).on("click", btnGetGps_click);
 
@@ -1524,15 +1482,6 @@ $(function ()
         _IsAudioPlaying = true;
     }
 
-    // TROY-FARM ?v=121 (narration test): narration defaults ON, mirroring
-    // the music default above -- one tap starts music + narration together.
-    // Tapping the Narration button off stores "false" and it stays off.
-    var TwcNarrationPlay = localStorage.getItem("TwcNarrationPlay");
-    if (!TwcNarrationPlay || TwcNarrationPlay == "true")
-    {
-        _IsNarrationPlaying = true;
-    }
-
     radScrollDefault.prop("checked", "");
     radScrollText.prop("checked", "");
     radScrollRss.prop("checked", "");
@@ -1594,10 +1543,6 @@ $(function ()
         $("#radThemeA").prop("checked", "checked");
         AssignThemes({ Themes: "THEMEA" });
         localStorage.removeItem("TwcThemes");
-
-        TwcCallBack({ Status: "ISNARRATIONPLAYING", Value: false });
-        localStorage.removeItem("TwcNarrationPlay");
-        _IsNarrationPlaying = false;
 
         TwcCallBack({ Status: "ISAUDIOPLAYING", Value: false });
         localStorage.removeItem("TwcAudioPlay");
