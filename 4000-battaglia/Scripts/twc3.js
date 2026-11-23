@@ -352,6 +352,17 @@ var _AudioContext = null;
 var _AudioBufferSource = null;
 var _AudioDuration = 0;
 var _AudioCurrentTime = 0;
+// TROY-FARM ?v=120 (gapless music): _AudioStartTime is the AudioContext
+// clock reading when the current track's buffer source started, so the
+// end-of-track check measures the TRACK position, not the context age.
+// The context runs during the MP3 download+decode, which used to fire
+// the 3s fade-out early and cut songs off before the true end.
+var _AudioStartTime = 0;
+// Pre-decoded next track, fetched while the current track plays, so the
+// next song starts the instant the current one ends (no download gap).
+var _NextAudioBuffer = null;
+var _NextAudioUrl = null;
+var _NextAudioLoading = false;
 var _AudioGain = null;
 var _AudioRefreshIntervalId = null;
 
@@ -4061,6 +4072,22 @@ setTimeout(() =>
                 GetWeather();
             },
         });
+
+        // TROY-FARM ?v=120 (gapless music): soft weather refresh for the
+        // parent's auto-refresh timer. Re-fetches the staged data and
+        // re-renders WITHOUT reloading the iframe — a reload destroys
+        // the iframe's AudioContext and cuts the current song off
+        // halfway. The farm-data cache is reset first so the fresh
+        // farm-data.json is picked up; GetWeather re-runs the fetch
+        // chain (forecast, hourly, radar, tides) and the canvas tick
+        // re-renders from the refreshed parameters. Audio is untouched.
+        window.TwcRefreshWeatherData = function ()
+        {
+            _FarmDataReady = false;
+            _FarmData = null;
+            _FarmDataLoading = false;
+            GetWeather();
+        };
     }), 250);
 
 var NavigateMenu = function ()
@@ -10032,6 +10059,17 @@ var _P28DrawHourly = function (WeatherParameters, subMs)
     DrawText(context, "Star4000 Small", "24pt", "#FFFF00", 535, 114, "WIND", 3);
 
     UpdateWeatherCanvas(WeatherParameters, canvasHourlyForecast);
+
+    // TROY-FARM ?v=120 (white line): draw the thin white divider at the
+    // top of the ticker box LAST, ungated, so it sits on top of the
+    // hourly list, the ticker background and the scroll text on every
+    // frame — matching the line the other screens get from the panel
+    // at the same place (canvas y 402, just above the y 405 ticker
+    // strip). 3px so it stays visible at the 640 -> 390 phone scale
+    // (~1.8 CSS px). The ?v=119 copy in UpdateWeatherCanvas never drew
+    // (it was gated on a custom scroll text Troy never sets).
+    context.fillStyle = "#ffffff";
+    context.fillRect(0, 402, 640, 3);
 };
 
 var PopulateHourlyForecast = function (WeatherParameters)
@@ -14177,14 +14215,11 @@ var UpdateWeatherCanvas = function (WeatherParameters, Canvas)
         DrawCustomScrollText(WeatherParameters, context);
     }
 
-    // TROY-FARM (2026-11-22): thin white divider at the very top of the
-    // ticker box on the Hourly Forecast screen only — separates the hourly
-    // list above from the scrolling ticker below.
-    if (Canvas[0] == canvasHourlyForecast[0] && OkToDrawCustomScrollText == true)
-    {
-        context.fillStyle = "#ffffff";
-        context.fillRect(0, 405, 640, 2);
-    }
+    // TROY-FARM ?v=120: the ticker-top divider moved to _P28DrawHourly
+    // (drawn last, ungated). This gated copy never drew: it required
+    // OkToDrawCustomScrollText, which is false when no custom scroll
+    // text is set — Troy's normal case — so Hourly had no line while
+    // the other screens got theirs from the panel.
 
     if (OkToDrawScrollHazardText == true)
     {
@@ -15103,7 +15138,9 @@ var AudioOnTimeUpdate = function ()
 {
     if (window.AudioContext)
     {
-        _AudioCurrentTime = _AudioContext.currentTime;
+        // TROY-FARM ?v=120: track position = context clock minus the
+        // clock reading at start (the context runs during download).
+        _AudioCurrentTime = _AudioContext.currentTime - _AudioStartTime;
     }
     else
     {
@@ -15173,7 +15210,10 @@ var AudioOnTimeUpdate = function ()
 
                         if (_IsAudioPlaying == true)
                         {
-                            LoadAudio(GetNextMusicUrl());
+                            // TROY-FARM ?v=120: start the pre-decoded next
+                            // track at once (no download gap); falls back
+                            // to a fresh download if nothing preloaded.
+                            PlayNextAudio();
                         }
                     }
                 }, IntervalMs);
@@ -15341,6 +15381,7 @@ var LoadAudio = function(Url)
         _AudioContext = new AudioContext();
         _AudioDuration = 0;
         _AudioCurrentTime = 0;
+        _AudioStartTime = 0;
 
         var req = new XMLHttpRequest();
         //req.open("GET", "https://battaglia.ddns.net/twc/Audio/Trammell Starks - The Blizzard Song.mp3", true);
@@ -15369,6 +15410,11 @@ var LoadAudio = function(Url)
                 //_AudioGain.gain.value = 0.1;
 
                 //PlayAudio();
+                // TROY-FARM ?v=120: stamp the context clock at start so
+                // AudioOnTimeUpdate measures the track position, not the
+                // context age (download+decode time no longer cuts the
+                // song off early).
+                _AudioStartTime = _AudioContext.currentTime;
                 _AudioBufferSource.start();
                 _AudioContext.resume();
 
@@ -15377,6 +15423,12 @@ var LoadAudio = function(Url)
                     AudioOnTimeUpdate();
                     RefreshStateOfMusicAudio();
                 }, 500);
+
+                // TROY-FARM ?v=120 (gapless music): fetch + decode the
+                // next track now, while this one plays, so it starts the
+                // instant this one ends instead of going silent for a
+                // download.
+                PreloadNextAudio();
 
             });
         };
@@ -15408,6 +15460,108 @@ var LoadAudio = function(Url)
         };
         audio.src = Url;
         audio.load();
+    }
+};
+// TROY-FARM ?v=120 (gapless music): pre-fetch + pre-decode the next track
+// while the current track plays, so the end-of-track handoff starts the
+// next song at once instead of going silent while its MP3 downloads and
+// decodes. The playlist is a random shuffle without repeats
+// (GetNextMusicUrl consumes one entry); preloading consumes the next
+// entry one step ahead, so the order stays shuffle-correct and no track
+// repeats until the shuffle refills.
+var PreloadNextAudio = function ()
+{
+    if (!window.AudioContext) return;
+    if (_NextAudioBuffer || _NextAudioLoading) return;
+    if (!_IsAudioPlaying) return;
+    if (!_AudioContext) return;
+    var url = GetNextMusicUrl();
+    if (!url) return;
+    _NextAudioUrl = url;
+    _NextAudioLoading = true;
+    // Decode on the current context; the decoded AudioBuffer is
+    // context-independent, so it stays usable even after LoadAudio /
+    // PlayAudioBuffer closes this context for the next track.
+    var ctx = _AudioContext;
+    var req = new XMLHttpRequest();
+    req.open("GET", url, true);
+    req.responseType = "arraybuffer";
+    req.onload = function ()
+    {
+        ctx.decodeAudioData(req.response, function (buffer)
+        {
+            _NextAudioBuffer = buffer;
+            _NextAudioLoading = false;
+        }, function ()
+        {
+            _NextAudioLoading = false;
+            _NextAudioUrl = null;
+        });
+    };
+    req.onerror = function ()
+    {
+        _NextAudioLoading = false;
+        _NextAudioUrl = null;
+    };
+    req.send();
+};
+// Start a pre-decoded buffer at once — the same play setup LoadAudio
+// does after its download+decode, minus the download+decode wait.
+var PlayAudioBuffer = function (buffer)
+{
+    if (!window.AudioContext || !buffer)
+    {
+        LoadAudio(GetNextMusicUrl());
+        return;
+    }
+    if (_AudioRefreshIntervalId)
+    {
+        window.clearIntervalWorker(_AudioRefreshIntervalId);
+        _AudioRefreshIntervalId = null;
+    }
+    if (_AudioBufferSource)
+    {
+        try { _AudioBufferSource.stop(); } catch (ex) { }
+        _AudioBufferSource = null;
+    }
+    if (_AudioContext)
+    {
+        _AudioContext.close();
+        _AudioContext = null;
+    }
+    _AudioContext = new AudioContext();
+    _AudioDuration = buffer.duration;
+    _AudioCurrentTime = 0;
+    _AudioStartTime = 0;
+    _AudioBufferSource = _AudioContext.createBufferSource();
+    _AudioBufferSource.buffer = buffer;
+    _AudioGain = _AudioContext.createGain();
+    _AudioBufferSource.connect(_AudioGain);
+    _AudioGain.connect(_AudioContext.destination);
+    _AudioGain.gain.value = 1.00;
+    _AudioStartTime = _AudioContext.currentTime;
+    _AudioBufferSource.start();
+    _AudioContext.resume();
+    _AudioRefreshIntervalId = window.setIntervalWorker(function ()
+    {
+        AudioOnTimeUpdate();
+        RefreshStateOfMusicAudio();
+    }, 500);
+    // Queue the following track while this one plays.
+    PreloadNextAudio();
+};
+var PlayNextAudio = function ()
+{
+    if (_NextAudioBuffer)
+    {
+        var buffer = _NextAudioBuffer;
+        _NextAudioBuffer = null;
+        _NextAudioUrl = null;
+        PlayAudioBuffer(buffer);
+    }
+    else
+    {
+        LoadAudio(GetNextMusicUrl());
     }
 };
 var PlayAudio = function()

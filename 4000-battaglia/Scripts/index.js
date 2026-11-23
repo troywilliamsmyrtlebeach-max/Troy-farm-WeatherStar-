@@ -1757,7 +1757,32 @@ var StartAutoRefreshTimer = function ()
         if (_AutoRefreshCountMs >= _AutoRefreshTotalIntervalMs)
         {
             // Time has elapsed.
-            LoadTwcData(_TwcDataUrl, true);
+            // TROY-FARM ?v=120 (gapless music): refresh the weather data
+            // WITHOUT reloading the iframe — a reload destroys the
+            // iframe's AudioContext and cuts the current song off
+            // halfway. TwcRefreshWeatherData (twc3.js) re-fetches the
+            // staged data and re-renders; fall back to the full reload
+            // only if the iframe does not offer it (old cached twc3.js).
+            var _twcWin = (iframeTwc[0] && iframeTwc[0].contentWindow) || null;
+            if (_twcWin && typeof _twcWin.TwcRefreshWeatherData === "function")
+            {
+                try
+                {
+                    _twcWin.TwcRefreshWeatherData();
+                }
+                catch (ex)
+                {
+                    LoadTwcData(_TwcDataUrl, true);
+                    return;
+                }
+                _LastUpdate = new Date();
+                AssignLastUpdate();
+                _AutoRefreshCountMs = 0;
+            }
+            else
+            {
+                LoadTwcData(_TwcDataUrl, true);
+            }
         }
     };
     _AutoRefreshIntervalId = window.setInterval(AutoRefreshTimer, _AutoRefreshIntervalMs);
