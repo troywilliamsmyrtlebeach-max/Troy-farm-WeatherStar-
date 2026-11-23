@@ -4089,7 +4089,7 @@ var NavigateNext = function ()
     }
     else
     {
-        _PlayMs += 10000;
+        _PlayMs += 8000;
     }
 
     _IsSpeaking = false; // Force navigation
@@ -4109,11 +4109,11 @@ var NavigatePrevious = function ()
 
     if (_CurrentCanvasType == CanvasTypes.Progress)
     {
-        _PlayMs = _PlayMsOffsets.End - 10000;
+        _PlayMs = _PlayMsOffsets.End - 8000;
     }
     else
     {
-        _PlayMs -= 10000;
+        _PlayMs -= 8000;
     }
 
     _IsSpeaking = false; // Force navigation
@@ -4496,28 +4496,28 @@ var _PlayMsOffsets = {
     End: 0,
     Length: 0,
     CurrentWeather_Start: 0,
-    CurrentWeather_End: 10000,
-    CurrentWeather_Length: 10000,
+    CurrentWeather_End: 8000,
+    CurrentWeather_Length: 8000,
     CurrentWeather_Loaded: false,
     LatestObservations_Start: 0,
     LatestObservations_End: 0,
-    LatestObservations_Length: 10000,
+    LatestObservations_Length: 8000,
     LatestObservations_Loaded: false,
     HourlyForecast_Start: 0,
     HourlyForecast_End: 0,
-    HourlyForecast_Length: 36000,
+    HourlyForecast_Length: 30000,
     HourlyForecast_Loaded: false,
     RegionalForecast1_Start: 0,
     RegionalForecast1_End: 0,
-    RegionalForecast1_Length: 10000,
+    RegionalForecast1_Length: 8000,
     RegionalForecast1_Loaded: false,
     RegionalForecast2_Start: 0,
     RegionalForecast2_End: 0,
-    RegionalForecast2_Length: 10000,
+    RegionalForecast2_Length: 8000,
     RegionalForecast2_Loaded: false,
     RegionalObservations_Start: 0,
     RegionalObservations_End: 0,
-    RegionalObservations_Length: 10000,
+    RegionalObservations_Length: 8000,
     RegionalObservations_Loaded: false,
     LocalForecast_Start: 0,
     LocalForecast_End: 0,
@@ -4525,39 +4525,39 @@ var _PlayMsOffsets = {
     LocalForecast_Loaded: false,
     MarineForecast_Start: 0,
     MarineForecast_End: 0,
-    MarineForecast_Length: 10000,
+    MarineForecast_Length: 8000,
     MarineForecast_Loaded: false,
     AirQuality_Start: 0,
     AirQuality_End: 0,
-    AirQuality_Length: 10000,
+    AirQuality_Length: 8000,
     AirQuality_Loaded: false,
     ExtendedForecast1_Start: 0,
     ExtendedForecast1_End: 0,
-    ExtendedForecast1_Length: 10000,
+    ExtendedForecast1_Length: 8000,
     ExtendedForecast1_Loaded: false,
     ExtendedForecast2_Start: 0,
     ExtendedForecast2_End: 0,
-    ExtendedForecast2_Length: 10000,
+    ExtendedForecast2_Length: 8000,
     ExtendedForecast2_Loaded: false,
     Almanac_Start: 0,
     Almanac_End: 0,
-    Almanac_Length: 10000,
+    Almanac_Length: 8000,
     Almanac_Loaded: false,
     AlmanacTides_Start: 0,
     AlmanacTides_End: 0,
-    AlmanacTides_Length: 10000,
+    AlmanacTides_Length: 8000,
     AlmanacTides_Loaded: false,
     Outlook_Start: 0,
     Outlook_End: 0,
-    Outlook_Length: 10000,
+    Outlook_Length: 8000,
     Outlook_Loaded: false,
     DailyHistory_Start: 0,
     DailyHistory_End: 0,
-    DailyHistory_Length: 10000,
+    DailyHistory_Length: 8000,
     DailyHistory_Loaded: false,
     LocalRadar_Start: 0,
     LocalRadar_End: 0,
-    LocalRadar_Length: 15000,
+    LocalRadar_Length: 12000,
     LocalRadar_Loaded: false,
     Hazards_Start: 0,
     Hazards_End: 0,
@@ -4576,7 +4576,7 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
     _PlayMsOffsets.CurrentWeather_Start = 0
     if (Progress.CurrentConditions == LoadStatuses.Loaded)
     {
-        _PlayMsOffsets.LatestObservations_Length = 10000;
+        _PlayMsOffsets.LatestObservations_Length = 8000;
     }
     else
     {
@@ -4590,7 +4590,7 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
     // table exists, not only when progress says Loaded.
     if (_P25LoReady())
     {
-        _PlayMsOffsets.LatestObservations_Length = 10000;
+        _PlayMsOffsets.LatestObservations_Length = 8000;
     }
     else
     {
@@ -4602,9 +4602,10 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
     _PlayMsOffsets.HourlyForecast_Start = _PlayMsOffsets.LatestObservations_End;
     if (Progress.HourlyForecast == LoadStatuses.Loaded)
     {
-        // TROY-FARM P28 rebuild: 6 pages of 4 hourly rows, Channel pacing
-        // [9, 6, 6, 6, 6, 3]s = 36s per cycle.
-        _PlayMsOffsets.HourlyForecast_Length = 36000;
+        // TROY-FARM P28 rebuild: hourly list scrolls continuously (see
+        // _P28DrawHourly); slot 30s (was 36s) — TROY 2026-11-22 speed-up,
+        // like Channel/International.
+        _PlayMsOffsets.HourlyForecast_Length = 30000;
     }
     else
     {
@@ -4616,7 +4617,7 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
     _PlayMsOffsets.RegionalForecast1_Start = _PlayMsOffsets.HourlyForecast_End;
     if (Progress.TomorrowsRegionalMap == LoadStatuses.Loaded)
     {
-        _PlayMsOffsets.RegionalForecast1_Length = 10000;
+        _PlayMsOffsets.RegionalForecast1_Length = 8000;
     }
     else
     {
@@ -4628,7 +4629,7 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
     _PlayMsOffsets.RegionalForecast2_Start = _PlayMsOffsets.RegionalForecast1_End;
     if (Progress.TomorrowsRegionalMap == LoadStatuses.Loaded)
     {
-        _PlayMsOffsets.RegionalForecast2_Length = 10000;
+        _PlayMsOffsets.RegionalForecast2_Length = 8000;
     }
     else
     {
@@ -4640,7 +4641,7 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
     _PlayMsOffsets.RegionalObservations_Start = _PlayMsOffsets.RegionalForecast2_End;
     if (Progress.CurrentRegionalMap == LoadStatuses.Loaded)
     {
-        _PlayMsOffsets.RegionalObservations_Length = 10000;
+        _PlayMsOffsets.RegionalObservations_Length = 8000;
     }
     else
     {
@@ -4652,7 +4653,7 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
     _PlayMsOffsets.LocalForecast_Start = _PlayMsOffsets.RegionalObservations_End;
     if (Progress.WordedForecast == LoadStatuses.Loaded)
     {
-        _PlayMsOffsets.LocalForecast_Length = LocalForecastScreenTexts.length * 10000;
+        _PlayMsOffsets.LocalForecast_Length = LocalForecastScreenTexts.length * 8000;
     }
     else
     {
@@ -4664,7 +4665,7 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
     _PlayMsOffsets.MarineForecast_Start = _PlayMsOffsets.LocalForecast_End;
     if (Progress.WordedForecast == LoadStatuses.Loaded && _WeatherParameters.MarineForecast)
     {
-        _PlayMsOffsets.MarineForecast_Length = 10000;
+        _PlayMsOffsets.MarineForecast_Length = 8000;
     }
     else
     {
@@ -4676,7 +4677,7 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
     _PlayMsOffsets.AirQuality_Start = _PlayMsOffsets.MarineForecast_End;
     if (Progress.WordedForecast == LoadStatuses.Loaded && _WeatherParameters.AirQuality)
     {
-        _PlayMsOffsets.AirQuality_Length = 10000;
+        _PlayMsOffsets.AirQuality_Length = 8000;
     }
     else
     {
@@ -4688,7 +4689,7 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
     _PlayMsOffsets.ExtendedForecast1_Start = _PlayMsOffsets.AirQuality_End;
     if (Progress.FourDayForecast == LoadStatuses.Loaded)
     {
-        _PlayMsOffsets.ExtendedForecast1_Length = 10000;
+        _PlayMsOffsets.ExtendedForecast1_Length = 8000;
     }
     else
     {
@@ -4700,7 +4701,7 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
     _PlayMsOffsets.ExtendedForecast2_Start = _PlayMsOffsets.ExtendedForecast1_End;
     if (Progress.FourDayForecast == LoadStatuses.Loaded)
     {
-        _PlayMsOffsets.ExtendedForecast2_Length = 10000;
+        _PlayMsOffsets.ExtendedForecast2_Length = 8000;
     }
     else
     {
@@ -4712,7 +4713,7 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
     _PlayMsOffsets.Almanac_Start = _PlayMsOffsets.ExtendedForecast2_End;
     if (Progress.Almanac == LoadStatuses.Loaded)
     {
-        _PlayMsOffsets.Almanac_Length = 10000;
+        _PlayMsOffsets.Almanac_Length = 8000;
     }
     else
     {
@@ -4724,7 +4725,7 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
     _PlayMsOffsets.AlmanacTides_Start = _PlayMsOffsets.Almanac_End;
     if (Progress.Almanac == LoadStatuses.Loaded && _WeatherParameters.WeatherTides)
     {
-        _PlayMsOffsets.AlmanacTides_Length = 10000;
+        _PlayMsOffsets.AlmanacTides_Length = 8000;
     }
     else
     {
@@ -4736,7 +4737,7 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
     _PlayMsOffsets.Outlook_Start = _PlayMsOffsets.AlmanacTides_End;
     if (Progress.Almanac == LoadStatuses.Loaded && _WeatherParameters.Outlook)
     {
-        _PlayMsOffsets.Outlook_Length = 10000;
+        _PlayMsOffsets.Outlook_Length = 8000;
     }
     else
     {
@@ -4748,7 +4749,7 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
     _PlayMsOffsets.DailyHistory_Start = _PlayMsOffsets.Outlook_End;
     if (Progress.DailyHistory == LoadStatuses.Loaded && _WeatherParameters.DailyHistory)
     {
-        _PlayMsOffsets.DailyHistory_Length = 10000;
+        _PlayMsOffsets.DailyHistory_Length = 8000;
     }
     else
     {
@@ -4760,7 +4761,7 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
     _PlayMsOffsets.LocalRadar_Start = _PlayMsOffsets.DailyHistory_End;
     if (Progress.DopplerRadar == LoadStatuses.Loaded)
     {
-        _PlayMsOffsets.LocalRadar_Length = 15000;
+        _PlayMsOffsets.LocalRadar_Length = 12000;
     }
     else
     {
@@ -5088,7 +5089,7 @@ var UpdatePlayPosition = function ()
         _CurrentPosition = _CurrentCanvasType;
         SubMs = _PlayMs - _PlayMsOffsets.LocalForecast_Start;
 
-        _UpdateLocalForecastIndex = Math.floor(SubMs / 10000);
+        _UpdateLocalForecastIndex = Math.floor(SubMs / 8000);
         _CurrentPosition += _UpdateLocalForecastIndex / 10;
 
         if (_IsSpeaking == true)
@@ -9820,15 +9821,15 @@ var _P28ValidateHourlyForecast = function (json)
 // offset 1px per 20ms tick = 50px/s after a 3s hold), instead of jumping
 // between 6 pages of 4 rows. 24 rows x 72px + 10px top padding = 1738px
 // of content in the 288px window below the header band (y116-404); max
-// offset 1450px, reached ~32s into the 36s slot, then held. The slot
-// pacing still copies Channel's hourly delays [9, 6, 6, 6, 6, 3]s = 36s.
+// offset 1450px, reached ~27s into the 30s slot, then held (TROY
+// 2026-11-22 speed-up: slot 36s -> 30s, scroll 0.05 -> 0.06 px/ms).
 // LIKE is yellow, same as Channel's CSS (the upstream app's pale
 // lavender-blue LIKE is not Troy's Channel look).
 // Icons are 70x70 (was 48x48): Channel's icons render 45x42 CSS px at
 // 390px; Battaglia's 48px icons rendered only 28px on Troy's phone
 // (the wrapper's width=660 viewport scales 660->390, factor 0.591), so
 // 70px canvas = 41px on screen, matching Channel's icon size. The
-// canvas play clock ticks every 100ms, so the scroll advances 5px per
+// canvas play clock ticks every 100ms, so the scroll advances 6px per
 // tick (10fps) — a steady crawl, not page jumps; Channel's HTML scroll
 // is smoother (50fps), but the app has no finer clock to drive it with.
 var _P28LastSubMs = 0;
@@ -9838,10 +9839,83 @@ var _P28ScrollMaxOffset = 1450;
 
 var _P28ScrollOffsetForMs = function (subMs)
 {
-    var _off = (subMs - 3000) * 0.05;
+    var _off = (subMs - 3000) * 0.06;
     if (_off < 0) _off = 0;
     if (_off > _P28ScrollMaxOffset) _off = _P28ScrollMaxOffset;
     return _off;
+};
+
+// TROY-FARM (2026-11-22): Hourly Forecast icons match Channel/International.
+// Channel's hourly.mjs renders each hour with getWeatherRegionalIconFromIconLink
+// (4000-myrtle-intl/scripts/modules/icons.mjs) — the TWC-style images/r/*.gif
+// set — while this screen was loading the NWS forecast.weather.gov wtf/small
+// PNGs (nfog.png, nbkn.png, ...). Map the staged NWS icon code + that hour's
+// own day/night to the SAME images/r/*.gif file Channel uses for the same
+// condition, served from https://battaglia.ddns.net/twc/images/r/ (the host
+// this app already loads its hero/LO icons from; every gif below verified
+// live there 2026-11-22). OVC/Cloudy is Cloudy.gif day AND night (Channel's
+// 2026-11-22 Cloudy-icon fix). Unknown codes fall back to Channel's own
+// default: Partly-Cloudy.gif by day, Mostly-Clear.gif at night.
+var _P28HourlyIconUrl = function (iconCode, isDaytime)
+{
+    var _day = isDaytime ? true : false;
+    var _code = (iconCode || "").toLowerCase();
+    var _gif;
+    switch (_code)
+    {
+        case "skc":
+        case "cold":
+        case "hot":
+            _gif = _day ? "Sunny.gif" : "Clear-1992.gif";
+            break;
+        case "few":
+            _gif = _day ? "Sunny.gif" : "Mostly-Clear.gif";
+            break;
+        case "sct":
+            _gif = _day ? "Partly-Cloudy.gif" : "Mostly-Clear.gif";
+            break;
+        case "bkn":
+            _gif = _day ? "Mostly-Cloudy.gif" : "Mostly-Clear.gif";
+            break;
+        case "ovc":
+            _gif = "Cloudy.gif";
+            break;
+        case "fog":
+            _gif = "Fog.gif";
+            break;
+        case "rain":
+            _gif = "Shower.gif";
+            break;
+        case "rain_showers":
+        case "rain_showers_hi":
+            _gif = "Rain-1992.gif";
+            break;
+        case "rain_sleet":
+        case "snow_sleet":
+        case "sleet":
+            _gif = "Sleet.gif";
+            break;
+        case "snow":
+        case "blizzard":
+            _gif = "Heavy-Snow.gif";
+            break;
+        case "snow_showers":
+            _gif = _day ? "Scattered-Snow-Showers-1994-2.gif" : "Heavy-Snow.gif";
+            break;
+        case "tsra":
+        case "tsra_sct":
+        case "tsra_hi":
+            _gif = "Thunderstorm.gif";
+            break;
+        case "fzra":
+        case "mix":
+            _gif = "Freezing-Rain-1992.gif";
+            break;
+        default:
+            _gif = _day ? "Partly-Cloudy.gif" : "Mostly-Clear.gif";
+            break;
+    }
+    return "https://battaglia.ddns.net/twc/images/r/" + _gif;
 };
 
 var _P28DrawHourly = function (WeatherParameters, subMs)
@@ -9905,16 +9979,18 @@ var _P28DrawHourly = function (WeatherParameters, subMs)
         var _wind = (_row.windSpeedMph === 0) ? "Calm" : _row.windDir + " " + _row.windSpeedMph;
         DrawText(context, "Star4000 Large", "24pt", "#FFFF00", 605, _y, _wind, 3, "end");
 
-        // Sky icon (best-effort, must never wedge the screen): the staged
-        // URL already carries the night 'n' prefix — moon at night, sun
-        // by day, per that hour's own day/night. Cached per URL so
-        // redraws are synchronous once loaded. 60x60, centered x290:
+        // Sky icon (best-effort, must never wedge the screen): Channel/
+        // International's images/r/*.gif for this hour's NWS code + its own
+        // day/night (see _P28HourlyIconUrl) — moon at night, sun by day.
+        // NOT the staged NWS wtf PNG. Cached per URL so redraws are
+        // synchronous once loaded. 60x60, centered x290:
         // on Troy's phone the 640-wide canvas scales 0.5909x, so 60px
         // renders 35.5 CSS px — exactly Channel/International's icon
         // size on their live kiosk links at 390px (35.45x33.09). The
         // 70px size overshot it by ~17% (41.4 CSS px); corrected
         // 2026-11-17 after measuring Troy's own links.
-        if (_row.iconUrl)
+        var _hourlyIconUrl = _P28HourlyIconUrl(_row.iconCode, _row.isDaytime);
+        if (_hourlyIconUrl)
         {
             (function (_iconUrl)
             {
@@ -9942,7 +10018,7 @@ var _P28DrawHourly = function (WeatherParameters, subMs)
                 {
                     context.drawImage(_img, 260, _top + 6, 60, 60);
                 }
-            })(_row.iconUrl);
+            })(_hourlyIconUrl);
         }
     }
     context.restore();
@@ -14101,6 +14177,15 @@ var UpdateWeatherCanvas = function (WeatherParameters, Canvas)
         DrawCustomScrollText(WeatherParameters, context);
     }
 
+    // TROY-FARM (2026-11-22): thin white divider at the very top of the
+    // ticker box on the Hourly Forecast screen only — separates the hourly
+    // list above from the scrolling ticker below.
+    if (Canvas[0] == canvasHourlyForecast[0] && OkToDrawCustomScrollText == true)
+    {
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, 405, 640, 2);
+    }
+
     if (OkToDrawScrollHazardText == true)
     {
         DrawScrollHazardText(WeatherParameters, context);
@@ -14583,7 +14668,7 @@ var DrawCustomScrollText = function (WeatherParameters, context)
 
     text = _ScrollText;
 
-    x = 640 - ((_UpdateCustomScrollTextMs / _UpdateWeatherUpdateMs) * 5);
+    x = 640 - ((_UpdateCustomScrollTextMs / _UpdateWeatherUpdateMs) * 8);
     if (x < ((text.length + 10) * 15 * -1)) // Wait an extra 5 characters.
     {
         _UpdateCustomScrollTextMs = 0;
