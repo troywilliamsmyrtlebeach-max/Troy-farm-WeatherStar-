@@ -1,8 +1,8 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-24T00:10:50-05:00",
-  "updateTime": "2026-11-24T05:10:52.829775+00:00",
+  "generatedAt": "2026-11-24T00:42:30-05:00",
+  "updateTime": "2026-11-24T05:42:31.406849+00:00",
   "source": "Storm Prediction Center categorical outlooks (Day 1/2/3 GeoJSON) for 33.92,-78.57",
   "sources": {
     "1": "https://www.spc.noaa.gov/products/outlook/day1otlk_cat.lyr.geojson",
@@ -12,14 +12,14 @@
   "days": [
     {
       "day": 1,
-      "dateLabel": "Mon Nov 23",
+      "dateLabel": "Tue Nov 24",
       "riskCode": "NONE",
       "riskLabel": "No Severe Outlook",
       "color": "#FFFFFF",
-      "validFrom": "2026-11-23T20:00:00-05:00",
-      "validTo": "2026-11-24T07:00:00-05:00",
-      "validLabel": "Mon 8 PM - Tue 7 AM EST",
-      "issued": "2026-11-23T19:31:00-05:00",
+      "validFrom": "2026-11-24T07:00:00-05:00",
+      "validTo": "2026-11-25T07:00:00-05:00",
+      "validLabel": "Tue 7 AM - Wed 7 AM EST",
+      "issued": "2026-11-24T00:28:00-05:00",
       "source": "https://www.spc.noaa.gov/products/outlook/day1otlk_cat.lyr.geojson",
       "matchedPolygon": null
     },
