@@ -1,0 +1,224 @@
+{
+  "station": "KNCCAROL120",
+  "location": "CALABASH-FARM AT BRUNSWICK",
+  "generatedAt": "2026-11-23T23:46:25-05:00",
+  "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
+  "cities": [
+    {
+      "name": "Atlanta",
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Mostly Cloudy",
+      "highF": 62,
+      "lowF": 43,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "Boston",
+      "iconLink": "https://api.weather.gov/icons/land/day/few?size=medium",
+      "shortForecast": "Sunny",
+      "highF": 46,
+      "lowF": 28,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "Chicago",
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Partly Sunny",
+      "highF": 42,
+      "lowF": 30,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "Cleveland",
+      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
+      "shortForecast": "Mostly Sunny",
+      "highF": 42,
+      "lowF": 30,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "Dallas",
+      "iconLink": "https://api.weather.gov/icons/land/day/rain_showers,30/rain_showers,20?size=medium",
+      "shortForecast": "Chance Rain Showers",
+      "highF": 50,
+      "lowF": 34,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "Denver",
+      "iconLink": "https://api.weather.gov/icons/land/day/few?size=medium",
+      "shortForecast": "Sunny",
+      "highF": 52,
+      "lowF": 26,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "Detroit",
+      "iconLink": "https://api.weather.gov/icons/land/day/few?size=medium",
+      "shortForecast": "Sunny",
+      "highF": 40,
+      "lowF": 29,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "Hartford",
+      "iconLink": "https://api.weather.gov/icons/land/day/few?size=medium",
+      "shortForecast": "Sunny",
+      "highF": 47,
+      "lowF": 23,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "Houston",
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn/rain_showers,20?size=medium",
+      "shortForecast": "Partly Sunny then Slight Chance Rain Showers",
+      "highF": 58,
+      "lowF": 42,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "Indianapolis",
+      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
+      "shortForecast": "Mostly Sunny",
+      "highF": 42,
+      "lowF": 27,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "Los Angeles",
+      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
+      "shortForecast": "Mostly Sunny",
+      "highF": 73,
+      "lowF": 55,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "Miami",
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Mostly Cloudy",
+      "highF": 81,
+      "lowF": 74,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "Minneapolis",
+      "iconLink": "https://api.weather.gov/icons/land/day/ovc?size=medium",
+      "shortForecast": "Cloudy",
+      "highF": 34,
+      "lowF": 25,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "New York",
+      "iconLink": "https://api.weather.gov/icons/land/day/skc?size=medium",
+      "shortForecast": "Sunny",
+      "highF": 51,
+      "lowF": 39,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "Norfolk",
+      "iconLink": "https://api.weather.gov/icons/land/day/rain_showers,30/bkn?size=medium",
+      "shortForecast": "Chance Rain Showers then Partly Sunny",
+      "highF": 53,
+      "lowF": 43,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "Orlando",
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Partly Sunny",
+      "highF": 75,
+      "lowF": 64,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "Philadelphia",
+      "iconLink": "https://api.weather.gov/icons/land/day/skc?size=medium",
+      "shortForecast": "Sunny",
+      "highF": 51,
+      "lowF": 32,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "Pittsburgh",
+      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
+      "shortForecast": "Mostly Sunny",
+      "highF": 43,
+      "lowF": 27,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "St. Louis",
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Mostly Cloudy",
+      "highF": 44,
+      "lowF": 28,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "San Francisco",
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Mostly Cloudy",
+      "highF": 63,
+      "lowF": 54,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "Seattle",
+      "iconLink": "https://api.weather.gov/icons/land/day/rain,50/rain,70?size=medium",
+      "shortForecast": "Light Rain Likely",
+      "highF": 52,
+      "lowF": 48,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "Syracuse",
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Partly Sunny",
+      "highF": 39,
+      "lowF": 24,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "Tampa",
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Partly Sunny",
+      "highF": 77,
+      "lowF": 65,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    },
+    {
+      "name": "Washington DC",
+      "iconLink": "https://api.weather.gov/icons/land/day/few?size=medium",
+      "shortForecast": "Sunny",
+      "highF": 53,
+      "lowF": 32,
+      "isDaytime": true,
+      "dayName": "Tuesday"
+    }
+  ]
+}
