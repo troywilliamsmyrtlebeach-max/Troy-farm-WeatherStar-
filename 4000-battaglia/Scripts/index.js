@@ -89,6 +89,16 @@ var _canvasIds = [
     "canvasCurrentWeather",
     "canvasLatestObservations",
     "canvasHourlyForecast",
+    // TROY-FARM P29 (2026-11-24): canvasTravelForecast was missing
+    // from this list — FullScreenResize() sizes ONLY the canvases
+    // listed here, so in fullscreen every other screen filled the
+    // display while Travel Cities kept its intrinsic 640x480 size:
+    // close-up/cropped in landscape fullscreen (Troy had to tap in
+    // and out of fullscreen for that screen every time it came up
+    // — same class as the P27 canvasDailyHistory fix). It sits here
+    // in cycle order, between HourlyForecast and
+    // RegionalForecast1, like the canvas order in twc3.html.
+    "canvasTravelForecast",
     "canvasRegionalForecast1",
     "canvasRegionalForecast2",
     "canvasRegionalObservations",
