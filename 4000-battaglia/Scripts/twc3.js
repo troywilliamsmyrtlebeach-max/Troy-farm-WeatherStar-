@@ -9872,8 +9872,10 @@ var _P28ScrollOffsetForMs = function (subMs)
 // TROY-FARM (2026-11-22): Hourly Forecast icons match Channel/International.
 // Channel's hourly.mjs renders each hour with getWeatherRegionalIconFromIconLink
 // (4000-myrtle-intl/scripts/modules/icons.mjs) — the TWC-style images/r/*.gif
-// set — while this screen was loading the NWS forecast.weather.gov wtf/small
-// PNGs (nfog.png, nbkn.png, ...). Map the staged NWS icon code + that hour's
+// set — the staged icon code is Open-Meteo WMO mapped by
+// stage_hourly_forecast.py (Troy's 2026-11-23 "Match" decision — the
+// same source Channel's hourly reads; NWS was the source before).
+// Map the staged icon code + that hour's
 // own day/night to the SAME images/r/*.gif file Channel uses for the same
 // condition, served from https://battaglia.ddns.net/twc/images/r/ (the host
 // this app already loads its hero/LO icons from; every gif below verified
@@ -9907,6 +9909,11 @@ var _P28HourlyIconUrl = function (iconCode, isDaytime)
         case "fog":
             _gif = "Fog.gif";
             break;
+        case "light_drizzle":
+            // TROY-FARM 2026-11-23 (Match): WMO 51 — Channel shows
+            // Scattered-Showers-1994-2.gif by day, the Night file after dark.
+            _gif = _day ? "Scattered-Showers-1994-2.gif" : "Scattered-Showers-Night.gif";
+            break;
         case "rain":
             _gif = "Shower.gif";
             break;
@@ -9919,6 +9926,11 @@ var _P28HourlyIconUrl = function (iconCode, isDaytime)
         case "sleet":
             _gif = "Sleet.gif";
             break;
+        case "light_snow":
+            // TROY-FARM 2026-11-23 (Match): WMO 71 — Channel shows
+            // Light-Snow.gif day AND night (not Heavy-Snow).
+            _gif = "Light-Snow.gif";
+            break;
         case "snow":
         case "blizzard":
             _gif = "Heavy-Snow.gif";
@@ -9926,10 +9938,21 @@ var _P28HourlyIconUrl = function (iconCode, isDaytime)
         case "snow_showers":
             _gif = _day ? "Scattered-Snow-Showers-1994-2.gif" : "Heavy-Snow.gif";
             break;
+        case "snow_showers_lt":
+            // TROY-FARM 2026-11-23 (Match): WMO 85 — same day file as
+            // snow_showers, but Light-Snow.gif at night (Channel case
+            // 85-night); 86 keeps Heavy-Snow.gif at night.
+            _gif = _day ? "Scattered-Snow-Showers-1994-2.gif" : "Light-Snow.gif";
+            break;
         case "tsra":
         case "tsra_sct":
         case "tsra_hi":
             _gif = "Thunderstorm.gif";
+            break;
+        case "tsra_hail":
+            // TROY-FARM 2026-11-23 (Match): WMO 96/99 — Channel shows
+            // ThunderSnow.gif, not the plain thunderstorm file.
+            _gif = "ThunderSnow.gif";
             break;
         case "fzra":
         case "mix":
@@ -9964,23 +9987,33 @@ var _P28DrawHourlyIconMotion = function (context, iconCode, isDaytime, x, y, siz
     else if (_code === "fog") _kind = "fog";
     else if (_code === "skc" || _code === "cold" || _code === "hot" || _code === "few") _kind = isDaytime ? "sun" : "stars";
     else _kind = "cloud";
+    // TROY-FARM 2026-11-23 (rain under the icon): rows are 72px tall
+    // and the next row's icon starts 12px below this one's bottom
+    // edge, so rain/storm/mix get an 11px-taller clip — the drops
+    // fall in the empty strip UNDER the icon, never into the next row.
+    var _clipH = (_kind === "rain" || _kind === "storm" || _kind === "mix") ? size + 11 : size;
     context.save();
     context.beginPath();
-    context.rect(x, y, size, size);
+    context.rect(x, y, size, _clipH);
     context.clip();
     var _j;
-    var _rainDrops = function (count)
+    // TROY-FARM 2026-11-23 (rain under the icon): drops fall in the
+    // strip just BELOW the icon box (head travels y+size-2 .. y+size+5,
+    // 6px streaks, ~350ms a fall) — rain visibly falling from the
+    // cloud, not painted on top of it. Staggered so the band is
+    // always full.
+    var _rainDropsUnder = function (count)
     {
         context.strokeStyle = "rgba(140,200,255,0.95)";
         context.lineWidth = 2.5;
         context.lineCap = "round";
         for (_j = 0; _j < count; _j++)
         {
-            var _dx = x + 10 + _j * 13;
-            var _dy = y + 6 + ((_t * 0.09 + _j * 17) % 46);
+            var _dx = x + 8 + _j * 9;
+            var _dy = y + size - 2 + ((_t * 0.02 + _j * 7 / count) % 7);
             context.beginPath();
             context.moveTo(_dx, _dy);
-            context.lineTo(_dx - 2, _dy + 9);
+            context.lineTo(_dx - 2, _dy + 6);
             context.stroke();
         }
     };
@@ -9998,11 +10031,11 @@ var _P28DrawHourlyIconMotion = function (context, iconCode, isDaytime, x, y, siz
     };
     if (_kind === "rain")
     {
-        _rainDrops(4);
+        _rainDropsUnder(6);
     }
     else if (_kind === "storm")
     {
-        _rainDrops(4);
+        _rainDropsUnder(6);
         // Lightning bolt flashes ~every 2.6s, visible ~350ms.
         if ((_t % 2600) < 350)
         {
@@ -10024,7 +10057,7 @@ var _P28DrawHourlyIconMotion = function (context, iconCode, isDaytime, x, y, siz
     }
     else if (_kind === "mix")
     {
-        _rainDrops(3);
+        _rainDropsUnder(3);
         _snowFlakes(2);
     }
     else if (_kind === "fog")
@@ -10050,13 +10083,27 @@ var _P28DrawHourlyIconMotion = function (context, iconCode, isDaytime, x, y, siz
         context.strokeStyle = "rgba(255,233,74,0.85)";
         context.lineWidth = 2;
         context.lineCap = "round";
-        for (_j = 0; _j < 4; _j++)
+        for (_j = 0; _j < 6; _j++)
         {
-            var _a = _t * 0.0005 + _j * (Math.PI / 2);
+            var _a = _t * 0.0005 + _j * (Math.PI / 3);
             context.beginPath();
-            context.moveTo(_cx + Math.cos(_a) * 20, _cy + Math.sin(_a) * 20);
+            context.moveTo(_cx + Math.cos(_a) * 19, _cy + Math.sin(_a) * 19);
             context.lineTo(_cx + Math.cos(_a) * 28, _cy + Math.sin(_a) * 28);
             context.stroke();
+        }
+        // TROY-FARM 2026-11-23 (sun shine across): a bright band
+        // sweeps left-to-right across the sun every ~2.6s (900ms
+        // sweep, then a pause) — the shine moves across the icon.
+        var _sweep = _t % 2600;
+        if (_sweep < 900)
+        {
+            var _sx = x - 24 + (_sweep / 900) * (size + 48);
+            var _grad = context.createLinearGradient(_sx - 12, 0, _sx + 12, 0);
+            _grad.addColorStop(0, "rgba(255,255,190,0)");
+            _grad.addColorStop(0.5, "rgba(255,255,190,0.55)");
+            _grad.addColorStop(1, "rgba(255,255,190,0)");
+            context.fillStyle = _grad;
+            context.fillRect(_sx - 12, y, 24, size);
         }
     }
     else if (_kind === "stars")
@@ -10195,8 +10242,9 @@ var _P28DrawHourly = function (WeatherParameters, subMs)
                     // TROY-FARM animated icons (2026-11-23): canvas
                     // freezes GIFs on their first frame, so the motion
                     // is drawn here, on top of the still icon, on
-                    // every play tick — rain falls, snow falls,
-                    // lightning flashes, clouds drift.
+                    // every play tick — rain falls under the icon, the
+                    // sun shines across, snow falls, lightning
+                    // flashes, clouds drift.
                     _P28DrawHourlyIconMotion(context, _iconRow.iconCode, _iconRow.isDaytime, 260, _iconTop + 6, 60, subMs, _iconIndex);
                 }
             })(_hourlyIconUrl, _top, _row, i);
