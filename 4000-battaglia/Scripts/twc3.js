@@ -3848,7 +3848,7 @@ setTimeout(() =>
                     _P28LoadStagedHourlyForecast(_WeatherParameters);
                     _P28LoadStagedSunsetBeach(_WeatherParameters);
                     _P28LoadStagedSpcOutlook(_WeatherParameters);
-                    GetTravelWeather(_WeatherParameters);
+                    _P29LoadStagedTravelCities(_WeatherParameters);
                     //GetAirQuality2(_WeatherParameters);
                     GetAirQuality3(_WeatherParameters);
                     ShowRegionalMap(_WeatherParameters, true);
@@ -4049,7 +4049,7 @@ setTimeout(() =>
                         _P28LoadStagedHourlyForecast(_WeatherParameters);
                         _P28LoadStagedSunsetBeach(_WeatherParameters);
                         _P28LoadStagedSpcOutlook(_WeatherParameters);
-                        GetTravelWeather(_WeatherParameters);
+                        _P29LoadStagedTravelCities(_WeatherParameters);
                         //GetAirQuality2(_WeatherParameters);
                         GetAirQuality3(_WeatherParameters);
                         ShowRegionalMap(_WeatherParameters, true);
@@ -11004,25 +11004,28 @@ var _P28DrawHourly = function (WeatherParameters, subMs)
         // fine; the column is there now, under its LIKE header.
         if (typeof _row.feelsLikeF === "number")
         {
-            DrawText(context, "Star4000 Large", "24pt", "#FFFF00", 425, _y, ("   " + _row.feelsLikeF).slice(-3), 3);
+            DrawText(context, "Star4000 Large", "20pt", "#FFFF00", 425, _y, ("   " + _row.feelsLikeF).slice(-3), 3);
         }
         // WIND: direction + speed, right-aligned; Calm with no direction
         // when 0. NWS hourly carries no gust, so hourly rows show
         // sustained wind only — same as Channel (Open-Meteo wind only).
         // No MPH on this table — same as Latest Observations.
         var _wind = (_row.windSpeedMph === 0) ? "Calm" : _row.windDir + " " + _row.windSpeedMph;
-        DrawText(context, "Star4000 Large", "24pt", "#FFFF00", 605, _y, _wind, 3, "end");
+        DrawText(context, "Star4000 Large", "20pt", "#FFFF00", 605, _y, _wind, 3, "end");
 
         // Sky icon (best-effort, must never wedge the screen): Channel/
         // International's images/r/*.gif for this hour's NWS code + its own
         // day/night (see _P28HourlyIconUrl) — moon at night, sun by day.
         // NOT the staged NWS wtf PNG. Cached per URL so redraws are
-        // synchronous once loaded. 60x60, centered x290:
-        // on Troy's phone the 640-wide canvas scales 0.5909x, so 60px
-        // renders 35.5 CSS px — exactly Channel/International's icon
-        // size on their live kiosk links at 390px (35.45x33.09). The
-        // 70px size overshot it by ~17% (41.4 CSS px); corrected
-        // 2026-11-17 after measuring Troy's own links.
+        // synchronous once loaded. TROY-FARM ?v=129 (Channel match):
+        // drawn at NATURAL size, aspect-preserving, top-anchored 8px
+        // below the row top and centered on x290 — exactly how
+        // Channel renders them (.icon box left:255 width:70, icon at
+        // natural size). The old forced 60x60 square stretched every
+        // non-square GIF (Cloudy 52x36 stretched 67% taller, Clear-1992
+        // 36x38 stretched 67% wider) — the "squeezed" look Troy
+        // reported. Cloudy now renders 52x36 (30.7x21.3 CSS px on his
+        // phone), identical to Channel's live render.
         var _hourlyIconUrl = _P28HourlyIconUrl(_row.iconCode, _row.isDaytime);
         if (_hourlyIconUrl)
         {
@@ -11050,14 +11053,17 @@ var _P28DrawHourly = function (WeatherParameters, subMs)
                 }
                 if (_img.complete && _img.naturalWidth > 0)
                 {
-                    context.drawImage(_img, 260, _top + 6, 60, 60);
+                    var _dw = _img.naturalWidth, _dh = _img.naturalHeight;
+                    var _dx = 290 - Math.floor(_dw / 2);
+                    var _dy = _iconTop + 8;
+                    context.drawImage(_img, _dx, _dy, _dw, _dh);
                     // TROY-FARM animated icons (2026-11-23): canvas
                     // freezes GIFs on their first frame, so the motion
                     // is drawn here, on top of the still icon, on
                     // every play tick — rain falls under the icon, the
                     // sun shines across, snow falls, lightning
                     // flashes, clouds drift.
-                    _P28DrawHourlyIconMotion(context, _iconRow.iconCode, _iconRow.isDaytime, 260, _iconTop + 6, 60, subMs, _iconIndex);
+                    _P28DrawHourlyIconMotion(context, _iconRow.iconCode, _iconRow.isDaytime, _dx, _dy, _dw, _dh, subMs, _iconIndex);
                 }
             })(_hourlyIconUrl, _top, _row, i);
         }
@@ -11722,6 +11728,95 @@ var _TravelIconFromNwsIconLink = function (IconLink, IsNight)
     return Bare;
 };
 
+// TROY-FARM P29 (2026-11-23, ?v=129): Travel Cities from a staged
+// travel-cities.json, refreshed by the Channel cron every 15 min from
+// live NWS (stage_travel_cities.py — it resolves each city's gridpoint
+// fresh from the NWS points API every run, so gridpoints can never go
+// stale again). Same-origin fetch, so it is fast and reliable on a
+// phone. Why: the ?v=128 live fetch NEVER worked in any browser —
+// $.ajaxCORS sends cache:false, jQuery appends ?_=nonce, and
+// api.weather.gov rejects the unknown "_" param with HTTP 400
+// ("Query parameter _ is not recognized"); the cors/?u= fallback then
+// 404s on GitHub Pages. All 24 cities failed on every boot (proven
+// in-browser 2026-11-23: fetch plain 200, $.ajax cache:false 400 with
+// empty errorThrown, $.ajax cache:true SUCCESS). The staged file is
+// the primary path; a missing or stale (>2h) file falls back to the
+// live GetTravelWeather fetch below (whose cache flag is fixed here
+// too — see below). A city absent from the staged file honestly
+// renders NO TRAVEL DATA AVAILABLE, never a faked value.
+var _P29LoadStagedTravelCities = function (WeatherParameters)
+{
+    $.ajaxCORS({
+        type: "GET",
+        url: "travel-cities.json",
+        dataType: "json",
+        crossDomain: true,
+        cache: false,
+        success: function (json)
+        {
+            if (!_P29ValidateTravelCities(json))
+            {
+                console.warn("P29: travel-cities.json invalid or stale; falling back to live NWS travel fetch.");
+                GetTravelWeather(WeatherParameters);
+                return;
+            }
+            var _byName = {};
+            $(json.cities).each(function () { _byName[this.name] = this; });
+            $(WeatherParameters.TravelCities).each(function ()
+            {
+                var _staged = _byName[this.Name];
+                if (!_staged) return;
+                var _isNight = !_staged.isDaytime;
+                // Same icon derivation as the live path — one code path:
+                // summary words first, NWS icon-URL codes as fallback.
+                var _icon = GetWeatherRegionalIconFromIconLink(_staged.iconLink, _staged.shortForecast, undefined, _isNight);
+                if (_icon === "https://battaglia.ddns.net/twc/images/r/")
+                {
+                    _icon = _TravelIconFromNwsIconLink(_staged.iconLink, _isNight);
+                }
+                this.WeatherTravelForecast = {
+                    Icon: _icon,
+                    Conditions: _staged.shortForecast,
+                    MinimumTemperature: _staged.lowF,
+                    MaximumTemperature: _staged.highF,
+                    MinimumTemperatureC: Math.round((_staged.lowF - 32) * 5 / 9),
+                    MaximumTemperatureC: Math.round((_staged.highF - 32) * 5 / 9),
+                    DayName: _staged.dayName,
+                };
+            });
+            PopulateTravelCities(WeatherParameters);
+        },
+        error: function ()
+        {
+            console.warn("P29: travel-cities.json fetch failed; falling back to live NWS travel fetch.");
+            GetTravelWeather(WeatherParameters);
+        }
+    });
+};
+
+var _P29ValidateTravelCities = function (json)
+{
+    if (!json || json.station !== "KNCCAROL120") return false;
+    if (!json.cities || json.cities.length < 20) return false;
+    var _gen = new Date(json.generatedAt);
+    if (isNaN(_gen.getTime())) return false;
+    // The cron re-stages it every 15 min; older than 2h means the
+    // staging broke — fall back to the live fetch, never show old cities.
+    if ((new Date() - _gen) > 2 * 60 * 60 * 1000) return false;
+    for (var i = 0; i < json.cities.length; i++)
+    {
+        var c = json.cities[i];
+        if (typeof c.name !== "string" || c.name === "") return false;
+        if (typeof c.iconLink !== "string" || c.iconLink === "") return false;
+        if (typeof c.shortForecast !== "string" || c.shortForecast === "") return false;
+        if (typeof c.highF !== "number" || isNaN(c.highF)) return false;
+        if (typeof c.lowF !== "number" || isNaN(c.lowF)) return false;
+        if (typeof c.isDaytime !== "boolean") return false;
+        if (typeof c.dayName !== "string" || c.dayName === "") return false;
+    }
+    return true;
+};
+
 // TROY-FARM Travel Cities restore (2026-11-23): Troy asked for Travel
 // Cities Forecast back alongside the Hourly Forecast ("add travel cities
 // forecast back to my battagila"). Same screen as pre-P28, but the data
@@ -11769,12 +11864,16 @@ var GetTravelWeather = function (WeatherParameters)
         Url += "," + TravelCity.point.y.toString();
         Url += "/forecast";
 
+        // TROY-FARM ?v=129: cache:true, not false. jQuery's cache:false
+        // appends ?_=nonce and api.weather.gov rejects the unknown "_"
+        // param with HTTP 400, so every city failed on every boot.
+        // cache:true sends the bare gridpoint URL, which NWS accepts.
         $.ajaxCORS({
             type: "GET",
             url: Url,
             dataType: "json",
             crossDomain: true,
-            cache: false,
+            cache: true,
             success: function (json)
             {
                 var Periods = json && json.properties && json.properties.periods;
@@ -12943,6 +13042,26 @@ var _P26BuildCalabashMapEntry = function (farmData, WeatherParameters, maxLat, m
     };
 };
 
+// TROY-FARM P30 (2026-11-24): Regional Forecast maps — Calabash in,
+// Wilmington out (Troy ~11:03 PM Nov 23: "add Calabash to the forecast
+// maps ... and take off Wilmington"). P26 did the same swap on the
+// Regional Observations map only; this is the forecast-map half.
+// * Calabash has no METAR station, so its marker is fed by the farm
+//   point's own NWS gridpoint forecast — the same MapClick DWML the
+//   other forecast-map cities use, at the farm lat/lon (33.92, -78.57),
+//   parsed through the same WeatherDwmlParser + WeatherTravelForecast,
+//   so it draws the identical icon + high/low. The DWML fetch is live
+//   per ShowRegionalMap call; a failed fetch, an empty forecast, or a
+//   missing WeatherTravelForecast -> the Calabash marker is OMITTED,
+//   never plotted with invented or old values as if current.
+//   (farm-data.json is current conditions only — never a forecast source.)
+// * Wilmington (KILM) leaves the forecast maps too: the two P26 guards
+//   in the city-selection loops below now skip it on every map, not
+//   just Observations. PopulateRegionalObservations (Latest Observations
+//   rows) and regional-map-metars.xml staging are untouched.
+var _P30CalabashForecast1Handled = false;
+var _P30CalabashForecast2Handled = false;
+
 var ShowRegionalMap = function (WeatherParameters, TomorrowForecast1, TomorrowForecast2)
 {
     if (TomorrowForecast1 == true)
@@ -13452,9 +13571,10 @@ var ShowRegionalMap = function (WeatherParameters, TomorrowForecast1, TomorrowFo
                 return true;
             }
 
-            // TROY-FARM P26: Wilmington leaves the Regional Observations
-            // map only (forecast maps keep it).
-            if (TomorrowForecast1 != true && TomorrowForecast2 != true && _P26IsWilmingtonNC(RegionalCity))
+            // TROY-FARM P26/P30: Wilmington leaves every regional map —
+            // Observations (P26) and both Forecast maps (P30, Troy ~11:03
+            // PM Nov 23). Latest Observations rows are untouched.
+            if (_P26IsWilmingtonNC(RegionalCity))
             {
                 return true;
             }
@@ -13507,9 +13627,10 @@ var ShowRegionalMap = function (WeatherParameters, TomorrowForecast1, TomorrowFo
                 return true;
             }
 
-            // TROY-FARM P26: Wilmington leaves the Regional Observations
-            // map only (forecast maps keep it).
-            if (TomorrowForecast1 != true && TomorrowForecast2 != true && _P26IsWilmingtonNC(RegionalCity))
+            // TROY-FARM P26/P30: Wilmington leaves every regional map —
+            // Observations (P26) and both Forecast maps (P30, Troy ~11:03
+            // PM Nov 23). Latest Observations rows are untouched.
+            if (_P26IsWilmingtonNC(RegionalCity))
             {
                 return true;
             }
@@ -13613,6 +13734,81 @@ var ShowRegionalMap = function (WeatherParameters, TomorrowForecast1, TomorrowFo
                 if (Count == Total)
                 {
                     PopulateRegionalMap();
+                }
+            });
+        }
+
+        // TROY-FARM P30 (2026-11-24): Regional Forecast maps only —
+        // Calabash marker from the farm point's own live NWS gridpoint
+        // forecast (MapClick DWML at 33.92, -78.57 — the same call the
+        // other forecast-map cities use, parsed through the same
+        // WeatherDwmlParser + WeatherTravelForecast). One insert per
+        // forecast map, guarded per map: RegionalMapOnLoad re-runs when
+        // a city fetch fails, and the two maps are separate ShowRegional-
+        // Map calls sharing this file. If the farm forecast fetch fails
+        // or comes back empty the marker is omitted and Total is given
+        // back, so the map still draws with the other cities.
+        if ((TomorrowForecast1 == true || TomorrowForecast2 == true) &&
+            ((TomorrowForecast1 == true && _P30CalabashForecast1Handled == false) ||
+             (TomorrowForecast2 == true && _P30CalabashForecast2Handled == false)))
+        {
+            if (TomorrowForecast1 == true) _P30CalabashForecast1Handled = true;
+            if (TomorrowForecast2 == true) _P30CalabashForecast2Handled = true;
+            Total++;
+            var _p30CalabashCity = { Name: "Calabash", Latitude: _P26FarmLatitude, Longitude: _P26FarmLongitude };
+            var _p30Url = "https://forecast.weather.gov/MapClick.php?FcstType=dwml";
+            _p30Url += "&lat=" + _P26FarmLatitude.toString();
+            _p30Url += "&lon=" + _P26FarmLongitude.toString();
+            $.ajaxCORS({
+                type: "GET",
+                url: _p30Url,
+                dataType: "xml",
+                crossDomain: true,
+                cache: false,
+                success: function (xml)
+                {
+                    var $xml = $(xml);
+                    var weatherDwmlParser = new WeatherDwmlParser($xml);
+                    var weatherTravelForecast = new WeatherTravelForecast(weatherDwmlParser, GetTodaysForecast, GetTonightsForecast, GetTomorrowsForecast);
+                    if (weatherTravelForecast.Conditions == "")
+                    {
+                        console.error("No forecast data for 'Calabash'");
+                        Total--;
+                        if (Count == Total)
+                        {
+                            PopulateRegionalMap();
+                        }
+                        return;
+                    }
+                    var CityXY;
+                    if (WeatherParameters.State == "HI")
+                    {
+                        CityXY = GetXYForCityHI(_p30CalabashCity, maxLat, minLon);
+                    }
+                    else if (WeatherParameters.State == "AK")
+                    {
+                        CityXY = GetXYForCityAK(_p30CalabashCity, maxLat, minLon);
+                    }
+                    else
+                    {
+                        CityXY = GetXYForCity(_p30CalabashCity, maxLat, minLon);
+                    }
+                    RegionalForecastCities.push({ RegionalCity: _p30CalabashCity, CityXY: CityXY, weatherTravelForecast: weatherTravelForecast });
+                    Count++;
+                    if (Count == Total)
+                    {
+                        PopulateRegionalMap();
+                    }
+                },
+                error: function (xhr, error, errorThrown)
+                {
+                    console.error("GetRegionalMapCity DWML failed: " + errorThrown + " (" + _p30Url + ")");
+                    Total--;
+                    if (Count == Total)
+                    {
+                        PopulateRegionalMap();
+                    }
+                    return;
                 }
             });
         }
