@@ -9942,6 +9942,152 @@ var _P28HourlyIconUrl = function (iconCode, isDaytime)
     return "https://battaglia.ddns.net/twc/images/r/" + _gif;
 };
 
+// TROY-FARM animated Hourly Forecast icons (2026-11-23, Troy's words:
+// "make it where the weather icons are in motion like the rain moving").
+// The hourly icons are GIFs, but canvas drawImage() only ever paints an
+// animated GIF's FIRST frame, so the rain in Rain-1992.gif / Shower.gif
+// looked still even though the file itself moves. This draws the motion
+// ON the canvas, on top of the still icon, on every 50ms play tick
+// (_P28DrawHourly redraws every tick while the Hourly screen plays).
+// Motion is clipped to the 60x60 icon box so it never touches the hour,
+// TEMP, LIKE or WIND text. tMs is the screen's SubMs clock; each row is
+// staggered by rowIndex * 173ms so rows do not march in lockstep.
+var _P28DrawHourlyIconMotion = function (context, iconCode, isDaytime, x, y, size, tMs, rowIndex)
+{
+    var _code = (iconCode || "").toLowerCase();
+    var _t = tMs + rowIndex * 173;
+    var _kind;
+    if (_code === "tsra" || _code === "tsra_sct" || _code === "tsra_hi") _kind = "storm";
+    else if (_code === "rain" || _code === "rain_showers" || _code === "rain_showers_hi") _kind = "rain";
+    else if (_code === "snow" || _code === "blizzard" || _code === "snow_showers") _kind = "snow";
+    else if (_code === "rain_sleet" || _code === "snow_sleet" || _code === "sleet" || _code === "fzra" || _code === "mix") _kind = "mix";
+    else if (_code === "fog") _kind = "fog";
+    else if (_code === "skc" || _code === "cold" || _code === "hot" || _code === "few") _kind = isDaytime ? "sun" : "stars";
+    else _kind = "cloud";
+    context.save();
+    context.beginPath();
+    context.rect(x, y, size, size);
+    context.clip();
+    var _j;
+    var _rainDrops = function (count)
+    {
+        context.strokeStyle = "rgba(140,200,255,0.95)";
+        context.lineWidth = 2.5;
+        context.lineCap = "round";
+        for (_j = 0; _j < count; _j++)
+        {
+            var _dx = x + 10 + _j * 13;
+            var _dy = y + 6 + ((_t * 0.09 + _j * 17) % 46);
+            context.beginPath();
+            context.moveTo(_dx, _dy);
+            context.lineTo(_dx - 2, _dy + 9);
+            context.stroke();
+        }
+    };
+    var _snowFlakes = function (count)
+    {
+        context.fillStyle = "rgba(255,255,255,0.95)";
+        for (_j = 0; _j < count; _j++)
+        {
+            var _fx = x + 8 + _j * 11 + Math.sin(_t * 0.002 + _j * 1.7) * 3;
+            var _fy = y + 6 + ((_t * 0.03 + _j * 13) % 48);
+            context.beginPath();
+            context.arc(_fx, _fy, 2.2, 0, Math.PI * 2);
+            context.fill();
+        }
+    };
+    if (_kind === "rain")
+    {
+        _rainDrops(4);
+    }
+    else if (_kind === "storm")
+    {
+        _rainDrops(4);
+        // Lightning bolt flashes ~every 2.6s, visible ~350ms.
+        if ((_t % 2600) < 350)
+        {
+            context.fillStyle = "#FFEB3B";
+            context.beginPath();
+            context.moveTo(x + 38, y + 14);
+            context.lineTo(x + 30, y + 32);
+            context.lineTo(x + 37, y + 32);
+            context.lineTo(x + 29, y + 50);
+            context.lineTo(x + 41, y + 30);
+            context.lineTo(x + 34, y + 30);
+            context.closePath();
+            context.fill();
+        }
+    }
+    else if (_kind === "snow")
+    {
+        _snowFlakes(5);
+    }
+    else if (_kind === "mix")
+    {
+        _rainDrops(3);
+        _snowFlakes(2);
+    }
+    else if (_kind === "fog")
+    {
+        context.strokeStyle = "rgba(255,255,255,0.55)";
+        context.lineWidth = 3;
+        context.lineCap = "round";
+        for (_j = 0; _j < 3; _j++)
+        {
+            var _mx = Math.sin(_t * 0.001 + _j * 2.1) * 6;
+            var _my = y + 18 + _j * 13;
+            context.beginPath();
+            context.moveTo(x + 10 + _mx, _my);
+            context.lineTo(x + 50 + _mx, _my);
+            context.stroke();
+        }
+    }
+    else if (_kind === "sun")
+    {
+        // Sun rays shimmering at the icon edge, turning slowly.
+        var _cx = x + size / 2;
+        var _cy = y + size / 2;
+        context.strokeStyle = "rgba(255,233,74,0.85)";
+        context.lineWidth = 2;
+        context.lineCap = "round";
+        for (_j = 0; _j < 4; _j++)
+        {
+            var _a = _t * 0.0005 + _j * (Math.PI / 2);
+            context.beginPath();
+            context.moveTo(_cx + Math.cos(_a) * 20, _cy + Math.sin(_a) * 20);
+            context.lineTo(_cx + Math.cos(_a) * 28, _cy + Math.sin(_a) * 28);
+            context.stroke();
+        }
+    }
+    else if (_kind === "stars")
+    {
+        context.fillStyle = "rgba(255,255,255,0.95)";
+        for (_j = 0; _j < 3; _j++)
+        {
+            var _sa = 0.35 + 0.6 * Math.abs(Math.sin(_t * 0.004 + _j * 2.1));
+            context.globalAlpha = _sa;
+            context.beginPath();
+            context.arc(x + 12 + _j * 18, y + 12 + (_j % 2) * 8, 2, 0, Math.PI * 2);
+            context.fill();
+        }
+        context.globalAlpha = 1;
+    }
+    else
+    {
+        // Cloudy / partly / mostly: two soft white puffs drifting across.
+        context.fillStyle = "rgba(255,255,255,0.20)";
+        for (_j = 0; _j < 2; _j++)
+        {
+            var _px = x - 12 + ((_t * 0.02 + _j * 34) % (size + 24));
+            var _py = y + 16 + _j * 18;
+            context.beginPath();
+            context.ellipse(_px, _py, 15, 6, 0, 0, Math.PI * 2);
+            context.fill();
+        }
+    }
+    context.restore();
+};
+
 var _P28DrawHourly = function (WeatherParameters, subMs)
 {
     var HourlyForecast = WeatherParameters.HourlyForecast;
@@ -10016,7 +10162,7 @@ var _P28DrawHourly = function (WeatherParameters, subMs)
         var _hourlyIconUrl = _P28HourlyIconUrl(_row.iconCode, _row.isDaytime);
         if (_hourlyIconUrl)
         {
-            (function (_iconUrl)
+            (function (_iconUrl, _iconTop, _iconRow, _iconIndex)
             {
                 var _img = _P28IconCache[_iconUrl];
                 if (!_img)
@@ -10041,8 +10187,14 @@ var _P28DrawHourly = function (WeatherParameters, subMs)
                 if (_img.complete && _img.naturalWidth > 0)
                 {
                     context.drawImage(_img, 260, _top + 6, 60, 60);
+                    // TROY-FARM animated icons (2026-11-23): canvas
+                    // freezes GIFs on their first frame, so the motion
+                    // is drawn here, on top of the still icon, on
+                    // every play tick — rain falls, snow falls,
+                    // lightning flashes, clouds drift.
+                    _P28DrawHourlyIconMotion(context, _iconRow.iconCode, _iconRow.isDaytime, 260, _iconTop + 6, 60, subMs, _iconIndex);
                 }
-            })(_hourlyIconUrl);
+            })(_hourlyIconUrl, _top, _row, i);
         }
     }
     context.restore();
