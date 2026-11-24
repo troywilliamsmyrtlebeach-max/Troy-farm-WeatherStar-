@@ -10769,10 +10769,14 @@ var _ExtMotionTick = function (_idx)
 // Motion is clipped to the 60x60 icon box so it never touches the hour,
 // TEMP, LIKE or WIND text. tMs is the screen's SubMs clock; each row is
 // staggered by rowIndex * 173ms so rows do not march in lockstep.
-var _P28DrawHourlyIconMotion = function (context, iconCode, isDaytime, x, y, size, tMs, rowIndex)
+var _P28DrawHourlyIconMotion = function (context, iconCode, isDaytime, x, y, w, h, tMs, rowIndex)
 {
     var _code = (iconCode || "").toLowerCase();
     var _t = tMs + rowIndex * 173;
+    // Radial effects (sun rays, stars, cloud puffs) scale off the
+    // icon's larger side so they read the same on a wide cloud
+    // (52x36) as on a tall sun (60x56).
+    var _s = Math.max(w, h);
     var _kind;
     if (_code === "tsra" || _code === "tsra_sct" || _code === "tsra_hi") _kind = "storm";
     else if (_code === "rain" || _code === "rain_showers" || _code === "rain_showers_hi") _kind = "rain";
@@ -10782,17 +10786,18 @@ var _P28DrawHourlyIconMotion = function (context, iconCode, isDaytime, x, y, siz
     else if (_code === "skc" || _code === "cold" || _code === "hot" || _code === "few") _kind = isDaytime ? "sun" : "stars";
     else _kind = "cloud";
     // TROY-FARM 2026-11-23 (rain under the icon): rows are 72px tall
-    // and the next row's icon starts 12px below this one's bottom
-    // edge, so rain/storm/mix get an 11px-taller clip — the drops
-    // fall in the empty strip UNDER the icon, never into the next row.
-    var _clipH = (_kind === "rain" || _kind === "storm" || _kind === "mix") ? size + 11 : size;
+    // and the icon is top-anchored like Channel's, so rain/storm/mix
+    // get an 11px-taller clip — the drops fall in the empty strip
+    // UNDER the icon, never into the next row (rain icons are at most
+    // 40px tall, so the strip ends well above the row bottom).
+    var _clipH = (_kind === "rain" || _kind === "storm" || _kind === "mix") ? h + 11 : h;
     context.save();
     context.beginPath();
-    context.rect(x, y, size, _clipH);
+    context.rect(x, y, w, _clipH);
     context.clip();
     var _j;
     // TROY-FARM 2026-11-23 (rain under the icon): drops fall in the
-    // strip just BELOW the icon box (head travels y+size-2 .. y+size+5,
+    // strip just BELOW the icon box (head travels y+h-2 .. y+h+5,
     // 6px streaks, ~350ms a fall) — rain visibly falling from the
     // cloud, not painted on top of it. Staggered so the band is
     // always full.
@@ -10803,8 +10808,8 @@ var _P28DrawHourlyIconMotion = function (context, iconCode, isDaytime, x, y, siz
         context.lineCap = "round";
         for (_j = 0; _j < count; _j++)
         {
-            var _dx = x + 8 + _j * 9;
-            var _dy = y + size - 2 + ((_t * 0.02 + _j * 7 / count) % 7);
+            var _dx = x + 8 + _j * ((w - 16) / (count - 1));
+            var _dy = y + h - 2 + ((_t * 0.02 + _j * 7 / count) % 5);
             context.beginPath();
             context.moveTo(_dx, _dy);
             context.lineTo(_dx - 2, _dy + 6);
@@ -10816,8 +10821,8 @@ var _P28DrawHourlyIconMotion = function (context, iconCode, isDaytime, x, y, siz
         context.fillStyle = "rgba(255,255,255,0.95)";
         for (_j = 0; _j < count; _j++)
         {
-            var _fx = x + 8 + _j * 11 + Math.sin(_t * 0.002 + _j * 1.7) * 3;
-            var _fy = y + 6 + ((_t * 0.03 + _j * 13) % 48);
+            var _fx = x + 8 + _j * ((w - 16) / (count - 1)) + Math.sin(_t * 0.002 + _j * 1.7) * 3;
+            var _fy = y + 6 + ((_t * 0.03 + _j * 13) % (h - 12));
             context.beginPath();
             context.arc(_fx, _fy, 2.2, 0, Math.PI * 2);
             context.fill();
@@ -10835,12 +10840,12 @@ var _P28DrawHourlyIconMotion = function (context, iconCode, isDaytime, x, y, siz
         {
             context.fillStyle = "#FFEB3B";
             context.beginPath();
-            context.moveTo(x + 38, y + 14);
-            context.lineTo(x + 30, y + 32);
-            context.lineTo(x + 37, y + 32);
-            context.lineTo(x + 29, y + 50);
-            context.lineTo(x + 41, y + 30);
-            context.lineTo(x + 34, y + 30);
+            context.moveTo(x + w * 0.63, y + h * 0.23);
+            context.lineTo(x + w * 0.50, y + h * 0.53);
+            context.lineTo(x + w * 0.62, y + h * 0.53);
+            context.lineTo(x + w * 0.48, y + h * 0.83);
+            context.lineTo(x + w * 0.68, y + h * 0.50);
+            context.lineTo(x + w * 0.57, y + h * 0.50);
             context.closePath();
             context.fill();
         }
@@ -10862,18 +10867,18 @@ var _P28DrawHourlyIconMotion = function (context, iconCode, isDaytime, x, y, siz
         for (_j = 0; _j < 3; _j++)
         {
             var _mx = Math.sin(_t * 0.001 + _j * 2.1) * 6;
-            var _my = y + 18 + _j * 13;
+            var _my = y + h * (0.30 + _j * 0.22);
             context.beginPath();
-            context.moveTo(x + 10 + _mx, _my);
-            context.lineTo(x + 50 + _mx, _my);
+            context.moveTo(x + w * 0.17 + _mx, _my);
+            context.lineTo(x + w * 0.83 + _mx, _my);
             context.stroke();
         }
     }
     else if (_kind === "sun")
     {
         // Sun rays shimmering at the icon edge, turning slowly.
-        var _cx = x + size / 2;
-        var _cy = y + size / 2;
+        var _cx = x + w / 2;
+        var _cy = y + h / 2;
         context.strokeStyle = "rgba(255,233,74,0.85)";
         context.lineWidth = 2;
         context.lineCap = "round";
@@ -10881,8 +10886,8 @@ var _P28DrawHourlyIconMotion = function (context, iconCode, isDaytime, x, y, siz
         {
             var _a = _t * 0.0005 + _j * (Math.PI / 3);
             context.beginPath();
-            context.moveTo(_cx + Math.cos(_a) * 19, _cy + Math.sin(_a) * 19);
-            context.lineTo(_cx + Math.cos(_a) * 28, _cy + Math.sin(_a) * 28);
+            context.moveTo(_cx + Math.cos(_a) * _s * 0.32, _cy + Math.sin(_a) * _s * 0.32);
+            context.lineTo(_cx + Math.cos(_a) * _s * 0.47, _cy + Math.sin(_a) * _s * 0.47);
             context.stroke();
         }
         // TROY-FARM 2026-11-23 (sun shine across): a bright band
@@ -10891,13 +10896,13 @@ var _P28DrawHourlyIconMotion = function (context, iconCode, isDaytime, x, y, siz
         var _sweep = _t % 2600;
         if (_sweep < 900)
         {
-            var _sx = x - 24 + (_sweep / 900) * (size + 48);
-            var _grad = context.createLinearGradient(_sx - 12, 0, _sx + 12, 0);
+            var _sx = x - w * 0.4 + (_sweep / 900) * (w * 1.8);
+            var _grad = context.createLinearGradient(_sx - w * 0.2, 0, _sx + w * 0.2, 0);
             _grad.addColorStop(0, "rgba(255,255,190,0)");
             _grad.addColorStop(0.5, "rgba(255,255,190,0.55)");
             _grad.addColorStop(1, "rgba(255,255,190,0)");
             context.fillStyle = _grad;
-            context.fillRect(_sx - 12, y, 24, size);
+            context.fillRect(_sx - w * 0.2, y, w * 0.4, h);
         }
     }
     else if (_kind === "stars")
@@ -10908,7 +10913,7 @@ var _P28DrawHourlyIconMotion = function (context, iconCode, isDaytime, x, y, siz
             var _sa = 0.35 + 0.6 * Math.abs(Math.sin(_t * 0.004 + _j * 2.1));
             context.globalAlpha = _sa;
             context.beginPath();
-            context.arc(x + 12 + _j * 18, y + 12 + (_j % 2) * 8, 2, 0, Math.PI * 2);
+            context.arc(x + w * (0.20 + _j * 0.30), y + h * (0.18 + (_j % 2) * 0.12), 2, 0, Math.PI * 2);
             context.fill();
         }
         context.globalAlpha = 1;
@@ -10919,10 +10924,10 @@ var _P28DrawHourlyIconMotion = function (context, iconCode, isDaytime, x, y, siz
         context.fillStyle = "rgba(255,255,255,0.20)";
         for (_j = 0; _j < 2; _j++)
         {
-            var _px = x - 12 + ((_t * 0.02 + _j * 34) % (size + 24));
-            var _py = y + 16 + _j * 18;
+            var _px = x - w * 0.2 + ((_t * 0.02 + _j * w * 0.34) % (w * 1.4));
+            var _py = y + h * (0.25 + _j * 0.27);
             context.beginPath();
-            context.ellipse(_px, _py, 15, 6, 0, 0, Math.PI * 2);
+            context.ellipse(_px, _py, w * 0.25, h * 0.1, 0, 0, Math.PI * 2);
             context.fill();
         }
     }
@@ -10972,12 +10977,25 @@ var _P28DrawHourly = function (WeatherParameters, subMs)
         var _row = HourlyForecast.hours[i];
         var _top = 116 + 10 + i * 72 - _offset;
         if (_top + 72 < 116 || _top > 404) continue;
-        var _y = _top + 44;
+        // TROY-FARM ?v=129 (Channel match): rows render at 20pt, not
+        // 24pt, and glyphs top-anchor 8px below the row top, exactly
+        // like Channel's .hourly-row (top:8px). Battaglia's Star4000
+        // Large cut renders ~20% wider than the font Channel's rows
+        // actually render in (Channel's @font-face 404s, so its rows
+        // render in the fallback face: "Mon 11 PM" 142px vs 173px on
+        // this canvas at 24pt), so at 24pt the hour text sprawled to
+        // x120 and ate the gap to the icon — the "bunched up" look
+        // Troy reported. At 20pt the widths match Channel's rendered
+        // widths ("Mon 11 PM" 144 vs 142, "61" 32 vs 34, "NNW 4" 80
+        // vs 82), the hour ends at x169, and the 86px gap to the icon
+        // box is Channel's 88px. Baseline _top+37 puts the glyph top
+        // at _top+8 (20pt ascent 29px, measured live).
+        var _y = _top + 37;
 
         // Hour: weekday short + hour, e.g. "Tue 8 PM" — Channel form.
-        DrawText(context, "Star4000 Large", "24pt", "#FFFF00", 25, _y, _row.weekday + " " + _row.hourLabel, 3);
+        DrawText(context, "Star4000 Large", "20pt", "#FFFF00", 25, _y, _row.weekday + " " + _row.hourLabel, 3);
         // TEMP: bare number padded to 3, no degree symbol — Channel form.
-        DrawText(context, "Star4000 Large", "24pt", "#FFFF00", 355, _y, ("   " + _row.tempF).slice(-3), 3);
+        DrawText(context, "Star4000 Large", "20pt", "#FFFF00", 355, _y, ("   " + _row.tempF).slice(-3), 3);
         // LIKE (feels-like): ALWAYS shown (Troy 2026-11-23: "add the
         // feels like temperature on there too"). It used to show only
         // when it differed from TEMP (Channel form) — but tonight
