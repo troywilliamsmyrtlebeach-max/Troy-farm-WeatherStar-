@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-24T12:41:29-05:00",
+  "generatedAt": "2026-11-24T12:57:05-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -161,7 +161,7 @@
       "name": "Pittsburgh",
       "iconLink": "https://api.weather.gov/icons/land/day/few?size=medium",
       "shortForecast": "Sunny",
-      "highF": 43,
+      "highF": 42,
       "lowF": 26,
       "isDaytime": true,
       "dayName": "Tuesday"
