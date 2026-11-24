@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-24T17:55:40-05:00",
+  "generatedAt": "2026-11-24T18:13:07-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -26,7 +26,7 @@
       "name": "Chicago",
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
       "shortForecast": "Mostly Cloudy",
-      "highF": 41,
+      "highF": 43,
       "lowF": 32,
       "isDaytime": true,
       "dayName": "Tuesday"
@@ -60,21 +60,21 @@
     },
     {
       "name": "Detroit",
-      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
-      "shortForecast": "Mostly Sunny",
-      "highF": 40,
-      "lowF": 28,
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Partly Sunny",
+      "highF": 45,
+      "lowF": 37,
       "isDaytime": true,
-      "dayName": "Tuesday"
+      "dayName": "Wednesday"
     },
     {
       "name": "Hartford",
-      "iconLink": "https://api.weather.gov/icons/land/day/skc?size=medium",
-      "shortForecast": "Sunny",
-      "highF": 48,
-      "lowF": 22,
+      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
+      "shortForecast": "Mostly Sunny",
+      "highF": 45,
+      "lowF": 25,
       "isDaytime": true,
-      "dayName": "Tuesday"
+      "dayName": "Wednesday"
     },
     {
       "name": "Houston",
@@ -114,8 +114,8 @@
     },
     {
       "name": "Minneapolis",
-      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
-      "shortForecast": "Mostly Cloudy",
+      "iconLink": "https://api.weather.gov/icons/land/day/ovc?size=medium",
+      "shortForecast": "Cloudy",
       "highF": 34,
       "lowF": 26,
       "isDaytime": true,
@@ -133,7 +133,7 @@
     {
       "name": "Norfolk",
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
-      "shortForecast": "Mostly Cloudy",
+      "shortForecast": "Partly Sunny",
       "highF": 55,
       "lowF": 45,
       "isDaytime": true,
@@ -159,12 +159,12 @@
     },
     {
       "name": "Pittsburgh",
-      "iconLink": "https://api.weather.gov/icons/land/day/few?size=medium",
-      "shortForecast": "Sunny",
-      "highF": 42,
-      "lowF": 26,
+      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
+      "shortForecast": "Mostly Sunny",
+      "highF": 49,
+      "lowF": 37,
       "isDaytime": true,
-      "dayName": "Tuesday"
+      "dayName": "Wednesday"
     },
     {
       "name": "St. Louis",
@@ -195,8 +195,8 @@
     },
     {
       "name": "Syracuse",
-      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
-      "shortForecast": "Mostly Sunny",
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Partly Sunny",
       "highF": 39,
       "lowF": 24,
       "isDaytime": true,
@@ -204,21 +204,21 @@
     },
     {
       "name": "Tampa",
-      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
-      "shortForecast": "Mostly Cloudy",
-      "highF": 73,
-      "lowF": 63,
+      "iconLink": "https://api.weather.gov/icons/land/day/tsra,60/tsra,50?size=medium",
+      "shortForecast": "Showers And Thunderstorms Likely",
+      "highF": 72,
+      "lowF": 64,
       "isDaytime": true,
-      "dayName": "Tuesday"
+      "dayName": "Wednesday"
     },
     {
       "name": "Washington DC",
-      "iconLink": "https://api.weather.gov/icons/land/day/skc?size=medium",
-      "shortForecast": "Sunny",
-      "highF": 53,
-      "lowF": 35,
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Mostly Cloudy",
+      "highF": 54,
+      "lowF": 45,
       "isDaytime": true,
-      "dayName": "Tuesday"
+      "dayName": "Wednesday"
     }
   ]
 }
