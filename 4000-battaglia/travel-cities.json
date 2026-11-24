@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-24T11:55:27-05:00",
+  "generatedAt": "2026-11-24T12:09:18-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -133,16 +133,16 @@
     {
       "name": "Norfolk",
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
-      "shortForecast": "Partly Sunny",
-      "highF": 54,
-      "lowF": 44,
+      "shortForecast": "Mostly Cloudy",
+      "highF": 55,
+      "lowF": 45,
       "isDaytime": true,
       "dayName": "Tuesday"
     },
     {
       "name": "Orlando",
-      "iconLink": "https://api.weather.gov/icons/land/day/rain_showers/bkn?size=medium",
-      "shortForecast": "Slight Chance Rain Showers then Mostly Cloudy",
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Mostly Cloudy",
       "highF": 73,
       "lowF": 64,
       "isDaytime": true,
@@ -195,8 +195,8 @@
     },
     {
       "name": "Syracuse",
-      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
-      "shortForecast": "Mostly Sunny",
+      "iconLink": "https://api.weather.gov/icons/land/day/snow,70/sct?size=medium",
+      "shortForecast": "Snow Showers Likely then Mostly Sunny",
       "highF": 39,
       "lowF": 24,
       "isDaytime": true,
