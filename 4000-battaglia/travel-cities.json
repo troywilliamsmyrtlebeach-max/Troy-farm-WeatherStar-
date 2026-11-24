@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-24T10:58:13-05:00",
+  "generatedAt": "2026-11-24T11:10:16-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -105,8 +105,8 @@
     },
     {
       "name": "Miami",
-      "iconLink": "https://api.weather.gov/icons/land/day/ovc?size=medium",
-      "shortForecast": "Cloudy",
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Mostly Cloudy",
       "highF": 80,
       "lowF": 74,
       "isDaytime": true,
@@ -132,8 +132,8 @@
     },
     {
       "name": "Norfolk",
-      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
-      "shortForecast": "Partly Sunny",
+      "iconLink": "https://api.weather.gov/icons/land/day/rain,30/bkn?size=medium",
+      "shortForecast": "Chance Light Rain then Partly Sunny",
       "highF": 54,
       "lowF": 44,
       "isDaytime": true,
@@ -195,8 +195,8 @@
     },
     {
       "name": "Syracuse",
-      "iconLink": "https://api.weather.gov/icons/land/day/snow,40/sct?size=medium",
-      "shortForecast": "Chance Snow Showers then Mostly Sunny",
+      "iconLink": "https://api.weather.gov/icons/land/day/snow,70/sct?size=medium",
+      "shortForecast": "Snow Showers Likely then Mostly Sunny",
       "highF": 39,
       "lowF": 24,
       "isDaytime": true,
