@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-24T12:57:05-05:00",
+  "generatedAt": "2026-11-24T13:08:09-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -25,7 +25,7 @@
     {
       "name": "Chicago",
       "iconLink": "https://api.weather.gov/icons/land/day/snow/bkn?size=medium",
-      "shortForecast": "Slight Chance Snow Showers then Partly Sunny",
+      "shortForecast": "Slight Chance Rain And Snow Showers then Partly Sunny",
       "highF": 41,
       "lowF": 32,
       "isDaytime": true,
@@ -195,8 +195,8 @@
     },
     {
       "name": "Syracuse",
-      "iconLink": "https://api.weather.gov/icons/land/day/snow,70/sct?size=medium",
-      "shortForecast": "Snow Showers Likely then Mostly Sunny",
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Partly Sunny",
       "highF": 39,
       "lowF": 24,
       "isDaytime": true,
