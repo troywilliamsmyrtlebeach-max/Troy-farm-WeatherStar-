@@ -95,6 +95,10 @@ var _canvasIds = [
     "canvasLocalForecast",
     "canvasExtendedForecast1",
     "canvasExtendedForecast2",
+    // TROY-FARM SPC outlook screen (2026-11-23): sits here in cycle
+    // order, right after ExtendedForecast2 — FullScreenResize() sizes
+    // ONLY the canvases listed here (see the P27 note below).
+    "canvasSpcOutlook",
     "canvasAlmanac",
     "canvasAlmanacTides",
     "canvasOutlook",

@@ -67,6 +67,7 @@ var divHi2;
 var divHi3;
 var canvasExtendedForecast1;
 var canvasExtendedForecast2;
+var canvasSpcOutlook;
 
 var tblLocalForecast;
 var divLocalForecast1;
@@ -107,6 +108,13 @@ var canvasMarineForecast;
 var canvasAirQuality;
 
 var canvasHourlyForecast;
+
+var tblTravelCities;
+var divTravelCitiesLow;
+var divTravelCitiesHigh;
+var tblTravelCitiesScroll;
+var divTravelCitiesScroll;
+var canvasTravelForecast;
 
 var tblOutlook;
 var divOutlookTemp;
@@ -302,6 +310,11 @@ var _UpdateCustomScrollTextMs = 0;
 var _UpdateScrollHazardTextMs = 0;
 
 
+//var _UpdateTravelCitiesInterval = 30;
+var _UpdateTravelCitiesInterval = 150;
+var _UpdateTravelCitiesCounterMs = 0;
+var _UpdateTravelCitiesY = 0;
+
 //var _UpdateHazardsInterval = 30;
 var _UpdateHazardsInterval = 150;
 var _UpdateHazardsCounterMs = 0;
@@ -315,20 +328,33 @@ var CanvasTypes = {
     CurrentWeather: 1,
     LatestObservations: 2,
     HourlyForecast: 3,
-    RegionalForecast1: 4,
-    RegionalForecast2: 5,
-    RegionalObservations: 6,
-    LocalForecast: 7,
-    MarineForecast: 8,
-    ExtendedForecast1: 9,
-    ExtendedForecast2: 10,
-    Almanac: 11,
-    AlmanacTides: 12,
-    AirQuality: 13,
-    Outlook: 14,
-    DailyHistory: 15,
-    LocalRadar: 16,
-    Hazards: 17,
+    TravelForecast: 4,
+    RegionalForecast1: 5,
+    RegionalForecast2: 6,
+    RegionalObservations: 7,
+    LocalForecast: 8,
+    MarineForecast: 9,
+    ExtendedForecast1: 10,
+    ExtendedForecast2: 11,
+    // TROY-FARM SPC outlook screen (2026-11-23): inserted here, between
+    // ExtendedForecast2 and Almanac, so manual PREV/NEXT stepping visits
+    // it in the same order the auto-play cycle does (cycle slot sits
+    // right after ExtendedForecast2). All later types shift by one;
+    // every reference is symbolic, so nothing else changes.
+    // TROY-FARM Travel Cities (2026-11-23): TravelForecast: 4 above
+    // shifts RegionalForecast1 onward by one already; the two inserts
+    // compose — final order is Hourly 3, Travel 4, Regional1 5,
+    // Regional2 6, RegionalObs 7, Local 8, Marine 9, Ext1 10, Ext2 11,
+    // SPC 12, Almanac 13, AlmanacTides 14, AirQuality 15, Outlook 16,
+    // DailyHistory 17, LocalRadar 18, Hazards 19.
+    SpcOutlook: 12,
+    Almanac: 13,
+    AlmanacTides: 14,
+    AirQuality: 15,
+    Outlook: 16,
+    DailyHistory: 17,
+    LocalRadar: 18,
+    Hazards: 19,
 };
 var _FirstCanvasType = CanvasTypes.Progress;
 var _LastCanvasType = CanvasTypes.Hazards;
@@ -3662,6 +3688,7 @@ setTimeout(() =>
         divHi3 = $("#divHi3");
         canvasExtendedForecast1 = $("#canvasExtendedForecast1");
         canvasExtendedForecast2 = $("#canvasExtendedForecast2");
+        canvasSpcOutlook = $("#canvasSpcOutlook");
 
         tblLocalForecast = $("#tblLocalForecast");
         divLocalForecast1 = $("#divLocalForecast1");
@@ -3697,6 +3724,13 @@ setTimeout(() =>
 
         canvasHourlyForecast = $("#canvasHourlyForecast");
 
+        tblTravelCities = $("#tblTravelCities");
+        divTravelCitiesHigh = $("#divTravelCitiesHigh");
+        divTravelCitiesLow = $("#divTravelCitiesLow");
+        tblTravelCitiesScroll = $("#tblTravelCitiesScroll");
+        divTravelCitiesScroll = $("#divTravelCitiesScroll");
+        canvasTravelForecast = $("#canvasTravelForecast");
+
         tblRegionalObservations = $("#tblRegionalObservations");
         divRegionalObservationsCityName = $("#divRegionalObservationsCityName");
         divRegionalObservationsTemperature = $("#divRegionalObservationsTemperature");
@@ -3727,6 +3761,7 @@ setTimeout(() =>
         WeatherCanvases.push(canvasCurrentWeather);
         WeatherCanvases.push(canvasLatestObservations);
         WeatherCanvases.push(canvasHourlyForecast);
+        WeatherCanvases.push(canvasTravelForecast);
         WeatherCanvases.push(canvasRegionalForecast1);
         WeatherCanvases.push(canvasRegionalForecast2);
         WeatherCanvases.push(canvasRegionalObservations);
@@ -3739,6 +3774,7 @@ setTimeout(() =>
         WeatherCanvases.push(canvasLocalForecast);
         WeatherCanvases.push(canvasExtendedForecast1);
         WeatherCanvases.push(canvasExtendedForecast2);
+        WeatherCanvases.push(canvasSpcOutlook);
         WeatherCanvases.push(canvasHazards);
         WeatherCanvases.push(canvasLocalRadar);
         _WeatherParameters.WeatherCanvases = WeatherCanvases;
@@ -3752,6 +3788,8 @@ setTimeout(() =>
             WeatherCanvas.hide();
         });
         canvasProgress.show();
+
+        _WeatherParameters.TravelCities = _TravelCities;
 
 
         var GetWeatherIntervalId = null;
@@ -3808,6 +3846,9 @@ setTimeout(() =>
                 {
                     GetMonthPrecipitation(_WeatherParameters);
                     _P28LoadStagedHourlyForecast(_WeatherParameters);
+                    _P28LoadStagedSunsetBeach(_WeatherParameters);
+                    _P28LoadStagedSpcOutlook(_WeatherParameters);
+                    GetTravelWeather(_WeatherParameters);
                     //GetAirQuality2(_WeatherParameters);
                     GetAirQuality3(_WeatherParameters);
                     ShowRegionalMap(_WeatherParameters, true);
@@ -3861,7 +3902,7 @@ setTimeout(() =>
                     // overwrites Failed with Loaded.
                     window.setTimeout(function ()
                     {
-                        var _p19Names = ["CurrentConditions", "WordedForecast", "FourDayForecast", "HourlyForecast", "NearbyConditions", "CurrentRegionalMap", "TomorrowsRegionalMap", "Almanac", "DailyHistory", "DopplerRadar", "Hazards"];
+                        var _p19Names = ["CurrentConditions", "WordedForecast", "FourDayForecast", "HourlyForecast", "TravelForecast", "NearbyConditions", "CurrentRegionalMap", "TomorrowsRegionalMap", "Almanac", "DailyHistory", "DopplerRadar", "Hazards", "SpcOutlook"];
                         $(_p19Names).each(function ()
                         {
                             if (_WeatherParameters.Progress[this] == LoadStatuses.Loading)
@@ -4006,6 +4047,9 @@ setTimeout(() =>
 
                         GetMonthPrecipitation(_WeatherParameters);
                         _P28LoadStagedHourlyForecast(_WeatherParameters);
+                        _P28LoadStagedSunsetBeach(_WeatherParameters);
+                        _P28LoadStagedSpcOutlook(_WeatherParameters);
+                        GetTravelWeather(_WeatherParameters);
                         //GetAirQuality2(_WeatherParameters);
                         GetAirQuality3(_WeatherParameters);
                         ShowRegionalMap(_WeatherParameters, true);
@@ -4151,6 +4195,7 @@ var Navigate = function (Offset)
 {
     var LocalForecastScreenTexts = _WeatherParameters.LocalForecastScreenTexts;
     var Hazards = _WeatherParameters.WeatherHazardConditions.Hazards;
+    var cnvTravelCitiesScroll = $("#cnvTravelCitiesScroll");
     var cnvHazardsScroll = $("#cnvHazardsScroll");
 
     if (Offset == 0)
@@ -4178,6 +4223,17 @@ var Navigate = function (Offset)
                         }
                         break;
 
+
+                    case CanvasTypes.TravelForecast:
+                        if (_WeatherParameters.Progress.TravelForecast == LoadStatuses.Loaded)
+                        {
+                            if (_UpdateTravelCitiesY < cnvTravelCitiesScroll.height() - 289)
+                            {
+                                UpdateTravelCities(1);
+                                return;
+                            }
+                        }
+                        break;
 
                     case CanvasTypes.Hazards:
                         if (_WeatherParameters.Progress.Hazards == LoadStatuses.Loaded && Hazards.length > 0)
@@ -4221,6 +4277,17 @@ var Navigate = function (Offset)
                         }
                         break;
 
+
+                    case CanvasTypes.TravelForecast:
+                        if (_WeatherParameters.Progress.TravelForecast == LoadStatuses.Loaded)
+                        {
+                            if (_UpdateTravelCitiesY > 0)
+                            {
+                                UpdateTravelCities(-1);
+                                return;
+                            }
+                        }
+                        break;
 
                     case CanvasTypes.Hazards:
                         if (_WeatherParameters.Progress.Hazards == LoadStatuses.Loaded && Hazards.length > 0)
@@ -4300,6 +4367,22 @@ var Navigate = function (Offset)
             //window.location.hash = "aHourlyForecast";
             canvasHourlyForecast.scrollIntoView();
             break;
+        case CanvasTypes.TravelForecast:
+            if (_WeatherParameters.Progress.TravelForecast != LoadStatuses.Loaded)
+            {
+                if (Offset) { Navigate(Offset); } return;
+            }
+            if (Offset == 1)
+            {
+                UpdateTravelCities(0);
+            }
+            else if (Offset == -1)
+            {
+                UpdateTravelCities(Infinity);
+            }
+            //window.location.hash = "aTravelForecast";
+            canvasTravelForecast.scrollIntoView();
+            break;
         case CanvasTypes.RegionalForecast1:
             if (_WeatherParameters.Progress.TomorrowsRegionalMap != LoadStatuses.Loaded)
             {
@@ -4369,6 +4452,13 @@ var Navigate = function (Offset)
             }
             //window.location.hash = "aExtendedForecast";
             canvasExtendedForecast2.scrollIntoView();
+            break;
+        case CanvasTypes.SpcOutlook:
+            if (_WeatherParameters.Progress.SpcOutlook != LoadStatuses.Loaded)
+            {
+                if (Offset) { Navigate(Offset); } return;
+            }
+            canvasSpcOutlook.scrollIntoView();
             break;
         case CanvasTypes.Almanac:
             if (_WeatherParameters.Progress.Almanac != LoadStatuses.Loaded)
@@ -4529,6 +4619,15 @@ var _PlayMsOffsets = {
     HourlyForecast_End: 0,
     HourlyForecast_Length: 30000,
     HourlyForecast_Loaded: false,
+    TravelForecast_Start: 0,
+    TravelForecast_End: 0,
+    // TROY-FARM (2026-11-23): 60s, not 8s — the restored scroll (3s wait,
+    // then 3px/100ms over a 1,439px list) needs ~51s to show all 24
+    // cities; at 8s only the first ~6 would ever appear and the list
+    // restarts each cycle. The pre-P28 slot was 60s. Other screens
+    // keep their 8s dwell.
+    TravelForecast_Length: 60000,
+    TravelForecast_Loaded: false,
     RegionalForecast1_Start: 0,
     RegionalForecast1_End: 0,
     RegionalForecast1_Length: 8000,
@@ -4561,6 +4660,10 @@ var _PlayMsOffsets = {
     ExtendedForecast2_End: 0,
     ExtendedForecast2_Length: 8000,
     ExtendedForecast2_Loaded: false,
+    SpcOutlook_Start: 0,
+    SpcOutlook_End: 0,
+    SpcOutlook_Length: 8000,
+    SpcOutlook_Loaded: false,
     Almanac_Start: 0,
     Almanac_End: 0,
     Almanac_Length: 8000,
@@ -4590,6 +4693,7 @@ var _PlayMsOffsets = {
 var AssignPlayMsOffsets = function (CalledFromProgress)
 {
     var LocalForecastScreenTexts = _WeatherParameters.LocalForecastScreenTexts;
+    var cnvTravelCitiesScroll = $("#cnvTravelCitiesScroll");
     var cnvHazardsScroll = $("#cnvHazardsScroll");
     var Hazards = _WeatherParameters.WeatherHazardConditions.Hazards;
     var Progress = _WeatherParameters.Progress;
@@ -4635,8 +4739,22 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
     }
     _PlayMsOffsets.HourlyForecast_End = _PlayMsOffsets.HourlyForecast_Start + _PlayMsOffsets.HourlyForecast_Length;
 
+    //TravelForecast
+    _PlayMsOffsets.TravelForecast_Start = _PlayMsOffsets.HourlyForecast_End;
+    if (Progress.TravelForecast == LoadStatuses.Loaded)
+    {
+        // TROY-FARM (2026-11-23): 60s so the full 24-city scroll fits
+        // (see the defaults comment above); 0 when not loaded.
+        _PlayMsOffsets.TravelForecast_Length = 60000;
+    }
+    else
+    {
+        _PlayMsOffsets.TravelForecast_Length = 0;
+    }
+    _PlayMsOffsets.TravelForecast_End = _PlayMsOffsets.TravelForecast_Start + _PlayMsOffsets.TravelForecast_Length;
+
     //RegionalForecast1
-    _PlayMsOffsets.RegionalForecast1_Start = _PlayMsOffsets.HourlyForecast_End;
+    _PlayMsOffsets.RegionalForecast1_Start = _PlayMsOffsets.TravelForecast_End;
     if (Progress.TomorrowsRegionalMap == LoadStatuses.Loaded)
     {
         _PlayMsOffsets.RegionalForecast1_Length = 8000;
@@ -4731,8 +4849,20 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
     }
     _PlayMsOffsets.ExtendedForecast2_End = _PlayMsOffsets.ExtendedForecast2_Start + _PlayMsOffsets.ExtendedForecast2_Length;
 
+    //SpcOutlook
+    _PlayMsOffsets.SpcOutlook_Start = _PlayMsOffsets.ExtendedForecast2_End;
+    if (Progress.SpcOutlook == LoadStatuses.Loaded)
+    {
+        _PlayMsOffsets.SpcOutlook_Length = 8000;
+    }
+    else
+    {
+        _PlayMsOffsets.SpcOutlook_Length = 0;
+    }
+    _PlayMsOffsets.SpcOutlook_End = _PlayMsOffsets.SpcOutlook_Start + _PlayMsOffsets.SpcOutlook_Length;
+
     //Almanac
-    _PlayMsOffsets.Almanac_Start = _PlayMsOffsets.ExtendedForecast2_End;
+    _PlayMsOffsets.Almanac_Start = _PlayMsOffsets.SpcOutlook_End;
     if (Progress.Almanac == LoadStatuses.Loaded)
     {
         _PlayMsOffsets.Almanac_Length = 8000;
@@ -4846,6 +4976,17 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
             }
             _PlayMsOffsets.HourlyForecast_Loaded = true;
         }
+        if (Progress.TravelForecast == LoadStatuses.Loaded && _PlayMsOffsets.TravelForecast_Loaded == false)
+        {
+            //if (_PlayMs > _PlayMsOffsets.TravelForecast_End)
+            //if (_PlayMs <= _PlayMsOffsets.TravelForecast_Start)
+            //if (_PlayMs < _PlayMsOffsets.TravelForecast_End)
+            if (_CurrentCanvasType > CanvasTypes.TravelForecast)
+            {
+                _PlayMs += _PlayMsOffsets.TravelForecast_Length;
+            }
+            _PlayMsOffsets.TravelForecast_Loaded = true;
+        }
         if (Progress.TomorrowsRegionalMap == LoadStatuses.Loaded && _PlayMsOffsets.RegionalForecast1_Loaded == false)
         {
             //if (_PlayMs > _PlayMsOffsets.RegionalForecast_End)
@@ -4925,6 +5066,14 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
             }
             _PlayMsOffsets.ExtendedForecast2_Loaded = true;
         }
+        if (Progress.SpcOutlook == LoadStatuses.Loaded && _PlayMsOffsets.SpcOutlook_Loaded == false)
+        {
+            if (_CurrentCanvasType > CanvasTypes.SpcOutlook)
+            {
+                _PlayMs += _PlayMsOffsets.SpcOutlook_Length;
+            }
+            _PlayMsOffsets.SpcOutlook_Loaded = true;
+        }
         if (Progress.Almanac == LoadStatuses.Loaded && _PlayMsOffsets.Almanac_Loaded == false)
         {
             //if (_PlayMs > _PlayMsOffsets.Almanac_End)
@@ -4999,6 +5148,9 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
             case CanvasTypes.HourlyForecast:
                 _PlayMs = _PlayMsOffsets.HourlyForecast_Start;
                 break;
+            case CanvasTypes.TravelForecast:
+                _PlayMs = _PlayMsOffsets.TravelForecast_Start;
+                break;
             case CanvasTypes.RegionalForecast1:
                 _PlayMs = _PlayMsOffsets.RegionalForecast1_Start;
                 break;
@@ -5022,6 +5174,9 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
                 break;
             case CanvasTypes.ExtendedForecast2:
                 _PlayMs = _PlayMsOffsets.ExtendedForecast2_Start;
+                break;
+            case CanvasTypes.SpcOutlook:
+                _PlayMs = _PlayMsOffsets.SpcOutlook_Start;
                 break;
             case CanvasTypes.Almanac:
                 _PlayMs = _PlayMsOffsets.Almanac_Start;
@@ -5049,6 +5204,7 @@ var AssignPlayMsOffsets = function (CalledFromProgress)
 var UpdatePlayPosition = function ()
 {
     var LocalForecastScreenTexts = _WeatherParameters.LocalForecastScreenTexts;
+    var cnvTravelCitiesScroll = $("#cnvTravelCitiesScroll");
     var cnvHazardsScroll = $("#cnvHazardsScroll");
     var Hazards = _WeatherParameters.WeatherHazardConditions.Hazards;
     var Progress = _WeatherParameters.Progress;
@@ -5090,6 +5246,33 @@ var UpdatePlayPosition = function ()
         // with the offset for this SubMs, so the rows crawl instead of
         // jumping between pages. The draw is idempotent and cheap.
         _P28DrawHourly(_WeatherParameters, SubMs);
+    }
+    else if (_PlayMs >= _PlayMsOffsets.TravelForecast_Start && _PlayMs < _PlayMsOffsets.TravelForecast_End)
+    {
+        _CurrentCanvasType = CanvasTypes.TravelForecast;
+        _CurrentPosition = _CurrentCanvasType;
+        SubMs = _PlayMs - _PlayMsOffsets.TravelForecast_Start;
+
+        // Wait 3 seconds and then start scrolling.
+        if (SubMs < 3000)
+        {
+            _UpdateTravelCitiesY = 0;
+        }
+        if (SubMs >= 3000)
+        {
+            //y += 1;
+            _UpdateTravelCitiesY = 3 * ((SubMs - 3000) / _PlayInterval);
+        }
+        if (_UpdateTravelCitiesY > cnvTravelCitiesScroll.height() - 289)
+        {
+            _UpdateTravelCitiesY = cnvTravelCitiesScroll.height() - 289;
+
+            // Wait 10 seconds and start all over.
+        }
+
+        //_CurrentPosition += Math.floor(_UpdateTravelCitiesY / 72) / 10;
+
+        UpdateTravelCities();
     }
     else if (_PlayMs >= _PlayMsOffsets.RegionalForecast1_Start && _PlayMs < _PlayMsOffsets.RegionalForecast1_End)
     {
@@ -5146,6 +5329,11 @@ var UpdatePlayPosition = function ()
     else if (_PlayMs >= _PlayMsOffsets.ExtendedForecast2_Start && _PlayMs < _PlayMsOffsets.ExtendedForecast2_End)
     {
         _CurrentCanvasType = CanvasTypes.ExtendedForecast2;
+        _CurrentPosition = _CurrentCanvasType;
+    }
+    else if (_PlayMs >= _PlayMsOffsets.SpcOutlook_Start && _PlayMs < _PlayMsOffsets.SpcOutlook_End)
+    {
+        _CurrentCanvasType = CanvasTypes.SpcOutlook;
         _CurrentPosition = _CurrentCanvasType;
     }
     else if (_PlayMs >= _PlayMsOffsets.Almanac_Start && _PlayMs < _PlayMsOffsets.Almanac_End)
@@ -6953,6 +7141,28 @@ var PopulateCurrentConditions = function (WeatherParameters)
                 gifIcon.setFirstTime();
             }
 
+            // TROY-FARM 2026-11-23 (icons in motion): a 1-frame icon
+            // (tonight: Cloudy.gif) never repaints, so it sits still
+            // while the sun/shower icons around it move. Hand the live
+            // player + background to the still-icon ticker: every
+            // 100ms while this screen shows it repaints the icon box
+            // from the photo + the GIF's own frame, then draws the
+            // motion for this icon's kind on top. Multi-frame GIFs are
+            // untouched (SuperGif moves them). One interval for the
+            // life of the page; a data refresh only swaps the state.
+            _HeroMotionState = {
+                gifIcon: (typeof gifIcon !== "undefined" ? gifIcon : null),
+                bgImage: BackGroundImage,
+                bgLoaded: _p19Loaded,
+                canvas: canvas,
+                context: context,
+                kind: _StillIconKindFromIconUrl(WeatherCurrentConditions.Icon)
+            };
+            if (_HeroMotionInterval === null)
+            {
+                _HeroMotionInterval = window.setInterval(_HeroMotionTick, 100);
+            }
+
             WeatherParameters.Progress.CurrentConditions = LoadStatuses.Loaded;
 
             UpdateWeatherCanvas(WeatherParameters, canvasCurrentWeather);
@@ -7433,6 +7643,26 @@ var PopulateExtendedForecast = function (WeatherParameters, ScreenIndex)
                 x += 195;
             });
 
+            // TROY-FARM 2026-11-23 (icons in motion): as the hero —
+            // a 1-frame day icon (Clear/Cloudy/Fog/snow) never repaints,
+            // so it sits still. Same ticker: every 100ms while this
+            // screen shows, repaint each 1-frame day's box from the
+            // photo + its own frame, then draw that kind's motion.
+            // Multi-frame days are untouched (SuperGif moves them).
+            var _extDays = [];
+            var _extX = 46;
+            $(gifIcons).each(function ()
+            {
+                var _g = this;
+                _extDays.push({ gif: _g, x: _extX + (158 / 2) - (_g.get_canvas().width / 2), kind: (_g._stillKind || "cloud") });
+                _extX += 195;
+            });
+            _ExtMotionState[ScreenIndex] = { canvas: canvas, context: context, bgImage: BackGroundImage, days: _extDays };
+            if (_ExtMotionInterval[ScreenIndex] === null)
+            {
+                _ExtMotionInterval[ScreenIndex] = window.setInterval(function () { _ExtMotionTick(ScreenIndex); }, 100);
+            }
+
             if (ScreenIndex == 1)
             {
                 WeatherParameters.Progress.FourDayForecast1 = LoadStatuses.Loaded;
@@ -7481,6 +7711,7 @@ var PopulateExtendedForecast = function (WeatherParameters, ScreenIndex)
                 max_height: 75,
             });
 
+            gifIcon._stillKind = _StillIconKindFromIconUrl(Icon);
             gifIcons.push(gifIcon);
 
             x += 195;
@@ -9828,6 +10059,272 @@ var _P28ValidateHourlyForecast = function (json)
     return true;
 };
 
+// TROY-FARM SPC outlook screen (2026-11-23): Troy's words — "Can I
+// also add Storm prediction center outlook — Like thats on the myrtle
+// beach stream". A Storm Prediction Center categorical outlook screen
+// for the farm point, staged by stage_spc_outlook.py (hidden_files)
+// from the live SPC Day 1/2/3 categorical GeoJSON
+// (spc.noaa.gov/products/outlook/day{N}otlk_cat.lyr.geojson) with a
+// point-in-polygon test at 33.92N 78.57W. The staged file carries one
+// entry per day: risk code + plain-words label + valid window + the
+// polygon's own SPC fill color.
+// Freshness: outlooks are issued on a slower cadence than hourly, so
+// the app ignores a file whose generatedAt is older than 12 hours
+// (hourly uses 2h). A missing, invalid, or stale file NEVER shows old
+// risk as current — the screen draws OUTLOOK UNAVAILABLE instead
+// (Progress.SpcOutlook is still Loaded, so the 8s slot plays).
+var _P28LoadStagedSpcOutlook = function (WeatherParameters)
+{
+    $.ajaxCORS({
+        type: "GET",
+        url: "spc-outlook.json",
+        dataType: "json",
+        crossDomain: true,
+        cache: false,
+        success: function (json)
+        {
+            if (!_P28ValidateSpcOutlook(json))
+            {
+                console.warn("P28 SPC: spc-outlook.json invalid or stale; showing OUTLOOK UNAVAILABLE.");
+                WeatherParameters.SpcOutlook = null;
+                PopulateSpcOutlookUnavailable(WeatherParameters);
+                return;
+            }
+            WeatherParameters.SpcOutlook = json;
+            PopulateSpcOutlook(WeatherParameters);
+        },
+        error: function ()
+        {
+            console.warn("P28 SPC: spc-outlook.json missing; showing OUTLOOK UNAVAILABLE.");
+            WeatherParameters.SpcOutlook = null;
+            PopulateSpcOutlookUnavailable(WeatherParameters);
+        }
+    });
+};
+
+var _P28SpcRiskCodes = ["NONE", "TSTM", "MRGL", "SLGT", "ENH", "MDT", "HIGH"];
+
+var _P28ValidateSpcOutlook = function (json)
+{
+    if (!json || json.station !== "KNCCAROL120") return false;
+    if (!json.days || json.days.length !== 3) return false;
+    // SPC outlooks are issued on a slower cadence than hourly, so the
+    // freshness window is 12 hours (hourly uses 2h). Older than that,
+    // the outlook is stale and must never show as current.
+    var _gen = new Date(json.generatedAt);
+    if (isNaN(_gen.getTime())) return false;
+    if ((new Date() - _gen) > 12 * 60 * 60 * 1000) return false;
+    for (var i = 0; i < json.days.length; i++)
+    {
+        var d = json.days[i];
+        if (d.day !== i + 1) return false;
+        if (_P28SpcRiskCodes.indexOf(d.riskCode) < 0) return false;
+        if (typeof d.riskLabel !== "string" || d.riskLabel === "") return false;
+        if (typeof d.dateLabel !== "string" || d.dateLabel === "") return false;
+        if (typeof d.validLabel !== "string" || d.validLabel === "") return false;
+        if (typeof d.color !== "string" || d.color === "") return false;
+    }
+    return true;
+};
+
+// Shared draw for the SPC screen: same background, title, and side
+// gradients as the Almanac Outlook screen. One row per day — DAY n in
+// yellow, the risk in its SPC color at 24pt, the valid window below in
+// 18pt. The unavailable variant keeps the title and says so plainly
+// instead of showing any risk.
+var _P28DrawSpcOutlook = function (WeatherParameters, unavailable)
+{
+    var canvas = canvasSpcOutlook[0];
+    var context = canvas.getContext("2d", { willReadFrequently: true });
+
+    var BackGroundImage = new Image();
+    // TROY-FARM P23 pattern: proceed once on load, error, or an 8s
+    // timeout — a hung/missing background must not wedge the screen.
+    var _drawn = false;
+    var _draw = function ()
+    {
+        if (_drawn) return;
+        _drawn = true;
+
+        context.drawImage(BackGroundImage, 0, 0);
+        DrawHorizontalGradientSingle(context, 0, 30, 500, 90, _TopColor1, _TopColor2);
+        DrawTriangle(context, "rgb(28, 10, 87)", 500, 30, 450, 90, 500, 90);
+        DrawHorizontalGradientSingle(context, 0, 90, 52, 399, _SideColor1, _SideColor2);
+        DrawHorizontalGradientSingle(context, 584, 90, 640, 399, _SideColor1, _SideColor2);
+
+        DrawTitleText(context, "Storm Prediction", "Center");
+
+        DrawText(context, "Star4000", "24pt", "#FFFFFF", 320, 145, "Severe Weather Outlook", 2, "center");
+
+        if (unavailable)
+        {
+            DrawText(context, "Star4000", "24pt", "#FFFF00", 320, 255, "OUTLOOK UNAVAILABLE", 2, "center");
+            DrawText(context, "Star4000", "20pt", "#FFFFFF", 320, 305, "SPC DATA NOT AVAILABLE", 2, "center");
+            DrawText(context, "Star4000", "20pt", "#FFFFFF", 320, 340, "CHECK BACK SOON", 2, "center");
+        }
+        else
+        {
+            var _days = WeatherParameters.SpcOutlook.days;
+            var _y = 195;
+            for (var i = 0; i < _days.length; i++)
+            {
+                var _d = _days[i];
+                DrawText(context, "Star4000", "24pt", "#FFFF00", 70, _y, "DAY " + _d.day, 2);
+                DrawText(context, "Star4000", "24pt", _d.color, 170, _y, _d.riskLabel.toUpperCase(), 2);
+                DrawText(context, "Star4000", "18pt", "#FFFFFF", 70, _y + 32, _d.dateLabel.toUpperCase() + "  -  VALID " + _d.validLabel.toUpperCase(), 2);
+                _y += 62;
+            }
+        }
+
+        WeatherParameters.Progress.SpcOutlook = LoadStatuses.Loaded;
+
+        // Late-load adjust: the slot only exists once this data lands.
+        AssignPlayMsOffsets(true);
+
+        UpdateWeatherCanvas(WeatherParameters, canvasSpcOutlook);
+    };
+    BackGroundImage.onload = _draw;
+    BackGroundImage.onerror = _draw;
+    window.setTimeout(_draw, 8000);
+    BackGroundImage.src = "https://battaglia.ddns.net/twc/images/BackGround1_1.png";
+};
+
+var PopulateSpcOutlook = function (WeatherParameters)
+{
+    if (WeatherParameters == null || !WeatherParameters.SpcOutlook)
+    {
+        return;
+    }
+    _P28DrawSpcOutlook(WeatherParameters, false);
+};
+
+var PopulateSpcOutlookUnavailable = function (WeatherParameters)
+{
+    if (WeatherParameters == null)
+    {
+        return;
+    }
+    _P28DrawSpcOutlook(WeatherParameters, true);
+};
+
+// TROY-FARM (2026-11-23): Sunset Beach replaces Wilmington on Latest
+// Observations (Troy's correction ~9:43 PM — Wilmington -> Sunset Beach;
+// Southport stays, it is in Brunswick County). Sunset Beach
+// NC (33.88N 78.51W) has NO METAR station, so its row reads the staged
+// sunset-beach.json (Open-Meteo current weather for that point, refreshed
+// every 15 min by stage_sunset_beach.py) — never a relabel of KCRE's or
+// the farm's readings. Mirrors _P28LoadStagedHourlyForecast: a file whose
+// generatedAt is older than 2 hours is ignored, and a missing/stale file
+// simply omits the Sunset Beach row (the other 5 towns + farm row still
+// show) — never a stale or invented Sunset Beach row.
+var _P28LoadStagedSunsetBeach = function (WeatherParameters)
+{
+    $.ajaxCORS({
+        type: "GET",
+        url: "sunset-beach.json",
+        dataType: "json",
+        crossDomain: true,
+        cache: false,
+        success: function (json)
+        {
+            if (!_P28ValidateSunsetBeach(json))
+            {
+                console.warn("P28: sunset-beach.json invalid or stale; Sunset Beach row omitted.");
+                return;
+            }
+            WeatherParameters.SunsetBeach = json;
+            // Latest Observations may already have populated without the
+            // row (the METAR/DWML fetch can finish first) — redraw with
+            // it now. Populate never re-fires this loader, so no loop.
+            var _rc = WeatherParameters.WeatherCurrentRegionalConditions;
+            if (_rc && _rc.SortedArray && _rc.SortedArray.length > 0)
+            {
+                var _hasSunset = false;
+                $(_rc.SortedArray).each(function () { if (this.StationId === "SUNSET-BEACH") _hasSunset = true; });
+                if (!_hasSunset) PopulateRegionalObservations(WeatherParameters);
+            }
+        },
+        error: function ()
+        {
+            console.warn("P28: sunset-beach.json failed to load; Sunset Beach row omitted.");
+        }
+    });
+};
+
+var _P28ValidateSunsetBeach = function (json)
+{
+    if (!json || json.station !== "SUNSET-BEACH") return false;
+    if (typeof json.tempF !== "number" || isNaN(json.tempF)) return false;
+    if (typeof json.feelsLikeF !== "number" || isNaN(json.feelsLikeF)) return false;
+    if (typeof json.conditions !== "string" || json.conditions === "") return false;
+    if (typeof json.windSpeedMph !== "number" || isNaN(json.windSpeedMph)) return false;
+    // Wind direction: a string when the wind blows, null only for Calm.
+    if (json.windSpeedMph === 0)
+    {
+        if (json.windDir !== null && typeof json.windDir !== "string") return false;
+    }
+    else if (typeof json.windDir !== "string" || json.windDir === "") return false;
+    // The app ignores a file whose generatedAt is older than 2 hours
+    // (the cron re-stages it every 15 min, so a stale file means the
+    // staging broke — omit the row, never show old conditions).
+    var _gen = new Date(json.generatedAt);
+    if (isNaN(_gen.getTime())) return false;
+    if ((new Date() - _gen) > 2 * 60 * 60 * 1000) return false;
+    return true;
+};
+
+var _P28SunsetBeachShort = function (word)
+{
+    // Same ShortConditions transform the WeatherCurrentConditions
+    // constructor applies to the METAR town rows (Light -> L,
+    // Heavy -> H, Partly -> P, Mostly -> M, ...), so the Sunset Beach
+    // row reads like the other towns on the table and the canvas
+    // (which truncates ShortConditions to 9 chars). The farm-only
+    // abbreviations (P Cloudy / L RAIN / V Cloudy in _P23BuildFarmRow)
+    // do NOT apply here.
+    var s = (word || "");
+    s = s.replaceAll("Light", "L");
+    s = s.replaceAll("Heavy", "H");
+    s = s.replaceAll("Partly", "P");
+    s = s.replaceAll("Mostly", "M");
+    s = s.replaceAll("Few", "F");
+    s = s.replaceAll("Thunderstorm", "T'storm");
+    s = s.replaceAll(" in ", "");
+    s = s.replaceAll("Vicinity", "");
+    s = s.replaceAll(" and ", " ");
+    s = s.replaceAll("Freezing Rain", "Frz Rn");
+    s = s.replaceAll("Freezing", "Frz");
+    s = s.replaceAll("Unknown Precip", "");
+    s = s.replaceAll("L Snow Fog", "L Snw/Fog");
+    s = s.replaceAll(" with ", "/");
+    return s;
+};
+
+var _P28BuildSunsetBeachRow = function (WeatherParameters)
+{
+    // TROY-FARM (2026-11-23): the Sunset Beach Latest Observations row,
+    // built from the staged sunset-beach.json — NOT from a METAR.
+    // Plain object like _P23BuildFarmRow: the draw loop reads only
+    // StationName, Temperature, TemperatureC, ShortConditions,
+    // WindDirection, WindSpeed and WindSpeedC. Returns null when the
+    // file is missing or stale, so the caller omits the row rather than
+    // showing a stale or invented one.
+    if (!WeatherParameters || !_P28ValidateSunsetBeach(WeatherParameters.SunsetBeach)) return null;
+    var s = WeatherParameters.SunsetBeach;
+    var wmph = s.windSpeedMph;
+    return {
+        StationId: "SUNSET-BEACH",
+        StationName: "Sunset Beach",
+        Temperature: Math.round(s.tempF),
+        TemperatureC: Math.round((s.tempF - 32) * 5 / 9),
+        ShortConditions: _P28SunsetBeachShort(s.conditions),
+        Conditions: s.conditions,
+        WindDirection: (wmph > 0 && s.windDir) ? s.windDir : "",
+        WindSpeed: (wmph > 0) ? wmph : 0,
+        WindSpeedC: Math.round(wmph * 1.60934)
+    };
+};
+
 // TROY-FARM P28 rebuild (2026-11-17): the Hourly Forecast screen now
 // matches the Channel/International hourly screen — Troy's words
 // 2026-11-16: "I want my hourly forecast matching exactly 100% how it
@@ -9963,6 +10460,303 @@ var _P28HourlyIconUrl = function (iconCode, isDaytime)
             break;
     }
     return "https://battaglia.ddns.net/twc/images/r/" + _gif;
+};
+
+// TROY-FARM 2026-11-23 (icons in motion): SuperGif only ever moves a
+// multi-frame GIF — a 1-frame GIF (Cloudy, Clear/moon, Fog, the snow
+// set, Windy) is painted once and libgif's putFrame() never touches it
+// again (battery-saver early return), so the hero, the Extended
+// Forecast days and the regional city icons sit still whenever the
+// condition maps to one of those files — tonight the farm's own hero
+// icon is Cloudy.gif, 1 frame. This draws the same motion language
+// the ?v=127 hourly icons use (_P28DrawHourlyIconMotion) on top of the
+// still icon, clipped to the icon box: rain falls under the icon, the
+// sun shines across, snow falls, lightning flashes, fog drifts, stars
+// twinkle, clouds drift, wind streaks past. The caller repaints the
+// icon box first (the photo background + the GIF's own frame), so the
+// motion never smears; on the regional screens the 100ms map copy does
+// that repaint. Only 1-frame icons get the overlay — multi-frame GIFs
+// already move via SuperGif. tMs is the play clock (_PlayMs); each icon
+// is staggered by its box position so icons do not march in lockstep.
+var _StillIconKindFromIconUrl = function (url)
+{
+    var _b = (url || "").toString().split("/").pop().toLowerCase();
+    switch (_b)
+    {
+        case "sunny.gif":
+            return "sun";
+        case "clear.gif":
+        case "clear-1992.gif":
+        case "partly-clear.gif":
+        case "partly-clear-1994-2.gif":
+        case "mostly-clear.gif":
+            return "stars";
+        case "cloudy.gif":
+        case "mostly-cloudy.gif":
+        case "mostly-cloudy-1994-2.gif":
+        case "partly-cloudy.gif":
+            return "cloud";
+        case "fog.gif":
+            return "fog";
+        case "rain.gif":
+        case "rain-1992.gif":
+        case "shower.gif":
+        case "scattered-showers.gif":
+        case "scattered-showers-1994-2.gif":
+        case "scattered-showers-night.gif":
+        case "scattered-showers-night-1994-2.gif":
+            return "rain";
+        case "thunderstorm.gif":
+        case "scattered-tstorms.gif":
+            return "storm";
+        case "light-snow.gif":
+        case "heavy-snow.gif":
+        case "heavy-snow-1994-2.gif":
+        case "am-snow-1994.gif":
+        case "scattered-snow-showers.gif":
+        case "blowing-snow.gif":
+            return "snow";
+        case "sleet.gif":
+        case "snow-sleet.gif":
+        case "freezing-rain-sleet.gif":
+        case "wintry-mix.gif":
+        case "rain-snow.gif":
+        case "rain-snow-1992.gif":
+        case "freezing-rain.gif":
+        case "freezing-rain-1992.gif":
+        case "freezing-rain-snow-1992.gif":
+            return "mix";
+        case "windy.gif":
+            return "wind";
+        default:
+            return "cloud";
+    }
+};
+
+var _DrawStillIconMotion = function (context, kind, x, y, w, h, tMs)
+{
+    var _t = tMs + (x + y) * 7;
+    var _k = Math.max(0.5, Math.min(1.5, Math.min(w, h) / 60));
+    var _clipH = (kind === "rain" || kind === "storm" || kind === "mix") ? h + 11 : h;
+    context.save();
+    context.beginPath();
+    context.rect(x, y, w, _clipH);
+    context.clip();
+    var _j;
+    var _rainDropsUnder = function (count)
+    {
+        context.strokeStyle = "rgba(140,200,255,0.95)";
+        context.lineWidth = 2.5 * _k;
+        context.lineCap = "round";
+        for (_j = 0; _j < count; _j++)
+        {
+            var _dx = x + (w * (_j + 0.5) / count);
+            var _dy = y + h - 2 + ((_t * 0.02 + _j * 7 / count) % 7);
+            context.beginPath();
+            context.moveTo(_dx, _dy);
+            context.lineTo(_dx - 2 * _k, _dy + 6 * _k);
+            context.stroke();
+        }
+    };
+    var _snowFlakes = function (count)
+    {
+        context.fillStyle = "rgba(255,255,255,0.95)";
+        for (_j = 0; _j < count; _j++)
+        {
+            var _fx = x + (w * (_j + 0.5) / count) + Math.sin(_t * 0.002 + _j * 1.7) * 3 * _k;
+            var _fy = y + 6 + ((_t * 0.03 + _j * 13) % Math.max(12, h - 12));
+            context.beginPath();
+            context.arc(_fx, _fy, 2.2 * _k, 0, Math.PI * 2);
+            context.fill();
+        }
+    };
+    if (kind === "rain")
+    {
+        _rainDropsUnder(Math.max(3, Math.round(w / 9)));
+    }
+    else if (kind === "storm")
+    {
+        _rainDropsUnder(Math.max(3, Math.round(w / 9)));
+        // Lightning bolt flashes ~every 2.6s, visible ~350ms.
+        if ((_t % 2600) < 350)
+        {
+            var _bx = x + w * 0.63, _by = y + h * 0.23, _s = Math.min(w, h) / 60;
+            context.fillStyle = "#FFEB3B";
+            context.beginPath();
+            context.moveTo(_bx + 8 * _s, _by);
+            context.lineTo(_bx, _by + 18 * _s);
+            context.lineTo(_bx + 7 * _s, _by + 18 * _s);
+            context.lineTo(_bx - 1 * _s, _by + 36 * _s);
+            context.lineTo(_bx + 11 * _s, _by + 16 * _s);
+            context.lineTo(_bx + 4 * _s, _by + 16 * _s);
+            context.closePath();
+            context.fill();
+        }
+    }
+    else if (kind === "snow")
+    {
+        _snowFlakes(Math.max(3, Math.round(w / 12)));
+    }
+    else if (kind === "mix")
+    {
+        _rainDropsUnder(3);
+        _snowFlakes(2);
+    }
+    else if (kind === "fog")
+    {
+        context.strokeStyle = "rgba(255,255,255,0.55)";
+        context.lineWidth = 3 * _k;
+        context.lineCap = "round";
+        for (_j = 0; _j < 3; _j++)
+        {
+            var _mx = Math.sin(_t * 0.001 + _j * 2.1) * 6 * _k;
+            var _my = y + h * (0.3 + _j * 0.22);
+            context.beginPath();
+            context.moveTo(x + w * 0.15 + _mx, _my);
+            context.lineTo(x + w * 0.85 + _mx, _my);
+            context.stroke();
+        }
+    }
+    else if (kind === "sun")
+    {
+        var _cx = x + w / 2, _cy = y + h / 2;
+        context.strokeStyle = "rgba(255,233,74,0.85)";
+        context.lineWidth = 2 * _k;
+        context.lineCap = "round";
+        for (_j = 0; _j < 6; _j++)
+        {
+            var _a = _t * 0.0005 + _j * (Math.PI / 3);
+            context.beginPath();
+            context.moveTo(_cx + Math.cos(_a) * 0.32 * Math.min(w, h), _cy + Math.sin(_a) * 0.32 * Math.min(w, h));
+            context.lineTo(_cx + Math.cos(_a) * 0.47 * Math.min(w, h), _cy + Math.sin(_a) * 0.47 * Math.min(w, h));
+            context.stroke();
+        }
+        // A bright band sweeps left-to-right across the sun every
+        // ~2.6s (900ms sweep, then a pause) — the shine moves.
+        var _sweep = _t % 2600;
+        if (_sweep < 900)
+        {
+            var _sx = x - 24 + (_sweep / 900) * (w + 48);
+            var _grad = context.createLinearGradient(_sx - 12, 0, _sx + 12, 0);
+            _grad.addColorStop(0, "rgba(255,255,190,0)");
+            _grad.addColorStop(0.5, "rgba(255,255,190,0.55)");
+            _grad.addColorStop(1, "rgba(255,255,190,0)");
+            context.fillStyle = _grad;
+            context.fillRect(_sx - 12, y, 24, h);
+        }
+    }
+    else if (kind === "stars")
+    {
+        context.fillStyle = "rgba(255,255,255,0.95)";
+        for (_j = 0; _j < 3; _j++)
+        {
+            var _sa = 0.35 + 0.6 * Math.abs(Math.sin(_t * 0.004 + _j * 2.1));
+            context.globalAlpha = _sa;
+            context.beginPath();
+            context.arc(x + w * (0.2 + _j * 0.3), y + h * (0.2 + (_j % 2) * 0.15), 2 * _k, 0, Math.PI * 2);
+            context.fill();
+        }
+        context.globalAlpha = 1;
+    }
+    else if (kind === "wind")
+    {
+        context.strokeStyle = "rgba(255,255,255,0.75)";
+        context.lineWidth = 2.5 * _k;
+        context.lineCap = "round";
+        for (_j = 0; _j < 3; _j++)
+        {
+            var _wx = x - 10 + ((_t * 0.06 + _j * (w / 3)) % (w + 20));
+            var _wy = y + h * (0.3 + _j * 0.2);
+            context.beginPath();
+            context.moveTo(_wx, _wy);
+            context.lineTo(_wx + w * 0.35, _wy);
+            context.stroke();
+        }
+    }
+    else
+    {
+        // Cloudy / partly / mostly: two soft white puffs drifting across.
+        context.fillStyle = "rgba(255,255,255,0.20)";
+        for (_j = 0; _j < 2; _j++)
+        {
+            var _px = x - 0.2 * w + ((_t * 0.02 + _j * (w + 24) / 2) % (w * 1.4));
+            var _py = y + h * (0.27 + _j * 0.3);
+            context.beginPath();
+            context.ellipse(_px, _py, 0.25 * w, 0.1 * h, 0, 0, Math.PI * 2);
+            context.fill();
+        }
+    }
+    context.restore();
+};
+
+// Regional 1-frame city icons ride the 100ms map copy (the copy
+// repaints the icon box from the pristine offscreen canvas, so the
+// motion drawn here never smears). x/y are the offscreen-canvas icon
+// origin; the copy lands the map at y+90 on the display canvas.
+var _DrawRegionalStillIcons = function (context, list, tMs)
+{
+    if (!list) return;
+    for (var _i = 0; _i < list.length; _i++)
+    {
+        var _e = list[_i];
+        if (typeof _e.gif.length !== "function" || _e.gif.length() !== 1) continue;
+        var _w = _e.gif.get_canvas().width, _h = _e.gif.get_canvas().height;
+        if (!_w || !_h) continue;
+        _DrawStillIconMotion(context, _e.kind, _e.x, _e.y + 90, _w, _h, tMs);
+    }
+};
+
+// Hero ticker state: one 100ms interval for the life of the page; a
+// data refresh only swaps the state (never a second interval).
+var _HeroMotionState = null;
+var _HeroMotionInterval = null;
+var _HeroMotionTick = function ()
+{
+    var _s = _HeroMotionState;
+    if (!_s || !_s.gifIcon || !_s.canvas) return;
+    if (document.elementFromPoint(0, 0) != _s.canvas) return;
+    if (typeof _s.gifIcon.length !== "function" || _s.gifIcon.length() !== 1) return;
+    var _w = _s.gifIcon.get_canvas().width, _h = _s.gifIcon.get_canvas().height;
+    if (!_w || !_h) return;
+    var _x = 140, _y = 175;
+    if (_s.bgLoaded && _s.bgImage && _s.bgImage.complete && _s.bgImage.naturalWidth > 0)
+    {
+        _s.context.drawImage(_s.bgImage, _x, _y, _w, _h, _x, _y, _w, _h);
+    }
+    else
+    {
+        _s.context.clearRect(_x, _y, _w, _h);
+    }
+    _s.context.drawImage(_s.gifIcon.get_canvas(), _x, _y);
+    _DrawStillIconMotion(_s.context, _s.kind, _x, _y, _w, _h, _PlayMs);
+};
+
+// Extended-forecast ticker state: one 100ms interval per screen
+// (ScreenIndex 1/2); a data refresh only swaps the state.
+var _ExtMotionState = { 1: null, 2: null };
+var _ExtMotionInterval = { 1: null, 2: null };
+var _ExtMotionTick = function (_idx)
+{
+    var _s = _ExtMotionState[_idx];
+    if (!_s || !_s.canvas) return;
+    if (document.elementFromPoint(0, 0) != _s.canvas) return;
+    for (var _i = 0; _i < _s.days.length; _i++)
+    {
+        var _d = _s.days[_i];
+        if (typeof _d.gif.length !== "function" || _d.gif.length() !== 1) continue;
+        var _w = _d.gif.get_canvas().width, _h = _d.gif.get_canvas().height;
+        if (!_w || !_h) continue;
+        if (_s.bgImage && _s.bgImage.complete && _s.bgImage.naturalWidth > 0)
+        {
+            _s.context.drawImage(_s.bgImage, _d.x, 150, _w, _h, _d.x, 150, _w, _h);
+        }
+        else
+        {
+            _s.context.clearRect(_d.x, 150, _w, _h);
+        }
+        _s.context.drawImage(_d.gif.get_canvas(), _d.x, 150);
+        _DrawStillIconMotion(_s.context, _d.kind, _d.x, 150, _w, _h, _PlayMs);
+    }
 };
 
 // TROY-FARM animated Hourly Forecast icons (2026-11-23, Troy's words:
@@ -10851,6 +11645,490 @@ var WeatherTravelForecast = function (WeatherDwmlParser, ForceToday, ForceTonigh
     this.DayName = DayName;
 };
 
+// NWS api.weather.gov icon URLs carry machine codes, e.g.
+// https://api.weather.gov/icons/land/day/bkn/rain_showers,60?size=medium
+// The summary-word path above misses compound shortForecast wordings
+// ("Chance Light Rain", "Light Rain Likely", ...), so derive the icon
+// from the URL codes instead: prefer the LAST segment when there is one
+// (bkn/rain_showers -> showers, not just clouds; rain,50/rain,70 ->
+// rain), else the sky segment. Codes are translated to the old
+// forecast.weather.gov medium-png names GetWeatherIconFromIconLink
+// already knows, then run through the same regional mapper (no
+// conditions, no farm parameters — a city icon must never inherit the
+// farm's sky). Night tries the mapper's n-prefixed filename first, then
+// the plain one. Returns the bare r/ prefix when the code is unknown —
+// the city then honestly renders NO TRAVEL DATA AVAILABLE.
+var _TravelNwsCodePng = {
+    skc: "skc", few: "few", sct: "sct", bkn: "bkn", ovc: "ovc",
+    fog: "fg", haze: "hz", cold: "cold", hot: "hot",
+    rain: "ra", rain_showers: "shra", rain_snow: "rasn",
+    snow: "sn", snow_showers: "sn", sleet: "ip", fzra: "fzra",
+    mix: "mix", tsra: "tsra", wind: "wind", blizzard: "blizzard",
+};
+var _TravelIconFromNwsIconLink = function (IconLink, IsNight)
+{
+    var Bare = "https://battaglia.ddns.net/twc/images/r/";
+    if (!IconLink)
+    {
+        return Bare;
+    }
+    var Match = IconLink.toLowerCase().match(/\/land\/(day|night)\/(.+?)(\?|$)/);
+    if (!Match)
+    {
+        return Bare;
+    }
+    var Codes = Match[2].split("/");
+    var Png = "";
+    for (var i = Codes.length - 1; i >= 0; i--)
+    {
+        var Code = Codes[i].split(",")[0];
+        if (_TravelNwsCodePng[Code])
+        {
+            Png = _TravelNwsCodePng[Code];
+            break;
+        }
+    }
+    if (Png === "")
+    {
+        return Bare;
+    }
+    var Tries = IsNight ? ["n" + Png, Png] : [Png];
+    for (var t = 0; t < Tries.length; t++)
+    {
+        var Icon = GetWeatherRegionalIconFromIconLink("https://forecast.weather.gov/newimages/medium/" + Tries[t] + ".png", "", undefined, IsNight);
+        if (Icon !== Bare)
+        {
+            return Icon;
+        }
+    }
+    return Bare;
+};
+
+// TROY-FARM Travel Cities restore (2026-11-23): Troy asked for Travel
+// Cities Forecast back alongside the Hourly Forecast ("add travel cities
+// forecast back to my battagila"). Same screen as pre-P28, but the data
+// source is new: the pre-P28 DWML fetch (forecast.weather.gov/MapClick.php
+// ?FcstType=dwml) is retired, so each city now reads the live NWS
+// api.weather.gov gridpoint forecast — the same pattern Channel /
+// International use (4000-myrtle-intl/scripts/modules/travelforecast.mjs).
+// Gridpoints come from TravelCities.js `point` (WFO/X/Y, copied from Intl's
+// scripts/data/travelcities.js — same 24 cities, same lat/lon). One request
+// per city, all in parallel, via $.ajaxCORS (direct first; api.weather.gov
+// sends Access-Control-Allow-Origin: *, 15s timeout). A city whose request
+// fails, returns too few periods, or has non-numeric temps simply has no
+// WeatherTravelForecast and renders NO TRAVEL DATA AVAILABLE — never a
+// faked value. Each result is a plain object shaped like the old
+// WeatherTravelForecast (Icon / MinimumTemperature / MaximumTemperature /
+// Conditions / DayName) so PopulateTravelCities below is unchanged, and
+// icons go through GetWeatherRegionalIconFromIconLink (Scripts/Icons.js)
+// so they match Channel and animate via SuperGif like RegionalForecast.
+var GetTravelWeather = function (WeatherParameters)
+{
+    var TravelCities = WeatherParameters.TravelCities;
+    var Total = TravelCities.length;
+    var Count = 0;
+
+    $(TravelCities).each(function ()
+    {
+        var TravelCity = this;
+
+        // No gridpoint for this city (should not happen — TravelCities.js
+        // carries one per city) — count it as failed, never fake it.
+        if (!TravelCity.point || !TravelCity.point.wfo)
+        {
+            console.error("GetTravelWeather for city '" + TravelCity.Name + "' failed: no NWS gridpoint.");
+            Count++;
+            if (Count == Total)
+            {
+                PopulateTravelCities(WeatherParameters);
+            }
+            return;
+        }
+
+        var Url = "https://api.weather.gov/gridpoints/";
+        Url += TravelCity.point.wfo.toString();
+        Url += "/" + TravelCity.point.x.toString();
+        Url += "," + TravelCity.point.y.toString();
+        Url += "/forecast";
+
+        $.ajaxCORS({
+            type: "GET",
+            url: Url,
+            dataType: "json",
+            crossDomain: true,
+            cache: false,
+            success: function (json)
+            {
+                var Periods = json && json.properties && json.properties.periods;
+                // Need today + tonight at minimum: periods[todayShift]
+                // (the daytime high) and periods[todayShift + 1] (the
+                // overnight low). Anything shorter is unusable.
+                if (!Periods || Periods.length < 2)
+                {
+                    console.error("GetTravelWeather for city '" + TravelCity.Name + "' failed: no forecast periods.");
+                }
+                else
+                {
+                    // Same shift as Channel/International: periods[0] is
+                    // tonight when it is already night, so the daytime
+                    // high is periods[1] then.
+                    var TodayShift = Periods[0].isDaytime ? 0 : 1;
+                    var DayPeriod = Periods[TodayShift];
+                    var NightPeriod = Periods[TodayShift + 1];
+                    if (DayPeriod && NightPeriod
+                        && typeof DayPeriod.temperature === "number"
+                        && typeof NightPeriod.temperature === "number")
+                    {
+                        var IsNight = !DayPeriod.isDaytime;
+                        // Primary: the shortForecast words. Pass no farm
+                        // parameters — a city icon must never inherit the
+                        // farm's sky (GetWeatherIconFromIconLink falls back
+                        // to WeatherCurrentConditions otherwise).
+                        var Icon = GetWeatherRegionalIconFromIconLink(DayPeriod.icon, DayPeriod.shortForecast, undefined, IsNight);
+                        // Fallback: compound NWS wordings ("Chance Light
+                        // Rain", "Light Rain Likely", ...) match no summary
+                        // case and come back as the bare r/ prefix — derive
+                        // the icon from the NWS icon-URL codes instead.
+                        if (Icon === "https://battaglia.ddns.net/twc/images/r/")
+                        {
+                            Icon = _TravelIconFromNwsIconLink(DayPeriod.icon, IsNight);
+                        }
+                        // Day name for the "Travel Forecast For <day>"
+                        // title: today when the daytime period is today,
+                        // tomorrow when periods[0] was tonight.
+                        var DayDate = new Date();
+                        if (TodayShift === 1)
+                        {
+                            DayDate.setDate(DayDate.getDate() + 1);
+                        }
+                        var DayName = DayDate.toLocaleDateString("en-US", { weekday: "long" });
+                        var HighF = Math.round(DayPeriod.temperature);
+                        var LowF = Math.round(NightPeriod.temperature);
+                        TravelCity.WeatherTravelForecast = {
+                            Icon: Icon,
+                            Conditions: DayPeriod.shortForecast,
+                            MinimumTemperature: LowF,
+                            MaximumTemperature: HighF,
+                            MinimumTemperatureC: Math.round((LowF - 32) * 5 / 9),
+                            MaximumTemperatureC: Math.round((HighF - 32) * 5 / 9),
+                            DayName: DayName,
+                        };
+                    }
+                    else
+                    {
+                        console.error("GetTravelWeather for city '" + TravelCity.Name + "' failed: bad forecast periods.");
+                    }
+                }
+
+                Count++;
+                if (Count == Total)
+                {
+                    PopulateTravelCities(WeatherParameters);
+                }
+            },
+            error: function (xhr, error, errorThrown)
+            {
+                console.error("GetTravelWeather for city '" + TravelCity.Name + "' failed: " + errorThrown);
+
+                Count++;
+                if (Count == Total)
+                {
+                    PopulateTravelCities(WeatherParameters);
+                }
+            }
+        });
+
+    });
+
+};
+
+var PopulateTravelCities = function (WeatherParameters)
+{
+    if (WeatherParameters == null || (_DontLoadGifs == true && WeatherParameters.Progress.TravelForecast != LoadStatuses.Loaded))
+    {
+        return;
+    }
+
+    var TravelCities = WeatherParameters.TravelCities;
+    //console.log(TravelCities);
+
+    var Html = "";
+
+    var tbodyTravelCities = tblTravelCities.find("tbody");
+    tbodyTravelCities.empty();
+
+    Html = "<tr>";
+    Html += "<td></td>";
+    Html += "<td></td>";
+    Html += "<td>LOW</td>";
+    Html += "<td>HIGH</td>";
+    Html += "</tr>";
+    tbodyTravelCities.append(Html);
+
+    $(TravelCities).each(function ()
+    {
+        var WeatherTravelForecast = this.WeatherTravelForecast;
+
+        Html = "<tr>";
+        Html += "<td>" + this.Name + "</td>";
+
+        if (WeatherTravelForecast)
+        {
+            Html += "<td><img src='" + WeatherTravelForecast.Icon + "' /></td>";
+            Html += "<td>" + WeatherTravelForecast.MinimumTemperature + "</td>";
+            Html += "<td>" + WeatherTravelForecast.MaximumTemperature + "</td>";
+        }
+        else
+        {
+            Html += "<td colspan='3'>NO TRAVEL DATA AVAILABLE</td>";
+        }
+        Html += "</tr>";
+        tbodyTravelCities.append(Html);
+    });
+
+    var DrawTravelCities = function ()
+    {
+        // Draw canvas
+        var canvas = canvasTravelForecast[0];
+        var context = canvas.getContext("2d", { willReadFrequently: true });
+
+        var BackGroundImage = new Image();
+        BackGroundImage.onload = function ()
+        {
+            context.drawImage(BackGroundImage, 0, 0);
+            DrawHorizontalGradientSingle(context, 0, 30, 500, 90, _TopColor1, _TopColor2);
+            DrawTriangle(context, "rgb(28, 10, 87)", 500, 30, 450, 90, 500, 90);
+
+            //DrawTitleText(context, "Travel Forecast", "For " + TravelCities[0].WeatherTravelForecast.DayName);
+            DrawTitleText(context, "Travel Forecast", "For " + GetTravelCitiesDayName(TravelCities));
+
+            DrawText(context, "Star4000 Small", "24pt", "#FFFF00", 455, 105, "LOW", 2);
+            DrawText(context, "Star4000 Small", "24pt", "#FFFF00", 510, 105, "HIGH", 2);
+
+            var y = 0;
+
+            //window.setInterval(function ()
+            //{
+            //    context.drawImage(cnvTravelCitiesScroll[0], 0, y, 640, 289, 0, 110, 640, 289);
+
+            //    // Wait until the weather has been loaded.
+            //    if (WeatherParameters.Progress.GetTotalPercentage() != 100)
+            //    {
+            //        return;
+            //    }
+
+            //    // Wait 3 seconds and then start scrolling.
+            //    if (_UpdateTravelCitiesCounterMs == 0)
+            //    {
+            //        y = 0;
+            //    }
+            //    if (_UpdateTravelCitiesCounterMs > 3000)
+            //    {
+            //        //y += 1;
+            //        y += 5;
+            //    }
+            //    if (y > cnvTravelCitiesScroll.height() - 289)
+            //    {
+            //        y = cnvTravelCitiesScroll.height() - 289;
+
+            //        // Wait 10 seconds and start all over.
+            //        _UpdateTravelCitiesCounterMs = -10000;
+            //    }
+
+            //}, _UpdateTravelCitiesInterval);
+
+            window.setInterval(function ()
+            {
+                var Elm = document.elementFromPoint(0, 100);
+                if (Elm != canvas)
+                {
+                    return;
+                }
+
+                context.drawImage(cnvTravelCitiesScroll[0], 0, _UpdateTravelCitiesY, 640, 289, 0, 110, 640, 289);
+            }, 100);
+
+            WeatherParameters.Progress.TravelForecast = LoadStatuses.Loaded;
+
+            UpdateWeatherCanvas(WeatherParameters, canvasTravelForecast);
+        };
+        BackGroundImage.src = "https://battaglia.ddns.net/twc/images/BackGround6_1.png";
+        //BackGroundImage.src = "https://battaglia.ddns.net/twc/images/BackGround6_" + _Themes.toString() + ".png";
+    };
+
+    var cnvTravelCitiesScroll;
+
+    var ShowTravelCitiesScroll = function ()
+    {
+        var img = new Image();
+        var cnvTravelCitiesScrollId;
+        var context;
+        var TravelCities = WeatherParameters.TravelCities;
+
+        cnvTravelCitiesScrollId = "cnvTravelCitiesScroll";
+
+        if (_DontLoadGifs == false)
+        {
+            // Clear the current image.
+            divTravelCitiesScroll.empty();
+
+            divTravelCitiesScroll.html("<canvas id='" + cnvTravelCitiesScrollId + "' />");
+            cnvTravelCitiesScroll = $("#" + cnvTravelCitiesScrollId);
+            cnvTravelCitiesScroll.attr("width", "640"); // For Chrome.
+            cnvTravelCitiesScroll.attr("height", "1728"); // For Chrome.
+            cnvTravelCitiesScroll[0].RelatedCanvas = canvasTravelForecast[0];
+            //cnvTravelCitiesScroll.css("background",  "repeating-linear-gradient(#4040ff, #202080, #202080, #4040ff 20%)");
+        }
+        cnvTravelCitiesScroll = $("#" + cnvTravelCitiesScrollId);
+        context = cnvTravelCitiesScroll[0].getContext("2d", { willReadFrequently: true });
+
+        DrawBox(context, "rgb(35, 50, 112)", 0, 0, 640, 1728);
+
+        for (var Index = 0; Index <= 4; Index++)
+        {
+            var y = Index * 346;
+            DrawHorizontalGradient(context, 0, y, 640, y + 346, "#102080", "#001040");
+        }
+
+        var y = 50;
+        var Counter = 0;
+        var MaxIcons = TravelCities.length;
+
+        $(TravelCities).each(function ()
+        {
+            var TravelCity = this;
+            var WeatherTravelForecast = TravelCity.WeatherTravelForecast;
+            
+            DrawText(context, "Star4000 Large Compressed", "24pt", "#FFFF00", 80, y, TravelCity.Name, 2);
+
+            if (WeatherTravelForecast && WeatherTravelForecast.Icon != "https://battaglia.ddns.net/twc/images/r/")
+            {
+                var MinimumTemperature;
+                var MaximumTemperature;
+
+                switch (_Units)
+                {
+                    case Units.English:
+                        MinimumTemperature = WeatherTravelForecast.MinimumTemperature.toString();
+                        MaximumTemperature = WeatherTravelForecast.MaximumTemperature.toString();
+                        break;
+
+                    case Units.Metric:
+                        MinimumTemperature = Math.round(WeatherTravelForecast.MinimumTemperatureC).toString();
+                        MaximumTemperature = Math.round(WeatherTravelForecast.MaximumTemperatureC).toString();
+                        break;
+                }
+
+                //DrawText(context, "Star4000 Large", "24pt", "#FFFF00", 460, y, WeatherTravelForecast.MinimumTemperature, 2);
+                //var MinimumTemperature = WeatherTravelForecast.MinimumTemperature.toString();
+                var x = (500 - (MinimumTemperature.length * 20));
+                DrawText(context, "Star4000 Large", "24pt", "#FFFF00", x, y, MinimumTemperature, 2);
+
+                //DrawText(context, "Star4000 Large", "24pt", "#FFFF00", 520, y, WeatherTravelForecast.MaximumTemperature, 2);
+                //var MaximumTemperature = WeatherTravelForecast.MaximumTemperature.toString();
+                var x = (560 - (MaximumTemperature.length * 20));
+                DrawText(context, "Star4000 Large", "24pt", "#FFFF00", x, y, MaximumTemperature, 2);
+
+                if (_DontLoadGifs == true)
+                {
+                    Counter++;
+                    if (Counter == MaxIcons)
+                    {
+                        DrawTravelCities();
+                    }
+                }
+                else
+                {
+                    var gifIcon = new SuperGif({
+                        src: WeatherTravelForecast.Icon,
+                        loop_delay: 100,
+                        auto_play: true,
+                        canvas: cnvTravelCitiesScroll[0],
+                        x: 330,
+                        y: y - 35,
+                        max_width: 47,
+                    });
+
+                    gifIcon.load(function ()
+                    {
+                        Counter++;
+                        if (Counter == MaxIcons)
+                        {
+                            DrawTravelCities();
+                        };
+                    });
+                }
+            }
+            else
+            {
+                DrawText(context, "Star4000 Small", "24pt", "#FFFFFF", 400, y - 18, "NO TRAVEL", 2);
+                DrawText(context, "Star4000 Small", "24pt", "#FFFFFF", 400, y, "DATA AVAILABLE", 2);
+
+                Counter++;
+                if (Counter == MaxIcons)
+                {
+                    DrawTravelCities();
+                };
+            }
+
+            y += 72;
+        });
+    };
+    ShowTravelCitiesScroll();
+
+};
+
+var UpdateTravelCities = function (Offset)
+{
+    var canvas = canvasTravelForecast[0];
+    var context = canvas.getContext("2d", { willReadFrequently: true });
+    var cnvTravelCitiesScroll = $("#cnvTravelCitiesScroll");
+
+    switch (Offset)
+    {
+        case undefined:
+            break;
+        case 0:
+            _UpdateTravelCitiesY = 0;
+            break;
+        case Infinity:
+            _UpdateTravelCitiesY = cnvTravelCitiesScroll.height() - 289;
+            break;
+        default:
+            _UpdateTravelCitiesY += (289 * Offset);
+            if (_UpdateTravelCitiesY > cnvTravelCitiesScroll.height() - 289)
+            {
+                _UpdateTravelCitiesY = cnvTravelCitiesScroll.height() - 289;
+            }
+            else if (_UpdateTravelCitiesY < 0)
+            {
+                _UpdateTravelCitiesY = 0;
+            }
+            break;
+    }
+
+    context.drawImage(cnvTravelCitiesScroll[0], 0, _UpdateTravelCitiesY, 640, 289, 0, 110, 640, 289);
+
+    //// Wait 3 seconds and then start scrolling.
+    //if (_UpdateTravelCitiesCounterMs == 0)
+    //{
+    //    y = 0;
+    //}
+    //if (_UpdateTravelCitiesCounterMs > 3000)
+    //{
+    //    //y += 1;
+    //    y += 5;
+    //}
+    //if (y > cnvTravelCitiesScroll.height() - 289)
+    //{
+    //    y = cnvTravelCitiesScroll.height() - 289;
+
+    //    // Wait 10 seconds and start all over.
+    //    _UpdateTravelCitiesCounterMs = -10000;
+    //}
+
+};
+
 var DrawHorizontalGradient = function (context, x1, y1, x2, y2, color1, color2)
 {
     // http://www.w3schools.com/tags/canvas_createlineargradient.asp
@@ -11356,8 +12634,27 @@ var PopulateRegionalObservations = function (WeatherParameters)
     $(WeatherCurrentRegionalConditions.StationIds).each(function ()
     {
         var WeatherCurrentCondition = WeatherCurrentRegionalConditions.WeatherCurrentConditions[this.toString()];
+        // TROY-FARM (2026-11-23): Wilmington (KILM) is NOT rendered on
+        // Latest Observations — Sunset Beach takes its place (Troy's
+        // correction ~9:43 PM: Wilmington out, Southport stays — it is
+        // in Brunswick County). The KILM METAR stays in
+        // regional-metars.xml; only this row is dropped, here, so a
+        // re-populate can never bring Wilmington back.
+        if (!WeatherCurrentCondition) return;
+        if (WeatherCurrentCondition.StationId === "KILM" || WeatherCurrentCondition.StationName === "Wilmington") return;
         SortedArray.push(WeatherCurrentCondition)
     });
+    // TROY-FARM (2026-11-23): Sunset Beach joins the sort from the
+    // staged sunset-beach.json (Open-Meteo point data, no METAR) — it
+    // is NOT hand-placed: the alphabetical sort below puts it last,
+    // after Southport. When the file is
+    // missing or stale the row is simply omitted (5 towns + farm row),
+    // never filled from another station.
+    var _p28SunsetRow = _P28BuildSunsetBeachRow(WeatherParameters);
+    if (_p28SunsetRow)
+    {
+        SortedArray.push(_p28SunsetRow);
+    }
     SortedArray.sort(function (a, b)
     {
         var aName = a.StationName.toLowerCase();
@@ -11369,7 +12666,7 @@ var PopulateRegionalObservations = function (WeatherParameters)
     // station (KNCCAROL120) at the top of Latest Observations, ahead of
     // Conway-Horry and the rest. The alphabetical sort above already
     // yields his order for the METAR rows (Conway-Horry Cty < Lumberton
-    // < Myrtle Beach < North Myrtle Beach < Southport < Wilmington), so the farm
+    // < Myrtle Beach < North Myrtle Beach < Southport < Sunset Beach), so the farm
     // row is simply unshifted ahead of them. The farm row does not count
     // toward _MaximumRegionalStations (KNCCAROL120 is skipped during
     // collection), so the staged file carries 6 METAR stations and the
@@ -11559,6 +12856,75 @@ var _P23GetStagedMapMetar = function (StationId, onFound, onMiss)
     });
 };
 
+// TROY-FARM P26 (2026-11-23): Regional Observations map — Calabash in,
+// Wilmington out (Troy: "add Calabash and remove Wilmington" on the
+// Regional Observations map only).
+// * Calabash has no METAR station, so its marker is fed by the farm's own
+//   live farm-data.json (KNCCAROL120) — the same source Current Conditions
+//   and the Latest Observations farm row use. The draw loop reads only
+//   RegionalCity.Name, CityXY, and weatherCurrentConditions Icon /
+//   Temperature / TemperatureC, so the entry carries exactly those (plus
+//   the sky word for clarity); CityXY comes from the same GetXYForCity
+//   the other cities use, and the icon is the same
+//   GetWeatherIconFromSummary word->icon mapping the other cities go
+//   through, so the draw's GetWeatherRegionalIconFromIconLink call renders
+//   the identical regional gif.
+// * Freshness: farm-data.json lastUpdated must be within 2 hours — the
+//   same window the Hourly screen applies to hourly-forecast.json
+//   generatedAt (P28). Missing, unparseable, or stale farm data -> the
+//   Calabash marker is OMITTED, never plotted with invented or old values
+//   as if current. (There is no last-good cache: LoadFarmData holds only
+//   the current boot's fetch.)
+// * Wilmington (KILM) leaves the MAP only. PopulateRegionalObservations
+//   (Latest Observations rows), the RegionalForecast1/2 maps, and
+//   regional-map-metars.xml staging are untouched.
+var _P26FarmLatitude = 33.92;
+var _P26FarmLongitude = -78.57;
+var _P26FarmMapFreshnessMs = 2 * 60 * 60 * 1000;
+var _P26IsWilmingtonNC = function (City)
+{
+    // Both city sources carry a Wilmington NC: _RegionalCities
+    // (34.2257, -77.9447) and _StationInfo KILM (34.2667, -77.9).
+    // Name + proximity, so a same-named city elsewhere (e.g. DE) is kept.
+    if (!City || City.Name != "Wilmington") return false;
+    var lat = parseFloat(City.Latitude);
+    var lon = parseFloat(City.Longitude);
+    if (isNaN(lat) || isNaN(lon)) return false;
+    return (Math.abs(lat - 34.2257) < 0.5 && Math.abs(lon - (-77.9447)) < 0.5);
+};
+var _P26BuildCalabashMapEntry = function (farmData, WeatherParameters, maxLat, minLon, IsNightTime)
+{
+    // Returns the { RegionalCity, CityXY, weatherCurrentConditions } entry
+    // the Regional Observations draw loop reads, or null to omit the
+    // marker (missing / stale / invalid farm data — never invent values).
+    if (!farmData) return null;
+    var updated = new Date(farmData.lastUpdated);
+    if (isNaN(updated.getTime())) return null;
+    if ((new Date() - updated) > _P26FarmMapFreshnessMs) return null;
+    var tempC = parseFloat(farmData.temperature);
+    if (isNaN(tempC)) return null;
+    var sky = _P23FarmSkyWord(farmData);
+    var icon = GetWeatherIconFromSummary(WeatherParameters, sky, (IsNightTime != true));
+    if (!icon)
+    {
+        // GetWeatherIconFromSummary has no entry for these two farm words.
+        if (sky == "Thunderstorm") icon = "https://battaglia.ddns.net/twc/images/cc_tstorm.gif";
+        else if (sky == "Heavy Snow") icon = "https://battaglia.ddns.net/twc/images/heavy-snow.gif";
+        else return null;
+    }
+    return {
+        RegionalCity: { Name: "Calabash", Latitude: _P26FarmLatitude, Longitude: _P26FarmLongitude },
+        CityXY: GetXYForCity({ Latitude: _P26FarmLatitude, Longitude: _P26FarmLongitude }, maxLat, minLon),
+        weatherCurrentConditions: {
+            Temperature: Math.round(tempC * 9 / 5 + 32),
+            TemperatureC: Math.round(tempC),
+            Conditions: sky,
+            ShortConditions: sky,
+            Icon: icon
+        }
+    };
+};
+
 var ShowRegionalMap = function (WeatherParameters, TomorrowForecast1, TomorrowForecast2)
 {
     if (TomorrowForecast1 == true)
@@ -11609,6 +12975,7 @@ var ShowRegionalMap = function (WeatherParameters, TomorrowForecast1, TomorrowFo
     var canvasRegionalMap;
     var FirstTime = true;
     var Gifs = [];
+    var _regStill = [];
 
     if (TomorrowForecast1 == true)
     {
@@ -11639,6 +13006,7 @@ var ShowRegionalMap = function (WeatherParameters, TomorrowForecast1, TomorrowFo
 
     var RegionalCities = [];
     var SkipCities = [];
+    var _P26CalabashHandled = false;
 
     var Total = 0;
     var Count = 0;
@@ -11808,6 +13176,7 @@ var ShowRegionalMap = function (WeatherParameters, TomorrowForecast1, TomorrowFo
                             });
                             Gif.load();
                             Gifs.push(Gif);
+                            _regStill.push({ gif: Gif, x: x, y: y - 15, kind: _StillIconKindFromIconUrl(weatherTravelForecast.Icon) });
                         }
 
                         // City Name
@@ -11868,6 +13237,7 @@ var ShowRegionalMap = function (WeatherParameters, TomorrowForecast1, TomorrowFo
                         }
 
                         context.drawImage(cnvRegionalMap[0], 0, 0, 640, 309, 0, 90, 640, 309);
+                        _DrawRegionalStillIcons(context, _regStill, _PlayMs);
                         UpdateWeatherCanvas(WeatherParameters, canvasRegionalMap);
                     }, 100);
                 }
@@ -11918,6 +13288,7 @@ var ShowRegionalMap = function (WeatherParameters, TomorrowForecast1, TomorrowFo
                         });
                         Gif.load();
                         Gifs.push(Gif);
+                        _regStill.push({ gif: Gif, x: x, y: y - 15, kind: _StillIconKindFromIconUrl(GetWeatherRegionalIconFromIconLink(weatherCurrentConditions.Icon, undefined, undefined, IsNightTime)) });
                     }
 
                     // City Name
@@ -11960,6 +13331,7 @@ var ShowRegionalMap = function (WeatherParameters, TomorrowForecast1, TomorrowFo
                         }
 
                         context.drawImage(cnvRegionalMap[0], 0, 0, 640, 309, 0, 90, 640, 309);
+                        _DrawRegionalStillIcons(context, _regStill, _PlayMs);
                         UpdateWeatherCanvas(WeatherParameters, canvasRegionalObservations);
                     }, 100);
                 }
@@ -12062,6 +13434,13 @@ var ShowRegionalMap = function (WeatherParameters, TomorrowForecast1, TomorrowFo
                 return true;
             }
 
+            // TROY-FARM P26: Wilmington leaves the Regional Observations
+            // map only (forecast maps keep it).
+            if (TomorrowForecast1 != true && TomorrowForecast2 != true && _P26IsWilmingtonNC(RegionalCity))
+            {
+                return true;
+            }
+
             if (RegionalCity.Latitude > minLat && RegionalCity.Latitude < maxLat)
             {
                 if (RegionalCity.Longitude > minLon && RegionalCity.Longitude < maxLon)
@@ -12106,6 +13485,13 @@ var ShowRegionalMap = function (WeatherParameters, TomorrowForecast1, TomorrowFo
                 }
             });
             if (NeedToSkipCity == true)
+            {
+                return true;
+            }
+
+            // TROY-FARM P26: Wilmington leaves the Regional Observations
+            // map only (forecast maps keep it).
+            if (TomorrowForecast1 != true && TomorrowForecast2 != true && _P26IsWilmingtonNC(RegionalCity))
             {
                 return true;
             }
@@ -12170,6 +13556,48 @@ var ShowRegionalMap = function (WeatherParameters, TomorrowForecast1, TomorrowFo
 
         //    return;
         //}
+
+        // TROY-FARM P26 (2026-11-23): Regional Observations map only —
+        // Calabash marker from live farm-data.json (see _P26BuildCalabash-
+        // MapEntry). Counted in Total exactly once per ShowRegionalMap
+        // call (guarded: RegionalMapOnLoad re-runs when a city fetch
+        // fails). If the farm data is missing/stale the marker is omitted
+        // and Total is given back, so the map still draws with the
+        // METAR cities.
+        if (TomorrowForecast1 != true && TomorrowForecast2 != true && _P26CalabashHandled == false)
+        {
+            _P26CalabashHandled = true;
+            Total++;
+            LoadFarmData(function (farmData)
+            {
+                var entry = _P26BuildCalabashMapEntry(farmData, WeatherParameters, maxLat, minLon, IsNightTime);
+                if (entry)
+                {
+                    if (!WeatherParameters.RegionalObservationsCities)
+                    {
+                        WeatherParameters.RegionalObservationsCities = [];
+                    }
+                    var _p26Already = false;
+                    $(WeatherParameters.RegionalObservationsCities).each(function ()
+                    {
+                        if (this.RegionalCity && this.RegionalCity.Name == "Calabash") _p26Already = true;
+                    });
+                    if (_p26Already == false)
+                    {
+                        WeatherParameters.RegionalObservationsCities.push(entry);
+                    }
+                    Count++;
+                }
+                else
+                {
+                    Total--;
+                }
+                if (Count == Total)
+                {
+                    PopulateRegionalMap();
+                }
+            });
+        }
 
         var RegionalCityProcessing = false;
 
@@ -13892,6 +15320,8 @@ var Progress = function (e)
     this.WordedForecast = LoadStatuses.Loading;
     this.FourDayForecast = LoadStatuses.Loading;
     this.HourlyForecast = LoadStatuses.Loading;
+    this.TravelForecast = LoadStatuses.Loading;
+    this.SpcOutlook = LoadStatuses.Loading;
     this.NearbyConditions = LoadStatuses.Loading;
     this.CurrentRegionalMap = LoadStatuses.Loading;
     this.TomorrowsRegionalMap = LoadStatuses.Loading;
@@ -14289,6 +15719,7 @@ var UpdateWeatherCanvases = function (WeatherParameters)
     if (WeatherParameters.Progress.GetTotalPercentage() == 100)
     {
         _UpdateWeatherCurrentConditionCounterMs += _UpdateWeatherUpdateMs;
+        _UpdateTravelCitiesCounterMs += _UpdateWeatherUpdateMs;
         _UpdateHazardsCounterMs += _UpdateWeatherUpdateMs;
         _UpdateLocalForecastCounterMs += _UpdateWeatherUpdateMs;
         _UpdateCustomScrollTextMs += _UpdateWeatherUpdateMs;
@@ -15181,6 +16612,7 @@ var RefreshSegments = function ()
     PopulateMarineForecast(_WeatherParameters);
     PopulateAirQuality(_WeatherParameters);
     PopulateHourlyForecast(_WeatherParameters);
+    PopulateTravelCities(_WeatherParameters);
     ShowRegionalMap(_WeatherParameters, true);
     ShowRegionalMap(_WeatherParameters, false, true);
     ShowRegionalMap(_WeatherParameters);
@@ -15952,6 +17384,24 @@ var GetRssFeed = function (RssUrl)
             AssignScrollText(null);
         }
     });
+};
+
+var GetTravelCitiesDayName = function (TravelCities)
+{
+    var DayName = "";
+
+    $(TravelCities).each(function ()
+    {
+        var TravelCity = this;
+
+        if (TravelCity.WeatherTravelForecast)
+        {
+            DayName = TravelCity.WeatherTravelForecast.DayName;
+            return false;
+        }
+    });
+
+    return DayName;
 };
 
 var ScrollHazardText = function (enable)
