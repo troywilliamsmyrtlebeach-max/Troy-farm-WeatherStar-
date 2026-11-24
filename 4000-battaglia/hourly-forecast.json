@@ -1,8 +1,8 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-24T03:37:57-05:00",
-  "updateTime": "2026-11-24T08:37:58.216225+00:00",
+  "generatedAt": "2026-11-24T03:52:46-05:00",
+  "updateTime": "2026-11-24T08:52:47.311468+00:00",
   "source": "Open-Meteo hourly 33.92,-78.57 (same source as Channel/International hourly)",
   "hours": [
     {
@@ -30,7 +30,7 @@
       "shortForecast": "Cloudy",
       "windDir": "N",
       "windSpeedMph": 8,
-      "pop": 1,
+      "pop": 4,
       "isDaytime": false,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -105,7 +105,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NNE",
       "windSpeedMph": 15,
-      "pop": 2,
+      "pop": 1,
       "isDaytime": true,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -120,7 +120,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NNE",
       "windSpeedMph": 15,
-      "pop": 2,
+      "pop": 1,
       "isDaytime": true,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -240,7 +240,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NNE",
       "windSpeedMph": 8,
-      "pop": 2,
+      "pop": 1,
       "isDaytime": false,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
