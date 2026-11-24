@@ -55,23 +55,24 @@ class LatestObservations extends WeatherDisplay {
 		const weatherParameters = _weatherParameters ?? this.weatherParameters;
 		const farmTimeZone = weatherParameters?.timeZone ?? 'America/New_York';
 
-		// TROY SCREENSHOT (Oct 31 19:16): Latest Observations is EXACTLY these 7 towns,
+		// TROY SCREENSHOT (Oct 31 19:16): Latest Observations is EXACTLY these 7 rows,
 		// in this order, with live readings — not the nearest-30 by distance.
 		//  Conway = KHYW, Lumberton = KLBT, Myrtle Beach = KMYR,
-		//  North Myrtle Beach = KCRE, Sunset Beach = staged sunset-beach.json
-		//  (Open-Meteo current at 33.88N 78.51W — no METAR station there),
-		//  Calabash = the farm's own live conditions (farm-data.json) — the
-		//  farm IS in Calabash, so the row reads the same values as the farm
-		//  row. TROY Nov 9 20:26: every nearby row shows wind speed —
-		//  direction in front, whole mph ("W 3"); a 0 reads "Calm".
+		//  North Myrtle Beach = KCRE, Southport = KSUT (Brunswick County),
+		//  Sunset Beach = staged sunset-beach.json (Open-Meteo current at
+		//  33.88N 78.51W — no METAR station there). TROY Nov 9 20:26: every
+		//  nearby row shows wind speed — direction in front, whole mph
+		//  ("W 3"); a 0 reads "Calm".
 		// Troy Oct 31 19:32: farm FIRST, Elizabethtown DROPPED. Oct 31 20:06: N. Myrtle Beach ADDED — 7 towns + farm = 8 rows.
-		// TROY Nov 23 21:24: Wilmington OFF, Calabash ON; Southport OFF,
-		// Sunset Beach ON. Same 7 rows, same slots — swaps only.
+		// TROY Nov 23 21:33 (FINAL): Wilmington OFF, Sunset Beach ON in its
+		// place; Southport STAYS. No Calabash row — the farm row already is
+		// Calabash. Same 7 rows, same slots — swaps only.
 		const SCREENSHOT_TOWNS = [
 			{ id: 'KHYW', city: 'Conway Horry County Airport' },
 			{ id: 'KLBT', city: 'Lumberton' },
 			{ id: 'KMYR', city: 'Myrtle Beach International Airport' },
 			{ id: 'KCRE', city: 'North Myrtle Beach Grand Strand Airport' },
+			{ id: 'KSUT', city: 'Southport' },
 		];
 		const regionalStations = SCREENSHOT_TOWNS;
 
@@ -90,7 +91,7 @@ class LatestObservations extends WeatherDisplay {
 			lastStation = Math.min(regionalStations.length + 1, firstStation + 7 - actualConditions.length);
 		}
 
-		// TROY Nov 23 21:24: Sunset Beach row (Southport's slot) from the
+		// TROY Nov 23 21:33: Sunset Beach row (Wilmington's slot) from the
 		// staged sunset-beach.json the Channel 15-min cron refreshes
 		// (Open-Meteo current at 33.88N 78.51W — Sunset Beach has no METAR
 		// station, so its readings are never relabeled airport/farm data).
@@ -129,18 +130,6 @@ class LatestObservations extends WeatherDisplay {
 					StationId: 'FARM',
 					city: 'CALABASH-FARM AT BRUNSWICK',
 				});
-				// TROY Nov 23 21:24: Calabash row (Wilmington's slot) — the
-				// farm's own live conditions, same values as the farm row
-				// (the farm IS in Calabash). Wind is the same higher-of
-				// sustained/gust the farm row shows, so "Calm" matches too.
-				actualConditions.push({
-					temperature: { value: farm.temperature },
-					windSpeed: { value: Math.max(farm.windSpeed || 0, farm.windGust || 0) },
-					windDirection: { value: dirDeg },
-					textDescription: farmSky,
-					StationId: 'CALABASH',
-					city: 'Calabash',
-				});
 			}
 		} catch (e) { /* farm row optional — towns still show */ }
 		// cut down to the maximum of 7 (farm + 6 towns)
@@ -176,7 +165,7 @@ class LatestObservations extends WeatherDisplay {
 
 			// v=6: full TOWN names, never airport codes, never truncated
 			// mid-word — "Conway", "North Myrtle Beach" (not "Conway-Horry C" / "N. Myrtle Beach").
-			const SCREENSHOT_NAMES = { KHYW: 'Conway', KEYF: 'Elizabethtown', KLBT: 'Lumberton', KMYR: 'Myrtle Beach', KCPC: 'Whiteville', FARM: 'CALABASH-FARM', KCRE: 'North Myrtle Beach', SUNSET: 'Sunset Beach', CALABASH: 'Calabash' };
+			const SCREENSHOT_NAMES = { KHYW: 'Conway', KEYF: 'Elizabethtown', KLBT: 'Lumberton', KMYR: 'Myrtle Beach', KSUT: 'Southport', KCPC: 'Whiteville', FARM: 'CALABASH-FARM', KCRE: 'North Myrtle Beach', SUNSET: 'Sunset Beach' };
 			const fill = {
 				location: SCREENSHOT_NAMES[condition.StationId] || cleanStationName(condition.city),
 				temp: Temperature,

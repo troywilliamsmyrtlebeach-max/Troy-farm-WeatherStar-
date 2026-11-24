@@ -1,25 +1,10 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-23T21:53:45-05:00",
-  "updateTime": "2026-11-24T02:53:46.276918+00:00",
+  "generatedAt": "2026-11-23T22:10:30-05:00",
+  "updateTime": "2026-11-24T03:10:31.538022+00:00",
   "source": "Open-Meteo hourly 33.92,-78.57 (same source as Channel/International hourly)",
   "hours": [
-    {
-      "hourLabel": "9 PM",
-      "weekday": "Mon",
-      "tempF": 64,
-      "feelsLikeF": 68,
-      "dewpointF": 62,
-      "relativeHumidity": 95,
-      "shortForecast": "Cloudy",
-      "windDir": "WNW",
-      "windSpeedMph": 1,
-      "pop": 0,
-      "isDaytime": false,
-      "iconCode": "ovc",
-      "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
-    },
     {
       "hourLabel": "10 PM",
       "weekday": "Mon",
@@ -60,7 +45,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NW",
       "windSpeedMph": 4,
-      "pop": 2,
+      "pop": 1,
       "isDaytime": false,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -75,7 +60,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NNW",
       "windSpeedMph": 2,
-      "pop": 5,
+      "pop": 4,
       "isDaytime": false,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -90,7 +75,7 @@
       "shortForecast": "Fog",
       "windDir": "NNW",
       "windSpeedMph": 5,
-      "pop": 4,
+      "pop": 3,
       "isDaytime": false,
       "iconCode": "fog",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Fog.gif"
@@ -120,7 +105,7 @@
       "shortForecast": "Cloudy",
       "windDir": "N",
       "windSpeedMph": 8,
-      "pop": 3,
+      "pop": 2,
       "isDaytime": false,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -135,7 +120,7 @@
       "shortForecast": "Cloudy",
       "windDir": "N",
       "windSpeedMph": 9,
-      "pop": 2,
+      "pop": 1,
       "isDaytime": false,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -195,7 +180,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NNE",
       "windSpeedMph": 16,
-      "pop": 8,
+      "pop": 3,
       "isDaytime": true,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -210,7 +195,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NNE",
       "windSpeedMph": 16,
-      "pop": 4,
+      "pop": 3,
       "isDaytime": true,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -225,7 +210,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NNE",
       "windSpeedMph": 15,
-      "pop": 3,
+      "pop": 2,
       "isDaytime": true,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -240,7 +225,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NE",
       "windSpeedMph": 14,
-      "pop": 4,
+      "pop": 2,
       "isDaytime": true,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -364,6 +349,21 @@
       "isDaytime": false,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
+    },
+    {
+      "hourLabel": "9 PM",
+      "weekday": "Tue",
+      "tempF": 47,
+      "feelsLikeF": 41,
+      "dewpointF": 36,
+      "relativeHumidity": 64,
+      "shortForecast": "Partly Cloudy",
+      "windDir": "NE",
+      "windSpeedMph": 8,
+      "pop": 3,
+      "isDaytime": false,
+      "iconCode": "sct",
+      "iconUrl": "https://battaglia.ddns.net/twc/images/r/Mostly-Clear.gif"
     }
   ]
 }

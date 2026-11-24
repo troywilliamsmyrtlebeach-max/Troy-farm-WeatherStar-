@@ -361,6 +361,16 @@ const RegionalCities = [
 		},
 	},
 	{
+		city: 'Calabash',
+		lat: 33.92,
+		lon: -78.57,
+		point: {
+			x: 68,
+			y: 59,
+			wfo: 'ILM',
+		},
+	},
+	{
 		city: 'Carlsbad',
 		lat: 32.4207,
 		lon: -104.2288,
@@ -1138,16 +1148,6 @@ const RegionalCities = [
 			x: 61,
 			y: 33,
 			wfo: 'ICT',
-		},
-	},
-	{
-		city: 'Wilmington',
-		lat: 34.2257,
-		lon: -77.9447,
-		point: {
-			x: 88,
-			y: 67,
-			wfo: 'ILM',
 		},
 	},
 	{

@@ -52,7 +52,12 @@ class RegionalForecast extends WeatherDisplay {
 		if (weatherParameters.state === 'HI') targetDistance = 1;
 
 		// make station info into an array
-		const stationInfoArray = Object.values(StationInfo).map((value) => ({ ...value, targetDistance }));
+		// TROY Nov 23 21:33: Wilmington OFF the regional maps — KILM is in
+		// StationInfo, so dropping the RegionalCities entry alone is not
+		// enough (KILM would plot as "Wilmington I"); drop the station too.
+		const stationInfoArray = Object.values(StationInfo)
+			.filter((value) => value.id !== 'KILM')
+			.map((value) => ({ ...value, targetDistance }));
 		// combine regional cities with station info for additional stations
 		// stations are intentionally after cities to allow cities priority when drawing the map
 		const combinedCities = [...RegionalCities, ...stationInfoArray];
@@ -79,8 +84,12 @@ class RegionalForecast extends WeatherDisplay {
 				const point = city?.point ?? (await getAndFormatPoint(city.lat, city.lon));
 				if (!point) throw new Error('No pre-loaded point');
 
+				// TROY Nov 23 21:33: Calabash shows the FARM's own live
+				// conditions (farm-data.json) — never the NWS gridpoint
+				// observation, whose nearest station is KCRE.
+				const isCalabash = city.city === 'Calabash';
 				// start off the observation task
-				const observationPromise = utils.getRegionalObservation(point, city);
+				const observationPromise = isCalabash ? null : utils.getRegionalObservation(point, city);
 
 				const forecast = await json(`https://api.weather.gov/gridpoints/${point.wfo}/${point.x},${point.y}/forecast`);
 
@@ -88,7 +97,10 @@ class RegionalForecast extends WeatherDisplay {
 				const cityXY = utils.getXYForCity(city, minMaxLatLon.maxLat, minMaxLatLon.minLon, weatherParameters.state);
 
 				// wait for the regional observation if it's not done yet
-				const observation = await observationPromise;
+				// (Calabash: farm payload, daytime from the current period)
+				const observation = isCalabash
+					? await getFarmObservation(forecast?.properties?.periods?.[0]?.isDaytime)
+					: await observationPromise;
 
 				if (!observation || !observation.temperature || observation.temperature.value === null || observation.temperature.value === undefined) return false;
 
@@ -226,6 +238,30 @@ const getAndFormatPoint = async (lat, lon) => {
 		y: point.properties.gridY,
 		wfo: point.properties.gridId,
 	};
+};
+
+
+// TROY Nov 23 21:33: Calabash pin reads the farm's own live conditions
+// from farm-data.json (the farm IS in Calabash) — never the NWS gridpoint
+// observation, whose nearest station is KCRE. Returns an
+// observation.properties-like object, or false when the farm payload is
+// missing or older than 2 hours (no pin rather than stale data).
+const getFarmObservation = async (isDaytime) => {
+	try {
+		const appDir = (typeof window !== 'undefined') ? window.location.pathname.replace(/[^/]*$/, '') : '/';
+		const farm = await json(`${appDir}farm-data.json?v=${Date.now()}`, { retryCount: 0 });
+		if (!farm || farm.temperature === null || farm.temperature === undefined) return false;
+		if (!farm.lastUpdated || (Date.now() - new Date(farm.lastUpdated).getTime()) > 2 * 3600 * 1000) return false;
+		const dirDeg = { N: 0, NNE: 22.5, NE: 45, ENE: 67.5, E: 90, ESE: 112.5, SE: 135, SSE: 157.5, S: 180, SSW: 202.5, SW: 225, WSW: 247.5, W: 270, WNW: 292.5, NW: 315, NNW: 337.5 }[farm.windDirection] ?? 0;
+		// Farm conditionText -> NWS icon code (same graded set as Current Conditions).
+		const iconCode = { 0: 'skc', 1: 'few', 2: 'sct', 3: 'ovc', 4: 'sct', 45: 'fog', 48: 'fog', 61: 'rain', 63: 'rain', 65: 'rain', 71: 'snow', 73: 'snow', 75: 'snow', 95: 'tsra', 99: 'tsra' }[farm.conditionText] ?? 'sct';
+		return {
+			temperature: { value: farm.temperature },
+			icon: `https://api.weather.gov/icons/land/${isDaytime ? 'day' : 'night'}/${iconCode}`,
+			windSpeed: { value: Math.max(farm.windSpeed || 0, farm.windGust || 0) },
+			windDirection: { value: dirDeg },
+		};
+	} catch (e) { return false; }
 };
 
 // register display
