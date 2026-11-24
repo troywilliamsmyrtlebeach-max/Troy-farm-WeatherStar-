@@ -10137,8 +10137,13 @@ var _P28DrawHourly = function (WeatherParameters, subMs)
         DrawText(context, "Star4000 Large", "24pt", "#FFFF00", 25, _y, _row.weekday + " " + _row.hourLabel, 3);
         // TEMP: bare number padded to 3, no degree symbol — Channel form.
         DrawText(context, "Star4000 Large", "24pt", "#FFFF00", 355, _y, ("   " + _row.tempF).slice(-3), 3);
-        // LIKE (feels-like): only when it differs from temp — Channel form.
-        if (typeof _row.feelsLikeF === "number" && _row.feelsLikeF !== _row.tempF)
+        // LIKE (feels-like): ALWAYS shown (Troy 2026-11-23: "add the
+        // feels like temperature on there too"). It used to show only
+        // when it differed from TEMP (Channel form) — but tonight
+        // feels-like equals temp in all 24 hours, so the whole LIKE
+        // column was blank and looked missing. Same value twice is
+        // fine; the column is there now, under its LIKE header.
+        if (typeof _row.feelsLikeF === "number")
         {
             DrawText(context, "Star4000 Large", "24pt", "#FFFF00", 425, _y, ("   " + _row.feelsLikeF).slice(-3), 3);
         }
