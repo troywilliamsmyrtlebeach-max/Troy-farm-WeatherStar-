@@ -1,15 +1,15 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-24T13:53:39-05:00",
+  "generatedAt": "2026-11-24T14:09:01-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
       "name": "Atlanta",
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
       "shortForecast": "Mostly Cloudy",
-      "highF": 60,
-      "lowF": 44,
+      "highF": 62,
+      "lowF": 41,
       "isDaytime": true,
       "dayName": "Tuesday"
     },
@@ -42,10 +42,10 @@
     },
     {
       "name": "Dallas",
-      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
-      "shortForecast": "Mostly Cloudy",
-      "highF": 50,
-      "lowF": 33,
+      "iconLink": "https://api.weather.gov/icons/land/day/rain_showers,30/rain_showers,20?size=medium",
+      "shortForecast": "Chance Rain Showers",
+      "highF": 49,
+      "lowF": 34,
       "isDaytime": true,
       "dayName": "Tuesday"
     },
@@ -53,7 +53,7 @@
       "name": "Denver",
       "iconLink": "https://api.weather.gov/icons/land/day/few?size=medium",
       "shortForecast": "Sunny",
-      "highF": 53,
+      "highF": 54,
       "lowF": 26,
       "isDaytime": true,
       "dayName": "Tuesday"
@@ -71,7 +71,7 @@
       "name": "Hartford",
       "iconLink": "https://api.weather.gov/icons/land/day/skc?size=medium",
       "shortForecast": "Sunny",
-      "highF": 46,
+      "highF": 47,
       "lowF": 22,
       "isDaytime": true,
       "dayName": "Tuesday"
@@ -144,7 +144,7 @@
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
       "shortForecast": "Mostly Cloudy",
       "highF": 73,
-      "lowF": 64,
+      "lowF": 63,
       "isDaytime": true,
       "dayName": "Tuesday"
     },
