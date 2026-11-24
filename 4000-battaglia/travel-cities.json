@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-24T14:09:01-05:00",
+  "generatedAt": "2026-11-24T14:24:36-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -42,10 +42,10 @@
     },
     {
       "name": "Dallas",
-      "iconLink": "https://api.weather.gov/icons/land/day/rain_showers,30/rain_showers,20?size=medium",
-      "shortForecast": "Chance Rain Showers",
-      "highF": 49,
-      "lowF": 34,
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Mostly Cloudy",
+      "highF": 50,
+      "lowF": 33,
       "isDaytime": true,
       "dayName": "Tuesday"
     },
@@ -80,8 +80,8 @@
       "name": "Houston",
       "iconLink": "https://api.weather.gov/icons/land/day/rain_showers,30?size=medium",
       "shortForecast": "Chance Rain Showers",
-      "highF": 57,
-      "lowF": 42,
+      "highF": 56,
+      "lowF": 41,
       "isDaytime": true,
       "dayName": "Tuesday"
     },
@@ -186,10 +186,10 @@
     },
     {
       "name": "Seattle",
-      "iconLink": "https://api.weather.gov/icons/land/day/rain,20/rain,80?size=medium",
-      "shortForecast": "Light Rain",
+      "iconLink": "https://api.weather.gov/icons/land/day/rain,30/rain,70?size=medium",
+      "shortForecast": "Light Rain Likely",
       "highF": 53,
-      "lowF": 49,
+      "lowF": 48,
       "isDaytime": true,
       "dayName": "Tuesday"
     },
@@ -216,7 +216,7 @@
       "iconLink": "https://api.weather.gov/icons/land/day/skc?size=medium",
       "shortForecast": "Sunny",
       "highF": 53,
-      "lowF": 32,
+      "lowF": 35,
       "isDaytime": true,
       "dayName": "Tuesday"
     }
