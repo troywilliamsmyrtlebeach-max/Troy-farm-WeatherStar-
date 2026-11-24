@@ -1,8 +1,8 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-23T23:08:13-05:00",
-  "updateTime": "2026-11-24T04:08:13.860902+00:00",
+  "generatedAt": "2026-11-23T23:23:47-05:00",
+  "updateTime": "2026-11-24T04:23:47.848002+00:00",
   "source": "Open-Meteo hourly 33.92,-78.57 (same source as Channel/International hourly)",
   "hours": [
     {
@@ -30,7 +30,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NW",
       "windSpeedMph": 3,
-      "pop": 1,
+      "pop": 2,
       "isDaytime": false,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -45,7 +45,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NNW",
       "windSpeedMph": 4,
-      "pop": 4,
+      "pop": 3,
       "isDaytime": false,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -75,7 +75,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NNW",
       "windSpeedMph": 4,
-      "pop": 4,
+      "pop": 3,
       "isDaytime": false,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -90,7 +90,7 @@
       "shortForecast": "Cloudy",
       "windDir": "N",
       "windSpeedMph": 6,
-      "pop": 2,
+      "pop": 3,
       "isDaytime": false,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -150,7 +150,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NNE",
       "windSpeedMph": 13,
-      "pop": 2,
+      "pop": 1,
       "isDaytime": true,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -165,7 +165,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NNE",
       "windSpeedMph": 13,
-      "pop": 3,
+      "pop": 2,
       "isDaytime": true,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -180,7 +180,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NNE",
       "windSpeedMph": 13,
-      "pop": 3,
+      "pop": 2,
       "isDaytime": true,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -210,7 +210,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NE",
       "windSpeedMph": 13,
-      "pop": 2,
+      "pop": 1,
       "isDaytime": true,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
