@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-24T13:39:27-05:00",
+  "generatedAt": "2026-11-24T13:53:39-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -17,15 +17,15 @@
       "name": "Boston",
       "iconLink": "https://api.weather.gov/icons/land/day/skc?size=medium",
       "shortForecast": "Sunny",
-      "highF": 45,
+      "highF": 46,
       "lowF": 28,
       "isDaytime": true,
       "dayName": "Tuesday"
     },
     {
       "name": "Chicago",
-      "iconLink": "https://api.weather.gov/icons/land/day/snow/bkn?size=medium",
-      "shortForecast": "Slight Chance Rain And Snow Showers then Partly Sunny",
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Mostly Cloudy",
       "highF": 41,
       "lowF": 32,
       "isDaytime": true,
@@ -35,17 +35,17 @@
       "name": "Cleveland",
       "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
       "shortForecast": "Mostly Sunny",
-      "highF": 41,
+      "highF": 42,
       "lowF": 30,
       "isDaytime": true,
       "dayName": "Tuesday"
     },
     {
       "name": "Dallas",
-      "iconLink": "https://api.weather.gov/icons/land/day/rain_showers,30/rain_showers,20?size=medium",
-      "shortForecast": "Chance Rain Showers",
-      "highF": 49,
-      "lowF": 34,
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Mostly Cloudy",
+      "highF": 50,
+      "lowF": 33,
       "isDaytime": true,
       "dayName": "Tuesday"
     },
@@ -60,8 +60,8 @@
     },
     {
       "name": "Detroit",
-      "iconLink": "https://api.weather.gov/icons/land/day/few?size=medium",
-      "shortForecast": "Sunny",
+      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
+      "shortForecast": "Mostly Sunny",
       "highF": 40,
       "lowF": 28,
       "isDaytime": true,
@@ -71,7 +71,7 @@
       "name": "Hartford",
       "iconLink": "https://api.weather.gov/icons/land/day/skc?size=medium",
       "shortForecast": "Sunny",
-      "highF": 47,
+      "highF": 46,
       "lowF": 22,
       "isDaytime": true,
       "dayName": "Tuesday"
@@ -105,10 +105,10 @@
     },
     {
       "name": "Miami",
-      "iconLink": "https://api.weather.gov/icons/land/day/ovc?size=medium",
-      "shortForecast": "Cloudy",
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Mostly Cloudy",
       "highF": 80,
-      "lowF": 74,
+      "lowF": 73,
       "isDaytime": true,
       "dayName": "Tuesday"
     },
@@ -126,7 +126,7 @@
       "iconLink": "https://api.weather.gov/icons/land/day/skc?size=medium",
       "shortForecast": "Sunny",
       "highF": 51,
-      "lowF": 40,
+      "lowF": 39,
       "isDaytime": true,
       "dayName": "Tuesday"
     },
@@ -159,8 +159,8 @@
     },
     {
       "name": "Pittsburgh",
-      "iconLink": "https://api.weather.gov/icons/land/day/few?size=medium",
-      "shortForecast": "Sunny",
+      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
+      "shortForecast": "Mostly Sunny",
       "highF": 42,
       "lowF": 26,
       "isDaytime": true,
@@ -186,17 +186,17 @@
     },
     {
       "name": "Seattle",
-      "iconLink": "https://api.weather.gov/icons/land/day/rain,30/rain,70?size=medium",
-      "shortForecast": "Light Rain Likely",
+      "iconLink": "https://api.weather.gov/icons/land/day/rain,20/rain,80?size=medium",
+      "shortForecast": "Light Rain",
       "highF": 53,
-      "lowF": 48,
+      "lowF": 49,
       "isDaytime": true,
       "dayName": "Tuesday"
     },
     {
       "name": "Syracuse",
-      "iconLink": "https://api.weather.gov/icons/land/day/snow,70/sct?size=medium",
-      "shortForecast": "Snow Showers Likely then Mostly Sunny",
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Partly Sunny",
       "highF": 39,
       "lowF": 24,
       "isDaytime": true,
@@ -206,8 +206,8 @@
       "name": "Tampa",
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
       "shortForecast": "Mostly Cloudy",
-      "highF": 76,
-      "lowF": 64,
+      "highF": 73,
+      "lowF": 63,
       "isDaytime": true,
       "dayName": "Tuesday"
     },
