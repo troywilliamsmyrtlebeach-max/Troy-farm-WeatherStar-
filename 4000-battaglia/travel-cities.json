@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-24T17:10:55-05:00",
+  "generatedAt": "2026-11-24T17:24:43-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -26,7 +26,7 @@
       "name": "Chicago",
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
       "shortForecast": "Mostly Cloudy",
-      "highF": 41,
+      "highF": 43,
       "lowF": 32,
       "isDaytime": true,
       "dayName": "Tuesday"
@@ -133,7 +133,7 @@
     {
       "name": "Norfolk",
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
-      "shortForecast": "Partly Sunny",
+      "shortForecast": "Mostly Cloudy",
       "highF": 55,
       "lowF": 45,
       "isDaytime": true,
