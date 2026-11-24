@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-24T16:57:05-05:00",
+  "generatedAt": "2026-11-24T17:10:55-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -133,7 +133,7 @@
     {
       "name": "Norfolk",
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
-      "shortForecast": "Mostly Cloudy",
+      "shortForecast": "Partly Sunny",
       "highF": 55,
       "lowF": 45,
       "isDaytime": true,
