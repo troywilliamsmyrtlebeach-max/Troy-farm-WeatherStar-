@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-24T13:08:09-05:00",
+  "generatedAt": "2026-11-24T13:39:27-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -71,7 +71,7 @@
       "name": "Hartford",
       "iconLink": "https://api.weather.gov/icons/land/day/skc?size=medium",
       "shortForecast": "Sunny",
-      "highF": 46,
+      "highF": 47,
       "lowF": 22,
       "isDaytime": true,
       "dayName": "Tuesday"
@@ -87,8 +87,8 @@
     },
     {
       "name": "Indianapolis",
-      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
-      "shortForecast": "Mostly Sunny",
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Partly Sunny",
       "highF": 43,
       "lowF": 27,
       "isDaytime": true,
@@ -195,8 +195,8 @@
     },
     {
       "name": "Syracuse",
-      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
-      "shortForecast": "Partly Sunny",
+      "iconLink": "https://api.weather.gov/icons/land/day/snow,70/sct?size=medium",
+      "shortForecast": "Snow Showers Likely then Mostly Sunny",
       "highF": 39,
       "lowF": 24,
       "isDaytime": true,
