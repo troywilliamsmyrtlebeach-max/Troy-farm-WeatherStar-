@@ -1,8 +1,8 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-24T09:40:43-05:00",
-  "updateTime": "2026-11-24T14:40:43.514881+00:00",
+  "generatedAt": "2026-11-24T09:54:11-05:00",
+  "updateTime": "2026-11-24T14:54:11.951043+00:00",
   "source": "Open-Meteo hourly 33.92,-78.57 (same source as Channel/International hourly)",
   "hours": [
     {
@@ -15,7 +15,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NNE",
       "windSpeedMph": 15,
-      "pop": 1,
+      "pop": 0,
       "isDaytime": true,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -75,7 +75,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NE",
       "windSpeedMph": 14,
-      "pop": 1,
+      "pop": 0,
       "isDaytime": true,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
