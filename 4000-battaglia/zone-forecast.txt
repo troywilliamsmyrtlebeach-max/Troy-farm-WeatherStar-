@@ -1,20 +1,18 @@
-Expires:202611250000;;684003
-FPUS52 KILM 241054
+Expires:202611250245;;684003
+FPUS52 KILM 241340
 ZFPILM
 
 Zone Forecast Product
 National Weather Service Wilmington NC
-554 AM EST Tue Nov 24 2026
+840 AM EST Tue Nov 24 2026
 
-NCZ106-250000-
+NCZ106-250245-
 Coastal Pender-
 Including the city of Surf City
-554 AM EST Tue Nov 24 2026
+840 AM EST Tue Nov 24 2026
 
-...COASTAL FLOOD ADVISORY IN EFFECT UNTIL 8 AM EST THIS MORNING...
-
-.TODAY...Mostly cloudy. Highs in the upper 50s. Northeast winds
-15 to 20 mph with gusts up to 30 mph.
+.REST OF TODAY...Mostly cloudy. Highs in the upper 50s. Northeast
+winds 15 to 20 mph with gusts up to 30 mph.
 .TONIGHT...Mostly cloudy. A slight chance of showers after
 midnight. Lows in the lower 40s. Northeast winds 15 to 20 mph
 with gusts up to 30 mph. Chance of rain 20 percent.
@@ -40,13 +38,13 @@ in the upper 60s.
 
 $$
 
-NCZ105-250000-
+NCZ105-250245-
 Inland Pender-
 Including the city of Burgaw
-554 AM EST Tue Nov 24 2026
+840 AM EST Tue Nov 24 2026
 
-.TODAY...Mostly cloudy. Highs in the upper 50s. Northeast winds
-10 to 15 mph with gusts up to 25 mph.
+.REST OF TODAY...Mostly cloudy. Near steady temperature in the
+mid 50s. Northeast winds 10 to 15 mph with gusts up to 25 mph.
 .TONIGHT...Mostly cloudy. A slight chance of showers after
 midnight. Lows in the lower 40s. Northeast winds around 10 mph
 with gusts up to 20 mph. Chance of rain 20 percent.
@@ -70,16 +68,14 @@ Highs in the upper 60s.
 
 $$
 
-NCZ108-250000-
+NCZ108-250245-
 Coastal New Hanover-
 Including the cities of Masonboro, Myrtle Grove, Ogden,
 Carolina Beach, and Seagate
-554 AM EST Tue Nov 24 2026
+840 AM EST Tue Nov 24 2026
 
-...COASTAL FLOOD ADVISORY IN EFFECT UNTIL 8 AM EST THIS MORNING...
-
-.TODAY...Mostly cloudy. Highs around 60. Northeast winds 15 to
-20 mph with gusts up to 30 mph.
+.REST OF TODAY...Mostly cloudy. Near steady temperature in the
+upper 50s. Northeast winds 15 to 20 mph with gusts up to 30 mph.
 .TONIGHT...Mostly cloudy. A chance of showers after midnight.
 Breezy with lows in the upper 40s. Northeast winds 15 to 25 mph
 with gusts up to 35 mph. Chance of rain 40 percent.
@@ -105,16 +101,16 @@ Highs in the mid 60s.
 
 $$
 
-NCZ107-250000-
+NCZ107-250245-
 Inland New Hanover-
 Including the city of Wilmington
-554 AM EST Tue Nov 24 2026
+840 AM EST Tue Nov 24 2026
 
 ...COASTAL FLOOD ADVISORY IN EFFECT UNTIL 10 AM EST THIS
 MORNING...
 
-.TODAY...Mostly cloudy. Highs in the upper 50s. Northeast winds
-10 to 15 mph with gusts up to 25 mph.
+.REST OF TODAY...Mostly cloudy. Near steady temperature in the
+mid 50s. Northeast winds 10 to 15 mph with gusts up to 25 mph.
 .TONIGHT...Mostly cloudy. A slight chance of showers after
 midnight. Lows in the lower 40s. Northeast winds 10 to 15 mph
 with gusts up to 25 mph. Chance of rain 20 percent.
@@ -140,16 +136,14 @@ Highs in the upper 60s.
 
 $$
 
-NCZ110-250000-
+NCZ110-250245-
 Coastal Brunswick-
 Including the cities of Oak Island, Long Beach, Southport,
 and Sunset Beach
-554 AM EST Tue Nov 24 2026
+840 AM EST Tue Nov 24 2026
 
-...COASTAL FLOOD ADVISORY IN EFFECT UNTIL 8 AM EST THIS MORNING...
-
-.TODAY...Mostly cloudy. Highs around 60. Northeast winds 15 to
-20 mph with gusts up to 30 mph.
+.REST OF TODAY...Mostly cloudy. Near steady temperature in the
+upper 50s. Northeast winds 15 to 20 mph with gusts up to 30 mph.
 .TONIGHT...Mostly cloudy. A chance of showers after midnight.
 Lows in the mid 40s. Northeast winds 15 to 20 mph with gusts up
 to 35 mph. Chance of rain 40 percent.
@@ -175,14 +169,14 @@ Highs in the upper 60s.
 
 $$
 
-NCZ109-250000-
+NCZ109-250245-
 Inland Brunswick-
 Including the cities of Boiling Spring Lakes, Leland,
 and Shallotte
-554 AM EST Tue Nov 24 2026
+840 AM EST Tue Nov 24 2026
 
-.TODAY...Mostly cloudy. Highs in the upper 50s. Northeast winds
-10 to 15 mph.
+.REST OF TODAY...Mostly cloudy. Near steady temperature in the
+mid 50s. Northeast winds 10 to 15 mph.
 .TONIGHT...Mostly cloudy. A slight chance of showers after
 midnight. Lows in the lower 40s. Northeast winds 10 to 15 mph
 with gusts up to 25 mph. Chance of rain 20 percent.
@@ -205,13 +199,13 @@ Highs in the upper 60s.
 
 $$
 
-NCZ096-250000-
+NCZ096-250245-
 Bladen-
 Including the cities of Elizabethtown and Bladenboro
-554 AM EST Tue Nov 24 2026
+840 AM EST Tue Nov 24 2026
 
-.TODAY...Mostly cloudy. Highs in the upper 50s. Northeast winds
-10 to 15 mph with gusts up to 25 mph.
+.REST OF TODAY...Mostly cloudy. Highs in the upper 50s. Northeast
+winds 10 to 15 mph with gusts up to 25 mph.
 .TONIGHT...Partly cloudy in the evening, then becoming mostly
 cloudy. Lows in the upper 30s. Northeast winds 5 to 10 mph with
 gusts up to 20 mph.
@@ -233,14 +227,14 @@ Lows in the mid 40s.
 
 $$
 
-NCZ099-250000-
+NCZ099-250245-
 Columbus-
 Including the cities of Whiteville, Tabor City, Chadbourn,
 and Lake Waccamaw
-554 AM EST Tue Nov 24 2026
+840 AM EST Tue Nov 24 2026
 
-.TODAY...Mostly cloudy. Highs in the upper 50s. Northeast winds
-around 10 mph with gusts up to 25 mph.
+.REST OF TODAY...Mostly cloudy. Near steady temperature in the
+mid 50s. Northeast winds around 10 mph with gusts up to 25 mph.
 .TONIGHT...Mostly cloudy. A slight chance of showers after
 midnight. Lows in the lower 40s. Northeast winds 5 to 10 mph with
 gusts up to 20 mph. Chance of rain 20 percent.
@@ -261,13 +255,13 @@ Lows in the upper 40s.
 
 $$
 
-NCZ087-250000-
+NCZ087-250245-
 Robeson-
 Including the city of Lumberton
-554 AM EST Tue Nov 24 2026
+840 AM EST Tue Nov 24 2026
 
-.TODAY...Mostly cloudy this morning, then becoming partly sunny.
-Highs in the upper 50s. Northeast winds 15 to 20 mph.
+.REST OF TODAY...Partly sunny. Highs in the upper 50s. Northeast
+winds 15 to 20 mph.
 .TONIGHT...Partly cloudy. Lows in the upper 30s. Northeast winds
 10 to 15 mph with gusts up to 25 mph.
 .WEDNESDAY...Cloudy. A chance of showers in the morning, then
@@ -289,16 +283,14 @@ Highs in the upper 60s.
 
 $$
 
-SCZ054-250000-
+SCZ054-250245-
 Coastal Horry-
 Including the cities of Myrtle Beach, Socastee,
 North Myrtle Beach, Garden City, and Little River
-554 AM EST Tue Nov 24 2026
+840 AM EST Tue Nov 24 2026
 
-...COASTAL FLOOD ADVISORY IN EFFECT UNTIL 8 AM EST THIS MORNING...
-
-.TODAY...Mostly cloudy. Highs around 60. Northeast winds 15 to
-20 mph.
+.REST OF TODAY...Mostly cloudy. Near steady temperature in the
+upper 50s. Northeast winds 15 to 20 mph.
 .TONIGHT...Mostly cloudy. A chance of showers after midnight.
 Lows in the lower 40s. Northeast winds 15 to 20 mph with gusts up
 to 30 mph. Chance of rain 40 percent.
@@ -324,13 +316,13 @@ in the upper 60s.
 
 $$
 
-SCZ058-250000-
+SCZ058-250245-
 Central Horry-
 Including the cities of Conway, Longs, and Bucksport
-554 AM EST Tue Nov 24 2026
+840 AM EST Tue Nov 24 2026
 
-.TODAY...Mostly cloudy. Near steady temperature in the upper 50s.
-Northeast winds 10 to 15 mph with gusts up to 25 mph.
+.REST OF TODAY...Mostly cloudy. Near steady temperature in the
+upper 50s. Northeast winds 10 to 15 mph with gusts up to 25 mph.
 .TONIGHT...Mostly cloudy. A chance of showers after midnight.
 Lows in the lower 40s. Northeast winds 5 to 10 mph with gusts up
 to 20 mph. Chance of rain 30 percent.
@@ -355,13 +347,13 @@ Highs in the upper 60s.
 
 $$
 
-SCZ059-250000-
+SCZ059-250245-
 Northern Horry-
 Including the cities of Loris, Green Sea, and Aynor
-554 AM EST Tue Nov 24 2026
+840 AM EST Tue Nov 24 2026
 
-.TODAY...Mostly cloudy. Near steady temperature in the mid 50s.
-Northeast winds 10 to 15 mph with gusts up to 25 mph.
+.REST OF TODAY...Mostly cloudy. Near steady temperature in the
+mid 50s. Northeast winds 10 to 15 mph with gusts up to 25 mph.
 .TONIGHT...Partly cloudy in the evening, then mostly cloudy with
 a slight chance of showers after midnight. Lows around 40.
 Northeast winds 5 to 10 mph with gusts up to 20 mph. Chance of
@@ -383,15 +375,14 @@ Lows in the upper 40s.
 
 $$
 
-SCZ056-250000-
+SCZ056-250245-
 Coastal Georgetown-
 Including the cities of Georgetown and Murrells Inlet
-554 AM EST Tue Nov 24 2026
+840 AM EST Tue Nov 24 2026
 
-...COASTAL FLOOD ADVISORY IN EFFECT UNTIL 8 AM EST THIS MORNING...
-
-.TODAY...Mostly cloudy with a 20 percent chance of showers. Highs
-around 60. Northeast winds 15 to 20 mph with gusts up to 30 mph.
+.REST OF TODAY...Mostly cloudy with a 20 percent chance of
+showers. Near steady temperature in the upper 50s. Northeast
+winds 15 to 20 mph with gusts up to 30 mph.
 .TONIGHT...Mostly cloudy. A slight chance of showers in the
 evening, then a chance of showers after midnight. Lows in the
 lower 40s. Northeast winds 15 to 20 mph with gusts up to 30 mph.
@@ -419,13 +410,13 @@ in the upper 60s.
 
 $$
 
-SCZ055-250000-
+SCZ055-250245-
 Inland Georgetown-
 Including the city of Andrews
-554 AM EST Tue Nov 24 2026
+840 AM EST Tue Nov 24 2026
 
-.TODAY...Mostly cloudy. Near steady temperature in the upper 50s.
-Northeast winds 10 to 15 mph.
+.REST OF TODAY...Mostly cloudy. Near steady temperature in the
+upper 50s. Northeast winds 10 to 15 mph.
 .TONIGHT...Mostly cloudy. A slight chance of showers in the
 evening, then a chance of showers after midnight. Lows in the
 lower 40s. Northeast winds 5 to 10 mph with gusts up to 20 mph.
@@ -451,14 +442,14 @@ Highs in the upper 60s.
 
 $$
 
-SCZ024-250000-
+SCZ024-250245-
 Dillon-
 Including the city of Dillon
-554 AM EST Tue Nov 24 2026
+840 AM EST Tue Nov 24 2026
 
-.TODAY...Mostly cloudy this morning, then becoming partly sunny.
-Near steady temperature in the mid 50s. Northeast winds 10 to
-15 mph with gusts up to 25 mph.
+.REST OF TODAY...Mostly cloudy early this morning, then becoming
+partly sunny. Near steady temperature in the mid 50s. Northeast
+winds 10 to 15 mph with gusts up to 25 mph.
 .TONIGHT...Partly cloudy in the evening, then becoming mostly
 cloudy. Lows in the upper 30s. Northeast winds 10 to 15 mph with
 gusts up to 25 mph.
@@ -481,13 +472,13 @@ Highs in the upper 60s.
 
 $$
 
-SCZ033-250000-
+SCZ033-250245-
 Marion-
 Including the cities of Marion and Mullins
-554 AM EST Tue Nov 24 2026
+840 AM EST Tue Nov 24 2026
 
-.TODAY...Mostly cloudy. Near steady temperature in the mid 50s.
-Northeast winds 10 to 15 mph with gusts up to 25 mph.
+.REST OF TODAY...Mostly cloudy. Near steady temperature in the
+mid 50s. Northeast winds 10 to 15 mph with gusts up to 25 mph.
 .TONIGHT...Partly cloudy in the evening, then mostly cloudy with
 a slight chance of showers after midnight. Lows around 40.
 Northeast winds 5 to 10 mph with gusts up to 20 mph. Chance of
@@ -512,14 +503,14 @@ Highs in the upper 60s.
 
 $$
 
-SCZ032-250000-
+SCZ032-250245-
 Florence-
 Including the city of Florence
-554 AM EST Tue Nov 24 2026
+840 AM EST Tue Nov 24 2026
 
-.TODAY...Mostly cloudy this morning, then becoming partly sunny.
-Highs around 60. Northeast winds 10 to 15 mph with gusts up to
-25 mph.
+.REST OF TODAY...Mostly cloudy early this morning, then becoming
+partly sunny. Near steady temperature in the upper 50s. Northeast
+winds 10 to 15 mph with gusts up to 25 mph.
 .TONIGHT...Partly cloudy in the evening, then mostly cloudy with
 a slight chance of showers after midnight. Lows in the upper 30s.
 Northeast winds 10 to 15 mph. Chance of rain 20 percent.
@@ -544,13 +535,13 @@ Highs in the upper 60s.
 
 $$
 
-SCZ039-250000-
+SCZ039-250245-
 Williamsburg-
 Including the city of Kingstree
-554 AM EST Tue Nov 24 2026
+840 AM EST Tue Nov 24 2026
 
-.TODAY...Mostly cloudy. Near steady temperature in the upper 50s.
-Northeast winds 5 to 10 mph with gusts up to 20 mph.
+.REST OF TODAY...Mostly cloudy. Near steady temperature in the
+upper 50s. Northeast winds around 10 mph with gusts up to 20 mph.
 .TONIGHT...Partly cloudy in the evening, then mostly cloudy with
 a slight chance of showers after midnight. Lows around 40.
 Northeast winds 5 to 10 mph with gusts up to 20 mph. Chance of
@@ -576,14 +567,13 @@ Lows in the upper 40s.
 
 $$
 
-SCZ017-250000-
+SCZ017-250245-
 Marlboro-
 Including the cities of Bennettsville and McColl
-554 AM EST Tue Nov 24 2026
+840 AM EST Tue Nov 24 2026
 
-.TODAY...Mostly cloudy this morning, then becoming partly sunny.
-Highs in the upper 50s. Northeast winds 10 to 15 mph with gusts
-up to 25 mph.
+.REST OF TODAY...Partly sunny. Highs in the upper 50s. Northeast
+winds 10 to 15 mph with gusts up to 25 mph.
 .TONIGHT...Partly cloudy. Lows in the upper 30s. Northeast winds
 10 to 15 mph with gusts up to 25 mph.
 .WEDNESDAY...Cloudy. A chance of showers in the morning, then
@@ -606,14 +596,14 @@ Highs in the upper 60s.
 
 $$
 
-SCZ023-250000-
+SCZ023-250245-
 Darlington-
 Including the cities of Hartsville, Darlington,
 and North Hartsville
-554 AM EST Tue Nov 24 2026
+840 AM EST Tue Nov 24 2026
 
-.TODAY...Partly sunny. Highs around 60. Northeast winds 10 to
-15 mph with gusts up to 25 mph.
+.REST OF TODAY...Partly sunny. Highs around 60. Northeast winds
+10 to 15 mph with gusts up to 25 mph.
 .TONIGHT...Partly cloudy in the evening, then becoming mostly
 cloudy. Lows in the upper 30s. Northeast winds 10 to 15 mph with
 gusts up to 25 mph.
