@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-24T16:27:19-05:00",
+  "generatedAt": "2026-11-24T16:43:20-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -42,9 +42,9 @@
     },
     {
       "name": "Dallas",
-      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
-      "shortForecast": "Mostly Cloudy",
-      "highF": 50,
+      "iconLink": "https://api.weather.gov/icons/land/day/rain_showers?size=medium",
+      "shortForecast": "Slight Chance Rain Showers",
+      "highF": 48,
       "lowF": 33,
       "isDaytime": true,
       "dayName": "Tuesday"
@@ -152,15 +152,15 @@
       "name": "Philadelphia",
       "iconLink": "https://api.weather.gov/icons/land/day/skc?size=medium",
       "shortForecast": "Sunny",
-      "highF": 51,
-      "lowF": 32,
+      "highF": 52,
+      "lowF": 35,
       "isDaytime": true,
       "dayName": "Tuesday"
     },
     {
       "name": "Pittsburgh",
-      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
-      "shortForecast": "Mostly Sunny",
+      "iconLink": "https://api.weather.gov/icons/land/day/few?size=medium",
+      "shortForecast": "Sunny",
       "highF": 42,
       "lowF": 26,
       "isDaytime": true,
