@@ -1,25 +1,10 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-24T18:56:07-05:00",
-  "updateTime": "2026-11-24T23:56:07.692171+00:00",
+  "generatedAt": "2026-11-24T19:11:04-05:00",
+  "updateTime": "2026-11-25T00:11:04.822784+00:00",
   "source": "Open-Meteo hourly 33.92,-78.57 (same source as Channel/International hourly)",
   "hours": [
-    {
-      "hourLabel": "6 PM",
-      "weekday": "Tue",
-      "tempF": 50,
-      "feelsLikeF": 44,
-      "dewpointF": 37,
-      "relativeHumidity": 61,
-      "shortForecast": "Clear",
-      "windDir": "NE",
-      "windSpeedMph": 6,
-      "pop": 1,
-      "isDaytime": false,
-      "iconCode": "skc",
-      "iconUrl": "https://battaglia.ddns.net/twc/images/r/Clear-1992.gif"
-    },
     {
       "hourLabel": "7 PM",
       "weekday": "Tue",
@@ -30,7 +15,7 @@
       "shortForecast": "Clear",
       "windDir": "NE",
       "windSpeedMph": 8,
-      "pop": 1,
+      "pop": 0,
       "isDaytime": false,
       "iconCode": "skc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Clear-1992.gif"
@@ -45,7 +30,7 @@
       "shortForecast": "Clear",
       "windDir": "NE",
       "windSpeedMph": 10,
-      "pop": 1,
+      "pop": 0,
       "isDaytime": false,
       "iconCode": "skc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Clear-1992.gif"
@@ -90,7 +75,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NE",
       "windSpeedMph": 11,
-      "pop": 1,
+      "pop": 2,
       "isDaytime": false,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -120,7 +105,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NNE",
       "windSpeedMph": 11,
-      "pop": 20,
+      "pop": 19,
       "isDaytime": false,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -135,7 +120,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NNE",
       "windSpeedMph": 11,
-      "pop": 5,
+      "pop": 15,
       "isDaytime": false,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -150,7 +135,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NNE",
       "windSpeedMph": 12,
-      "pop": 9,
+      "pop": 11,
       "isDaytime": false,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -165,7 +150,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NNE",
       "windSpeedMph": 12,
-      "pop": 20,
+      "pop": 21,
       "isDaytime": false,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -180,7 +165,7 @@
       "shortForecast": "Cloudy",
       "windDir": "NNE",
       "windSpeedMph": 12,
-      "pop": 34,
+      "pop": 27,
       "isDaytime": false,
       "iconCode": "ovc",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Cloudy.gif"
@@ -195,7 +180,7 @@
       "shortForecast": "Light Rain",
       "windDir": "NNE",
       "windSpeedMph": 12,
-      "pop": 42,
+      "pop": 41,
       "isDaytime": false,
       "iconCode": "rain",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Shower.gif"
@@ -210,7 +195,7 @@
       "shortForecast": "Light Rain",
       "windDir": "NNE",
       "windSpeedMph": 13,
-      "pop": 48,
+      "pop": 60,
       "isDaytime": true,
       "iconCode": "rain",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Shower.gif"
@@ -225,7 +210,7 @@
       "shortForecast": "Rain",
       "windDir": "NNE",
       "windSpeedMph": 15,
-      "pop": 67,
+      "pop": 70,
       "isDaytime": true,
       "iconCode": "rain",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Shower.gif"
@@ -240,7 +225,7 @@
       "shortForecast": "Light Rain",
       "windDir": "NNE",
       "windSpeedMph": 15,
-      "pop": 79,
+      "pop": 82,
       "isDaytime": true,
       "iconCode": "rain",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Shower.gif"
@@ -255,7 +240,7 @@
       "shortForecast": "Heavy Drizzle",
       "windDir": "NNE",
       "windSpeedMph": 15,
-      "pop": 78,
+      "pop": 84,
       "isDaytime": true,
       "iconCode": "rain",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Shower.gif"
@@ -285,7 +270,7 @@
       "shortForecast": "Light Drizzle",
       "windDir": "NE",
       "windSpeedMph": 17,
-      "pop": 75,
+      "pop": 74,
       "isDaytime": true,
       "iconCode": "light_drizzle",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Scattered-Showers-1994-2.gif"
@@ -300,7 +285,7 @@
       "shortForecast": "Heavy Drizzle",
       "windDir": "NE",
       "windSpeedMph": 15,
-      "pop": 91,
+      "pop": 77,
       "isDaytime": true,
       "iconCode": "rain",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Shower.gif"
@@ -330,7 +315,7 @@
       "shortForecast": "Drizzle",
       "windDir": "NE",
       "windSpeedMph": 17,
-      "pop": 100,
+      "pop": 98,
       "isDaytime": true,
       "iconCode": "rain",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Shower.gif"
@@ -345,7 +330,7 @@
       "shortForecast": "Rain",
       "windDir": "NE",
       "windSpeedMph": 18,
-      "pop": 94,
+      "pop": 93,
       "isDaytime": true,
       "iconCode": "rain",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Shower.gif"
@@ -360,8 +345,23 @@
       "shortForecast": "Light Rain",
       "windDir": "NE",
       "windSpeedMph": 22,
-      "pop": 99,
+      "pop": 97,
       "isDaytime": true,
+      "iconCode": "rain",
+      "iconUrl": "https://battaglia.ddns.net/twc/images/r/Shower.gif"
+    },
+    {
+      "hourLabel": "6 PM",
+      "weekday": "Wed",
+      "tempF": 60,
+      "feelsLikeF": 54,
+      "dewpointF": 57,
+      "relativeHumidity": 92,
+      "shortForecast": "Rain",
+      "windDir": "NE",
+      "windSpeedMph": 20,
+      "pop": 100,
+      "isDaytime": false,
       "iconCode": "rain",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Shower.gif"
     }
