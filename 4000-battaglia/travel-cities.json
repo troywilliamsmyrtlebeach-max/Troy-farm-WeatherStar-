@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-24T19:25:24-05:00",
+  "generatedAt": "2026-11-24T19:39:19-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -78,12 +78,12 @@
     },
     {
       "name": "Houston",
-      "iconLink": "https://api.weather.gov/icons/land/day/skc?size=medium",
-      "shortForecast": "Sunny",
+      "iconLink": "https://api.weather.gov/icons/land/day/rain_showers,30?size=medium",
+      "shortForecast": "Chance Rain Showers",
       "highF": 56,
       "lowF": 41,
       "isDaytime": true,
-      "dayName": "Wednesday"
+      "dayName": "Tuesday"
     },
     {
       "name": "Indianapolis",
@@ -114,12 +114,12 @@
     },
     {
       "name": "Minneapolis",
-      "iconLink": "https://api.weather.gov/icons/land/day/ovc?size=medium",
-      "shortForecast": "Cloudy",
-      "highF": 34,
-      "lowF": 26,
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Partly Sunny",
+      "highF": 40,
+      "lowF": 20,
       "isDaytime": true,
-      "dayName": "Tuesday"
+      "dayName": "Wednesday"
     },
     {
       "name": "New York",
