@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-24T20:23:51-05:00",
+  "generatedAt": "2026-11-24T20:39:05-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -54,9 +54,9 @@
       "iconLink": "https://api.weather.gov/icons/land/day/few?size=medium",
       "shortForecast": "Sunny",
       "highF": 54,
-      "lowF": 26,
+      "lowF": 28,
       "isDaytime": true,
-      "dayName": "Tuesday"
+      "dayName": "Wednesday"
     },
     {
       "name": "Detroit",
