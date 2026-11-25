@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-24T20:09:36-05:00",
+  "generatedAt": "2026-11-24T20:23:51-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -204,8 +204,8 @@
     },
     {
       "name": "Tampa",
-      "iconLink": "https://api.weather.gov/icons/land/day/tsra,60/tsra,50?size=medium",
-      "shortForecast": "Showers And Thunderstorms Likely",
+      "iconLink": "https://api.weather.gov/icons/land/day/rain_showers,70/tsra,50?size=medium",
+      "shortForecast": "Rain Showers Likely",
       "highF": 72,
       "lowF": 64,
       "isDaytime": true,
