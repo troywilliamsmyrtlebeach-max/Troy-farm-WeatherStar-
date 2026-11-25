@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-24T19:39:19-05:00",
+  "generatedAt": "2026-11-24T19:53:54-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -26,10 +26,10 @@
       "name": "Chicago",
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
       "shortForecast": "Mostly Cloudy",
-      "highF": 43,
-      "lowF": 32,
+      "highF": 44,
+      "lowF": 40,
       "isDaytime": true,
-      "dayName": "Tuesday"
+      "dayName": "Wednesday"
     },
     {
       "name": "Cleveland",
@@ -78,12 +78,12 @@
     },
     {
       "name": "Houston",
-      "iconLink": "https://api.weather.gov/icons/land/day/rain_showers,30?size=medium",
-      "shortForecast": "Chance Rain Showers",
+      "iconLink": "https://api.weather.gov/icons/land/day/skc?size=medium",
+      "shortForecast": "Sunny",
       "highF": 56,
       "lowF": 41,
       "isDaytime": true,
-      "dayName": "Tuesday"
+      "dayName": "Wednesday"
     },
     {
       "name": "Indianapolis",
