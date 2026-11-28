@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-28T01:09:44-05:00",
+  "generatedAt": "2026-11-28T01:25:56-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -24,10 +24,10 @@
     },
     {
       "name": "Chicago",
-      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
-      "shortForecast": "Mostly Sunny",
+      "iconLink": "https://api.weather.gov/icons/land/day/rain,20/sct?size=medium",
+      "shortForecast": "Slight Chance Rain then Mostly Sunny",
       "highF": 52,
-      "lowF": 40,
+      "lowF": 39,
       "isDaytime": true,
       "dayName": "Sunday"
     },
