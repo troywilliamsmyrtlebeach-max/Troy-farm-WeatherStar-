@@ -1,8 +1,8 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-28T02:54:59-05:00",
-  "updateTime": "2026-11-28T07:54:59.444522+00:00",
+  "generatedAt": "2026-11-28T03:10:12-05:00",
+  "updateTime": "2026-11-28T08:10:12.655944+00:00",
   "source": "Storm Prediction Center categorical outlooks (Day 1/2/3 GeoJSON) for 33.92,-78.57",
   "sources": {
     "1": "https://www.spc.noaa.gov/products/outlook/day1otlk_cat.lyr.geojson",
