@@ -1,0 +1,125 @@
+# Channel / International / Battaglia 15-minute refresh — GitHub Actions.
+#
+# Purpose: keep Troy's three WeatherStar emulators (Channel 4000-myrtle-intl,
+# International 4000-exact, Battaglia 4000-battaglia, plus the stream copy
+# 4000-myrtle-stream) updated with fresh CALABASH-FARM AT BRUNSWICK readings
+# every 15 minutes, entirely inside GitHub — no Muse involvement. A Muse
+# token outage must not be able to pause this.
+#
+# STATUS: schedule DISABLED. This workflow is workflow_dispatch only until
+# the manual test passes and Troy approves cutover. To enable the 15-minute
+# schedule after cutover approval, uncomment the `schedule` block below.
+# Do NOT enable the schedule while the Muse cron
+# (weatherstar-channel-intl-15min-refresh) is still live — the two writers
+# would race on the same files.
+#
+# What it runs (scripts live in .github/scripts/channel-refresh/):
+#   fetch.py  - curl fetches: WU dashboard (6 generations), WunderMap, OSOILM,
+#               NWS forecast/alerts/KCRE/ZFP, aviationweather METARs, CPC GIFs,
+#               WU monthly, GOES satellite, KLTX radar loop.
+#   stage.py  - same staging rules as the Muse pipeline (sky from Open-Meteo
+#               cloud cover at the farm point with the thin-cirrus cap, Nov 22
+#               vis/ceiling rule, precip triple-check, wind/rounding rules,
+#               pressure trend). Writes farm-data.json x4, localforecast.mjs
+#               x3, Battaglia zone-forecast/metars/outlook/monthly/hourly/SPC/
+#               sunset-beach/travel-cities, and the ?v= cache-bust bump.
+#   The five stage_*.py helpers run inside stage.py (hourly, SPC, sunset
+#   beach x2, travel cities).
+#
+# Auth: the built-in GITHUB_TOKEN only (permissions: contents: write). No
+# PAT, no API keys, no credentials of any kind. Troy's WU PWS API key is
+# never used — the pages run on public readings only.
+#
+# Known Actions-only gaps vs the Muse pipeline (see repo docs / run log):
+#   - Sky eye override: Muse's sky_ground_truth.json is not readable here.
+#     Pass a `sky_override` input on manual dispatch instead (Troy's eye
+#     word); the Muse cron's eye override stays the live path until cutover.
+#   - RetroCast fallback: the Muse pipeline's RC cross-check files are not
+#     available; the run uses WU directly and aborts pre-write (no push) if
+#     WU is stale, exactly as the Muse run does when all sources fail.
+#   - Monthly precip: Jr's November total is not available; the staged file
+#     is kept as-is until a verifiable value exists (never invented).
+
+name: Channel / Intl / Battaglia 15-min refresh
+
+on:
+  workflow_dispatch:
+    inputs:
+      sky_override:
+        description: "Optional sky override - Troy's eye-report word (Fair, Sunny, Clear, Partly cloudy, Mostly cloudy, Cloudy, Variably Cloudy, Light Rain, Rain, Heavy Rain, Light Snow, Snow, Heavy Snow, Thunderstorm). Empty = automated sky."
+        required: false
+        default: ""
+        type: string
+  # schedule:
+  #   - cron: "*/15 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: channel-intl-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    env:
+      REPO_ROOT: ${{ github.workspace }}
+      SCRIPTS_DIR: ${{ github.workspace }}/.github/scripts/channel-refresh
+      WORK_DIR: /tmp/channel-refresh-work
+      CHANNEL_SRC_BASE: ${{ github.workspace }}
+      BATTAGLIA_SRC_DIR: ${{ github.workspace }}/4000-battaglia
+      SKY_OVERRIDE: ${{ inputs.sky_override }}
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Verify checkout is at origin/main HEAD
+        run: |
+          git fetch origin main --quiet
+          test "$(git rev-parse HEAD)" = "$(git rev-parse origin/main)" || { echo "checkout HEAD != origin/main HEAD - abort (another writer pushed first; retry)"; exit 1; }
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Pillow (only third-party dep - KLTX/CPC pixel scans)
+        run: pip install Pillow
+
+      - name: Fetch live sources
+        run: |
+          mkdir -p "$WORK_DIR"
+          echo "REFRESH_RUN_ID=$(date -u +%Y%m%d%H%M)" >> "$GITHUB_ENV"
+          python3 "$SCRIPTS_DIR/fetch.py" 2>&1 | tee "$WORK_DIR/fetch.log"
+
+      - name: Stage fresh data
+        run: |
+          python3 "$SCRIPTS_DIR/stage.py" 2>&1 | tee "$WORK_DIR/stage.log"
+
+      - name: Commit and push staged files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python3 - "$WORK_DIR/manifest_run${REFRESH_RUN_ID}.nul" <<'EOF'
+          import subprocess, sys
+          raw = open(sys.argv[1], "rb").read()
+          assert raw.endswith(b"\x00"), "manifest must end with NUL"
+          paths = [p for p in raw.decode().split("\x00") if p]
+          assert paths, "manifest is empty"
+          print("manifest: %d files" % len(paths))
+          subprocess.run(["git", "add", "--"] + paths, check=True)
+          EOF
+          if git diff --cached --quiet; then echo "nothing staged - no commit"; exit 0; fi
+          STAGE_SUMMARY=$(grep "STAGE DONE" "$WORK_DIR/stage.log" | head -n 1 || true)
+          git commit -m "Channel/Intl/stream + Battaglia refresh (GitHub Actions $REFRESH_RUN_ID)" -m "$STAGE_SUMMARY"
+          git push origin main
+
+      - name: Verify live Pages serve the new data
+        run: |
+          sleep 90
+          for copy in 4000-myrtle-intl 4000-exact 4000-myrtle-stream 4000-battaglia; do
+            curl -sS --max-time 60 "https://troywilliamsmyrtlebeach-max.github.io/Troy-farm-WeatherStar-/$copy/farm-data.json" | python3 -c "import json,sys; d=json.load(sys.stdin); print('$copy', d['lastUpdated'], d['temperature'], 'C ct', d['conditionText'], d['pressureTrend'])"
+          done
+          curl -sS --max-time 60 "https://troywilliamsmyrtlebeach-max.github.io/Troy-farm-WeatherStar-/4000-battaglia/hourly-forecast.json" | python3 -c "import json,sys; d=json.load(sys.stdin); print('hourly', d['generatedAt'], len(d['hours']), 'hours')"
