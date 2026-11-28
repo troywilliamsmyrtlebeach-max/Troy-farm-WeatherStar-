@@ -31,9 +31,10 @@
 # never used — the pages run on public readings only.
 #
 # Known Actions-only gaps vs the Muse pipeline (see repo docs / run log):
-#   - Sky eye override: Muse's sky_ground_truth.json is not readable here.
-#     Pass a `sky_override` input on manual dispatch instead (Troy's eye
-#     word); the Muse cron's eye override stays the live path until cutover.
+#   - Sky eye override: persisted in the repo as .github/sky_override.json
+#     (Nov 27) - a dispatch word governs scheduled runs for 3 hours, a
+#     dispatch with clear_override ends it, expiry deletes it. The Muse
+#     cron's eye override stays the live path until cutover.
 #   - RetroCast fallback: the Muse pipeline's RC cross-check files are not
 #     available; the run uses WU directly and aborts pre-write (no push) if
 #     WU is stale, exactly as the Muse run does when all sources fail.
@@ -46,10 +47,15 @@ on:
   workflow_dispatch:
     inputs:
       sky_override:
-        description: "Optional sky override - Troy's eye-report word (Fair, Sunny, Clear, Partly cloudy, Mostly cloudy, Cloudy, Variably Cloudy, Light Rain, Rain, Heavy Rain, Light Snow, Snow, Heavy Snow, Thunderstorm). Empty = automated sky."
+        description: "Optional sky override - Troy's eye-report word (Fair, Sunny, Clear, Partly cloudy, Mostly cloudy, Cloudy, Variably Cloudy, Light Rain, Rain, Heavy Rain, Light Snow, Snow, Heavy Snow, Thunderstorm). Empty = automated sky. A word set here is stored in the repo and governs scheduled runs too, for 3 hours."
         required: false
         default: ""
         type: string
+      clear_override:
+        description: "End a stored sky override now (Troy's eye word stops governing; automated sky resumes)."
+        required: false
+        default: false
+        type: boolean
   # schedule:
   #   - cron: "*/15 * * * *"
 
@@ -71,9 +77,10 @@ jobs:
       CHANNEL_SRC_BASE: ${{ github.workspace }}
       BATTAGLIA_SRC_DIR: ${{ github.workspace }}/4000-battaglia
       SKY_OVERRIDE: ${{ inputs.sky_override }}
+      CLEAR_OVERRIDE: ${{ inputs.clear_override }}
     steps:
       - name: Check out repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4, pinned 2026-11-27 (verified from the v4 release page)
 
       - name: Verify checkout is at origin/main HEAD
         run: |
@@ -81,7 +88,7 @@ jobs:
           test "$(git rev-parse HEAD)" = "$(git rev-parse origin/main)" || { echo "checkout HEAD != origin/main HEAD - abort (another writer pushed first; retry)"; exit 1; }
 
       - name: Set up Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5, pinned 2026-11-27 (verified via the GitHub API)
         with:
           python-version: "3.12"
 
