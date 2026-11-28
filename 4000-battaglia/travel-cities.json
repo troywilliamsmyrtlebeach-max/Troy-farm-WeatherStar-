@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-27T23:06:45-05:00",
+  "generatedAt": "2026-11-27T23:19:10-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -78,10 +78,10 @@
     },
     {
       "name": "Houston",
-      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
-      "shortForecast": "Mostly Sunny",
+      "iconLink": "https://api.weather.gov/icons/land/day/few?size=medium",
+      "shortForecast": "Sunny",
       "highF": 74,
-      "lowF": 64,
+      "lowF": 63,
       "isDaytime": true,
       "dayName": "Saturday"
     },
@@ -159,10 +159,10 @@
     },
     {
       "name": "Pittsburgh",
-      "iconLink": "https://api.weather.gov/icons/land/day/snow,20/bkn?size=medium",
-      "shortForecast": "Slight Chance Rain And Snow then Mostly Cloudy",
+      "iconLink": "https://api.weather.gov/icons/land/day/snow/bkn?size=medium",
+      "shortForecast": "Chance Rain And Snow Showers then Partly Sunny",
       "highF": 44,
-      "lowF": 33,
+      "lowF": 32,
       "isDaytime": true,
       "dayName": "Saturday"
     },
@@ -195,10 +195,10 @@
     },
     {
       "name": "Syracuse",
-      "iconLink": "https://api.weather.gov/icons/land/day/rain_showers,40/rain_showers,80?size=medium",
-      "shortForecast": "Rain Showers",
+      "iconLink": "https://api.weather.gov/icons/land/day/rain_showers,30/rain_showers,70?size=medium",
+      "shortForecast": "Rain Showers Likely",
       "highF": 44,
-      "lowF": 37,
+      "lowF": 38,
       "isDaytime": true,
       "dayName": "Saturday"
     },
