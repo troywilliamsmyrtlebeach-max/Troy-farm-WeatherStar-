@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-27T23:54:08-05:00",
+  "generatedAt": "2026-11-28T00:09:23-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -11,7 +11,7 @@
       "highF": 61,
       "lowF": 41,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Boston",
@@ -20,7 +20,7 @@
       "highF": 53,
       "lowF": 41,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Chicago",
@@ -29,7 +29,7 @@
       "highF": 52,
       "lowF": 40,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Cleveland",
@@ -38,7 +38,7 @@
       "highF": 44,
       "lowF": 36,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Dallas",
@@ -47,7 +47,7 @@
       "highF": 71,
       "lowF": 48,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Denver",
@@ -56,7 +56,7 @@
       "highF": 53,
       "lowF": 25,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Detroit",
@@ -65,7 +65,7 @@
       "highF": 42,
       "lowF": 36,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Hartford",
@@ -74,7 +74,7 @@
       "highF": 52,
       "lowF": 34,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Houston",
@@ -83,7 +83,7 @@
       "highF": 74,
       "lowF": 63,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Indianapolis",
@@ -92,7 +92,7 @@
       "highF": 50,
       "lowF": 39,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Los Angeles",
@@ -101,7 +101,7 @@
       "highF": 76,
       "lowF": 57,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Miami",
@@ -110,7 +110,7 @@
       "highF": 74,
       "lowF": 69,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Minneapolis",
@@ -119,7 +119,7 @@
       "highF": 48,
       "lowF": 31,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "New York",
@@ -128,7 +128,7 @@
       "highF": 53,
       "lowF": 42,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Norfolk",
@@ -137,7 +137,7 @@
       "highF": 57,
       "lowF": 39,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Orlando",
@@ -146,7 +146,7 @@
       "highF": 64,
       "lowF": 55,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Philadelphia",
@@ -155,7 +155,7 @@
       "highF": 52,
       "lowF": 36,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Pittsburgh",
@@ -164,16 +164,16 @@
       "highF": 44,
       "lowF": 32,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "St. Louis",
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
       "shortForecast": "Partly Sunny",
-      "highF": 51,
-      "lowF": 42,
+      "highF": 53,
+      "lowF": 41,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "San Francisco",
@@ -182,7 +182,7 @@
       "highF": 67,
       "lowF": 56,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Seattle",
@@ -191,7 +191,7 @@
       "highF": 49,
       "lowF": 41,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Syracuse",
@@ -200,7 +200,7 @@
       "highF": 44,
       "lowF": 38,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Tampa",
@@ -209,7 +209,7 @@
       "highF": 68,
       "lowF": 57,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Washington DC",
@@ -218,7 +218,7 @@
       "highF": 57,
       "lowF": 36,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     }
   ]
 }
