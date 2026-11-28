@@ -62,29 +62,86 @@ for copy in COPIES + ["4000-battaglia"]:
         print("ADOPTING parent manual farm-data fix in %s (vis %s->%s, ceiling %s) - fresh values re-derived from live KCRE below" % (copy, _cj.get("visibility"), _sj.get("visibility"), _sj.get("ceiling")))
 print("source farm-data.json files match live HEAD (or adopted manual vis/ceiling fix only)")
 
-# --- Sky override (ACTIONS: Troy's eyes win 3h - via workflow_dispatch input) ---
+# --- Sky override (ACTIONS: Troy's eyes win 3h - persisted in the repo) ---
 # The Muse version read ~/workspace/weather-wire/state/sky_ground_truth.json,
-# which does not exist on a GitHub runner. The Actions workflow accepts an
-# optional `sky_override` input (Troy's eye word, passed when he reports sky
-# in chat and Muse triggers the dispatch); when set it stages ITS sky exactly
-# like a fresh eye report (same map, same precip-gate rule below). When empty,
-# normal source rules apply. The override governs this run only.
-_EYE = None
-_sky_override = os.environ.get("SKY_OVERRIDE", "").strip()
-if _sky_override:
-    _EYE_MAP = {"Fair": ("Fair", 1), "Sunny": ("Sunny", 0), "Clear": ("Clear", 0),
-                "Partly cloudy": ("Partly cloudy", 2), "Mostly cloudy": ("Mostly cloudy", 3),
-                "Partly Cloudy": ("Partly cloudy", 2), "Mostly Cloudy": ("Mostly cloudy", 3), "Variably Cloudy": ("Variably Cloudy", 4),
-                "Cloudy": ("Cloudy", 3), "Light Rain": ("Light Rain", 61), "Rain": ("Rain", 63),
-                "Heavy Rain": ("Heavy Rain", 65), "Light Snow": ("Light Snow", 71),
-                "Snow": ("Snow", 73), "Heavy Snow": ("Heavy Snow", 75),
-                "Thunderstorm": ("Thunderstorm", 95)}
-    assert _sky_override in _EYE_MAP, "sky override %r has no sky mapping - stop, do not guess" % _sky_override
-    _EYE = {"condition": _sky_override, "word": _EYE_MAP[_sky_override][0], "code": _EYE_MAP[_sky_override][1], "age_h": 0.0,
-            "reported_at": "workflow_dispatch"}
-    print("SKY OVERRIDE (workflow_dispatch): %r - stage ITS sky (%s, conditionText %d) instead of the model sky" % (_sky_override, _EYE["word"], _EYE["code"]))
-else:
+# which does not exist on a GitHub runner. The Actions version keeps the same
+# 3-hour rule with a small file in the repo, .github/sky_override.json:
+#   * a manual dispatch with `sky_override` set stages ITS sky this run
+#     (same map, same precip-gate rule below) AND writes the file, so the
+#     next scheduled runs keep staging Troy's word until it expires;
+#   * a scheduled run with no input reads the file and uses it while it is
+#     under 3 hours old, then ignores it (and deletes the stale file);
+#   * a dispatch with `clear_override` set deletes the file (his word ends
+#     now) and stages the automated sky.
+# The file is allowlisted in the manifest section below, so the run that
+# writes/clears it commits the change like any other staged file. The
+# precip gate below still applies both ways: a passed gate beats a stale
+# non-precip eye word (Nov 27 SUPERSEDED fix), and a precip eye word with
+# a failed gate is never staged.
+_OVR_PATH = os.path.join(REPO_ROOT, ".github", "sky_override.json")
+_OVR_TTL_H = 3.0
+_EYE_MAP = {"Fair": ("Fair", 1), "Sunny": ("Sunny", 0), "Clear": ("Clear", 0),
+            "Partly cloudy": ("Partly cloudy", 2), "Mostly cloudy": ("Mostly cloudy", 3),
+            "Partly Cloudy": ("Partly cloudy", 2), "Mostly Cloudy": ("Mostly cloudy", 3), "Variably Cloudy": ("Variably Cloudy", 4),
+            "Cloudy": ("Cloudy", 3), "Light Rain": ("Light Rain", 61), "Rain": ("Rain", 63),
+            "Heavy Rain": ("Heavy Rain", 65), "Light Snow": ("Light Snow", 71),
+            "Snow": ("Snow", 73), "Heavy Snow": ("Heavy Snow", 75),
+            "Thunderstorm": ("Thunderstorm", 95)}
+
+
+def _resolve_sky_override(_dispatch_word, _clear, _path, _now):
+    """Resolve Troy's eye-report sky word for this run.
+
+    Returns (_EYE dict or None, _note). Side effects: writes _path when a
+    fresh dispatch word arrives; deletes _path when cleared or stale.
+    _dispatch_word: the workflow_dispatch sky_override input ("" = none).
+    _clear: the clear_override input (GitHub passes booleans as the strings
+    "true"/"false" - compared explicitly, never by truthiness).
+    _now: tz-aware UTC datetime for age math.
+    """
+    _dispatch_word = (_dispatch_word or "").strip()
+    _clear = str(_clear or "").strip().lower() in ("true", "1", "yes")
+    if _clear:
+        if os.path.exists(_path):
+            os.remove(_path)
+            print("SKY OVERRIDE CLEARED (workflow_dispatch clear_override): stored word deleted - automated sky resumes")
+        else:
+            print("SKY OVERRIDE CLEAR requested but no stored word exists - automated sky resumes")
+        return None, "cleared"
+    if _dispatch_word:
+        assert _dispatch_word in _EYE_MAP, "sky override %r has no sky mapping - stop, do not guess" % _dispatch_word
+        _rec = {"word": _dispatch_word, "reportedAt": _now.isoformat(), "source": "workflow_dispatch sky_override"}
+        with open(_path, "w", encoding="utf-8") as _fh:
+            _fh.write(json.dumps(_rec, indent=2, sort_keys=True) + "\n")
+        print("SKY OVERRIDE (workflow_dispatch): %r - stored in %s, governs this run and scheduled runs for %.1fh" % (_dispatch_word, os.path.basename(_path), _OVR_TTL_H))
+        return {"condition": _dispatch_word, "word": _EYE_MAP[_dispatch_word][0], "code": _EYE_MAP[_dispatch_word][1], "age_h": 0.0, "reported_at": _rec["reportedAt"]}, "dispatch"
+    if os.path.exists(_path):
+        try:
+            with open(_path, encoding="utf-8") as _fh:
+                _rec = json.load(_fh)
+            _word = str(_rec["word"]).strip()
+            assert _word in _EYE_MAP, "stored word %r has no sky mapping" % _word
+            _reported = datetime.fromisoformat(str(_rec["reportedAt"]))
+            if _reported.tzinfo is None:
+                _reported = _reported.replace(tzinfo=timezone.utc)
+            _age_h = (_now - _reported).total_seconds() / 3600.0
+        except Exception as _e:
+            print("SKY OVERRIDE FILE %s unreadable (%r) - ignoring it, automated sky resumes (file left in place for inspection)" % (_path, _e))
+            return None, "unreadable"
+        if _age_h < 0:
+            print("SKY OVERRIDE FILE %s has a future timestamp (age %.2fh) - ignoring it, automated sky resumes" % (_path, _age_h))
+            return None, "future"
+        if _age_h >= _OVR_TTL_H:
+            os.remove(_path)
+            print("SKY OVERRIDE EXPIRED: stored word %r is %.1fh old (>= %.1fh) - file deleted, automated sky resumes" % (_word, _age_h, _OVR_TTL_H))
+            return None, "expired"
+        print("SKY OVERRIDE (stored, %.1fh old): %r - staging ITS sky (%s, conditionText %d) instead of the model sky" % (_age_h, _word, _EYE_MAP[_word][0], _EYE_MAP[_word][1]))
+        return {"condition": _word, "word": _EYE_MAP[_word][0], "code": _EYE_MAP[_word][1], "age_h": _age_h, "reported_at": _rec["reportedAt"]}, "stored"
     print("no sky override - normal source rules resume")
+    return None, "none"
+
+
+_EYE, _OVR_NOTE = _resolve_sky_override(os.environ.get("SKY_OVERRIDE", ""), os.environ.get("CLEAR_OVERRIDE", ""), _OVR_PATH, datetime.now(timezone.utc))
 
 # RUN-747 FIX (run-746 log note): the stage script only VERIFIED hourly
 # freshness; the file was regenerated manually after staging and appended to
@@ -946,6 +1003,10 @@ print("SKY %s (conditionText %d) from %s at %s EST" % (SKY_WORD, CONDITION_TEXT,
 # rate) - his eyes + the gate must agree; a precip eye word with a failed
 # gate keeps the computed sky and logs loudly (never stage an unconfirmed
 # precip word). A non-precip eye word overrides outright per the body.
+# Nov 27: the gate works both ways now — a staged precip word (gate
+# passed) beats a stale non-precip eye word, so real rain is never
+# hidden by an old Fair. Plain cloud changes still wait for his new
+# report or the 3h expiry — his eyes beat the model for clouds.
 if _EYE is not None:
     if _EYE["code"] in (61, 63, 65, 71, 73, 75, 95):
         if _precip_staged:
@@ -954,8 +1015,18 @@ if _EYE is not None:
         else:
             print("EYE OVERRIDE BLOCKED: eye report %r but precip gate FAILED - keeping computed sky %s (ct %d); eye report stands un-overwritten in sky_ground_truth.json" % (_EYE["condition"], SKY_WORD, CONDITION_TEXT))
     else:
-        print("EYE OVERRIDE: %r (%.1fh old) - staging eye sky %s (conditionText %d) over model sky %s (ct %d)" % (_EYE["condition"], _EYE["age_h"], _EYE["word"], _EYE["code"], SKY_WORD, CONDITION_TEXT))
-        SKY_WORD, CONDITION_TEXT = _EYE["word"], _EYE["code"]
+        if _precip_staged:
+            # NOV 27 FIX (Troy's question): real precip beats a stale
+            # non-precip eye word. The gate already proved rain/snow/
+            # thunder over the farm (WunderMap + radar echo + farm
+            # rate), so a Fair/Cloudy eye word from before it started
+            # must not hide it — his Nov 21 rule says falling precip
+            # MUST be reported. The eye word is NOT overwritten; it
+            # simply loses this run, and the next run re-checks.
+            print("EYE OVERRIDE SUPERSEDED: eye %r (%.1fh old) is non-precip but farm precip gate PASSED - keeping computed precip sky %s (ct %d)" % (_EYE["condition"], _EYE["age_h"], SKY_WORD, CONDITION_TEXT))
+        else:
+            print("EYE OVERRIDE: %r (%.1fh old) - staging eye sky %s (conditionText %d) over model sky %s (ct %d)" % (_EYE["condition"], _EYE["age_h"], _EYE["word"], _EYE["code"], SKY_WORD, CONDITION_TEXT))
+            SKY_WORD, CONDITION_TEXT = _EYE["word"], _EYE["code"]
 # OSO farm row.
 _oso = open(os.path.join(HF, "oso_run%d.html" % RUN)).read()
 _i = _oso.find("CALABASH-FARM")
@@ -1772,6 +1843,10 @@ changed = sorted(set(changed))
 assert changed, "no files changed vs HEAD - nothing to push"
 allowed = {
     "4000-myrtle-intl/farm-data.json", "4000-exact/farm-data.json", "4000-myrtle-stream/farm-data.json",
+    # Sky eye override persistence (Nov 27): the stored word file, written
+    # on a dispatch run and deleted when cleared/expired - committed like
+    # any other staged file.
+    ".github/sky_override.json",
     "4000-myrtle-intl/scripts/modules/localforecast.mjs", "4000-exact/scripts/modules/localforecast.mjs",
     "4000-myrtle-stream/scripts/modules/localforecast.mjs",
     "4000-myrtle-intl/index.html", "4000-exact/index.html", "4000-myrtle-stream/index.html",

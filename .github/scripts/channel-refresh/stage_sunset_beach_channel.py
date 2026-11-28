@@ -38,7 +38,7 @@ the farm row's words. Precip words come from the WMO code; the
 clear/cloudy word comes from Open-Meteo total cloud cover (fix
 2026-11-24 — the WMO code alone reads Fair on overcast nights):
 >=88% Cloudy, 51-87% Mostly Cloudy, 26-50% Partly Cloudy, 11-25%
-Fair, <=10% Clear. WMO codes for reference: 0 Clear, 1 Fair,
+Fair, <=10% Clear. CIRRUS RULE (Nov 27, 2026 — same as the farm, run 1219): high-dominated thin cloud caps the word at Fair (high >=70% of total and low+mid <=10%). WMO codes for reference: 0 Clear, 1 Fair,
 2 Partly Cloudy, 3 Cloudy,
 45/48 Fog, 51 Light Rain, 53/55 Rain, 56/57 Freezing Rain,
 61/63 Rain, 65 Heavy Rain, 66/67 Freezing Rain, 71 Light Snow,
@@ -146,15 +146,28 @@ def build(data, now):
             raise RuntimeError("Open-Meteo current response missing cloud_cover: %r" % (cur,))
         cover_pct = float(cover)
         if cover_pct >= 88:
-            sky = "Cloudy"
+            sky, _ct = "Cloudy", 3
         elif cover_pct >= 51:
-            sky = "Mostly Cloudy"
+            sky, _ct = "Mostly Cloudy", 3
         elif cover_pct >= 26:
-            sky = "Partly Cloudy"
+            sky, _ct = "Partly Cloudy", 2
         elif cover_pct >= 11:
-            sky = "Fair"
+            sky, _ct = "Fair", 1
         else:
-            sky = "Clear"
+            sky, _ct = "Clear", 0
+        # CIRRUS RULE (Nov 27, 2026 — same as the farm's _om_cover_word,
+        # run 1219): high-dominated thin cloud caps the word at Fair.
+        # Tonight Sunset Beach read 100% total, all high (low 0 mid 0)
+        # and staged "Cloudy" while the farm's identical cirrus read
+        # Fair — same sky, two words. Fog/precip branches above are
+        # untouched by this cap.
+        _low, _mid, _high = (cur.get("cloud_cover_low"),
+                             cur.get("cloud_cover_mid"),
+                             cur.get("cloud_cover_high"))
+        if (_low is not None and _mid is not None and _high is not None
+                and cover_pct > 0 and float(_high) >= 0.70 * cover_pct
+                and (float(_low) + float(_mid)) <= 10 and _ct > 1):
+            sky = "Fair"
     fetched_utc = datetime.datetime.now(datetime.timezone.utc).isoformat()
     return {
         "station": "Sunset Beach",

@@ -154,6 +154,9 @@ def build(data, now):
     # Precip codes keep their WMO word; fog keeps Fog; the clear/cloudy
     # word maps total cloud cover: >=88% Cloudy, 51-87% Mostly Cloudy,
     # 26-50% Partly Cloudy, 11-25% Fair, <=10% Clear.
+    # CIRRUS RULE (Nov 27, 2026 — same as the farm, run 1219):
+    # high-dominated thin cloud caps the word at Fair (high >=70%
+    # of total and low+mid <=10%).
     if code_int in (45, 48):
         words = "Fog"
     elif code_int is not None and code_int >= 51:
@@ -164,15 +167,28 @@ def build(data, now):
             raise RuntimeError("Open-Meteo current block has no cloud_cover")
         cover_pct = float(cover)
         if cover_pct >= 88:
-            words = "Cloudy"
+            words, _ct = "Cloudy", 3
         elif cover_pct >= 51:
-            words = "Mostly Cloudy"
+            words, _ct = "Mostly Cloudy", 3
         elif cover_pct >= 26:
-            words = "Partly Cloudy"
+            words, _ct = "Partly Cloudy", 2
         elif cover_pct >= 11:
-            words = "Fair"
+            words, _ct = "Fair", 1
         else:
-            words = "Clear"
+            words, _ct = "Clear", 0
+        # CIRRUS RULE (Nov 27, 2026 — same as the farm's _om_cover_word,
+        # run 1219): high-dominated thin cloud caps the word at Fair.
+        # Tonight Sunset Beach read 100% total, all high (low 0 mid 0)
+        # and staged "Cloudy" while the farm's identical cirrus read
+        # Fair — same sky, two words. Fog/precip branches above are
+        # untouched by this cap.
+        _low, _mid, _high = (cur.get("cloud_cover_low"),
+                             cur.get("cloud_cover_mid"),
+                             cur.get("cloud_cover_high"))
+        if (_low is not None and _mid is not None and _high is not None
+                and cover_pct > 0 and float(_high) >= 0.70 * cover_pct
+                and (float(_low) + float(_mid)) <= 10 and _ct > 1):
+            words = "Fair"
     fetched_utc = datetime.datetime.now(datetime.timezone.utc).isoformat()
     return {
         "station": "SUNSET-BEACH",
