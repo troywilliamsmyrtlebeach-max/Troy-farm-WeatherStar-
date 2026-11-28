@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-28T01:40:07-05:00",
+  "generatedAt": "2026-11-28T01:55:26-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -24,10 +24,10 @@
     },
     {
       "name": "Chicago",
-      "iconLink": "https://api.weather.gov/icons/land/day/rain,20/sct?size=medium",
-      "shortForecast": "Slight Chance Rain then Mostly Sunny",
+      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
+      "shortForecast": "Mostly Sunny",
       "highF": 52,
-      "lowF": 39,
+      "lowF": 40,
       "isDaytime": true,
       "dayName": "Sunday"
     },
@@ -51,10 +51,10 @@
     },
     {
       "name": "Denver",
-      "iconLink": "https://api.weather.gov/icons/land/day/rain_showers,20/snow,60?size=medium",
-      "shortForecast": "Slight Chance Rain Showers then Rain And Snow Showers Likely",
-      "highF": 53,
-      "lowF": 25,
+      "iconLink": "https://api.weather.gov/icons/land/day/rain_showers,50/snow,80?size=medium",
+      "shortForecast": "Chance Rain Showers then Snow Showers",
+      "highF": 55,
+      "lowF": 24,
       "isDaytime": true,
       "dayName": "Sunday"
     },
@@ -63,7 +63,7 @@
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
       "shortForecast": "Mostly Cloudy",
       "highF": 42,
-      "lowF": 36,
+      "lowF": 35,
       "isDaytime": true,
       "dayName": "Sunday"
     },
@@ -125,8 +125,8 @@
       "name": "New York",
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
       "shortForecast": "Partly Sunny",
-      "highF": 53,
-      "lowF": 42,
+      "highF": 52,
+      "lowF": 44,
       "isDaytime": true,
       "dayName": "Sunday"
     },
@@ -213,8 +213,8 @@
     },
     {
       "name": "Washington DC",
-      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
-      "shortForecast": "Mostly Sunny",
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Partly Sunny",
       "highF": 57,
       "lowF": 36,
       "isDaytime": true,
