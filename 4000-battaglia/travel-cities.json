@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-27T18:49:53-05:00",
+  "generatedAt": "2026-11-27T19:12:58-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -33,12 +33,12 @@
     },
     {
       "name": "Cleveland",
-      "iconLink": "https://api.weather.gov/icons/land/day/rain,70?size=medium",
-      "shortForecast": "Light Rain Likely",
-      "highF": 41,
-      "lowF": 38,
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Partly Sunny",
+      "highF": 44,
+      "lowF": 36,
       "isDaytime": true,
-      "dayName": "Friday"
+      "dayName": "Saturday"
     },
     {
       "name": "Dallas",
@@ -178,7 +178,7 @@
     {
       "name": "San Francisco",
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
-      "shortForecast": "Partly Sunny",
+      "shortForecast": "Mostly Cloudy",
       "highF": 64,
       "lowF": 53,
       "isDaytime": true,
@@ -186,8 +186,8 @@
     },
     {
       "name": "Seattle",
-      "iconLink": "https://api.weather.gov/icons/land/day/rain,60/rain,90?size=medium",
-      "shortForecast": "Light Rain",
+      "iconLink": "https://api.weather.gov/icons/land/day/rain,50?size=medium",
+      "shortForecast": "Chance Light Rain",
       "highF": 51,
       "lowF": 42,
       "isDaytime": true,
@@ -195,21 +195,21 @@
     },
     {
       "name": "Syracuse",
-      "iconLink": "https://api.weather.gov/icons/land/day/rain_showers,60?size=medium",
-      "shortForecast": "Rain Showers Likely",
-      "highF": 56,
-      "lowF": 40,
+      "iconLink": "https://api.weather.gov/icons/land/day/rain_showers,40/rain_showers,80?size=medium",
+      "shortForecast": "Rain Showers",
+      "highF": 44,
+      "lowF": 37,
       "isDaytime": true,
-      "dayName": "Friday"
+      "dayName": "Saturday"
     },
     {
       "name": "Tampa",
-      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
-      "shortForecast": "Mostly Cloudy",
-      "highF": 67,
-      "lowF": 57,
+      "iconLink": "https://api.weather.gov/icons/land/day/ovc?size=medium",
+      "shortForecast": "Cloudy",
+      "highF": 68,
+      "lowF": 58,
       "isDaytime": true,
-      "dayName": "Friday"
+      "dayName": "Saturday"
     },
     {
       "name": "Washington DC",
