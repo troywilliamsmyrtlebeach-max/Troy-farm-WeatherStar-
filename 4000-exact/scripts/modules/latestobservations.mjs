@@ -169,7 +169,7 @@ class LatestObservations extends WeatherDisplay {
 			const fill = {
 				location: SCREENSHOT_NAMES[condition.StationId] || cleanStationName(condition.city),
 				temp: Temperature,
-				weather: shortenCurrentConditions(condition.textDescription).substr(0, 9),
+				weather: shortenWeatherWord(condition.textDescription),
 			};
 
 			// TROY Nov 9 20:26: every NEARBY row shows wind speed — direction
@@ -206,6 +206,21 @@ class LatestObservations extends WeatherDisplay {
 		this.finishDraw();
 	}
 }
+// TROY Nov 27 21:55 (Southport row): the weather word must never be cut
+// mid-word — "Clear and Windy" rendered as "Clear Win" (substr(0, 9)).
+// The wind column already shows the wind, so a trailing " Windy" adds
+// nothing: drop it when another word remains. Otherwise truncate at a
+// word boundary (same rule as cleanStationName for towns, max 9 chars
+// for the 134px weather column: left 280px, wind starts 414px).
+const shortenWeatherWord = (_condition) => {
+	let condition = shortenCurrentConditions(_condition);
+	condition = condition.replace(/ Windy$/, '');
+	if (condition.length <= 9) return condition;
+	const cut = condition.slice(0, 9);
+	const lastSpace = cut.lastIndexOf(' ');
+	return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).trim();
+};
+
 const shortenCurrentConditions = (_condition) => {
 	let condition = _condition;
 	condition = condition.replace(/Light/, 'L');

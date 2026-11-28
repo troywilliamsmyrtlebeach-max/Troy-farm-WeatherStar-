@@ -119,8 +119,26 @@ class CustomWeatherStation extends WeatherDisplay {
 		if (pressureTrend === 'rising') pressureArrow = ' <img class="pressure-arrow" src=\'images/pressure-arrow.png\'></img>';
 		if (pressureTrend === 'falling') pressureArrow = ' <img class="pressure-arrow invert-pressure-arrow" src=\'images/pressure-arrow.png\'></img>';
 
+		// Troy 2026-11-25, clarified Nov 27: the main screen shows the
+		// cloud-cover % (Open-Meteo total at the farm point, staged as
+		// cloudCover in farm-data.json) IN PLACE OF feels-like, unless
+		// there is real wind chill or heat index (displayed feels-like
+		// differs from displayed air temp — convertTemperatureUnits
+		// already returns whole degrees). The swap keys off the data
+		// field, so until the Actions stage writes cloudCover the screen
+		// behaves exactly as today (feels-like shown); the new display
+		// activates automatically at cutover. The template already has
+		// a "Cloud Cover:" row (left blank on this screen until now).
+		const tempF = ConversionHelpers.convertTemperatureUnits(customWeatherParameters.temperature);
+		const feelsF = (customWeatherParameters.feelsLike !== undefined && customWeatherParameters.feelsLike !== null
+			? ConversionHelpers.convertTemperatureUnits(customWeatherParameters.feelsLike)
+			: tempF);
+		const cloudCover = customWeatherParameters.cloudCover;
+		const hasCloudCover = (typeof cloudCover === 'number' && Number.isFinite(cloudCover));
+		const hasWindChillOrHeatIndex = (feelsF !== tempF);
+
 		const fill = {
-			temp: ConversionHelpers.convertTemperatureUnits(customWeatherParameters.temperature) + String.fromCharCode(176),
+			temp: tempF + String.fromCharCode(176),
 			condition,
 			wind: windText,
 			location: 'CALABASH-FARM AT BRUNSWICK',
@@ -129,11 +147,13 @@ class CustomWeatherStation extends WeatherDisplay {
 			visibility: `${Math.min(10, ConversionHelpers.convertDistanceUnits(customWeatherParameters.visibility))} ${ConversionHelpers.getDistanceUnitText()}`,
 			ceiling: (customWeatherParameters.ceiling != null ? `${Number(customWeatherParameters.ceiling).toLocaleString('en-US')} ft.` : 'Unlimited'),
 			pressure: `${pressureInHg.toFixed(2)}${pressureArrow}`,
-			'feels-like': (customWeatherParameters.feelsLike !== undefined && customWeatherParameters.feelsLike !== null
-				? ConversionHelpers.convertTemperatureUnits(customWeatherParameters.feelsLike)
-				: ConversionHelpers.convertTemperatureUnits(customWeatherParameters.temperature)) + String.fromCharCode(176),
+			'feels-like': feelsF + String.fromCharCode(176),
 			icon: { type: 'img', src: iconImage },
 		};
+		// Cloud-cover % fills the template's "Cloud Cover:" row when the
+		// staged field is present; absent (pre-cutover Muse pipeline) the
+		// key is omitted and the row stays blank, as today.
+		if (hasCloudCover) fill.cloud = `${Math.round(cloudCover)}%`;
 
 		// Troy 2026-11-16 wind rule: the GUSTS row shows ONLY at gust 16+
 		// ("Gusts <gust>"); below 16 the gust is already folded into the
@@ -145,7 +165,16 @@ class CustomWeatherStation extends WeatherDisplay {
 		const area = this.elem.querySelector('.main');
 
 		area.innerHTML = '';
-		area.append(this.fillTemplate('weather', fill));
+		const node = this.fillTemplate('weather', fill);
+		area.append(node);
+		// Hide the Feels Like row when cloud cover replaces it (no real
+		// wind chill/heat index); with real wind chill/heat index both
+		// rows show.
+		if (hasCloudCover && !hasWindChillOrHeatIndex && node) {
+			const feelsRow = node.querySelector('.feels-like');
+			const row = feelsRow ? feelsRow.closest('.row') : null;
+			if (row) row.style.display = 'none';
+		}
 
 		this.finishDraw();
 	}
