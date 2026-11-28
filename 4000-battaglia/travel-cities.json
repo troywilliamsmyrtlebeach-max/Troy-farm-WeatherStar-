@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-27T21:09:05-05:00",
+  "generatedAt": "2026-11-27T21:24:30-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -97,11 +97,11 @@
     {
       "name": "Los Angeles",
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
-      "shortForecast": "Partly Sunny",
-      "highF": 83,
-      "lowF": 59,
+      "shortForecast": "Mostly Cloudy",
+      "highF": 76,
+      "lowF": 57,
       "isDaytime": true,
-      "dayName": "Friday"
+      "dayName": "Saturday"
     },
     {
       "name": "Miami",
@@ -186,12 +186,12 @@
     },
     {
       "name": "Seattle",
-      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
-      "shortForecast": "Partly Sunny",
-      "highF": 49,
-      "lowF": 41,
+      "iconLink": "https://api.weather.gov/icons/land/day/rain,70?size=medium",
+      "shortForecast": "Light Rain Likely",
+      "highF": 51,
+      "lowF": 42,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Friday"
     },
     {
       "name": "Syracuse",
