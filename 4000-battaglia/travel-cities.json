@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-28T02:09:38-05:00",
+  "generatedAt": "2026-11-28T02:25:28-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -9,7 +9,7 @@
       "iconLink": "https://api.weather.gov/icons/land/day/skc?size=medium",
       "shortForecast": "Sunny",
       "highF": 61,
-      "lowF": 41,
+      "lowF": 39,
       "isDaytime": true,
       "dayName": "Sunday"
     },
@@ -179,8 +179,8 @@
       "name": "San Francisco",
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
       "shortForecast": "Partly Sunny",
-      "highF": 67,
-      "lowF": 56,
+      "highF": 66,
+      "lowF": 55,
       "isDaytime": true,
       "dayName": "Sunday"
     },
