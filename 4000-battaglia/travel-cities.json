@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-28T09:33:47-05:00",
+  "generatedAt": "2026-11-28T09:41:52-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -159,8 +159,8 @@
     },
     {
       "name": "Pittsburgh",
-      "iconLink": "https://api.weather.gov/icons/land/day/snow/bkn?size=medium",
-      "shortForecast": "Chance Rain And Snow Showers then Partly Sunny",
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Partly Sunny",
       "highF": 44,
       "lowF": 32,
       "isDaytime": true,
@@ -182,7 +182,7 @@
       "highF": 66,
       "lowF": 55,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Seattle",
