@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-27T20:40:10-05:00",
+  "generatedAt": "2026-11-27T20:54:54-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -51,12 +51,12 @@
     },
     {
       "name": "Denver",
-      "iconLink": "https://api.weather.gov/icons/land/day/rain_showers,20/snow,60?size=medium",
-      "shortForecast": "Slight Chance Rain Showers then Rain And Snow Showers Likely",
-      "highF": 53,
-      "lowF": 25,
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Partly Sunny",
+      "highF": 64,
+      "lowF": 42,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Friday"
     },
     {
       "name": "Detroit",
@@ -178,7 +178,7 @@
     {
       "name": "San Francisco",
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
-      "shortForecast": "Mostly Cloudy",
+      "shortForecast": "Partly Sunny",
       "highF": 64,
       "lowF": 53,
       "isDaytime": true,
