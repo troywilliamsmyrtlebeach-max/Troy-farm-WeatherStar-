@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-27T19:26:14-05:00",
+  "generatedAt": "2026-11-27T19:40:43-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -24,12 +24,12 @@
     },
     {
       "name": "Chicago",
-      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
-      "shortForecast": "Mostly Cloudy",
-      "highF": 46,
-      "lowF": 34,
+      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
+      "shortForecast": "Mostly Sunny",
+      "highF": 52,
+      "lowF": 40,
       "isDaytime": true,
-      "dayName": "Friday"
+      "dayName": "Saturday"
     },
     {
       "name": "Cleveland",
@@ -78,12 +78,12 @@
     },
     {
       "name": "Houston",
-      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
-      "shortForecast": "Partly Sunny",
-      "highF": 64,
-      "lowF": 50,
+      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
+      "shortForecast": "Mostly Sunny",
+      "highF": 74,
+      "lowF": 64,
       "isDaytime": true,
-      "dayName": "Friday"
+      "dayName": "Saturday"
     },
     {
       "name": "Indianapolis",
@@ -114,12 +114,12 @@
     },
     {
       "name": "Minneapolis",
-      "iconLink": "https://api.weather.gov/icons/land/day/ovc?size=medium",
-      "shortForecast": "Cloudy",
-      "highF": 43,
-      "lowF": 32,
+      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
+      "shortForecast": "Mostly Sunny",
+      "highF": 48,
+      "lowF": 31,
       "isDaytime": true,
-      "dayName": "Friday"
+      "dayName": "Saturday"
     },
     {
       "name": "New York",
@@ -213,8 +213,8 @@
     },
     {
       "name": "Washington DC",
-      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
-      "shortForecast": "Mostly Sunny",
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Partly Sunny",
       "highF": 57,
       "lowF": 36,
       "isDaytime": true,
