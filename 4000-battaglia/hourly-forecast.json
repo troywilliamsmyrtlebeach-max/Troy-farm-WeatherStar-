@@ -1,25 +1,10 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-28T05:52:58-05:00",
-  "updateTime": "2026-11-28T10:52:58.328646+00:00",
+  "generatedAt": "2026-11-28T06:07:52-05:00",
+  "updateTime": "2026-11-28T11:07:52.487050+00:00",
   "source": "Open-Meteo hourly 33.92,-78.57 (same source as Channel/International hourly)",
   "hours": [
-    {
-      "hourLabel": "5 AM",
-      "weekday": "Sat",
-      "tempF": 45,
-      "feelsLikeF": 38,
-      "dewpointF": 38,
-      "relativeHumidity": 76,
-      "shortForecast": "Clear",
-      "windDir": "W",
-      "windSpeedMph": 8,
-      "pop": 0,
-      "isDaytime": false,
-      "iconCode": "skc",
-      "iconUrl": "https://battaglia.ddns.net/twc/images/r/Clear-1992.gif"
-    },
     {
       "hourLabel": "6 AM",
       "weekday": "Sat",
@@ -364,6 +349,21 @@
       "isDaytime": false,
       "iconCode": "sct",
       "iconUrl": "https://battaglia.ddns.net/twc/images/r/Mostly-Clear.gif"
+    },
+    {
+      "hourLabel": "5 AM",
+      "weekday": "Sun",
+      "tempF": 43,
+      "feelsLikeF": 38,
+      "dewpointF": 38,
+      "relativeHumidity": 82,
+      "shortForecast": "Clear",
+      "windDir": "WSW",
+      "windSpeedMph": 4,
+      "pop": 0,
+      "isDaytime": false,
+      "iconCode": "skc",
+      "iconUrl": "https://battaglia.ddns.net/twc/images/r/Clear-1992.gif"
     }
   ]
 }

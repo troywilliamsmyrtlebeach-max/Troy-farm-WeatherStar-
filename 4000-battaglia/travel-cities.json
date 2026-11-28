@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-28T05:53:02-05:00",
+  "generatedAt": "2026-11-28T06:07:56-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -65,7 +65,7 @@
       "highF": 42,
       "lowF": 35,
       "isDaytime": true,
-      "dayName": "Sunday"
+      "dayName": "Saturday"
     },
     {
       "name": "Hartford",
@@ -74,7 +74,7 @@
       "highF": 50,
       "lowF": 33,
       "isDaytime": true,
-      "dayName": "Sunday"
+      "dayName": "Saturday"
     },
     {
       "name": "Houston",
@@ -164,7 +164,7 @@
       "highF": 44,
       "lowF": 32,
       "isDaytime": true,
-      "dayName": "Sunday"
+      "dayName": "Saturday"
     },
     {
       "name": "St. Louis",
