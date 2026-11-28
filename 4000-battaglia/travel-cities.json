@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-28T03:23:59-05:00",
+  "generatedAt": "2026-11-28T03:39:42-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -116,8 +116,8 @@
       "name": "Minneapolis",
       "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
       "shortForecast": "Mostly Sunny",
-      "highF": 48,
-      "lowF": 31,
+      "highF": 49,
+      "lowF": 30,
       "isDaytime": true,
       "dayName": "Sunday"
     },
