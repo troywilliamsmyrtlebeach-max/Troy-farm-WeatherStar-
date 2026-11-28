@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-28T06:25:51-05:00",
+  "generatedAt": "2026-11-28T06:38:11-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -11,7 +11,7 @@
       "highF": 61,
       "lowF": 39,
       "isDaytime": true,
-      "dayName": "Saturday"
+      "dayName": "Sunday"
     },
     {
       "name": "Boston",
@@ -20,7 +20,7 @@
       "highF": 51,
       "lowF": 41,
       "isDaytime": true,
-      "dayName": "Sunday"
+      "dayName": "Saturday"
     },
     {
       "name": "Chicago",
@@ -74,7 +74,7 @@
       "highF": 50,
       "lowF": 33,
       "isDaytime": true,
-      "dayName": "Sunday"
+      "dayName": "Saturday"
     },
     {
       "name": "Houston",
@@ -92,7 +92,7 @@
       "highF": 49,
       "lowF": 38,
       "isDaytime": true,
-      "dayName": "Sunday"
+      "dayName": "Saturday"
     },
     {
       "name": "Los Angeles",
@@ -164,12 +164,12 @@
       "highF": 44,
       "lowF": 32,
       "isDaytime": true,
-      "dayName": "Sunday"
+      "dayName": "Saturday"
     },
     {
       "name": "St. Louis",
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
-      "shortForecast": "Partly Sunny",
+      "shortForecast": "Mostly Cloudy",
       "highF": 53,
       "lowF": 41,
       "isDaytime": true,
