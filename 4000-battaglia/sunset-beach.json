@@ -3,14 +3,14 @@
   "location": "Sunset Beach, NC",
   "latitude": 33.88,
   "longitude": -78.51,
-  "generatedAt": "2026-11-27T19:12:58-05:00",
-  "updateTime": "2026-11-28T00:12:58.639364+00:00",
+  "generatedAt": "2026-11-27T19:26:14-05:00",
+  "updateTime": "2026-11-28T00:26:14.587449+00:00",
   "source": "Open-Meteo current 33.88,-78.51 (Sunset Beach NC point; no METAR station)",
   "tempF": 48,
   "feelsLikeF": 41,
   "relativeHumidity": 69,
-  "conditions": "Partly Cloudy",
-  "weatherCode": 1,
+  "conditions": "Mostly Cloudy",
+  "weatherCode": 2,
   "windDir": "WSW",
   "windSpeedMph": 11
 }
