@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-27T22:09:48-05:00",
+  "generatedAt": "2026-11-27T22:24:04-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -170,7 +170,7 @@
       "name": "St. Louis",
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
       "shortForecast": "Partly Sunny",
-      "highF": 52,
+      "highF": 51,
       "lowF": 42,
       "isDaytime": true,
       "dayName": "Saturday"
