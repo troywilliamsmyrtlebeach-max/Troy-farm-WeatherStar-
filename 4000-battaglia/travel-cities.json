@@ -1,7 +1,7 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-28T01:55:26-05:00",
+  "generatedAt": "2026-11-28T02:09:38-05:00",
   "source": "NWS api.weather.gov gridpoint forecasts for 24 travel cities",
   "cities": [
     {
@@ -24,10 +24,10 @@
     },
     {
       "name": "Chicago",
-      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
-      "shortForecast": "Mostly Sunny",
+      "iconLink": "https://api.weather.gov/icons/land/day/rain,20/sct?size=medium",
+      "shortForecast": "Slight Chance Rain then Mostly Sunny",
       "highF": 52,
-      "lowF": 40,
+      "lowF": 39,
       "isDaytime": true,
       "dayName": "Sunday"
     },
@@ -70,9 +70,9 @@
     {
       "name": "Hartford",
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
-      "shortForecast": "Mostly Cloudy",
-      "highF": 52,
-      "lowF": 34,
+      "shortForecast": "Partly Sunny",
+      "highF": 50,
+      "lowF": 33,
       "isDaytime": true,
       "dayName": "Sunday"
     },
@@ -89,8 +89,8 @@
       "name": "Indianapolis",
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
       "shortForecast": "Partly Sunny",
-      "highF": 50,
-      "lowF": 39,
+      "highF": 49,
+      "lowF": 38,
       "isDaytime": true,
       "dayName": "Sunday"
     },
@@ -108,7 +108,7 @@
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
       "shortForecast": "Mostly Cloudy",
       "highF": 74,
-      "lowF": 69,
+      "lowF": 68,
       "isDaytime": true,
       "dayName": "Sunday"
     },
@@ -134,8 +134,8 @@
       "name": "Norfolk",
       "iconLink": "https://api.weather.gov/icons/land/day/few?size=medium",
       "shortForecast": "Sunny",
-      "highF": 57,
-      "lowF": 39,
+      "highF": 58,
+      "lowF": 40,
       "isDaytime": true,
       "dayName": "Sunday"
     },
@@ -143,16 +143,16 @@
       "name": "Orlando",
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
       "shortForecast": "Mostly Cloudy",
-      "highF": 64,
-      "lowF": 55,
+      "highF": 63,
+      "lowF": 54,
       "isDaytime": true,
       "dayName": "Sunday"
     },
     {
       "name": "Philadelphia",
-      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
-      "shortForecast": "Mostly Sunny",
-      "highF": 52,
+      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
+      "shortForecast": "Partly Sunny",
+      "highF": 53,
       "lowF": 36,
       "isDaytime": true,
       "dayName": "Sunday"
@@ -179,8 +179,8 @@
       "name": "San Francisco",
       "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
       "shortForecast": "Partly Sunny",
-      "highF": 66,
-      "lowF": 55,
+      "highF": 67,
+      "lowF": 56,
       "isDaytime": true,
       "dayName": "Sunday"
     },
@@ -213,8 +213,8 @@
     },
     {
       "name": "Washington DC",
-      "iconLink": "https://api.weather.gov/icons/land/day/bkn?size=medium",
-      "shortForecast": "Partly Sunny",
+      "iconLink": "https://api.weather.gov/icons/land/day/sct?size=medium",
+      "shortForecast": "Mostly Sunny",
       "highF": 57,
       "lowF": 36,
       "isDaytime": true,
