@@ -1,8 +1,8 @@
 {
   "station": "KNCCAROL120",
   "location": "CALABASH-FARM AT BRUNSWICK",
-  "generatedAt": "2026-11-27T21:39:06-05:00",
-  "updateTime": "2026-11-28T02:39:06.791610+00:00",
+  "generatedAt": "2026-11-27T21:54:03-05:00",
+  "updateTime": "2026-11-28T02:54:03.003370+00:00",
   "source": "Open-Meteo hourly 33.92,-78.57 (same source as Channel/International hourly)",
   "hours": [
     {
