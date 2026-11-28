@@ -2,11 +2,11 @@
   "station": "Sunset Beach",
   "latitude": 33.88,
   "longitude": -78.51,
-  "generatedAt": "2026-11-28T03:10:10-05:00",
-  "updateTime": "2026-11-28T08:10:10.068746+00:00",
+  "generatedAt": "2026-11-28T03:23:56-05:00",
+  "updateTime": "2026-11-28T08:23:56.544219+00:00",
   "source": "Open-Meteo current 33.88,-78.51",
-  "temperatureC": 7.9,
-  "windSpeedKph": 16.0,
-  "windDirectionDeg": 267,
+  "temperatureC": 7.8,
+  "windSpeedKph": 14.9,
+  "windDirectionDeg": 266,
   "sky": "Fair"
 }
