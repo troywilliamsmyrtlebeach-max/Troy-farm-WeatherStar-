@@ -39,9 +39,9 @@ class LocalForecast extends WeatherDisplay {
 		if (!conditions.length) {
 			this.screenTexts = [
 				// FRESH FORECAST 2026-11-18 ~4:19 AM EST (NWS ILM gridpoint 68,59 for the farm,
-				// generated 2026-11-28T09:07:33+00:00 forecast through Wednesday, verified this run). Written in the screenshot format (generator
+				// generated 2026-11-28T10:07:45+00:00 forecast through Wednesday, verified this run). Written in the screenshot format (generator
 				// style) with precip chance on every period, like the live path.
-				'OVERNIGHT... Clear, with a low around 41. West wind around 7 mph. Precip chance 0%.',
+				'OVERNIGHT... Clear, with a low around 41. West wind around 6 mph. Precip chance 0%.',
 				'SATURDAY... Sunny, with a high near 62. Southwest wind 3 to 7 mph. Precip chance 0%.',
 				'SATURDAY NIGHT... Mostly clear, with a low around 40. Southwest wind around 3 mph. Precip chance 0%.',
 				'SUNDAY... Mostly cloudy, with a high near 68. Southwest wind 1 to 7 mph. Precip chance 1%.',
